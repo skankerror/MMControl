@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapmap>
+<project version="0.5.0">
+  <paints>
+    <paint locked="false" id="1" className="Color" name="#000000">
+      <opacity>0.9900000095367432</opacity>
+      <color>#fce94f</color>
+    </paint>
+    <paint locked="false" id="2" className="Color" name="#000000">
+      <opacity>0.9900000095367432</opacity>
+      <color>#f57900</color>
+    </paint>
+    <paint locked="false" id="3" className="Color" name="#000000">
+      <opacity>0.9900000095367432</opacity>
+      <color>#ad7fa8</color>
+    </paint>
+  </paints>
+  <mappings>
+    <mapping locked="false" depth="1" id="1" className="ColorMapping" solo="false" paintId="1" visible="false" name="Mesh 1">
+      <opacity>1</opacity>
+      <destination className="Mesh">
+        <locked>false</locked>
+        <nColumns>2</nColumns>
+        <nRows>2</nRows>
+        <vertices>
+          <vertex x="50" y="59"/>
+          <vertex x="218" y="52"/>
+          <vertex x="50" y="196"/>
+          <vertex x="225" y="188"/>
+        </vertices>
+      </destination>
+    </mapping>
+    <mapping locked="false" depth="2" id="2" className="ColorMapping" solo="false" paintId="2" visible="false" name="Mesh 2">
+      <opacity>1</opacity>
+      <destination className="Mesh">
+        <locked>false</locked>
+        <nColumns>2</nColumns>
+        <nRows>2</nRows>
+        <vertices>
+          <vertex x="221" y="68"/>
+          <vertex x="408" y="72"/>
+          <vertex x="221" y="205"/>
+          <vertex x="402" y="202"/>
+        </vertices>
+      </destination>
+    </mapping>
+    <mapping locked="false" depth="3" id="3" className="ColorMapping" solo="false" paintId="3" visible="false" name="Mesh 3">
+      <opacity>1</opacity>
+      <destination className="Mesh">
+        <locked>false</locked>
+        <nColumns>2</nColumns>
+        <nRows>2</nRows>
+        <vertices>
+          <vertex x="405" y="80"/>
+          <vertex x="592" y="69"/>
+          <vertex x="410" y="202"/>
+          <vertex x="592" y="206"/>
+        </vertices>
+      </destination>
+    </mapping>
+  </mappings>
+</project>
