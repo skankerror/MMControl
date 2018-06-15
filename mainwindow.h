@@ -9,7 +9,7 @@
 #include "tabmmstate.h"
 #include "oscsend.h"
 #include "osccuelist.h"
-#include "osccue.h"
+
 
 class MainWindow : public QMainWindow
 {
@@ -19,6 +19,8 @@ public:
 
     void createCentralWidget();
     void createToolBar();
+
+    OscCueList *oscCueList;
 
 signals:
 
@@ -32,7 +34,7 @@ public slots:
 private:
     TabMidi *tabmidi;
     TabSeq *tabseq;
-        OscCueList *osccuelist;
+        //OscCueList *osccuelist;
     TabMMState *tabmmstate;
     QTabWidget *tabwidget;
 

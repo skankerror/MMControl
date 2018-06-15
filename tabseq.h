@@ -3,16 +3,26 @@
 
 #include <QWidget>
 #include <QtWidgets>
+#include <QTableView>
+#include "osccuelist.h"
+#include <QBoxLayout>
 
 class TabSeq : public QWidget
 {
     Q_OBJECT
 public:
-    TabSeq();
+    TabSeq(OscCueList *);
 
 signals:
 
 public slots:
+
+private:
+    //OscCueList *oscCueList;
+    QVBoxLayout *layout1;
+    QTableView *tableView;
+
+
 };
 
 #endif // TABSEQ_H

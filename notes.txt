@@ -1,0 +1,1 @@
+Refaire les constructeurs oscsend pour initialiser à 0 les arguments non définis.

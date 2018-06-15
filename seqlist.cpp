@@ -1,7 +1,7 @@
 #include "seqlist.h"
 
-SeqList::SeqList() :
-    OscCueList()
+SeqList::SeqList()
+    //OscCueList()
 {
 
 }

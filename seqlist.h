@@ -1,17 +1,17 @@
 #ifndef SEQLIST_H
 #define SEQLIST_H
 
-#include "osccuelist.h"
+//#include "osccuelist.h"
 
-class SeqList : public OscCueList
+class SeqList //: public OscCueList
 {
-    Q_OBJECT
+    //Q_OBJECT
 public:
     SeqList();
 
-signals:
+//signals:
 
-public slots:
+//public slots:
 };
 
 #endif // SEQLIST_H

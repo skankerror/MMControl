@@ -4,8 +4,9 @@ MainWindow::MainWindow() :
     QMainWindow()
 {
     MMState state;
+    oscCueList = new OscCueList(this);
     //MyMidiIn *midiin = new MyMidiIn;
-    osccuelist = new OscCueList;
+    //osccuelist = new OscCueList;
 
     createToolBar();
     createCentralWidget();
@@ -25,7 +26,7 @@ MainWindow::MainWindow() :
 void MainWindow::createCentralWidget()
 {
     tabmidi = new TabMidi;
-    tabseq = new TabSeq;
+    tabseq = new TabSeq(oscCueList);
     tabmmstate = new TabMMState;
     tabwidget = new QTabWidget;
 
@@ -741,6 +742,7 @@ void MainWindow::addToCue()
     case 19: oscsend = new OscSend(index, p_ID1SpinBox->value(), fadeCheckBox->isChecked(), timeSpinBox->value()); break;
     default: oscsend = new OscSend(index); break;
     }
-    OscCue *osccue = new OscCue(oscsend); // Comment récupérer ça ? dans la cuelist
-    osccuelist->addCue(osccue);
+    //OscCue *osccue = new OscCue(oscsend); // Comment récupérer ça ? dans la cuelist
+    //osccuelist->addCue(osccue);
+    oscCueList->addCue(oscsend);
 }
