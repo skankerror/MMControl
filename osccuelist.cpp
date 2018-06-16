@@ -26,8 +26,6 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const
     QBrush yellowBackground(Qt::yellow);
     if (role == Qt::DisplayRole)
     {
-        //OscSend *tempSend = v_listCue[index.row()];
-        //int col = index.column();
         switch (col) {
         case 0:
             switch(tempSend->m_champ) {
@@ -160,35 +158,11 @@ Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const
 
 void OscCueList::addCue(OscSend *oscsend)
 {
+    QModelIndex indexTemp = QModelIndex();
+    beginInsertRows(indexTemp, v_listCue.size(), v_listCue.size());
     v_listCue.append(oscsend);
+    endInsertRows();
 
-    QModelIndex index;
-    for (int i=0; i<15; i++)
-    {
-        index = createIndex(v_listCue.size(), i);
-        switch(i){
-        case 0: setData(index, oscsend->m_champ, 0); break;
-        case 1: setData(index, oscsend->m_p_uri, 0); break;
-        case 2: setData(index, oscsend->m_p_ID1, 0); break;
-        case 3: setData(index, oscsend->m_p_ID2, 0); break;
-        case 4: setData(index, oscsend->m_p_rate, 0); break;
-        case 5: setData(index, oscsend->m_p_opacity, 0); break;
-        case 6: setData(index, oscsend->m_p_volume, 0); break;
-        case 7: setData(index, oscsend->m_m_ID1, 0); break;
-        case 8: setData(index, oscsend->m_m_opacity, 0); break;
-        case 9: setData(index, oscsend->m_m_isvisible, 0); break;
-        case 10: setData(index, oscsend->m_m_issolo, 0); break;
-        case 11: setData(index, oscsend->m_m_islocked, 0); break;
-        case 12: setData(index, oscsend->m_m_depth, 0); break;
-        case 13: setData(index, oscsend->m_time, 0); break;
-        case 14: setData(index, oscsend->m_isfadein, 0); break;
-        default: break;
-        }
-        //emit dataChanged(index, index);
-    }
-
-    //setData(topLeft, );
-    //emit dataChanged(topLeft, bottomRight);
     std::cout << "cue added" << std::endl;
 
 }

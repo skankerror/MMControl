@@ -34,7 +34,6 @@ public slots:
 private:
     TabMidi *tabmidi;
     TabSeq *tabseq;
-        //OscCueList *osccuelist;
     TabMMState *tabmmstate;
     QTabWidget *tabwidget;
 

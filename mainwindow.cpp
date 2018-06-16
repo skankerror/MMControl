@@ -742,7 +742,5 @@ void MainWindow::addToCue()
     case 19: oscsend = new OscSend(index, p_ID1SpinBox->value(), fadeCheckBox->isChecked(), timeSpinBox->value()); break;
     default: oscsend = new OscSend(index); break;
     }
-    //OscCue *osccue = new OscCue(oscsend); // Comment récupérer ça ? dans la cuelist
-    //osccuelist->addCue(osccue);
     oscCueList->addCue(oscsend);
 }

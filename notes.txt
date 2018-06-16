@@ -1,1 +1,3 @@
-Refaire les constructeurs oscsend pour initialiser à 0 les arguments non définis.
+Dans OscCueList voir le addcue pour insérer juste après le row sélectionné.
+Créer des boutons pour déplacer et supprimer les cues.
+Voir comment éxécuter ???

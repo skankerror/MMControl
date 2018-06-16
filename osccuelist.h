@@ -9,7 +9,6 @@
 
 class OscCueList :
         public QAbstractTableModel
-        //public QObject
 {
     Q_OBJECT
 public:
@@ -22,7 +21,6 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const override;
 
 signals:
-    // void editCompleted(const QString &);
 
 public slots:
     void addCue(OscSend *oscsend);
