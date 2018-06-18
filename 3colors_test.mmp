@@ -2,21 +2,21 @@
 <!DOCTYPE mapmap>
 <project version="0.5.0">
   <paints>
-    <paint locked="false" id="1" className="Color" name="#000000">
-      <opacity>0.9900000095367432</opacity>
+    <paint className="Color" name="#000000" locked="false" id="1">
+      <opacity>6.556510925292969e-7</opacity>
       <color>#fce94f</color>
     </paint>
-    <paint locked="false" id="2" className="Color" name="#000000">
-      <opacity>0.9900000095367432</opacity>
+    <paint className="Color" name="#000000" locked="false" id="2">
+      <opacity>6.556510925292969e-7</opacity>
       <color>#f57900</color>
     </paint>
-    <paint locked="false" id="3" className="Color" name="#000000">
-      <opacity>0.9900000095367432</opacity>
+    <paint className="Color" name="#000000" locked="false" id="3">
+      <opacity>6.556510925292969e-7</opacity>
       <color>#ad7fa8</color>
     </paint>
   </paints>
   <mappings>
-    <mapping locked="false" depth="1" id="1" className="ColorMapping" solo="false" paintId="1" visible="false" name="Mesh 1">
+    <mapping className="ColorMapping" name="Mesh 1" locked="false" solo="false" id="1" depth="1" visible="true" paintId="1">
       <opacity>1</opacity>
       <destination className="Mesh">
         <locked>false</locked>
@@ -30,7 +30,7 @@
         </vertices>
       </destination>
     </mapping>
-    <mapping locked="false" depth="2" id="2" className="ColorMapping" solo="false" paintId="2" visible="false" name="Mesh 2">
+    <mapping className="ColorMapping" name="Mesh 2" locked="false" solo="false" id="2" depth="2" visible="true" paintId="2">
       <opacity>1</opacity>
       <destination className="Mesh">
         <locked>false</locked>
@@ -44,7 +44,7 @@
         </vertices>
       </destination>
     </mapping>
-    <mapping locked="false" depth="3" id="3" className="ColorMapping" solo="false" paintId="3" visible="false" name="Mesh 3">
+    <mapping className="ColorMapping" name="Mesh 3" locked="false" solo="false" id="3" depth="3" visible="true" paintId="3">
       <opacity>1</opacity>
       <destination className="Mesh">
         <locked>false</locked>

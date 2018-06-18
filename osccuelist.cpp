@@ -3,10 +3,10 @@
 OscCueList::OscCueList(QObject *parent):
     QAbstractTableModel(parent)
 {
-    OscSend *oscTest = new OscSend(NOOP, 1);
-    v_listCue.append(oscTest);
-    OscSend *oscTest2 = new OscSend(P_OPACITY, 1, 87, 0);
-    v_listCue.append(oscTest2);
+//    OscSend *oscTest = new OscSend(NOOP, 1);
+//    v_listCue.append(oscTest);
+//    OscSend *oscTest2 = new OscSend(P_OPACITY, 1, 87, 0);
+//    v_listCue.append(oscTest2);
 }
 
 int OscCueList::rowCount(const QModelIndex &) const
@@ -166,3 +166,20 @@ void OscCueList::addCue(OscSend *oscsend)
     std::cout << "cue added" << std::endl;
 
 }
+
+void OscCueList::moveCuePrev(int rowCue)
+{
+    QModelIndex indexTemp = QModelIndex();
+    beginMoveRows(indexTemp, rowCue, rowCue, indexTemp, rowCue - 1);
+    v_listCue.move(rowCue, rowCue - 1);
+    endMoveRows();
+}
+
+void OscCueList::removeCue(int rowCue)
+{
+    QModelIndex indexTemp = QModelIndex();
+    beginRemoveRows(indexTemp, rowCue, rowCue);
+    v_listCue.remove(rowCue);
+    endRemoveRows();
+}
+

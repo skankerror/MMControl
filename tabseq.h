@@ -16,11 +16,21 @@ public:
 signals:
 
 public slots:
+    void executeGo();
+    void movePrevious();
+    void moveNext();
+    void removeCue();
 
 private:
-    //OscCueList *oscCueList;
-    QVBoxLayout *layout1;
-    QTableView *tableView;
+    OscCueList *m_oscCueList;
+    QHBoxLayout *layoutMain;
+    QHBoxLayout *layout1;
+        QVBoxLayout *boutonLayout;
+            QPushButton *boutonPrev;
+            QPushButton *boutonNext;
+            QPushButton *boutonRemove;
+            QPushButton *boutonGo;
+        QTableView *tableView;
 
 
 };

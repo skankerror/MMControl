@@ -1,3 +1,5 @@
 Dans OscCueList voir le addcue pour insérer juste après le row sélectionné.
-Créer des boutons pour déplacer et supprimer les cues.
-Voir comment éxécuter ???
+Voir comment gérer time, fade et xfade sur les go.
+implémenter < et >.
+
+Rajouter bool pour savoir si la cue s'enchaîne avec la suite.

@@ -6,6 +6,7 @@
 #include <QAbstractTableModel>
 #include <QVariant>
 #include "oscsend.h"
+#include <QBrush>
 
 class OscCueList :
         public QAbstractTableModel
@@ -20,13 +21,17 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
 
+    QVector<OscSend *> v_listCue;
+
 signals:
 
 public slots:
     void addCue(OscSend *oscsend);
+    void moveCuePrev(int rowCue);
+    void removeCue(int rowCue);
 
 private:
-    QVector<OscSend *> v_listCue;
+
 };
 
 #endif // OSCCUELIST_H

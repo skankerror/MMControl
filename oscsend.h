@@ -5,7 +5,7 @@
 #include <QString>
 #include <QFile>
 #include <QColor>
-#include <QStandardItem>
+//#include <QStandardItem>
 #include <iostream>
 #include <unistd.h>
 #include "oscpack/osc/OscOutboundPacketStream.h"
@@ -43,8 +43,8 @@ enum champMM
 };
 
 class OscSend : public QObject,
-        public UdpTransmitSocket,
-        public QStandardItem
+        public UdpTransmitSocket
+        //public QStandardItem
 {
     Q_OBJECT
 public:
