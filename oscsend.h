@@ -5,7 +5,6 @@
 #include <QString>
 #include <QFile>
 #include <QColor>
-//#include <QStandardItem>
 #include <iostream>
 #include <unistd.h>
 #include "oscpack/osc/OscOutboundPacketStream.h"
@@ -44,7 +43,6 @@ enum champMM
 
 class OscSend : public QObject,
         public UdpTransmitSocket
-        //public QStandardItem
 {
     Q_OBJECT
 public:
@@ -61,7 +59,6 @@ public:
     void ExecuteXFade(int ID1, int ID2, int time);
     void ExecuteFade(int ID1, int time, bool isfadein);
 
-// private:
     champMM m_champ;
 
     QString m_p_uri = "";

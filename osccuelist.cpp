@@ -61,6 +61,7 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const
         case 12: return QString::number(tempSend->m_m_depth);
         case 13: return QString::number(tempSend->m_time);
         case 14: return QString::number(tempSend->m_isfadein);
+        case 15: return QString::number(tempSend->m_iswaiting);
         default:
             break;
         }

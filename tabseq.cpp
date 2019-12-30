@@ -4,7 +4,6 @@ TabSeq::TabSeq(OscCueList *oscCueList) :
     QWidget(),
     m_oscCueList(oscCueList)
 {
-    //oscCueList = new OscCueList(this);
     layoutMain = new QHBoxLayout;
     layout1 = new QHBoxLayout;
         boutonLayout = new QVBoxLayout;
@@ -37,6 +36,7 @@ TabSeq::TabSeq(OscCueList *oscCueList) :
 
 void TabSeq::executeGo()
 {
+    // Mettre ici pour enchaîner les cues
     m_oscCueList->v_listCue.at((tableView->currentIndex().row()))->ExecuteSend();
     if (tableView->currentIndex().siblingAtRow(tableView->currentIndex().row()+1).isValid() == true)
     tableView->setCurrentIndex(tableView->currentIndex().siblingAtRow(tableView->currentIndex().row()+1));
