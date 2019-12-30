@@ -5,125 +5,135 @@ TabMidi::TabMidi(QWidget *parent) : QWidget(parent)
     MyMidiIn *midiin = new MyMidiIn;
     oscSendS = new OscSend(P_OPACITY, 1, 0, 0);
     oscSendB = new OscSend(M_VISIBLE, 1, true);
-    layoutTotal = new QVBoxLayout;
-        sLayout = new QHBoxLayout;
-            S1 = new QSlider(Qt::Vertical); S2 = new QSlider(Qt::Vertical); S3 = new QSlider(Qt::Vertical);
-            S4 = new QSlider(Qt::Vertical); S5 = new QSlider(Qt::Vertical); S6 = new QSlider(Qt::Vertical);
-            S7 = new QSlider(Qt::Vertical); S8 = new QSlider(Qt::Vertical); S9 = new QSlider(Qt::Vertical);
-        sLayout->addWidget(S1); sLayout->addWidget(S2); sLayout->addWidget(S3); sLayout->addWidget(S4);
-        sLayout->addWidget(S5); sLayout->addWidget(S6); sLayout->addWidget(S7); sLayout->addWidget(S8);
-        sLayout->addWidget(S9);
+    layoutTotal = new QHBoxLayout;
+        headerLayout = new QVBoxLayout;
+            labelb9 = new QLabel("noop");
+            labelb8 = new QLabel("noop");
+            labelb7 = new QLabel("noop");
+            labelb6 = new QLabel("noop");
+            labelb5 = new QLabel("noop");
+            labelb4 = new QLabel("noop");
+            labelb3 = new QLabel("noop");
+            labelb2 = new QLabel("Mesh Not Visible");
+            labelb1 = new QLabel("Mesh Visible");
+            labelS = new QLabel("paint_opacity");
+            labelPid = new QLabel("paint id");
+            labelMid = new QLabel("mesh id");
+        headerLayout->addWidget(labelb9); headerLayout->addWidget(labelb8);
+        headerLayout->addWidget(labelb7); headerLayout->addWidget(labelb6);
+        headerLayout->addWidget(labelb5); headerLayout->addWidget(labelb4);
+        headerLayout->addWidget(labelb3); headerLayout->addWidget(labelb2);
+        headerLayout->addWidget(labelb1); headerLayout->addWidget(labelS);
+        headerLayout->addWidget(labelPid); headerLayout->addWidget(labelMid);
+        bLayout1 = new QVBoxLayout;
+            B64 = new QPushButton; B0 = new QPushButton; B8 = new QPushButton;
+            B16 = new QPushButton; B24 = new QPushButton; B32 = new QPushButton;
+            B40 = new QPushButton; B48 = new QPushButton; B56 = new QPushButton;
+            S1 = new QSlider(Qt::Vertical);
+            pID1 = new QSpinBox; pID1->setValue(1); mID1 = new QSpinBox; mID1->setValue(1);
+        bLayout1->addWidget(B56); bLayout1->addWidget(B48); bLayout1->addWidget(B40);
+        bLayout1->addWidget(B32); bLayout1->addWidget(B24); bLayout1->addWidget(B16);
+        bLayout1->addWidget(B8); bLayout1->addWidget(B0); bLayout1->addWidget(B64);
+        bLayout1->addWidget(S1); bLayout1->addWidget(pID1);bLayout1->addWidget(mID1);
 
-        pIDLayout = new QHBoxLayout;
-            pID1 = new QSpinBox; pID1->setValue(1); pIDLayout->addWidget(pID1);
-            pID2 = new QSpinBox; pID2->setValue(2); pIDLayout->addWidget(pID2);
-            pID3 = new QSpinBox; pID3->setValue(3); pIDLayout->addWidget(pID3);
-            pID4 = new QSpinBox; pID4->setValue(4); pIDLayout->addWidget(pID4);
-            pID5 = new QSpinBox; pID5->setValue(5); pIDLayout->addWidget(pID5);
-            pID6 = new QSpinBox; pID6->setValue(6); pIDLayout->addWidget(pID6);
-            pID7 = new QSpinBox; pID7->setValue(7); pIDLayout->addWidget(pID7);
-            pID8 = new QSpinBox; pID8->setValue(8); pIDLayout->addWidget(pID8);
-            pID9 = new QSpinBox; pID9->setValue(9); pIDLayout->addWidget(pID9);
-        mIDLayout = new QHBoxLayout;
-            mID1 = new QSpinBox; mID1->setValue(1); mIDLayout->addWidget(mID1);
-            mID2 = new QSpinBox; mID2->setValue(2); mIDLayout->addWidget(mID2);
-            mID3 = new QSpinBox; mID3->setValue(3); mIDLayout->addWidget(mID3);
-            mID4 = new QSpinBox; mID4->setValue(4); mIDLayout->addWidget(mID4);
-            mID5 = new QSpinBox; mID5->setValue(5); mIDLayout->addWidget(mID5);
-            mID6 = new QSpinBox; mID6->setValue(6); mIDLayout->addWidget(mID6);
-            mID7 = new QSpinBox; mID7->setValue(7); mIDLayout->addWidget(mID7);
-            mID8 = new QSpinBox; mID8->setValue(8); mIDLayout->addWidget(mID8);
-            mID9 = new QSpinBox; mID9->setValue(9); mIDLayout->addWidget(mID9);
+        bLayout2 = new QVBoxLayout;
+            B65 = new QPushButton; B1 = new QPushButton; B9 = new QPushButton;
+            B17 = new QPushButton; B25 = new QPushButton; B33 = new QPushButton;
+            B41 = new QPushButton; B49 = new QPushButton; B57 = new QPushButton;
+            S2 = new QSlider(Qt::Vertical);
+            pID2 = new QSpinBox; pID2->setValue(2); mID2 = new QSpinBox; mID2->setValue(2);
+        bLayout2->addWidget(B57); bLayout2->addWidget(B49); bLayout2->addWidget(B41);
+        bLayout2->addWidget(B33); bLayout2->addWidget(B25); bLayout2->addWidget(B17);
+        bLayout2->addWidget(B9); bLayout2->addWidget(B1); bLayout2->addWidget(B65);
+        bLayout2->addWidget(S2); bLayout2->addWidget(pID2);bLayout2->addWidget(mID2);
 
+        bLayout3 = new QVBoxLayout;
+            B66 = new QPushButton; B2 = new QPushButton; B10 = new QPushButton;
+            B18 = new QPushButton; B26 = new QPushButton; B34 = new QPushButton;
+            B42 = new QPushButton; B50 = new QPushButton; B58 = new QPushButton;
+            S3 = new QSlider(Qt::Vertical);
+            pID3 = new QSpinBox; pID3->setValue(3); mID3 = new QSpinBox; mID3->setValue(3);
+        bLayout3->addWidget(B58); bLayout3->addWidget(B50); bLayout3->addWidget(B42);
+        bLayout3->addWidget(B34); bLayout3->addWidget(B26); bLayout3->addWidget(B18);
+        bLayout3->addWidget(B10); bLayout3->addWidget(B2); bLayout3->addWidget(B66);
+        bLayout3->addWidget(S3); bLayout3->addWidget(pID3);bLayout3->addWidget(mID3);
 
+        bLayout4 = new QVBoxLayout;
+            B67 = new QPushButton; B3 = new QPushButton; B11 = new QPushButton;
+            B19 = new QPushButton; B27 = new QPushButton; B35 = new QPushButton;
+            B43 = new QPushButton; B51 = new QPushButton; B59 = new QPushButton;
+            S4 = new QSlider(Qt::Vertical);
+            pID4 = new QSpinBox; pID4->setValue(4); mID4 = new QSpinBox; mID4->setValue(4);
+        bLayout4->addWidget(B59); bLayout4->addWidget(B51); bLayout4->addWidget(B43);
+        bLayout4->addWidget(B35); bLayout4->addWidget(B27); bLayout4->addWidget(B19);
+        bLayout4->addWidget(B11); bLayout4->addWidget(B3); bLayout4->addWidget(B67);
+        bLayout4->addWidget(S4); bLayout4->addWidget(pID4);bLayout4->addWidget(mID4);
 
-        bLayoutTotal = new QHBoxLayout;
-            bLayout1 = new QVBoxLayout;
-                B64 = new QPushButton; B0 = new QPushButton; B8 = new QPushButton;
-                B16 = new QPushButton; B24 = new QPushButton; B32 = new QPushButton;
-                B40 = new QPushButton; B48 = new QPushButton; B56 = new QPushButton;
-            bLayout1->addWidget(B56); bLayout1->addWidget(B48); bLayout1->addWidget(B40);
-            bLayout1->addWidget(B32); bLayout1->addWidget(B24); bLayout1->addWidget(B16);
-            bLayout1->addWidget(B8); bLayout1->addWidget(B0); bLayout1->addWidget(B64);
+        bLayout5 = new QVBoxLayout;
+            B68 = new QPushButton; B4 = new QPushButton; B12 = new QPushButton;
+            B20 = new QPushButton; B28 = new QPushButton; B36 = new QPushButton;
+            B44 = new QPushButton; B52 = new QPushButton; B60 = new QPushButton;
+            S5 = new QSlider(Qt::Vertical);
+            pID5 = new QSpinBox; pID5->setValue(5); mID5 = new QSpinBox; mID5->setValue(5);
+        bLayout5->addWidget(B60); bLayout5->addWidget(B52); bLayout5->addWidget(B44);
+        bLayout5->addWidget(B36); bLayout5->addWidget(B28); bLayout5->addWidget(B20);
+        bLayout5->addWidget(B12); bLayout5->addWidget(B4); bLayout5->addWidget(B68);
+        bLayout5->addWidget(S5); bLayout5->addWidget(pID5);bLayout5->addWidget(mID5);
 
-            bLayout2 = new QVBoxLayout;
-                B65 = new QPushButton; B1 = new QPushButton; B9 = new QPushButton;
-                B17 = new QPushButton; B25 = new QPushButton; B33 = new QPushButton;
-                B41 = new QPushButton; B49 = new QPushButton; B57 = new QPushButton;
-            bLayout2->addWidget(B57); bLayout2->addWidget(B49); bLayout2->addWidget(B41);
-            bLayout2->addWidget(B33); bLayout2->addWidget(B25); bLayout2->addWidget(B17);
-            bLayout2->addWidget(B9); bLayout2->addWidget(B1); bLayout2->addWidget(B65);
+        bLayout6 = new QVBoxLayout;
+            B69 = new QPushButton; B5 = new QPushButton; B13 = new QPushButton;
+            B21 = new QPushButton; B29 = new QPushButton; B37 = new QPushButton;
+            B45 = new QPushButton; B53 = new QPushButton; B61 = new QPushButton;
+            S6 = new QSlider(Qt::Vertical);
+            pID6 = new QSpinBox; pID6->setValue(6); mID6 = new QSpinBox; mID6->setValue(6);
+        bLayout6->addWidget(B61); bLayout6->addWidget(B53); bLayout6->addWidget(B45);
+        bLayout6->addWidget(B37); bLayout6->addWidget(B29); bLayout6->addWidget(B21);
+        bLayout6->addWidget(B13); bLayout6->addWidget(B5); bLayout6->addWidget(B69);
+        bLayout6->addWidget(S6); bLayout6->addWidget(pID6);bLayout6->addWidget(mID6);
 
-            bLayout3 = new QVBoxLayout;
-                B66 = new QPushButton; B2 = new QPushButton; B10 = new QPushButton;
-                B18 = new QPushButton; B26 = new QPushButton; B34 = new QPushButton;
-                B42 = new QPushButton; B50 = new QPushButton; B58 = new QPushButton;
-            bLayout3->addWidget(B58); bLayout3->addWidget(B50); bLayout3->addWidget(B42);
-            bLayout3->addWidget(B34); bLayout3->addWidget(B26); bLayout3->addWidget(B18);
-            bLayout3->addWidget(B10); bLayout3->addWidget(B2); bLayout3->addWidget(B66);
+        bLayout7 = new QVBoxLayout;
+            B70 = new QPushButton; B6 = new QPushButton; B14 = new QPushButton;
+            B22 = new QPushButton; B30 = new QPushButton; B38 = new QPushButton;
+            B46 = new QPushButton; B54 = new QPushButton; B62 = new QPushButton;
+            S7 = new QSlider(Qt::Vertical);
+            pID7 = new QSpinBox; pID7->setValue(7); mID7 = new QSpinBox; mID7->setValue(7);
+        bLayout7->addWidget(B62); bLayout7->addWidget(B54); bLayout7->addWidget(B46);
+        bLayout7->addWidget(B38); bLayout7->addWidget(B30); bLayout7->addWidget(B22);
+        bLayout7->addWidget(B14); bLayout7->addWidget(B6); bLayout7->addWidget(B70);
+        bLayout7->addWidget(S7); bLayout7->addWidget(pID7);bLayout7->addWidget(mID7);
 
-            bLayout4 = new QVBoxLayout;
-                B67 = new QPushButton; B3 = new QPushButton; B11 = new QPushButton;
-                B19 = new QPushButton; B27 = new QPushButton; B35 = new QPushButton;
-                B43 = new QPushButton; B51 = new QPushButton; B59 = new QPushButton;
-            bLayout4->addWidget(B59); bLayout4->addWidget(B51); bLayout4->addWidget(B43);
-            bLayout4->addWidget(B35); bLayout4->addWidget(B27); bLayout4->addWidget(B19);
-            bLayout4->addWidget(B11); bLayout4->addWidget(B3); bLayout4->addWidget(B67);
+        bLayout8 = new QVBoxLayout;
+            B71 = new QPushButton; B7 = new QPushButton; B15 = new QPushButton;
+            B23 = new QPushButton; B31 = new QPushButton; B39 = new QPushButton;
+            B47 = new QPushButton; B55 = new QPushButton; B63 = new QPushButton;
+            S8 = new QSlider(Qt::Vertical);
+            pID8 = new QSpinBox; pID8->setValue(8); mID8 = new QSpinBox; mID8->setValue(8);
+        bLayout8->addWidget(B63); bLayout8->addWidget(B55); bLayout8->addWidget(B47);
+        bLayout8->addWidget(B39); bLayout8->addWidget(B31); bLayout8->addWidget(B23);
+        bLayout8->addWidget(B18); bLayout8->addWidget(B7); bLayout8->addWidget(B71);
+        bLayout8->addWidget(S8); bLayout8->addWidget(pID8);bLayout8->addWidget(mID8);
 
-            bLayout5 = new QVBoxLayout;
-                B68 = new QPushButton; B4 = new QPushButton; B12 = new QPushButton;
-                B20 = new QPushButton; B28 = new QPushButton; B36 = new QPushButton;
-                B44 = new QPushButton; B52 = new QPushButton; B60 = new QPushButton;
-            bLayout5->addWidget(B60); bLayout5->addWidget(B52); bLayout5->addWidget(B44);
-            bLayout5->addWidget(B36); bLayout5->addWidget(B28); bLayout5->addWidget(B20);
-            bLayout5->addWidget(B12); bLayout5->addWidget(B4); bLayout5->addWidget(B68);
+        bLayout9 = new QVBoxLayout;
+            B98 = new QPushButton; B89 = new QPushButton; B88 = new QPushButton;
+            B87 = new QPushButton; B86 = new QPushButton; B85 = new QPushButton;
+            B84 = new QPushButton; B83 = new QPushButton; B82 = new QPushButton;
+            S9 = new QSlider(Qt::Vertical);
+            pID9 = new QSpinBox; pID9->setValue(9); mID9 = new QSpinBox; mID9->setValue(9);
+        bLayout9->addWidget(B82); bLayout9->addWidget(B83); bLayout9->addWidget(B84);
+        bLayout9->addWidget(B85); bLayout9->addWidget(B86); bLayout9->addWidget(B87);
+        bLayout9->addWidget(B88); bLayout9->addWidget(B89); bLayout9->addWidget(B98);
+        bLayout9->addWidget(S9); bLayout9->addWidget(pID9);bLayout9->addWidget(mID9);
 
-            bLayout6 = new QVBoxLayout;
-                B69 = new QPushButton; B5 = new QPushButton; B13 = new QPushButton;
-                B21 = new QPushButton; B29 = new QPushButton; B37 = new QPushButton;
-                B45 = new QPushButton; B53 = new QPushButton; B61 = new QPushButton;
-            bLayout6->addWidget(B61); bLayout6->addWidget(B53); bLayout6->addWidget(B45);
-            bLayout6->addWidget(B37); bLayout6->addWidget(B29); bLayout6->addWidget(B21);
-            bLayout6->addWidget(B13); bLayout6->addWidget(B5); bLayout6->addWidget(B69);
-
-            bLayout7 = new QVBoxLayout;
-                B70 = new QPushButton; B6 = new QPushButton; B14 = new QPushButton;
-                B22 = new QPushButton; B30 = new QPushButton; B38 = new QPushButton;
-                B46 = new QPushButton; B54 = new QPushButton; B62 = new QPushButton;
-            bLayout7->addWidget(B62); bLayout7->addWidget(B54); bLayout7->addWidget(B46);
-            bLayout7->addWidget(B38); bLayout7->addWidget(B30); bLayout7->addWidget(B22);
-            bLayout7->addWidget(B14); bLayout7->addWidget(B6); bLayout7->addWidget(B70);
-
-            bLayout8 = new QVBoxLayout;
-                B71 = new QPushButton; B7 = new QPushButton; B15 = new QPushButton;
-                B23 = new QPushButton; B31 = new QPushButton; B39 = new QPushButton;
-                B47 = new QPushButton; B55 = new QPushButton; B63 = new QPushButton;
-            bLayout8->addWidget(B63); bLayout8->addWidget(B55); bLayout8->addWidget(B47);
-            bLayout8->addWidget(B39); bLayout8->addWidget(B31); bLayout8->addWidget(B23);
-            bLayout8->addWidget(B18); bLayout8->addWidget(B7); bLayout8->addWidget(B71);
-
-            bLayout9 = new QVBoxLayout;
-                B98 = new QPushButton; B89 = new QPushButton; B88 = new QPushButton;
-                B87 = new QPushButton; B86 = new QPushButton; B85 = new QPushButton;
-                B84 = new QPushButton; B83 = new QPushButton; B82 = new QPushButton;
-            bLayout9->addWidget(B82); bLayout9->addWidget(B83); bLayout9->addWidget(B84);
-            bLayout9->addWidget(B85); bLayout9->addWidget(B86); bLayout9->addWidget(B87);
-            bLayout9->addWidget(B88); bLayout9->addWidget(B89); bLayout9->addWidget(B98);
-
-        bLayoutTotal->addLayout(bLayout1);
-        bLayoutTotal->addLayout(bLayout2);
-        bLayoutTotal->addLayout(bLayout3);
-        bLayoutTotal->addLayout(bLayout4);
-        bLayoutTotal->addLayout(bLayout5);
-        bLayoutTotal->addLayout(bLayout6);
-        bLayoutTotal->addLayout(bLayout7);
-        bLayoutTotal->addLayout(bLayout8);
-        bLayoutTotal->addLayout(bLayout9);
-
-        layoutTotal->addLayout(bLayoutTotal);
-        layoutTotal->addLayout(sLayout);
-        layoutTotal->addLayout(pIDLayout);
-        layoutTotal->addLayout(mIDLayout);
+    layoutTotal->addLayout(headerLayout);
+    layoutTotal->addLayout(bLayout1);
+    layoutTotal->addLayout(bLayout2);
+    layoutTotal->addLayout(bLayout3);
+    layoutTotal->addLayout(bLayout4);
+    layoutTotal->addLayout(bLayout5);
+    layoutTotal->addLayout(bLayout6);
+    layoutTotal->addLayout(bLayout7);
+    layoutTotal->addLayout(bLayout8);
+    layoutTotal->addLayout(bLayout9);
 
     this->setLayout(layoutTotal);
 
@@ -232,7 +242,6 @@ TabMidi::TabMidi(QWidget *parent) : QWidget(parent)
     connect(this->B82, SIGNAL(clicked()), this, SLOT(sendOscAPCB82()));}
 
 }
-
 
 
 void TabMidi::receiveMidiCtrl(int unID, float uneOpacite)
@@ -510,265 +519,3 @@ void TabMidi::sendOscAPCB63(){ /*Paint uri 8 */  }
 void TabMidi::sendOscAPCB82(){ /*Paint uri 9 */  }
 
 
-// Hide Show paint type button
-//void MainWindow::hideShowPaint1Button(int choix)
-//{
-//    switch (choix)
-//    {
-//    case 0:
-//        ui->B64->setDisabled(true);
-//        ui->B0->setDisabled(false);
-//        ui->B40->setDisabled(false);
-//        ui->B48->setDisabled(false);
-//        ui->B56->setDisabled(false);
-//        break;
-//    case 1:
-//        ui->B64->setDisabled(true);
-//        ui->B0->setDisabled(true);
-//        ui->B40->setDisabled(false);
-//        ui->B48->setDisabled(false);
-//        ui->B56->setDisabled(false);
-//        break;
-//    case 2:
-//        ui->B64->setDisabled(false);
-//        ui->B0->setDisabled(true);
-//        ui->B40->setDisabled(true);
-//        ui->B48->setDisabled(true);
-//        ui->B56->setDisabled(true);
-//        break;
-//    default:
-//        break;
-//    }
-//}
-//void MainWindow::hideShowPaint2Button(int choix)
-//{
-//    switch (choix)
-//    {
-//    case 0:
-//        ui->B65->setDisabled(true);
-//        ui->B1->setDisabled(false);
-//        ui->B41->setDisabled(false);
-//        ui->B49->setDisabled(false);
-//        ui->B57->setDisabled(false);
-//        break;
-//    case 1:
-//        ui->B65->setDisabled(true);
-//        ui->B1->setDisabled(true);
-//        ui->B41->setDisabled(false);
-//        ui->B49->setDisabled(false);
-//        ui->B57->setDisabled(false);
-//        break;
-//    case 2:
-//        ui->B65->setDisabled(false);
-//        ui->B1->setDisabled(true);
-//        ui->B41->setDisabled(true);
-//        ui->B49->setDisabled(true);
-//        ui->B57->setDisabled(true);
-//        break;
-//    default:
-//        break;
-//    }
-//}
-//void MainWindow::hideShowPaint3Button(int choix)
-//{
-//    switch (choix)
-//    {
-//    case 0:
-//        ui->B66->setDisabled(true);
-//        ui->B2->setDisabled(false);
-//        ui->B42->setDisabled(false);
-//        ui->B50->setDisabled(false);
-//        ui->B58->setDisabled(false);
-//        break;
-//    case 1:
-//        ui->B66->setDisabled(true);
-//        ui->B2->setDisabled(true);
-//        ui->B42->setDisabled(false);
-//        ui->B50->setDisabled(false);
-//        ui->B58->setDisabled(false);
-//        break;
-//    case 2:
-//        ui->B66->setDisabled(false);
-//        ui->B2->setDisabled(true);
-//        ui->B42->setDisabled(true);
-//        ui->B50->setDisabled(true);
-//        ui->B58->setDisabled(true);
-//        break;
-//    default:
-//        break;
-//    }
-//}
-//void MainWindow::hideShowPaint4Button(int choix)
-//{
-//    switch (choix)
-//    {
-//    case 0:
-//        ui->B67->setDisabled(true);
-//        ui->B3->setDisabled(false);
-//        ui->B43->setDisabled(false);
-//        ui->B51->setDisabled(false);
-//        ui->B59->setDisabled(false);
-//        break;
-//    case 1:
-//        ui->B67->setDisabled(true);
-//        ui->B3->setDisabled(true);
-//        ui->B43->setDisabled(false);
-//        ui->B51->setDisabled(false);
-//        ui->B59->setDisabled(false);
-//        break;
-//    case 2:
-//        ui->B67->setDisabled(false);
-//        ui->B3->setDisabled(true);
-//        ui->B43->setDisabled(true);
-//        ui->B51->setDisabled(true);
-//        ui->B59->setDisabled(true);
-//        break;
-//    default:
-//        break;
-//    }
-//}
-//void MainWindow::hideShowPaint5Button(int choix)
-//{
-//    switch (choix)
-//    {
-//    case 0:
-//        ui->B68->setDisabled(true);
-//        ui->B4->setDisabled(false);
-//        ui->B44->setDisabled(false);
-//        ui->B52->setDisabled(false);
-//        ui->B60->setDisabled(false);
-//        break;
-//    case 1:
-//        ui->B68->setDisabled(true);
-//        ui->B4->setDisabled(true);
-//        ui->B44->setDisabled(false);
-//        ui->B52->setDisabled(false);
-//        ui->B60->setDisabled(false);
-//        break;
-//    case 2:
-//        ui->B68->setDisabled(false);
-//        ui->B4->setDisabled(true);
-//        ui->B44->setDisabled(true);
-//        ui->B52->setDisabled(true);
-//        ui->B60->setDisabled(true);
-//        break;
-//    default:
-//        break;
-//    }
-//}
-//void MainWindow::hideShowPaint6Button(int choix)
-//{
-//    switch (choix)
-//    {
-//    case 0:
-//        ui->B69->setDisabled(true);
-//        ui->B5->setDisabled(false);
-//        ui->B45->setDisabled(false);
-//        ui->B53->setDisabled(false);
-//        ui->B61->setDisabled(false);
-//        break;
-//    case 1:
-//        ui->B69->setDisabled(true);
-//        ui->B5->setDisabled(true);
-//        ui->B45->setDisabled(false);
-//        ui->B53->setDisabled(false);
-//        ui->B61->setDisabled(false);
-//        break;
-//    case 2:
-//        ui->B69->setDisabled(false);
-//        ui->B5->setDisabled(true);
-//        ui->B45->setDisabled(true);
-//        ui->B53->setDisabled(true);
-//        ui->B61->setDisabled(true);
-//        break;
-//    default:
-//        break;
-//    }
-//}
-//void MainWindow::hideShowPaint7Button(int choix)
-//{
-//    switch (choix)
-//    {
-//    case 0:
-//        ui->B70->setDisabled(true);
-//        ui->B6->setDisabled(false);
-//        ui->B46->setDisabled(false);
-//        ui->B54->setDisabled(false);
-//        ui->B62->setDisabled(false);
-//        break;
-//    case 1:
-//        ui->B70->setDisabled(true);
-//        ui->B6->setDisabled(true);
-//        ui->B46->setDisabled(false);
-//        ui->B54->setDisabled(false);
-//        ui->B62->setDisabled(false);
-//        break;
-//    case 2:
-//        ui->B70->setDisabled(false);
-//        ui->B6->setDisabled(true);
-//        ui->B46->setDisabled(true);
-//        ui->B54->setDisabled(true);
-//        ui->B62->setDisabled(true);
-//        break;
-//    default:
-//        break;
-//    }
-//}
-//void MainWindow::hideShowPaint8Button(int choix)
-//{
-//    switch (choix)
-//    {
-//    case 0:
-//        ui->B71->setDisabled(true);
-//        ui->B7->setDisabled(false);
-//        ui->B47->setDisabled(false);
-//        ui->B55->setDisabled(false);
-//        ui->B63->setDisabled(false);
-//        break;
-//    case 1:
-//        ui->B71->setDisabled(true);
-//        ui->B7->setDisabled(true);
-//        ui->B47->setDisabled(false);
-//        ui->B55->setDisabled(false);
-//        ui->B63->setDisabled(false);
-//        break;
-//    case 2:
-//        ui->B71->setDisabled(false);
-//        ui->B7->setDisabled(true);
-//        ui->B47->setDisabled(true);
-//        ui->B55->setDisabled(true);
-//        ui->B63->setDisabled(true);
-//        break;
-//    default:
-//        break;
-//    }
-//}
-//void MainWindow::hideShowPaint9Button(int choix)
-//{
-//    switch (choix)
-//    {
-//    case 0:
-//        ui->B98->setDisabled(true);
-//        ui->B89->setDisabled(false);
-//        ui->B84->setDisabled(false);
-//        ui->B83->setDisabled(false);
-//        ui->B82->setDisabled(false);
-//        break;
-//    case 1:
-//        ui->B98->setDisabled(true);
-//        ui->B89->setDisabled(true);
-//        ui->B84->setDisabled(false);
-//        ui->B83->setDisabled(false);
-//        ui->B82->setDisabled(false);
-//        break;
-//    case 2:
-//        ui->B98->setDisabled(false);
-//        ui->B89->setDisabled(true);
-//        ui->B84->setDisabled(true);
-//        ui->B83->setDisabled(true);
-//        ui->B82->setDisabled(true);
-//        break;
-//    default:
-//        break;
-//    }
-//}

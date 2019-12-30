@@ -5,7 +5,7 @@
 #include <QString>
 #include <QFile>
 #include <QColor>
-#include <QStandardItem>
+//#include <QStandardItem>
 #include <iostream>
 #include <unistd.h>
 #include "oscpack/osc/OscOutboundPacketStream.h"
@@ -43,8 +43,8 @@ enum champMM
 };
 
 class OscSend : public QObject,
-        public UdpTransmitSocket,
-        public QStandardItem
+        public UdpTransmitSocket
+        //public QStandardItem
 {
     Q_OBJECT
 public:
@@ -64,25 +64,26 @@ public:
 // private:
     champMM m_champ;
 
-    QString m_p_uri;
-    QString m_p_name;
-    QString m_p_color;
-    int m_p_ID1;
-    int m_p_ID2; // pour boucle...
-    int m_p_rate;
-    int m_p_opacity;
-    int m_p_volume;
+    QString m_p_uri = "";
+    QString m_p_name = "";
+    QString m_p_color = "";
+    int m_p_ID1 = 0;
+    int m_p_ID2 = 0; // pour boucle...
+    int m_p_rate = 0;
+    int m_p_opacity = 0;
+    int m_p_volume = 0;
 
-    QString m_m_name;
-    int m_m_ID1;
-    int m_m_opacity;
-    bool m_m_isvisible;
-    bool m_m_issolo;
-    bool m_m_islocked;
-    int m_m_depth;
+    QString m_m_name = "";
+    int m_m_ID1 = 0;
+    int m_m_opacity = 0;
+    bool m_m_isvisible = false;
+    bool m_m_issolo = false;
+    bool m_m_islocked = false;
+    int m_m_depth = 0;
 
-    int m_time;
-    bool m_isfadein;
+    int m_time = 0;
+    bool m_isfadein = false;
+    bool m_iswaiting = true;
 };
 
 #endif // OSCSEND_H

@@ -3,7 +3,7 @@
 OscSend::OscSend(champMM champ, int time): // 0, 1, 2, 3, 4
     QObject(),
     UdpTransmitSocket(IpEndpointName(ADDRESS, PORT)),
-    QStandardItem(),
+    //QStandardItem(),
     m_champ(champ),
     m_time(time)
 {
@@ -24,7 +24,7 @@ OscSend::OscSend(champMM champ, int ID1,
                  QString name, int time): // 5, 12
     QObject(),
     UdpTransmitSocket(IpEndpointName(ADDRESS, PORT)),
-    QStandardItem(),
+    //QStandardItem(),
     m_champ(champ),
     m_time(time)
 {
@@ -57,7 +57,7 @@ OscSend::OscSend(champMM champ, int ID1,
 OscSend::OscSend(champMM champ,int p_ID1, int time): // 6
     QObject(),
     UdpTransmitSocket(IpEndpointName(ADDRESS, PORT)),
-    QStandardItem(),
+    //QStandardItem(),
     m_champ(champ),
     m_p_ID1(p_ID1),
     m_time(time)
@@ -72,7 +72,7 @@ OscSend::OscSend(champMM champ, int ID1, int var,
         int time): // 7, 8, 9, 13, 17, 18
     QObject(),
     UdpTransmitSocket(IpEndpointName(ADDRESS, PORT)),
-    QStandardItem(),
+    //QStandardItem(),
     m_champ(champ),
     m_time(time)
 {
@@ -91,7 +91,7 @@ OscSend::OscSend(champMM champ, int ID1, bool isproperty,
         int time): // 14, 15, 16, 19
     QObject(),
     UdpTransmitSocket(IpEndpointName(ADDRESS, PORT)),
-    QStandardItem(),
+    //QStandardItem(),
     m_champ(champ),
     m_time(time)
 {

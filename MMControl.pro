@@ -16,9 +16,7 @@ SOURCES += \
     tabmidi.cpp \
     tabseq.cpp \
     oscsend.cpp \
-    osccue.cpp \
     osccuelist.cpp \
-    seqlist.cpp \
     mmstate.cpp \
     tabmmstate.cpp
 
@@ -28,8 +26,9 @@ HEADERS += \
     tabmidi.h \
     tabseq.h \
     oscsend.h \
-    osccue.h \
     osccuelist.h \
-    seqlist.h \
     mmstate.h \
     tabmmstate.h
+
+DISTFILES += \
+    notes.txt
