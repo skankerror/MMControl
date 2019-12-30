@@ -9,16 +9,16 @@
 
 class TabMMState : public QWidget
 {
-    Q_OBJECT
+  Q_OBJECT
 public:
-    explicit TabMMState(MMState *);
+  explicit TabMMState(MMState *);
 
 signals:
 
 public slots:
 
 private:
-    MMState *m_mmstate;
+  MMState *m_mmstate;
 };
 
 #endif // TABMMSTATE_H

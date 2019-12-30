@@ -2,145 +2,145 @@
 
 TabMidi::TabMidi(QWidget *parent) : QWidget(parent)
 {
-    MyMidiIn *midiin = new MyMidiIn;
-    oscSendS = new OscSend(P_OPACITY, 1, 0, 0);
-    oscSendB = new OscSend(M_VISIBLE, 1, true);
-    layoutTotal = new QHBoxLayout;
-        headerLayout = new QVBoxLayout;
-            labelb9 = new QLabel("noop");
-            labelb8 = new QLabel("noop");
-            labelb7 = new QLabel("noop");
-            labelb6 = new QLabel("noop");
-            labelb5 = new QLabel("noop");
-            labelb4 = new QLabel("noop");
-            labelb3 = new QLabel("noop");
-            labelb2 = new QLabel("Mesh Not Visible");
-            labelb1 = new QLabel("Mesh Visible");
-            labelS = new QLabel("paint_opacity");
-            labelPid = new QLabel("paint id");
-            labelMid = new QLabel("mesh id");
-        headerLayout->addWidget(labelb9); headerLayout->addWidget(labelb8);
-        headerLayout->addWidget(labelb7); headerLayout->addWidget(labelb6);
-        headerLayout->addWidget(labelb5); headerLayout->addWidget(labelb4);
-        headerLayout->addWidget(labelb3); headerLayout->addWidget(labelb2);
-        headerLayout->addWidget(labelb1); headerLayout->addWidget(labelS);
-        headerLayout->addWidget(labelPid); headerLayout->addWidget(labelMid);
-        bLayout1 = new QVBoxLayout;
-            B64 = new QPushButton; B0 = new QPushButton; B8 = new QPushButton;
-            B16 = new QPushButton; B24 = new QPushButton; B32 = new QPushButton;
-            B40 = new QPushButton; B48 = new QPushButton; B56 = new QPushButton;
-            S1 = new QSlider(Qt::Vertical);
-            pID1 = new QSpinBox; pID1->setValue(1); mID1 = new QSpinBox; mID1->setValue(1);
-        bLayout1->addWidget(B56); bLayout1->addWidget(B48); bLayout1->addWidget(B40);
-        bLayout1->addWidget(B32); bLayout1->addWidget(B24); bLayout1->addWidget(B16);
-        bLayout1->addWidget(B8); bLayout1->addWidget(B0); bLayout1->addWidget(B64);
-        bLayout1->addWidget(S1); bLayout1->addWidget(pID1);bLayout1->addWidget(mID1);
+  MyMidiIn *midiin = new MyMidiIn;
+  oscSendS = new OscSend(P_OPACITY, 1, 0, 0);
+  oscSendB = new OscSend(M_VISIBLE, 1, true);
+  layoutTotal = new QHBoxLayout;
+  headerLayout = new QVBoxLayout;
+  labelb9 = new QLabel("noop");
+  labelb8 = new QLabel("noop");
+  labelb7 = new QLabel("noop");
+  labelb6 = new QLabel("noop");
+  labelb5 = new QLabel("noop");
+  labelb4 = new QLabel("noop");
+  labelb3 = new QLabel("noop");
+  labelb2 = new QLabel("Mesh Not Visible");
+  labelb1 = new QLabel("Mesh Visible");
+  labelS = new QLabel("paint_opacity");
+  labelPid = new QLabel("paint id");
+  labelMid = new QLabel("mesh id");
+  headerLayout->addWidget(labelb9); headerLayout->addWidget(labelb8);
+  headerLayout->addWidget(labelb7); headerLayout->addWidget(labelb6);
+  headerLayout->addWidget(labelb5); headerLayout->addWidget(labelb4);
+  headerLayout->addWidget(labelb3); headerLayout->addWidget(labelb2);
+  headerLayout->addWidget(labelb1); headerLayout->addWidget(labelS);
+  headerLayout->addWidget(labelPid); headerLayout->addWidget(labelMid);
+  bLayout1 = new QVBoxLayout;
+  B64 = new QPushButton; B0 = new QPushButton; B8 = new QPushButton;
+  B16 = new QPushButton; B24 = new QPushButton; B32 = new QPushButton;
+  B40 = new QPushButton; B48 = new QPushButton; B56 = new QPushButton;
+  S1 = new QSlider(Qt::Vertical);
+  pID1 = new QSpinBox; pID1->setValue(1); mID1 = new QSpinBox; mID1->setValue(1);
+  bLayout1->addWidget(B56); bLayout1->addWidget(B48); bLayout1->addWidget(B40);
+  bLayout1->addWidget(B32); bLayout1->addWidget(B24); bLayout1->addWidget(B16);
+  bLayout1->addWidget(B8); bLayout1->addWidget(B0); bLayout1->addWidget(B64);
+  bLayout1->addWidget(S1); bLayout1->addWidget(pID1);bLayout1->addWidget(mID1);
 
-        bLayout2 = new QVBoxLayout;
-            B65 = new QPushButton; B1 = new QPushButton; B9 = new QPushButton;
-            B17 = new QPushButton; B25 = new QPushButton; B33 = new QPushButton;
-            B41 = new QPushButton; B49 = new QPushButton; B57 = new QPushButton;
-            S2 = new QSlider(Qt::Vertical);
-            pID2 = new QSpinBox; pID2->setValue(2); mID2 = new QSpinBox; mID2->setValue(2);
-        bLayout2->addWidget(B57); bLayout2->addWidget(B49); bLayout2->addWidget(B41);
-        bLayout2->addWidget(B33); bLayout2->addWidget(B25); bLayout2->addWidget(B17);
-        bLayout2->addWidget(B9); bLayout2->addWidget(B1); bLayout2->addWidget(B65);
-        bLayout2->addWidget(S2); bLayout2->addWidget(pID2);bLayout2->addWidget(mID2);
+  bLayout2 = new QVBoxLayout;
+  B65 = new QPushButton; B1 = new QPushButton; B9 = new QPushButton;
+  B17 = new QPushButton; B25 = new QPushButton; B33 = new QPushButton;
+  B41 = new QPushButton; B49 = new QPushButton; B57 = new QPushButton;
+  S2 = new QSlider(Qt::Vertical);
+  pID2 = new QSpinBox; pID2->setValue(2); mID2 = new QSpinBox; mID2->setValue(2);
+  bLayout2->addWidget(B57); bLayout2->addWidget(B49); bLayout2->addWidget(B41);
+  bLayout2->addWidget(B33); bLayout2->addWidget(B25); bLayout2->addWidget(B17);
+  bLayout2->addWidget(B9); bLayout2->addWidget(B1); bLayout2->addWidget(B65);
+  bLayout2->addWidget(S2); bLayout2->addWidget(pID2);bLayout2->addWidget(mID2);
 
-        bLayout3 = new QVBoxLayout;
-            B66 = new QPushButton; B2 = new QPushButton; B10 = new QPushButton;
-            B18 = new QPushButton; B26 = new QPushButton; B34 = new QPushButton;
-            B42 = new QPushButton; B50 = new QPushButton; B58 = new QPushButton;
-            S3 = new QSlider(Qt::Vertical);
-            pID3 = new QSpinBox; pID3->setValue(3); mID3 = new QSpinBox; mID3->setValue(3);
-        bLayout3->addWidget(B58); bLayout3->addWidget(B50); bLayout3->addWidget(B42);
-        bLayout3->addWidget(B34); bLayout3->addWidget(B26); bLayout3->addWidget(B18);
-        bLayout3->addWidget(B10); bLayout3->addWidget(B2); bLayout3->addWidget(B66);
-        bLayout3->addWidget(S3); bLayout3->addWidget(pID3);bLayout3->addWidget(mID3);
+  bLayout3 = new QVBoxLayout;
+  B66 = new QPushButton; B2 = new QPushButton; B10 = new QPushButton;
+  B18 = new QPushButton; B26 = new QPushButton; B34 = new QPushButton;
+  B42 = new QPushButton; B50 = new QPushButton; B58 = new QPushButton;
+  S3 = new QSlider(Qt::Vertical);
+  pID3 = new QSpinBox; pID3->setValue(3); mID3 = new QSpinBox; mID3->setValue(3);
+  bLayout3->addWidget(B58); bLayout3->addWidget(B50); bLayout3->addWidget(B42);
+  bLayout3->addWidget(B34); bLayout3->addWidget(B26); bLayout3->addWidget(B18);
+  bLayout3->addWidget(B10); bLayout3->addWidget(B2); bLayout3->addWidget(B66);
+  bLayout3->addWidget(S3); bLayout3->addWidget(pID3);bLayout3->addWidget(mID3);
 
-        bLayout4 = new QVBoxLayout;
-            B67 = new QPushButton; B3 = new QPushButton; B11 = new QPushButton;
-            B19 = new QPushButton; B27 = new QPushButton; B35 = new QPushButton;
-            B43 = new QPushButton; B51 = new QPushButton; B59 = new QPushButton;
-            S4 = new QSlider(Qt::Vertical);
-            pID4 = new QSpinBox; pID4->setValue(4); mID4 = new QSpinBox; mID4->setValue(4);
-        bLayout4->addWidget(B59); bLayout4->addWidget(B51); bLayout4->addWidget(B43);
-        bLayout4->addWidget(B35); bLayout4->addWidget(B27); bLayout4->addWidget(B19);
-        bLayout4->addWidget(B11); bLayout4->addWidget(B3); bLayout4->addWidget(B67);
-        bLayout4->addWidget(S4); bLayout4->addWidget(pID4);bLayout4->addWidget(mID4);
+  bLayout4 = new QVBoxLayout;
+  B67 = new QPushButton; B3 = new QPushButton; B11 = new QPushButton;
+  B19 = new QPushButton; B27 = new QPushButton; B35 = new QPushButton;
+  B43 = new QPushButton; B51 = new QPushButton; B59 = new QPushButton;
+  S4 = new QSlider(Qt::Vertical);
+  pID4 = new QSpinBox; pID4->setValue(4); mID4 = new QSpinBox; mID4->setValue(4);
+  bLayout4->addWidget(B59); bLayout4->addWidget(B51); bLayout4->addWidget(B43);
+  bLayout4->addWidget(B35); bLayout4->addWidget(B27); bLayout4->addWidget(B19);
+  bLayout4->addWidget(B11); bLayout4->addWidget(B3); bLayout4->addWidget(B67);
+  bLayout4->addWidget(S4); bLayout4->addWidget(pID4);bLayout4->addWidget(mID4);
 
-        bLayout5 = new QVBoxLayout;
-            B68 = new QPushButton; B4 = new QPushButton; B12 = new QPushButton;
-            B20 = new QPushButton; B28 = new QPushButton; B36 = new QPushButton;
-            B44 = new QPushButton; B52 = new QPushButton; B60 = new QPushButton;
-            S5 = new QSlider(Qt::Vertical);
-            pID5 = new QSpinBox; pID5->setValue(5); mID5 = new QSpinBox; mID5->setValue(5);
-        bLayout5->addWidget(B60); bLayout5->addWidget(B52); bLayout5->addWidget(B44);
-        bLayout5->addWidget(B36); bLayout5->addWidget(B28); bLayout5->addWidget(B20);
-        bLayout5->addWidget(B12); bLayout5->addWidget(B4); bLayout5->addWidget(B68);
-        bLayout5->addWidget(S5); bLayout5->addWidget(pID5);bLayout5->addWidget(mID5);
+  bLayout5 = new QVBoxLayout;
+  B68 = new QPushButton; B4 = new QPushButton; B12 = new QPushButton;
+  B20 = new QPushButton; B28 = new QPushButton; B36 = new QPushButton;
+  B44 = new QPushButton; B52 = new QPushButton; B60 = new QPushButton;
+  S5 = new QSlider(Qt::Vertical);
+  pID5 = new QSpinBox; pID5->setValue(5); mID5 = new QSpinBox; mID5->setValue(5);
+  bLayout5->addWidget(B60); bLayout5->addWidget(B52); bLayout5->addWidget(B44);
+  bLayout5->addWidget(B36); bLayout5->addWidget(B28); bLayout5->addWidget(B20);
+  bLayout5->addWidget(B12); bLayout5->addWidget(B4); bLayout5->addWidget(B68);
+  bLayout5->addWidget(S5); bLayout5->addWidget(pID5);bLayout5->addWidget(mID5);
 
-        bLayout6 = new QVBoxLayout;
-            B69 = new QPushButton; B5 = new QPushButton; B13 = new QPushButton;
-            B21 = new QPushButton; B29 = new QPushButton; B37 = new QPushButton;
-            B45 = new QPushButton; B53 = new QPushButton; B61 = new QPushButton;
-            S6 = new QSlider(Qt::Vertical);
-            pID6 = new QSpinBox; pID6->setValue(6); mID6 = new QSpinBox; mID6->setValue(6);
-        bLayout6->addWidget(B61); bLayout6->addWidget(B53); bLayout6->addWidget(B45);
-        bLayout6->addWidget(B37); bLayout6->addWidget(B29); bLayout6->addWidget(B21);
-        bLayout6->addWidget(B13); bLayout6->addWidget(B5); bLayout6->addWidget(B69);
-        bLayout6->addWidget(S6); bLayout6->addWidget(pID6);bLayout6->addWidget(mID6);
+  bLayout6 = new QVBoxLayout;
+  B69 = new QPushButton; B5 = new QPushButton; B13 = new QPushButton;
+  B21 = new QPushButton; B29 = new QPushButton; B37 = new QPushButton;
+  B45 = new QPushButton; B53 = new QPushButton; B61 = new QPushButton;
+  S6 = new QSlider(Qt::Vertical);
+  pID6 = new QSpinBox; pID6->setValue(6); mID6 = new QSpinBox; mID6->setValue(6);
+  bLayout6->addWidget(B61); bLayout6->addWidget(B53); bLayout6->addWidget(B45);
+  bLayout6->addWidget(B37); bLayout6->addWidget(B29); bLayout6->addWidget(B21);
+  bLayout6->addWidget(B13); bLayout6->addWidget(B5); bLayout6->addWidget(B69);
+  bLayout6->addWidget(S6); bLayout6->addWidget(pID6);bLayout6->addWidget(mID6);
 
-        bLayout7 = new QVBoxLayout;
-            B70 = new QPushButton; B6 = new QPushButton; B14 = new QPushButton;
-            B22 = new QPushButton; B30 = new QPushButton; B38 = new QPushButton;
-            B46 = new QPushButton; B54 = new QPushButton; B62 = new QPushButton;
-            S7 = new QSlider(Qt::Vertical);
-            pID7 = new QSpinBox; pID7->setValue(7); mID7 = new QSpinBox; mID7->setValue(7);
-        bLayout7->addWidget(B62); bLayout7->addWidget(B54); bLayout7->addWidget(B46);
-        bLayout7->addWidget(B38); bLayout7->addWidget(B30); bLayout7->addWidget(B22);
-        bLayout7->addWidget(B14); bLayout7->addWidget(B6); bLayout7->addWidget(B70);
-        bLayout7->addWidget(S7); bLayout7->addWidget(pID7);bLayout7->addWidget(mID7);
+  bLayout7 = new QVBoxLayout;
+  B70 = new QPushButton; B6 = new QPushButton; B14 = new QPushButton;
+  B22 = new QPushButton; B30 = new QPushButton; B38 = new QPushButton;
+  B46 = new QPushButton; B54 = new QPushButton; B62 = new QPushButton;
+  S7 = new QSlider(Qt::Vertical);
+  pID7 = new QSpinBox; pID7->setValue(7); mID7 = new QSpinBox; mID7->setValue(7);
+  bLayout7->addWidget(B62); bLayout7->addWidget(B54); bLayout7->addWidget(B46);
+  bLayout7->addWidget(B38); bLayout7->addWidget(B30); bLayout7->addWidget(B22);
+  bLayout7->addWidget(B14); bLayout7->addWidget(B6); bLayout7->addWidget(B70);
+  bLayout7->addWidget(S7); bLayout7->addWidget(pID7);bLayout7->addWidget(mID7);
 
-        bLayout8 = new QVBoxLayout;
-            B71 = new QPushButton; B7 = new QPushButton; B15 = new QPushButton;
-            B23 = new QPushButton; B31 = new QPushButton; B39 = new QPushButton;
-            B47 = new QPushButton; B55 = new QPushButton; B63 = new QPushButton;
-            S8 = new QSlider(Qt::Vertical);
-            pID8 = new QSpinBox; pID8->setValue(8); mID8 = new QSpinBox; mID8->setValue(8);
-        bLayout8->addWidget(B63); bLayout8->addWidget(B55); bLayout8->addWidget(B47);
-        bLayout8->addWidget(B39); bLayout8->addWidget(B31); bLayout8->addWidget(B23);
-        bLayout8->addWidget(B18); bLayout8->addWidget(B7); bLayout8->addWidget(B71);
-        bLayout8->addWidget(S8); bLayout8->addWidget(pID8);bLayout8->addWidget(mID8);
+  bLayout8 = new QVBoxLayout;
+  B71 = new QPushButton; B7 = new QPushButton; B15 = new QPushButton;
+  B23 = new QPushButton; B31 = new QPushButton; B39 = new QPushButton;
+  B47 = new QPushButton; B55 = new QPushButton; B63 = new QPushButton;
+  S8 = new QSlider(Qt::Vertical);
+  pID8 = new QSpinBox; pID8->setValue(8); mID8 = new QSpinBox; mID8->setValue(8);
+  bLayout8->addWidget(B63); bLayout8->addWidget(B55); bLayout8->addWidget(B47);
+  bLayout8->addWidget(B39); bLayout8->addWidget(B31); bLayout8->addWidget(B23);
+  bLayout8->addWidget(B18); bLayout8->addWidget(B7); bLayout8->addWidget(B71);
+  bLayout8->addWidget(S8); bLayout8->addWidget(pID8);bLayout8->addWidget(mID8);
 
-        bLayout9 = new QVBoxLayout;
-            B98 = new QPushButton; B89 = new QPushButton; B88 = new QPushButton;
-            B87 = new QPushButton; B86 = new QPushButton; B85 = new QPushButton;
-            B84 = new QPushButton; B83 = new QPushButton; B82 = new QPushButton;
-            S9 = new QSlider(Qt::Vertical);
-            pID9 = new QSpinBox; pID9->setValue(9); mID9 = new QSpinBox; mID9->setValue(9);
-        bLayout9->addWidget(B82); bLayout9->addWidget(B83); bLayout9->addWidget(B84);
-        bLayout9->addWidget(B85); bLayout9->addWidget(B86); bLayout9->addWidget(B87);
-        bLayout9->addWidget(B88); bLayout9->addWidget(B89); bLayout9->addWidget(B98);
-        bLayout9->addWidget(S9); bLayout9->addWidget(pID9);bLayout9->addWidget(mID9);
+  bLayout9 = new QVBoxLayout;
+  B98 = new QPushButton; B89 = new QPushButton; B88 = new QPushButton;
+  B87 = new QPushButton; B86 = new QPushButton; B85 = new QPushButton;
+  B84 = new QPushButton; B83 = new QPushButton; B82 = new QPushButton;
+  S9 = new QSlider(Qt::Vertical);
+  pID9 = new QSpinBox; pID9->setValue(9); mID9 = new QSpinBox; mID9->setValue(9);
+  bLayout9->addWidget(B82); bLayout9->addWidget(B83); bLayout9->addWidget(B84);
+  bLayout9->addWidget(B85); bLayout9->addWidget(B86); bLayout9->addWidget(B87);
+  bLayout9->addWidget(B88); bLayout9->addWidget(B89); bLayout9->addWidget(B98);
+  bLayout9->addWidget(S9); bLayout9->addWidget(pID9);bLayout9->addWidget(mID9);
 
-    layoutTotal->addLayout(headerLayout);
-    layoutTotal->addLayout(bLayout1);
-    layoutTotal->addLayout(bLayout2);
-    layoutTotal->addLayout(bLayout3);
-    layoutTotal->addLayout(bLayout4);
-    layoutTotal->addLayout(bLayout5);
-    layoutTotal->addLayout(bLayout6);
-    layoutTotal->addLayout(bLayout7);
-    layoutTotal->addLayout(bLayout8);
-    layoutTotal->addLayout(bLayout9);
+  layoutTotal->addLayout(headerLayout);
+  layoutTotal->addLayout(bLayout1);
+  layoutTotal->addLayout(bLayout2);
+  layoutTotal->addLayout(bLayout3);
+  layoutTotal->addLayout(bLayout4);
+  layoutTotal->addLayout(bLayout5);
+  layoutTotal->addLayout(bLayout6);
+  layoutTotal->addLayout(bLayout7);
+  layoutTotal->addLayout(bLayout8);
+  layoutTotal->addLayout(bLayout9);
 
-    this->setLayout(layoutTotal);
+  this->setLayout(layoutTotal);
 
-    connect(midiin, SIGNAL(sigMidiCtrlChanged(int, float)), this, SLOT(receiveMidiCtrl(int,float)));
-    connect(midiin, SIGNAL(sigMidiNoteChanged(int)), this, SLOT(receiveMidiNote(int)));
-    //connections des sliders
-   {connect(this->S1, SIGNAL(valueChanged(int)), this, SLOT(sendOscS1(int)));
+  connect(midiin, SIGNAL(sigMidiCtrlChanged(int, float)), this, SLOT(receiveMidiCtrl(int,float)));
+  connect(midiin, SIGNAL(sigMidiNoteChanged(int)), this, SLOT(receiveMidiNote(int)));
+  //connections des sliders
+  {connect(this->S1, SIGNAL(valueChanged(int)), this, SLOT(sendOscS1(int)));
     connect(this->S2, SIGNAL(valueChanged(int)), this, SLOT(sendOscS2(int)));
     connect(this->S3, SIGNAL(valueChanged(int)), this, SLOT(sendOscS3(int)));
     connect(this->S4, SIGNAL(valueChanged(int)), this, SLOT(sendOscS4(int)));
@@ -150,8 +150,8 @@ TabMidi::TabMidi(QWidget *parent) : QWidget(parent)
     connect(this->S8, SIGNAL(valueChanged(int)), this, SLOT(sendOscS8(int)));
     connect(this->S9, SIGNAL(valueChanged(int)), this, SLOT(sendOscS9(int)));}
 
-    // connections de tous les boutons !
-   {connect(this->B64, SIGNAL(clicked()), this, SLOT(sendOscAPCB64()));
+  // connections de tous les boutons !
+  {connect(this->B64, SIGNAL(clicked()), this, SLOT(sendOscAPCB64()));
     connect(this->B65, SIGNAL(clicked()), this, SLOT(sendOscAPCB65()));
     connect(this->B66, SIGNAL(clicked()), this, SLOT(sendOscAPCB66()));
     connect(this->B67, SIGNAL(clicked()), this, SLOT(sendOscAPCB67()));
@@ -247,184 +247,184 @@ TabMidi::TabMidi(QWidget *parent) : QWidget(parent)
 void TabMidi::receiveMidiCtrl(int unID, float uneOpacite)
 {
 
-    switch(unID)
-    {
-    case 1: this->S1->setValue((int)(uneOpacite*100)); break;
-    case 2: this->S2->setValue((int)(uneOpacite*100)); break;
-    case 3: this->S3->setValue((int)(uneOpacite*100)); break;
-    case 4: this->S4->setValue((int)(uneOpacite*100)); break;
-    case 5: this->S5->setValue((int)(uneOpacite*100)); break;
-    case 6: this->S6->setValue((int)(uneOpacite*100)); break;
-    case 7: this->S7->setValue((int)(uneOpacite*100)); break;
-    case 8: this->S8->setValue((int)(uneOpacite*100)); break;
-    case 9: this->S9->setValue((int)(uneOpacite*100)); break;
+  switch(unID)
+  {
+  case 1: this->S1->setValue((int)(uneOpacite*100)); break;
+  case 2: this->S2->setValue((int)(uneOpacite*100)); break;
+  case 3: this->S3->setValue((int)(uneOpacite*100)); break;
+  case 4: this->S4->setValue((int)(uneOpacite*100)); break;
+  case 5: this->S5->setValue((int)(uneOpacite*100)); break;
+  case 6: this->S6->setValue((int)(uneOpacite*100)); break;
+  case 7: this->S7->setValue((int)(uneOpacite*100)); break;
+  case 8: this->S8->setValue((int)(uneOpacite*100)); break;
+  case 9: this->S9->setValue((int)(uneOpacite*100)); break;
 
-    default : break;
-    }
+  default : break;
+  }
 }
 
 void TabMidi::sendOscS1(int uneOpacite)
 {
-    oscSendS->m_p_ID1 = pID1->value();
-    oscSendS->m_p_opacity = uneOpacite;
-    oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID1->value();
+  oscSendS->m_p_opacity = uneOpacite;
+  oscSendS->ExecuteSend();
 }
 void TabMidi::sendOscS2(int uneOpacite)
 {
-    oscSendS->m_p_ID1 = pID2->value();
-    oscSendS->m_p_opacity = uneOpacite;
-    oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID2->value();
+  oscSendS->m_p_opacity = uneOpacite;
+  oscSendS->ExecuteSend();
 }
 void TabMidi::sendOscS3(int uneOpacite)
 {
-    oscSendS->m_p_ID1 = pID3->value();
-    oscSendS->m_p_opacity = uneOpacite;
-    oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID3->value();
+  oscSendS->m_p_opacity = uneOpacite;
+  oscSendS->ExecuteSend();
 }
 void TabMidi::sendOscS4(int uneOpacite)
 {
-    oscSendS->m_p_ID1 = pID4->value();
-    oscSendS->m_p_opacity = uneOpacite;
-    oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID4->value();
+  oscSendS->m_p_opacity = uneOpacite;
+  oscSendS->ExecuteSend();
 }
 void TabMidi::sendOscS5(int uneOpacite)
 {
-    oscSendS->m_p_ID1 = pID5->value();
-    oscSendS->m_p_opacity = uneOpacite;
-    oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID5->value();
+  oscSendS->m_p_opacity = uneOpacite;
+  oscSendS->ExecuteSend();
 }
 void TabMidi::sendOscS6(int uneOpacite)
 {
-    oscSendS->m_p_ID1 = pID6->value();
-    oscSendS->m_p_opacity = uneOpacite;
-    oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID6->value();
+  oscSendS->m_p_opacity = uneOpacite;
+  oscSendS->ExecuteSend();
 }
 void TabMidi::sendOscS7(int uneOpacite)
 {
-    oscSendS->m_p_ID1 = pID7->value();
-    oscSendS->m_p_opacity = uneOpacite;
-    oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID7->value();
+  oscSendS->m_p_opacity = uneOpacite;
+  oscSendS->ExecuteSend();
 }
 void TabMidi::sendOscS8(int uneOpacite)
 {
-    oscSendS->m_p_ID1 = pID8->value();
-    oscSendS->m_p_opacity = uneOpacite;
-    oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID8->value();
+  oscSendS->m_p_opacity = uneOpacite;
+  oscSendS->ExecuteSend();
 }
 void TabMidi::sendOscS9(int uneOpacite)
 {
-    oscSendS->m_p_ID1 = pID9->value();
-    oscSendS->m_p_opacity = uneOpacite;
-    oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID9->value();
+  oscSendS->m_p_opacity = uneOpacite;
+  oscSendS->ExecuteSend();
 }
 
 void TabMidi::receiveMidiNote(int unBouton)
 {
 
-    switch (unBouton)
-    {
-    // rangée 9 au dessus des sliders paint/color
-    case 64: this->B64->animateClick(); break;
-    case 65: this->B65->animateClick(); break;
-    case 66: this->B66->animateClick(); break;
-    case 67: this->B67->animateClick(); break;
-    case 68: this->B68->animateClick(); break;
-    case 69: this->B69->animateClick(); break;
-    case 70: this->B70->animateClick(); break;
-    case 71: this->B71->animateClick(); break;
-    case 98: this->B98->animateClick(); break;
+  switch (unBouton)
+  {
+  // rangée 9 au dessus des sliders paint/color
+  case 64: this->B64->animateClick(); break;
+  case 65: this->B65->animateClick(); break;
+  case 66: this->B66->animateClick(); break;
+  case 67: this->B67->animateClick(); break;
+  case 68: this->B68->animateClick(); break;
+  case 69: this->B69->animateClick(); break;
+  case 70: this->B70->animateClick(); break;
+  case 71: this->B71->animateClick(); break;
+  case 98: this->B98->animateClick(); break;
 
     // rangée 8 paint/rate
-    case 0: this->B0->animateClick(); break;
-    case 1: this->B1->animateClick(); break;
-    case 2: this->B2->animateClick(); break;
-    case 3: this->B3->animateClick(); break;
-    case 4: this->B4->animateClick(); break;
-    case 5: this->B5->animateClick(); break;
-    case 6: this->B6->animateClick(); break;
-    case 7: this->B7->animateClick(); break;
-    case 89: this->B89->animateClick(); break;
+  case 0: this->B0->animateClick(); break;
+  case 1: this->B1->animateClick(); break;
+  case 2: this->B2->animateClick(); break;
+  case 3: this->B3->animateClick(); break;
+  case 4: this->B4->animateClick(); break;
+  case 5: this->B5->animateClick(); break;
+  case 6: this->B6->animateClick(); break;
+  case 7: this->B7->animateClick(); break;
+  case 89: this->B89->animateClick(); break;
 
     //rangée 7 mapping/solo off
-    case 8: this->B8->animateClick(); break;
-    case 9: this->B9->animateClick(); break;
-    case 10: this->B10->animateClick(); break;
-    case 11: this->B11->animateClick(); break;
-    case 12: this->B12->animateClick(); break;
-    case 13: this->B13->animateClick(); break;
-    case 14: this->B14->animateClick(); break;
-    case 15: this->B15->animateClick(); break;
-    case 88: this->B88->animateClick(); break;
+  case 8: this->B8->animateClick(); break;
+  case 9: this->B9->animateClick(); break;
+  case 10: this->B10->animateClick(); break;
+  case 11: this->B11->animateClick(); break;
+  case 12: this->B12->animateClick(); break;
+  case 13: this->B13->animateClick(); break;
+  case 14: this->B14->animateClick(); break;
+  case 15: this->B15->animateClick(); break;
+  case 88: this->B88->animateClick(); break;
 
     // rangée 6 mapping/solo on
-    case 16: this->B16->animateClick(); break;
-    case 17: this->B17->animateClick(); break;
-    case 18: this->B18->animateClick(); break;
-    case 19: this->B19->animateClick(); break;
-    case 20: this->B20->animateClick(); break;
-    case 21: this->B21->animateClick(); break;
-    case 22: this->B22->animateClick(); break;
-    case 23: this->B23->animateClick(); break;
-    case 87: this->B87->animateClick(); break;
+  case 16: this->B16->animateClick(); break;
+  case 17: this->B17->animateClick(); break;
+  case 18: this->B18->animateClick(); break;
+  case 19: this->B19->animateClick(); break;
+  case 20: this->B20->animateClick(); break;
+  case 21: this->B21->animateClick(); break;
+  case 22: this->B22->animateClick(); break;
+  case 23: this->B23->animateClick(); break;
+  case 87: this->B87->animateClick(); break;
 
     // rangée 5 mapping/visible off
-    case 24: this->B24->animateClick(); break;
-    case 25: this->B25->animateClick(); break;
-    case 26: this->B26->animateClick(); break;
-    case 27: this->B27->animateClick(); break;
-    case 28: this->B28->animateClick(); break;
-    case 29: this->B29->animateClick(); break;
-    case 30: this->B30->animateClick(); break;
-    case 31: this->B31->animateClick(); break;
-    case 86: this->B86->animateClick(); break;
+  case 24: this->B24->animateClick(); break;
+  case 25: this->B25->animateClick(); break;
+  case 26: this->B26->animateClick(); break;
+  case 27: this->B27->animateClick(); break;
+  case 28: this->B28->animateClick(); break;
+  case 29: this->B29->animateClick(); break;
+  case 30: this->B30->animateClick(); break;
+  case 31: this->B31->animateClick(); break;
+  case 86: this->B86->animateClick(); break;
 
     // rangée 4 mapping/visible on
-    case 32: this->B32->animateClick(); break;
-    case 33: this->B33->animateClick(); break;
-    case 34: this->B34->animateClick(); break;
-    case 35: this->B35->animateClick(); break;
-    case 36: this->B36->animateClick(); break;
-    case 37: this->B37->animateClick(); break;
-    case 38: this->B38->animateClick(); break;
-    case 39: this->B39->animateClick(); break;
-    case 85: this->B85->animateClick(); break;
+  case 32: this->B32->animateClick(); break;
+  case 33: this->B33->animateClick(); break;
+  case 34: this->B34->animateClick(); break;
+  case 35: this->B35->animateClick(); break;
+  case 36: this->B36->animateClick(); break;
+  case 37: this->B37->animateClick(); break;
+  case 38: this->B38->animateClick(); break;
+  case 39: this->B39->animateClick(); break;
+  case 85: this->B85->animateClick(); break;
 
     // rangée 3 paint/uri/ previous
-    case 40: this->B40->animateClick(); break;
-    case 41: this->B41->animateClick(); break;
-    case 42: this->B42->animateClick(); break;
-    case 43: this->B43->animateClick(); break;
-    case 44: this->B44->animateClick(); break;
-    case 45: this->B45->animateClick(); break;
-    case 46: this->B46->animateClick(); break;
-    case 47: this->B47->animateClick(); break;
-    case 84: this->B84->animateClick(); break;
+  case 40: this->B40->animateClick(); break;
+  case 41: this->B41->animateClick(); break;
+  case 42: this->B42->animateClick(); break;
+  case 43: this->B43->animateClick(); break;
+  case 44: this->B44->animateClick(); break;
+  case 45: this->B45->animateClick(); break;
+  case 46: this->B46->animateClick(); break;
+  case 47: this->B47->animateClick(); break;
+  case 84: this->B84->animateClick(); break;
 
     // rangée 2 paint/uri next
-    case 48: this->B48->animateClick(); break;
-    case 49: this->B49->animateClick(); break;
-    case 50: this->B50->animateClick(); break;
-    case 51: this->B51->animateClick(); break;
-    case 52: this->B52->animateClick(); break;
-    case 53: this->B53->animateClick(); break;
-    case 54: this->B54->animateClick(); break;
-    case 55: this->B55->animateClick(); break;
-    case 83: this->B83->animateClick(); break;
+  case 48: this->B48->animateClick(); break;
+  case 49: this->B49->animateClick(); break;
+  case 50: this->B50->animateClick(); break;
+  case 51: this->B51->animateClick(); break;
+  case 52: this->B52->animateClick(); break;
+  case 53: this->B53->animateClick(); break;
+  case 54: this->B54->animateClick(); break;
+  case 55: this->B55->animateClick(); break;
+  case 83: this->B83->animateClick(); break;
 
     // rangée 1 paint/uri uri
-    case 56: this->B56->animateClick(); break;
-    case 57: this->B57->animateClick(); break;
-    case 58: this->B58->animateClick(); break;
-    case 59: this->B59->animateClick(); break;
-    case 60: this->B60->animateClick(); break;
-    case 61: this->B61->animateClick(); break;
-    case 62: this->B62->animateClick(); break;
-    case 63: this->B63->animateClick(); break;
-    case 82: this->B82->animateClick(); break;
+  case 56: this->B56->animateClick(); break;
+  case 57: this->B57->animateClick(); break;
+  case 58: this->B58->animateClick(); break;
+  case 59: this->B59->animateClick(); break;
+  case 60: this->B60->animateClick(); break;
+  case 61: this->B61->animateClick(); break;
+  case 62: this->B62->animateClick(); break;
+  case 63: this->B63->animateClick(); break;
+  case 82: this->B82->animateClick(); break;
 
-    default:
-        break;
-    }
+  default:
+    break;
+  }
 
 }
 

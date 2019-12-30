@@ -19,25 +19,25 @@ const int opacity = 5;
 
 class MyMidiIn : public QObject, public RtMidiIn
 {
-    Q_OBJECT
+  Q_OBJECT
 public:
-    MyMidiIn(RtMidi::Api api = LINUX_ALSA,
-                      const std::string &clientName = "OscControlMapmap Input Client",
-                      unsigned int queueSizeLimit = 100);
+  MyMidiIn(RtMidi::Api api = LINUX_ALSA,
+           const std::string &clientName = "OscControlMapmap Input Client",
+           unsigned int queueSizeLimit = 100);
 
-             // Fn static pour le callback. Elle est statique mais elle peut accéder
-             // aux fonctions des objets. On lui enverrra this en arg userData.
-             static void sendMidiToOsc (double deltatime
+  // Fn static pour le callback. Elle est statique mais elle peut accéder
+  // aux fonctions des objets. On lui enverrra this en arg userData.
+  static void sendMidiToOsc (double deltatime
                              , std::vector<unsigned char> *unMessage
                              , void *userData);
 
-         signals:
-             void sigMidiCtrlChanged(int unID, float uneOpacite);
-             void sigMidiNoteChanged(int unBouton);
+signals:
+  void sigMidiCtrlChanged(int unID, float uneOpacite);
+  void sigMidiNoteChanged(int unBouton);
 
-         private slots:
-             void midiControlChanged(int unID, float uneOpacite);
-             void midiNoteChanged(int unBouton);
+private slots:
+  void midiControlChanged(int unID, float uneOpacite);
+  void midiNoteChanged(int unBouton);
 };
 
 #endif // MYMIDIIN_H
