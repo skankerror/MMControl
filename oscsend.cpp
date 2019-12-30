@@ -17,6 +17,7 @@ OscSend::OscSend(champMM champ, int time): // 0, 1, 2, 3, 4
     if (m_champ == NOOP)
     {
       std::cout << "OscSend created noop...\n";
+      m_time = time;
     }
   }
 }
@@ -117,7 +118,7 @@ void OscSend::ExecuteSend()
   packet << osc::BeginBundleImmediate;
   switch (m_champ) //
   {
-  case NOOP: std::cout << "Noop...\n"; break;
+  case NOOP: std::cout << "Noop... wait " << m_time << " s.\n"; usleep(1000000 * m_time); break;
   case PLAY: packet << osc::BeginMessage("/mapmap/play") << osc::EndMessage;
     std::cout << "/mapmap/play\n"; break;
   case PAUSE: packet << osc::BeginMessage("/mapmap/pause") << osc::EndMessage;
