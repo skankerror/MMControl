@@ -7,6 +7,7 @@
 #include "osccuelist.h"
 #include <QBoxLayout>
 #include <unistd.h>
+//#include <QFile>
 
 class TabSeq : public QWidget
 {
@@ -21,17 +22,21 @@ public slots:
   void movePrevious();
   void moveNext();
   void removeCue();
+  void saveAs();
+  void loadFile();
 
 private:
   OscCueList *m_oscCueList;
   QHBoxLayout *layoutMain;
-  QHBoxLayout *layout1;
-  QVBoxLayout *boutonLayout;
-  QPushButton *boutonPrev;
-  QPushButton *boutonNext;
-  QPushButton *boutonRemove;
-  QPushButton *boutonGo;
-  QTableView *tableView;
+    QHBoxLayout *layout1;
+      QVBoxLayout *boutonLayout;
+        QPushButton *boutonPrev;
+        QPushButton *boutonNext;
+        QPushButton *boutonRemove;
+        QPushButton *boutonGo;
+        QPushButton *boutonSaveAs;
+        QPushButton *boutonLoad;
+    QTableView *tableView;
 
 
 };
