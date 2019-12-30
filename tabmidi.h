@@ -2,6 +2,7 @@
 #define TABMIDI_H
 
 #include <QWidget>
+#include <QLabel>
 #include <QSlider>
 #include <QBoxLayout>
 #include <QPushButton>
@@ -18,8 +19,6 @@ public:
 signals:
 
 public slots:
-    // voir le cpp à refaire.
-    // Pour quand on reçoit du midiin.
     void receiveMidiCtrl(int unID, float uneOpacite);
 
     void sendOscS1(int uneOpacite); void sendOscS2(int uneOpacite); void sendOscS3(int uneOpacite); void sendOscS4(int uneOpacite); void sendOscS5(int uneOpacite);
@@ -58,14 +57,23 @@ public slots:
 private:
     OscSend *oscSendS;
     OscSend *oscSendB;
-    QVBoxLayout *layoutTotal;
-    QHBoxLayout *sLayout;
+    QHBoxLayout *layoutTotal;// plutot tester avec un QGridLayout.
         QSlider *S1; QSlider *S2; QSlider *S3; QSlider *S4; QSlider *S5; QSlider *S6; QSlider *S7; QSlider *S8; QSlider *S9;
-    QHBoxLayout *pIDLayout;
         QSpinBox *pID1; QSpinBox *pID2; QSpinBox *pID3; QSpinBox *pID4; QSpinBox *pID5; QSpinBox *pID6; QSpinBox *pID7; QSpinBox *pID8; QSpinBox *pID9;
-    QHBoxLayout *mIDLayout;
         QSpinBox *mID1; QSpinBox *mID2; QSpinBox *mID3; QSpinBox *mID4; QSpinBox *mID5; QSpinBox *mID6; QSpinBox *mID7; QSpinBox *mID8; QSpinBox *mID9;
-    QHBoxLayout *bLayoutTotal;
+        QVBoxLayout *headerLayout;
+            QLabel *labelb9;
+            QLabel *labelb8;
+            QLabel *labelb7;
+            QLabel *labelb6;
+            QLabel *labelb5;
+            QLabel *labelb4;
+            QLabel *labelb3;
+            QLabel *labelb2;
+            QLabel *labelb1;
+            QLabel *labelS;
+            QLabel *labelPid;
+            QLabel *labelMid;
         QVBoxLayout *bLayout1;
             QPushButton *B64; QPushButton *B0; QPushButton *B8; QPushButton *B16; QPushButton *B24; QPushButton *B32; QPushButton *B40; QPushButton *B48; QPushButton *B56;
         QVBoxLayout *bLayout2;

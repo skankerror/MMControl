@@ -3,7 +3,7 @@
 MainWindow::MainWindow() :
     QMainWindow()
 {
-    MMState state;
+    state = new MMState(this);
     oscCueList = new OscCueList(this);
 
     createToolBar();
@@ -25,7 +25,7 @@ void MainWindow::createCentralWidget()
 {
     tabmidi = new TabMidi;
     tabseq = new TabSeq(oscCueList);
-    tabmmstate = new TabMMState;
+    tabmmstate = new TabMMState(state);
     tabwidget = new QTabWidget;
 
     tabwidget->addTab(tabmidi, "Midi In");

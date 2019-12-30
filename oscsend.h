@@ -83,6 +83,7 @@ public:
 
     int m_time = 0;
     bool m_isfadein = false;
+    bool m_iswaiting = true;
 };
 
 #endif // OSCSEND_H

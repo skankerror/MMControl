@@ -2,12 +2,7 @@
 
 OscCueList::OscCueList(QObject *parent):
     QAbstractTableModel(parent)
-{
-//    OscSend *oscTest = new OscSend(NOOP, 1);
-//    v_listCue.append(oscTest);
-//    OscSend *oscTest2 = new OscSend(P_OPACITY, 1, 87, 0);
-//    v_listCue.append(oscTest2);
-}
+{}
 
 int OscCueList::rowCount(const QModelIndex &) const
 {
@@ -16,7 +11,7 @@ int OscCueList::rowCount(const QModelIndex &) const
 
 int OscCueList::columnCount(const QModelIndex &) const
 {
-    return 15;
+    return 16;
 }
 
 QVariant OscCueList::data(const QModelIndex &index, int role) const
@@ -114,6 +109,7 @@ bool OscCueList::setData(const QModelIndex &index, const QVariant &value, int ro
     case 12: v_listCue.at(index.row())->m_m_depth = value.toBool(); break;
     case 13: v_listCue.at(index.row())->m_time = value.toInt(); break;
     case 14: v_listCue.at(index.row())->m_isfadein = value.toBool(); break;
+    case 15: v_listCue.at(index.row())->m_iswaiting = value.toBool(); break;
     default: break;
     }
     emit dataChanged(index, index);
@@ -143,6 +139,7 @@ QVariant OscCueList::headerData(int section, Qt::Orientation orientation, int ro
             case 12: return QString("m_depth");
             case 13: return QString("time");
             case 14: return QString("fadeIn");
+            case 15: return QString("wait");
             }
         }
         if (orientation==Qt::Vertical)
