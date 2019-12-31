@@ -88,7 +88,7 @@ void TabSeq::removeCue()
 
 void TabSeq::saveAs()
 {
-  QString fileName = QFileDialog::getSaveFileName(this, "Save cuelist", "", "csv File(.csv);;All files (*)");
+  QString fileName = QFileDialog::getSaveFileName(this);
   if (fileName.isEmpty())
     return;
   else
@@ -122,28 +122,42 @@ void TabSeq::saveAs()
 }
 void TabSeq::loadFile()
 {
-//  QString fileName = QFileDialog::getOpenFileName(this, "Load cuelist", "", "csv File(.csv);;All files (*)" );
-//  //if (fileName.isEmpty())
-//  //  return;
-//  //else
-//  //{
-//    QFile file(fileName);
-//    int lineindex = 0;
-//    QTextStream in(&file);
+  QString fileName = QFileDialog::getOpenFileName(this);
+  QFile file(fileName);
+  if (fileName.isEmpty())
+  {
+    return;
+  }
+  if (file.open(QIODevice::ReadOnly))
+  {
 
-//    while (!in.atEnd())
-//    {
-//      QString fileLine = in.readLine();
-//      QStringList lineToken = fileLine.split(",");
-//      for (int j = 0; j < lineToken.size(); j++)
-//      {
-//        QString value = lineToken.at(j);
-//        QStandardItem *item = new QStandardItem(value);
-//        std::cout << value.toStdString() << std::endl;
-//        m_oscCueList->setData(m_oscCueList->index(lineindex, j), value);
-//      }
-//      lineindex++;
-//    }
-//    file.close();
-//  //}
+      int lineindex = 0;                     // file line counter
+      QTextStream in(&file);                 // read to text stream
+
+      while (!in.atEnd())
+      {
+
+          // read one line from textstream(separated by "\n")
+          QString fileLine = in.readLine();
+
+          // parse the read line into separate pieces(tokens) with "," as the delimiter
+          QStringList lineToken = fileLine.split(",", QString::SkipEmptyParts);
+
+          // load parsed data to model accordingly
+          for (int j = 0; j < lineToken.size(); j++) {
+              QString value = lineToken.at(j);
+              //QStandardItem *item = new QStandardItem(value);
+              std::cout << value.toStdString() << std::endl;
+              bool verif = m_oscCueList->setData(m_oscCueList->index(lineindex, j), value); // marche pas
+              if (verif)
+                std::cout << "true" << std::endl;
+              else
+                std::cout << "false" << std::endl;
+          }
+
+          lineindex++;
+      }
+
+      file.close();
+  }
 }
