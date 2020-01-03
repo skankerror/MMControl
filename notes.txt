@@ -1,7 +1,11 @@
-Execute go plante s'il n'y a aucune cue
+Execute go plante s'il n'y a aucune cue de sélectionnée
 
-Réussir à lire un .csv
+Réussir à lire un .csv, faire methode dans osccuelist ?
 
 Mettre mymidiin en public dans le mainwindow puis l'envoyer à tabmidi comme arg.
 
 Revoir le canevas graphique du tabmidi
+
+changer les données membre privées en _name
+
+Revoir les constructeurs, notamment m_name...

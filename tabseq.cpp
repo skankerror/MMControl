@@ -130,34 +130,19 @@ void TabSeq::loadFile()
   }
   if (file.open(QIODevice::ReadOnly))
   {
+    // peut-être remove cue existantes ?
+    int lineindex = 0;                     // file line counter
+    QTextStream in(&file);                 // read to text stream
+    while (!in.atEnd())
+    {
 
-      int lineindex = 0;                     // file line counter
-      QTextStream in(&file);                 // read to text stream
-
-      while (!in.atEnd())
-      {
-
-          // read one line from textstream(separated by "\n")
-          QString fileLine = in.readLine();
-
-          // parse the read line into separate pieces(tokens) with "," as the delimiter
-          QStringList lineToken = fileLine.split(",", QString::SkipEmptyParts);
-
-          // load parsed data to model accordingly
-          for (int j = 0; j < lineToken.size(); j++) {
-              QString value = lineToken.at(j);
-              //QStandardItem *item = new QStandardItem(value);
-              std::cout << value.toStdString() << std::endl;
-              bool verif = m_oscCueList->setData(m_oscCueList->index(lineindex, j), value); // marche pas
-              if (verif)
-                std::cout << "true" << std::endl;
-              else
-                std::cout << "false" << std::endl;
-          }
-
-          lineindex++;
-      }
-
-      file.close();
+        // read one line from textstream(separated by "\n")
+        QString fileLine = in.readLine();
+        QStringList lineToken = fileLine.split(",", QString::SkipEmptyParts); // parse the read line into separate pieces(tokens) with "," as the delimiter
+        m_oscCueList->addCue(m_oscCueList->retOscsendFromFileLine(lineToken));
+    }
+    lineindex++;
   }
+
+  file.close();
 }

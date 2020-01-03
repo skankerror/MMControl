@@ -94,7 +94,8 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const
 
 bool OscCueList::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-  switch(index.column()){
+  switch(index.column())
+  {
   case 0: v_listCue.at(index.row())->m_champ = static_cast<champMM>(value.toInt()); break;
   case 1: v_listCue.at(index.row())->m_p_uri = value.toString(); break;
   case 2: v_listCue.at(index.row())->m_p_ID1 = value.toInt(); break;
@@ -107,7 +108,7 @@ bool OscCueList::setData(const QModelIndex &index, const QVariant &value, int ro
   case 9: v_listCue.at(index.row())->m_m_isvisible = value.toBool(); break;
   case 10: v_listCue.at(index.row())->m_m_issolo = value.toBool(); break;
   case 11: v_listCue.at(index.row())->m_m_islocked = value.toBool(); break;
-  case 12: v_listCue.at(index.row())->m_m_depth = value.toBool(); break;
+  case 12: v_listCue.at(index.row())->m_m_depth = value.toBool(); break; // ???
   case 13: v_listCue.at(index.row())->m_time = value.toInt(); break;
   case 14: v_listCue.at(index.row())->m_isfadein = value.toBool(); break;
   case 15: v_listCue.at(index.row())->m_iswaiting = value.toBool(); break;
@@ -152,6 +153,85 @@ QVariant OscCueList::headerData(int section, Qt::Orientation orientation, int ro
 Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const
 {
   return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
+}
+
+OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
+{
+  OscSend *oscsend;
+  int m_champ_int;
+  QString m_p_uri = "";
+  int m_p_ID1 = 0;
+  int m_p_ID2 = 0;
+  int m_p_rate = 0;
+  int m_p_opacity = 0;
+  int m_p_volume = 0;
+  int m_m_ID1 = 0;
+  int m_m_opacity = 0;
+  bool m_m_isvisible = false;
+  bool m_m_issolo = false;
+  bool m_m_islocked = false;
+  bool m_m_depth = false; // ???
+  int m_time = 0;
+  bool m_isfadein = false;
+  bool m_iswaiting = false;
+
+  // load parsed data to model accordingly
+  for (int j = 0; j < lineToken.size(); j++)
+  {
+    QString val = lineToken.at(j);
+    std::cout << val.toStdString() << ", ";
+    QVariant value(val);
+    switch(j)
+    {
+    case 0: m_champ_int = value.toInt(); std::cout << m_champ_int << "bluk"; break;
+    case 1: m_p_uri = value.toString(); break;
+    case 2: m_p_ID1 = value.toInt(); break;
+    case 3: m_p_ID2 = value.toInt(); break;
+    case 4: m_p_rate = value.toInt(); break;
+    case 5: m_p_opacity = value.toInt(); break;
+    case 6: m_p_volume = value.toInt(); break;
+    case 7: m_m_ID1 = value.toInt(); break;
+    case 8: m_m_opacity = value.toInt(); break;
+    case 9: m_m_isvisible = value.toBool(); break;
+    case 10: m_m_issolo = value.toBool(); break;
+    case 11: m_m_islocked = value.toBool(); break;
+    case 12: m_m_depth = value.toBool(); break; // ???
+    case 13: m_time = value.toInt(); break;
+    case 14: m_isfadein = value.toBool(); break;
+    case 15: m_iswaiting = value.toBool(); break;
+    default: break;
+    }
+
+  }
+  champMM m_champ = static_cast<champMM>(m_champ_int);
+  switch(m_champ)
+  {
+  case 0: case 1: case 2: case 3: case 4: oscsend = new OscSend(m_champ); break;
+    // cstr 2
+  case 5: oscsend = new OscSend(m_champ, m_p_ID1, m_p_uri); break;
+  case 12: oscsend = new OscSend(m_champ, m_m_ID1, m_p_uri); break;
+  case 10: oscsend = new OscSend(m_champ, m_p_ID1, m_p_uri); break;
+    // cstr 3
+  case 6: oscsend = new OscSend(m_champ, m_p_ID1, 0); break;
+    // cstr 4
+  case 7: oscsend = new OscSend(m_champ, m_p_ID1, m_p_opacity, 0); break;
+  case 8: oscsend = new OscSend(m_champ, m_p_ID1, m_p_volume, 0); break;
+  case 9: oscsend = new OscSend(m_champ, m_p_ID1, m_p_rate, 0); break;
+  case 13: oscsend = new OscSend(m_champ, m_m_ID1, m_m_opacity, 0); break;
+  case 17: oscsend = new OscSend(m_champ, m_m_ID1, m_m_depth, 0); break;
+  case 18: oscsend = new OscSend(m_champ, m_p_ID1, m_p_ID2, m_time); break;
+    // cstr 5
+  case 11: oscsend = new OscSend(m_champ, m_p_ID1, m_p_uri); break;
+    // cstr 6
+  case 14: oscsend = new OscSend(m_champ, m_m_ID1, m_m_isvisible); break;
+  case 15: oscsend = new OscSend(m_champ, m_m_ID1, m_m_issolo); break;
+  case 16: oscsend = new OscSend(m_champ, m_m_ID1, m_m_islocked); break;
+  case 19: oscsend = new OscSend(m_champ, m_p_ID1, m_isfadein, m_time); break;
+  default: oscsend = new OscSend(m_champ); break;
+  }
+  // renvoyer les oscsend...
+
+  return oscsend;
 }
 
 void OscCueList::addCue(OscSend *oscsend)

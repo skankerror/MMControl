@@ -7,6 +7,8 @@
 #include <QVariant>
 #include "oscsend.h"
 #include <QBrush>
+#include <QTextStream>
+#include <QStringList>
 
 class OscCueList :
     public QAbstractTableModel
@@ -20,6 +22,7 @@ public:
   bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
   QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
   Qt::ItemFlags flags(const QModelIndex &index) const override;
+  OscSend* retOscsendFromFileLine(QStringList &lineToken);
 
   QVector<OscSend *> v_listCue;
 
