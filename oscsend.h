@@ -7,10 +7,10 @@
 #include <QColor>
 #include <iostream>
 #include <unistd.h>
-#include "oscpack/osc/OscOutboundPacketStream.h"
-#include "oscpack/ip/UdpSocket.h"
-#include "oscpack/ip/NetworkingUtils.h"
-#include "oscpack/ip/IpEndpointName.h"
+#include "contrib/oscpack/osc/OscOutboundPacketStream.h"
+#include "contrib/oscpack/ip/UdpSocket.h"
+#include "contrib/oscpack/ip/NetworkingUtils.h"
+#include "contrib/oscpack/ip/IpEndpointName.h"
 
 #define ADDRESS "127.0.0.1" // IP cible
 #define PORT 12345 // Port cible

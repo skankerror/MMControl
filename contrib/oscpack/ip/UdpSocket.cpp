@@ -34,7 +34,7 @@
 	requested that these non-binding requests be included whenever the
 	above license is reproduced.
 */
-#include "oscpack/ip/UdpSocket.h"
+#include "contrib/oscpack/ip/UdpSocket.h"
 
 #include <pthread.h>
 #include <unistd.h>
@@ -57,8 +57,8 @@
 #include <stdexcept>
 #include <vector>
 
-#include "oscpack/ip/PacketListener.h"
-#include "oscpack/ip/TimerListener.h"
+#include "contrib/oscpack/ip/PacketListener.h"
+#include "contrib/oscpack/ip/TimerListener.h"
 
 
 #if defined(__APPLE__) && !defined(_SOCKLEN_T)

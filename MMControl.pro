@@ -6,11 +6,11 @@ LIBS += -L/alsa/ -lasound\
 
 SOURCES += \
     main.cpp \
-    oscpack/osc/OscTypes.cpp \
-    oscpack/osc/OscOutboundPacketStream.cpp \
-    oscpack/ip/UdpSocket.cpp \
-    oscpack/ip/NetworkingUtils.cpp \
-    oscpack/ip/IpEndpointName.cpp \
+    contrib/oscpack/osc/OscTypes.cpp \
+    contrib/oscpack/osc/OscOutboundPacketStream.cpp \
+    contrib/oscpack/ip/UdpSocket.cpp \
+    contrib/oscpack/ip/NetworkingUtils.cpp \
+    contrib/oscpack/ip/IpEndpointName.cpp \
     mainwindow.cpp \
     mymidiin.cpp \
     tabmidi.cpp \
