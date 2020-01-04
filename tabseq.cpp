@@ -109,8 +109,19 @@ void TabSeq::saveAs()
       {
         for (int j = 0; j < columns; j++)
         {
-          textData += m_oscCueList->data(m_oscCueList->index(i,j)).toString();
-          textData += ", ";
+//          if (j == 0)
+//          {
+//            QString champTemp = m_oscCueList->data(m_oscCueList->index(i,j)).toString();
+//            int intTemp = static_cast<champMM>(champTemp.toInt());
+//            std::cout << champTemp.toStdString() << " " << intTemp << std::endl;
+//            textData += intTemp;
+//            textData += ", ";
+//          }
+//          else
+//          {
+            textData += m_oscCueList->data(m_oscCueList->index(i,j)).toString();
+            textData += ", ";
+//          }
         }
         textData += "\n";
       }

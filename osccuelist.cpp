@@ -158,7 +158,8 @@ Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const
 OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
 {
   OscSend *oscsend;
-  int m_champ_int;
+  champMM m_champ;
+  int m_champInt;
   QString m_p_uri = "";
   int m_p_ID1 = 0;
   int m_p_ID2 = 0;
@@ -181,9 +182,35 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
     QString val = lineToken.at(j);
     std::cout << val.toStdString() << ", ";
     QVariant value(val);
+//    int m_champInt;
     switch(j)
     {
-    case 0: m_champ_int = value.toInt(); std::cout << m_champ_int << "bluk"; break;
+//    case 0: m_champ = static_cast<champMM>(value.toInt()); std::cout << m_champ << "bluk"; break;
+    case 0:
+      if (val.toStdString() == "NOOP") m_champInt = NOOP;
+      if (val.toStdString() == "PLAY") m_champInt = PLAY;
+      if (val.toStdString() == "PAUSE") m_champInt = PAUSE;
+      if (val.toStdString() == "REWIND") m_champInt = REWIND;
+      if (val.toStdString() == "QUIT") m_champInt = QUIT;
+      if (val.toStdString() == "P_NAME") m_champInt = P_NAME;
+      if (val.toStdString() == "P_REWIND") m_champInt = P_REWIND;
+      if (val.toStdString() == "P_OPACITY") m_champInt = P_OPACITY;
+      if (val.toStdString() == "P_VOLUME") m_champInt = P_VOLUME;
+      if (val.toStdString() == "P_RATE") m_champInt = P_RATE;
+      if (val.toStdString() == "P_URI") m_champInt = P_URI;
+      if (val.toStdString() == "P_COLOR") m_champInt = P_COLOR;
+      if (val.toStdString() == "M_NAME") m_champInt = M_NAME;
+      if (val.toStdString() == "M_OPACITY") m_champInt = M_OPACITY;
+      if (val.toStdString() == "M_VISIBLE") m_champInt = M_VISIBLE;
+      if (val.toStdString() == "M_SOLO") m_champInt = M_SOLO;
+      if (val.toStdString() == "M_LOCK") m_champInt = M_LOCK;
+      if (val.toStdString() == "M_DEPTH") m_champInt = M_DEPTH;
+      if (val.toStdString() == "P_XFADE") m_champInt = P_XFADE;
+      if (val.toStdString() == "P_FADE") m_champInt = P_FADE;
+      //else m_champInt = NOOP;
+      //int champInt = static_cast<champMM>(m_champ);
+      std::cout << "bluk" << val.toStdString()<< " " << m_champInt << "bluk";
+      break;
     case 1: m_p_uri = value.toString(); break;
     case 2: m_p_ID1 = value.toInt(); break;
     case 3: m_p_ID2 = value.toInt(); break;
@@ -201,10 +228,11 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
     case 15: m_iswaiting = value.toBool(); break;
     default: break;
     }
-
+  m_champ = static_cast<champMM>(m_champInt);
   }
-  champMM m_champ = static_cast<champMM>(m_champ_int);
-  switch(m_champ)
+//  m_champ = static_cast<champMM>(m_champInt);
+  std::cout << m_champ << "bluk2";
+  switch(m_champInt)
   {
   case 0: case 1: case 2: case 3: case 4: oscsend = new OscSend(m_champ); break;
     // cstr 2
