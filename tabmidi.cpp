@@ -137,6 +137,11 @@ TabMidi::TabMidi(QWidget *parent) : QWidget(parent)
 
   this->setLayout(layoutTotal);
 
+  QPalette pal = palette();
+  pal.setColor(QPalette::Background, Qt::lightGray);
+  setAutoFillBackground(true);
+  setPalette(pal);
+
   connect(midiin, SIGNAL(sigMidiCtrlChanged(int, float)), this, SLOT(receiveMidiCtrl(int,float)));
   connect(midiin, SIGNAL(sigMidiNoteChanged(int)), this, SLOT(receiveMidiNote(int)));
   //connections des sliders

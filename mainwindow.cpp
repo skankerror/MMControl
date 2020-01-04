@@ -6,6 +6,12 @@ MainWindow::MainWindow() :
   icon = QIcon(":/graphics/Icon");
   setWindowIcon(icon);
   setWindowTitle("Mapmap Controller");
+  setGeometry(400, 200, 1024, 768);
+  QPalette pal = palette();
+  pal.setColor(QPalette::Background, Qt::lightGray);
+  setAutoFillBackground(true);
+  setPalette(pal);
+
   state = new MMState(this);
   oscCueList = new OscCueList(this);
 
@@ -23,6 +29,7 @@ MainWindow::MainWindow() :
   // Connect pour AddToCue
   connect(addToCuePushButton, SIGNAL(clicked()), SLOT(addToCue()));
   // Manque connects pour p_name et m_name ??
+ // connect(p_nameLineEdit, SIGNAL(modified()), SLOT())
 }
 
 void MainWindow::createCentralWidget()
@@ -35,6 +42,11 @@ void MainWindow::createCentralWidget()
   tabwidget->addTab(tabmidi, "Midi In");
   tabwidget->addTab(tabseq, "Sequencer");
   tabwidget->addTab(tabmmstate, "Mapmap State");
+
+//  QPalette pal = palette();
+//  pal.setColor(QPalette::Background, Qt::lightGray);
+//  setAutoFillBackground(true);
+//  setPalette(pal);
 
   setCentralWidget(tabwidget);
 }
@@ -148,18 +160,18 @@ void MainWindow::createToolBar()
   layout->addWidget(p_volumeLabel);//8 P_VOLUME
   layout->addWidget(p_volumeSpinBox);//8 P_VOLUME
   layout->addWidget(m_nameLineEdit);//12 M_NAME
-  layout->addWidget(m_IDLabel);//12,13,14,15,16,17
-  layout->addWidget(m_IDSpinBox);//12,13,14,15,16,17
-  layout->addWidget(m_opacityLabel);//13
-  layout->addWidget(m_opacitySpinBox);//13
-  layout->addWidget(m_visibleCheckBox);//14
-  layout->addWidget(m_soloCheckBox);//15
-  layout->addWidget(m_lockCheckBox);//16
-  layout->addWidget(m_depthLabel);//17
-  layout->addWidget(m_depthSpinBox);//17
-  layout->addWidget(timeLabel);// sauf 0
-  layout->addWidget(timeSpinBox);// sauf 0
-  layout->addWidget(fadeCheckBox);//19
+  layout->addWidget(m_IDLabel);//12,13,14,15,16,17 M_*
+  layout->addWidget(m_IDSpinBox);//12,13,14,15,16,17 M_*
+  layout->addWidget(m_opacityLabel);//13 M_OPACITY
+  layout->addWidget(m_opacitySpinBox);//13 M_OPACITY
+  layout->addWidget(m_visibleCheckBox);//14 M_VISIBLE
+  layout->addWidget(m_soloCheckBox);//15 M_SOLO
+  layout->addWidget(m_lockCheckBox);//16 M_LOCK
+  layout->addWidget(m_depthLabel);//17 M_DEPTH
+  layout->addWidget(m_depthSpinBox);//17 M_DEPTH
+  layout->addWidget(timeLabel);// TOUS
+  layout->addWidget(timeSpinBox);// TOUS
+  layout->addWidget(fadeCheckBox);//19 P_FADE
   layout->addStretch();
   layout->addWidget(sendPushButton);
   layout->addWidget(addToCuePushButton);
@@ -356,7 +368,7 @@ void MainWindow::sendFromToolBar()
 void MainWindow::setP_UriLabel()
 {
   QString fileName = QFileDialog::getOpenFileName(this, "Choose File",
-                                                  "/home/ray/Boulot",
+                                                  "/home/ray/boulot",
                                                   "Media Files (*.png, *.jpg, *.gif, *.mov, *.avi, *.mp4");
   p_uriLabel->setText(fileName);
 }

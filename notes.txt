@@ -1,15 +1,31 @@
-Execute go plante s'il n'y a aucune cue de sélectionnée
-
 Mettre mymidiin en public dans le mainwindow puis l'envoyer à tabmidi comme arg.
 
 Revoir le canevas graphique du tabmidi
 
 changer les données membre privées en _name
 
-Revoir les constructeurs, notamment m_name...
-
-Il y a des bugs dans les constructeurs de oscsend... notamment avec m_p_uri... à revoir
+Revoir les constructeurs de oscsend, c'est l'bordel !
 
 Commenter le code
 
 Faire un readme
+
+
+
+BUGS
+
+-Execute go plante s'il n'y a aucune cue de sélectionnée
+
+-addtocue ne prend pas p_name dans la cuelist (send marche),
+le go ne l'envoie pas même après un edit
+
+-dans la toolbar opacity ne va que jusqu'à 99
+
+-vérifier rate qui ne va pas à 0 ni dans les négatifs...
+
+-m_name ne marche ni pour send, n'envoie pas de string à cuelist
+et le go ne l'envoie pas même après édit
+
+-m_lock est bizarre, il ne se met pas à jour tout seul et le unlock ne marche pas
+bug mapmap ?
+

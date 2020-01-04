@@ -27,12 +27,23 @@ TabSeq::TabSeq(OscCueList *oscCueList) :
   boutonLayout->addWidget(boutonLoad);
   tableView = new QTableView();
   tableView->setModel(oscCueList);
+
+  QPalette pal = palette();
+  pal.setColor(QPalette::Background, Qt::lightGray);
+  tableView->setAutoFillBackground(true);
+  tableView->setPalette(pal);
+
   tableView->show();
   tableView->resizeColumnsToContents();
   layout1->addWidget(tableView);
   layoutMain->addLayout(boutonLayout);
   layoutMain->addLayout(layout1);
   this->setLayout(layoutMain);
+
+//  QPalette pal = palette();
+//  pal.setColor(QPalette::Background, Qt::lightGray);
+  setAutoFillBackground(true);
+  setPalette(pal);
 
   connect(boutonGo, SIGNAL(clicked(bool)), SLOT(executeGo()));
   connect(boutonPrev, SIGNAL(clicked(bool)), SLOT(movePrevious()));

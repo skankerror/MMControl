@@ -30,6 +30,8 @@ public slots:
   void sendFromToolBar();
   void setP_UriLabel();
   void setP_ColorLabel();
+ // void setP_Name();
+ // void setM_Name();
   void addToCue();
 
 private:
