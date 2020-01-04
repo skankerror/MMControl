@@ -32,3 +32,6 @@ HEADERS += \
 
 DISTFILES += \
     notes.txt
+
+RESOURCES += \
+  resources/resources.qrc

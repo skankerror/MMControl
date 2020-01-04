@@ -2,6 +2,7 @@
 #include <QTranslator>
 #include <QLocale>
 #include <QLibraryInfo>
+//#include <QPixmap>
 #include "mainwindow.h"
 
 int main(int argc, char **argv)
@@ -13,7 +14,9 @@ int main(int argc, char **argv)
                   QLibraryInfo::location(QLibraryInfo::TranslationsPath));
   app.installTranslator(&translator);
 
+//  QIcon icon("/:graphics/Icon");
   MainWindow win;
+//  win.setWindowIcon(icon);
   win.show();
 
   return app.exec();
