@@ -1,5 +1,3 @@
-Revoir le canevas graphique du tabmidi
-
 changer les données membre privées en _name
 
 Revoir les constructeurs de oscsend, c'est l'bordel !

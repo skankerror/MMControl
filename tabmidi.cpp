@@ -534,5 +534,3 @@ void TabMidi::sendOscAPCB61(){ /*Paint uri 6 */  }
 void TabMidi::sendOscAPCB62(){ /*Paint uri 7 */  }
 void TabMidi::sendOscAPCB63(){ /*Paint uri 8 */  }
 void TabMidi::sendOscAPCB82(){ /*Paint uri 9 */  }
-
-
