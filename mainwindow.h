@@ -22,6 +22,7 @@ public:
 
   OscCueList *oscCueList;
   MMState *state;
+  MyMidiIn *midiIn;
 
 signals:
 

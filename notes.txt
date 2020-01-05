@@ -1,5 +1,3 @@
-Mettre mymidiin en public dans le mainwindow puis l'envoyer à tabmidi comme arg.
-
 Revoir le canevas graphique du tabmidi
 
 changer les données membre privées en _name
@@ -9,6 +7,8 @@ Revoir les constructeurs de oscsend, c'est l'bordel !
 Commenter le code
 
 Faire un readme
+
+Pouvoir insérer une cue après le dernier sélectionné
 
 
 

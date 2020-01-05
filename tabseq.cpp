@@ -29,7 +29,7 @@ TabSeq::TabSeq(OscCueList *oscCueList) :
   tableView->setModel(oscCueList);
 
   QPalette pal = palette();
-  pal.setColor(QPalette::Background, Qt::lightGray);
+  pal.setColor(QPalette::Background, Qt::gray);
   tableView->setAutoFillBackground(true);
   tableView->setPalette(pal);
 
@@ -41,7 +41,7 @@ TabSeq::TabSeq(OscCueList *oscCueList) :
   this->setLayout(layoutMain);
 
 //  QPalette pal = palette();
-//  pal.setColor(QPalette::Background, Qt::lightGray);
+//  pal.setColor(QPalette::Background, Qt::gray);
   setAutoFillBackground(true);
   setPalette(pal);
 

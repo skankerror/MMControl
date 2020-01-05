@@ -8,12 +8,13 @@ MainWindow::MainWindow() :
   setWindowTitle("Mapmap Controller");
   setGeometry(400, 200, 1024, 768);
   QPalette pal = palette();
-  pal.setColor(QPalette::Background, Qt::lightGray);
+  pal.setColor(QPalette::Background, Qt::gray);
   setAutoFillBackground(true);
   setPalette(pal);
 
   state = new MMState(this);
   oscCueList = new OscCueList(this);
+  midiIn = new MyMidiIn;
 
   createToolBar();
   createCentralWidget();
@@ -34,7 +35,7 @@ MainWindow::MainWindow() :
 
 void MainWindow::createCentralWidget()
 {
-  tabmidi = new TabMidi;
+  tabmidi = new TabMidi(midiIn);
   tabseq = new TabSeq(oscCueList);
   tabmmstate = new TabMMState(state);
   tabwidget = new QTabWidget;
@@ -43,10 +44,10 @@ void MainWindow::createCentralWidget()
   tabwidget->addTab(tabseq, "Sequencer");
   tabwidget->addTab(tabmmstate, "Mapmap State");
 
-//  QPalette pal = palette();
-//  pal.setColor(QPalette::Background, Qt::lightGray);
-//  setAutoFillBackground(true);
-//  setPalette(pal);
+  QPalette pal = palette();
+  pal.setColor(QPalette::Background, Qt::lightGray);
+  tabwidget->setAutoFillBackground(true);
+  tabwidget->setPalette(pal);
 
   setCentralWidget(tabwidget);
 }

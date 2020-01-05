@@ -1,12 +1,14 @@
 #include "tabmidi.h"
 
-TabMidi::TabMidi(QWidget *parent) : QWidget(parent)
+TabMidi::TabMidi(MyMidiIn *midiIn, QWidget *parent) :
+  QWidget(parent),
+    m_midiIn(midiIn)
 {
-  MyMidiIn *midiin = new MyMidiIn;
+  //MyMidiIn *midiin = new MyMidiIn;
   oscSendS = new OscSend(P_OPACITY, 1, 0, 0);
   oscSendB = new OscSend(M_VISIBLE, 1, true);
-  layoutTotal = new QHBoxLayout;
-  headerLayout = new QVBoxLayout;
+  layoutTotal = new QGridLayout;
+//  headerLayout = new QVBoxLayout;
   labelb9 = new QLabel("noop");
   labelb8 = new QLabel("noop");
   labelb7 = new QLabel("noop");
@@ -19,131 +21,141 @@ TabMidi::TabMidi(QWidget *parent) : QWidget(parent)
   labelS = new QLabel("paint_opacity");
   labelPid = new QLabel("paint id");
   labelMid = new QLabel("mesh id");
-  headerLayout->addWidget(labelb9); headerLayout->addWidget(labelb8);
-  headerLayout->addWidget(labelb7); headerLayout->addWidget(labelb6);
-  headerLayout->addWidget(labelb5); headerLayout->addWidget(labelb4);
-  headerLayout->addWidget(labelb3); headerLayout->addWidget(labelb2);
-  headerLayout->addWidget(labelb1); headerLayout->addWidget(labelS);
-  headerLayout->addWidget(labelPid); headerLayout->addWidget(labelMid);
-  bLayout1 = new QVBoxLayout;
+  layoutTotal->addWidget(labelb9, 0, 0); layoutTotal->addWidget(labelb8, 1, 0);
+  layoutTotal->addWidget(labelb7, 2, 0); layoutTotal->addWidget(labelb6, 3, 0);
+  layoutTotal->addWidget(labelb5, 4, 0); layoutTotal->addWidget(labelb4, 5, 0);
+  layoutTotal->addWidget(labelb3, 6, 0); layoutTotal->addWidget(labelb2, 7, 0);
+  layoutTotal->addWidget(labelb1, 8, 0); layoutTotal->addWidget(labelS, 9, 0);
+  layoutTotal->addWidget(labelPid, 10, 0); layoutTotal->addWidget(labelMid, 11, 0);
+
   B64 = new QPushButton; B0 = new QPushButton; B8 = new QPushButton;
   B16 = new QPushButton; B24 = new QPushButton; B32 = new QPushButton;
   B40 = new QPushButton; B48 = new QPushButton; B56 = new QPushButton;
   S1 = new QSlider(Qt::Vertical);
   pID1 = new QSpinBox; pID1->setValue(1); mID1 = new QSpinBox; mID1->setValue(1);
-  bLayout1->addWidget(B56); bLayout1->addWidget(B48); bLayout1->addWidget(B40);
-  bLayout1->addWidget(B32); bLayout1->addWidget(B24); bLayout1->addWidget(B16);
-  bLayout1->addWidget(B8); bLayout1->addWidget(B0); bLayout1->addWidget(B64);
-  bLayout1->addWidget(S1); bLayout1->addWidget(pID1);bLayout1->addWidget(mID1);
+  layoutTotal->addWidget(B56, 0, 1); layoutTotal->addWidget(B48, 1, 1);
+  layoutTotal->addWidget(B40, 2, 1); layoutTotal->addWidget(B32, 3, 1);
+  layoutTotal->addWidget(B24, 4, 1); layoutTotal->addWidget(B16, 5, 1);
+  layoutTotal->addWidget(B8, 6, 1); layoutTotal->addWidget(B0, 7, 1);
+  layoutTotal->addWidget(B64, 8, 1); layoutTotal->addWidget(S1, 9, 1);
+  layoutTotal->addWidget(pID1, 10, 1); layoutTotal->addWidget(mID1, 11, 1);
 
-  bLayout2 = new QVBoxLayout;
   B65 = new QPushButton; B1 = new QPushButton; B9 = new QPushButton;
   B17 = new QPushButton; B25 = new QPushButton; B33 = new QPushButton;
   B41 = new QPushButton; B49 = new QPushButton; B57 = new QPushButton;
   S2 = new QSlider(Qt::Vertical);
   pID2 = new QSpinBox; pID2->setValue(2); mID2 = new QSpinBox; mID2->setValue(2);
-  bLayout2->addWidget(B57); bLayout2->addWidget(B49); bLayout2->addWidget(B41);
-  bLayout2->addWidget(B33); bLayout2->addWidget(B25); bLayout2->addWidget(B17);
-  bLayout2->addWidget(B9); bLayout2->addWidget(B1); bLayout2->addWidget(B65);
-  bLayout2->addWidget(S2); bLayout2->addWidget(pID2);bLayout2->addWidget(mID2);
+  layoutTotal->addWidget(B57, 0, 2); layoutTotal->addWidget(B49, 1, 2);
+  layoutTotal->addWidget(B41, 2, 2); layoutTotal->addWidget(B33, 3, 2);
+  layoutTotal->addWidget(B25, 4, 2); layoutTotal->addWidget(B17, 5, 2);
+  layoutTotal->addWidget(B9, 6, 2); layoutTotal->addWidget(B1, 7, 2);
+  layoutTotal->addWidget(B65, 8, 2); layoutTotal->addWidget(S2, 9, 2);
+  layoutTotal->addWidget(pID2, 10, 2); layoutTotal->addWidget(mID2, 11, 2);
 
-  bLayout3 = new QVBoxLayout;
   B66 = new QPushButton; B2 = new QPushButton; B10 = new QPushButton;
   B18 = new QPushButton; B26 = new QPushButton; B34 = new QPushButton;
   B42 = new QPushButton; B50 = new QPushButton; B58 = new QPushButton;
   S3 = new QSlider(Qt::Vertical);
   pID3 = new QSpinBox; pID3->setValue(3); mID3 = new QSpinBox; mID3->setValue(3);
-  bLayout3->addWidget(B58); bLayout3->addWidget(B50); bLayout3->addWidget(B42);
-  bLayout3->addWidget(B34); bLayout3->addWidget(B26); bLayout3->addWidget(B18);
-  bLayout3->addWidget(B10); bLayout3->addWidget(B2); bLayout3->addWidget(B66);
-  bLayout3->addWidget(S3); bLayout3->addWidget(pID3);bLayout3->addWidget(mID3);
+  layoutTotal->addWidget(B58, 0, 3); layoutTotal->addWidget(B50, 1, 3);
+  layoutTotal->addWidget(B42, 2, 3); layoutTotal->addWidget(B34, 3, 3);
+  layoutTotal->addWidget(B26, 4, 3); layoutTotal->addWidget(B18, 5, 3);
+  layoutTotal->addWidget(B10, 6, 3); layoutTotal->addWidget(B2, 7, 3);
+  layoutTotal->addWidget(B66, 8, 3); layoutTotal->addWidget(S3, 9, 3);
+  layoutTotal->addWidget(pID3, 10, 3); layoutTotal->addWidget(mID3, 11, 3);
 
-  bLayout4 = new QVBoxLayout;
   B67 = new QPushButton; B3 = new QPushButton; B11 = new QPushButton;
   B19 = new QPushButton; B27 = new QPushButton; B35 = new QPushButton;
   B43 = new QPushButton; B51 = new QPushButton; B59 = new QPushButton;
   S4 = new QSlider(Qt::Vertical);
   pID4 = new QSpinBox; pID4->setValue(4); mID4 = new QSpinBox; mID4->setValue(4);
-  bLayout4->addWidget(B59); bLayout4->addWidget(B51); bLayout4->addWidget(B43);
-  bLayout4->addWidget(B35); bLayout4->addWidget(B27); bLayout4->addWidget(B19);
-  bLayout4->addWidget(B11); bLayout4->addWidget(B3); bLayout4->addWidget(B67);
-  bLayout4->addWidget(S4); bLayout4->addWidget(pID4);bLayout4->addWidget(mID4);
+  layoutTotal->addWidget(B59, 0, 4); layoutTotal->addWidget(B51, 1, 4);
+  layoutTotal->addWidget(B43, 2, 4); layoutTotal->addWidget(B35, 3, 4);
+  layoutTotal->addWidget(B27, 4, 4); layoutTotal->addWidget(B19, 5, 4);
+  layoutTotal->addWidget(B11, 6, 4); layoutTotal->addWidget(B3, 7, 4);
+  layoutTotal->addWidget(B67, 8, 4); layoutTotal->addWidget(S4, 9, 4);
+  layoutTotal->addWidget(pID4, 10, 4); layoutTotal->addWidget(mID4, 11, 4);
 
-  bLayout5 = new QVBoxLayout;
   B68 = new QPushButton; B4 = new QPushButton; B12 = new QPushButton;
   B20 = new QPushButton; B28 = new QPushButton; B36 = new QPushButton;
   B44 = new QPushButton; B52 = new QPushButton; B60 = new QPushButton;
   S5 = new QSlider(Qt::Vertical);
   pID5 = new QSpinBox; pID5->setValue(5); mID5 = new QSpinBox; mID5->setValue(5);
-  bLayout5->addWidget(B60); bLayout5->addWidget(B52); bLayout5->addWidget(B44);
-  bLayout5->addWidget(B36); bLayout5->addWidget(B28); bLayout5->addWidget(B20);
-  bLayout5->addWidget(B12); bLayout5->addWidget(B4); bLayout5->addWidget(B68);
-  bLayout5->addWidget(S5); bLayout5->addWidget(pID5);bLayout5->addWidget(mID5);
+  layoutTotal->addWidget(B60, 0, 5); layoutTotal->addWidget(B52, 1, 5);
+  layoutTotal->addWidget(B44, 2, 5); layoutTotal->addWidget(B36, 3, 5);
+  layoutTotal->addWidget(B28, 4, 5); layoutTotal->addWidget(B20, 5, 5);
+  layoutTotal->addWidget(B12, 6, 5); layoutTotal->addWidget(B4, 7, 5);
+  layoutTotal->addWidget(B68, 8, 5); layoutTotal->addWidget(S5, 9, 5);
+  layoutTotal->addWidget(pID5, 10, 5); layoutTotal->addWidget(mID5, 11, 5);
 
-  bLayout6 = new QVBoxLayout;
   B69 = new QPushButton; B5 = new QPushButton; B13 = new QPushButton;
   B21 = new QPushButton; B29 = new QPushButton; B37 = new QPushButton;
   B45 = new QPushButton; B53 = new QPushButton; B61 = new QPushButton;
   S6 = new QSlider(Qt::Vertical);
   pID6 = new QSpinBox; pID6->setValue(6); mID6 = new QSpinBox; mID6->setValue(6);
-  bLayout6->addWidget(B61); bLayout6->addWidget(B53); bLayout6->addWidget(B45);
-  bLayout6->addWidget(B37); bLayout6->addWidget(B29); bLayout6->addWidget(B21);
-  bLayout6->addWidget(B13); bLayout6->addWidget(B5); bLayout6->addWidget(B69);
-  bLayout6->addWidget(S6); bLayout6->addWidget(pID6);bLayout6->addWidget(mID6);
+  layoutTotal->addWidget(B61, 0, 6); layoutTotal->addWidget(B53, 1, 6);
+  layoutTotal->addWidget(B45, 2, 6); layoutTotal->addWidget(B37, 3, 6);
+  layoutTotal->addWidget(B29, 4, 6); layoutTotal->addWidget(B21, 5, 6);
+  layoutTotal->addWidget(B13, 6, 6); layoutTotal->addWidget(B5, 7, 6);
+  layoutTotal->addWidget(B69, 8, 6); layoutTotal->addWidget(S6, 9, 6);
+  layoutTotal->addWidget(pID6, 10, 6); layoutTotal->addWidget(mID6, 11, 6);
 
-  bLayout7 = new QVBoxLayout;
   B70 = new QPushButton; B6 = new QPushButton; B14 = new QPushButton;
   B22 = new QPushButton; B30 = new QPushButton; B38 = new QPushButton;
   B46 = new QPushButton; B54 = new QPushButton; B62 = new QPushButton;
   S7 = new QSlider(Qt::Vertical);
   pID7 = new QSpinBox; pID7->setValue(7); mID7 = new QSpinBox; mID7->setValue(7);
-  bLayout7->addWidget(B62); bLayout7->addWidget(B54); bLayout7->addWidget(B46);
-  bLayout7->addWidget(B38); bLayout7->addWidget(B30); bLayout7->addWidget(B22);
-  bLayout7->addWidget(B14); bLayout7->addWidget(B6); bLayout7->addWidget(B70);
-  bLayout7->addWidget(S7); bLayout7->addWidget(pID7);bLayout7->addWidget(mID7);
+  layoutTotal->addWidget(B62, 0, 7); layoutTotal->addWidget(B54, 1, 7);
+  layoutTotal->addWidget(B46, 2, 7); layoutTotal->addWidget(B38, 3, 7);
+  layoutTotal->addWidget(B30, 4, 7); layoutTotal->addWidget(B22, 5, 7);
+  layoutTotal->addWidget(B14, 6, 7); layoutTotal->addWidget(B6, 7, 7);
+  layoutTotal->addWidget(B70, 8, 7); layoutTotal->addWidget(S7, 9, 7);
+  layoutTotal->addWidget(pID7, 10, 7); layoutTotal->addWidget(mID7, 11, 7);
 
-  bLayout8 = new QVBoxLayout;
   B71 = new QPushButton; B7 = new QPushButton; B15 = new QPushButton;
   B23 = new QPushButton; B31 = new QPushButton; B39 = new QPushButton;
   B47 = new QPushButton; B55 = new QPushButton; B63 = new QPushButton;
   S8 = new QSlider(Qt::Vertical);
   pID8 = new QSpinBox; pID8->setValue(8); mID8 = new QSpinBox; mID8->setValue(8);
-  bLayout8->addWidget(B63); bLayout8->addWidget(B55); bLayout8->addWidget(B47);
-  bLayout8->addWidget(B39); bLayout8->addWidget(B31); bLayout8->addWidget(B23);
-  bLayout8->addWidget(B18); bLayout8->addWidget(B7); bLayout8->addWidget(B71);
-  bLayout8->addWidget(S8); bLayout8->addWidget(pID8);bLayout8->addWidget(mID8);
+  layoutTotal->addWidget(B63, 0, 8); layoutTotal->addWidget(B55, 1, 8);
+  layoutTotal->addWidget(B47, 2, 8); layoutTotal->addWidget(B39, 3, 8);
+  layoutTotal->addWidget(B31, 4, 8); layoutTotal->addWidget(B23, 5, 8);
+  layoutTotal->addWidget(B15, 6, 8); layoutTotal->addWidget(B7, 7, 8);
+  layoutTotal->addWidget(B71, 8, 8); layoutTotal->addWidget(S8, 9, 8);
+  layoutTotal->addWidget(pID8, 10, 8); layoutTotal->addWidget(mID8, 11, 8);
 
-  bLayout9 = new QVBoxLayout;
   B98 = new QPushButton; B89 = new QPushButton; B88 = new QPushButton;
   B87 = new QPushButton; B86 = new QPushButton; B85 = new QPushButton;
   B84 = new QPushButton; B83 = new QPushButton; B82 = new QPushButton;
   S9 = new QSlider(Qt::Vertical);
   pID9 = new QSpinBox; pID9->setValue(9); mID9 = new QSpinBox; mID9->setValue(9);
-  bLayout9->addWidget(B82); bLayout9->addWidget(B83); bLayout9->addWidget(B84);
-  bLayout9->addWidget(B85); bLayout9->addWidget(B86); bLayout9->addWidget(B87);
-  bLayout9->addWidget(B88); bLayout9->addWidget(B89); bLayout9->addWidget(B98);
-  bLayout9->addWidget(S9); bLayout9->addWidget(pID9);bLayout9->addWidget(mID9);
+  layoutTotal->addWidget(B82, 0, 9); layoutTotal->addWidget(B83, 1, 9);
+  layoutTotal->addWidget(B84, 2, 9); layoutTotal->addWidget(B85, 3, 9);
+  layoutTotal->addWidget(B86, 4, 9); layoutTotal->addWidget(B87, 5, 9);
+  layoutTotal->addWidget(B88, 6, 9); layoutTotal->addWidget(B89, 7, 9);
+  layoutTotal->addWidget(B98, 8, 9); layoutTotal->addWidget(S9, 9, 9);
+  layoutTotal->addWidget(pID9, 10, 9); layoutTotal->addWidget(mID9, 11, 9);
 
-  layoutTotal->addLayout(headerLayout);
-  layoutTotal->addLayout(bLayout1);
-  layoutTotal->addLayout(bLayout2);
-  layoutTotal->addLayout(bLayout3);
-  layoutTotal->addLayout(bLayout4);
-  layoutTotal->addLayout(bLayout5);
-  layoutTotal->addLayout(bLayout6);
-  layoutTotal->addLayout(bLayout7);
-  layoutTotal->addLayout(bLayout8);
-  layoutTotal->addLayout(bLayout9);
+  // align sliders
+  layoutTotal->setAlignment(S1, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S2, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S3, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S4, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S5, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S6, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S7, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S8, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S9, Qt::AlignHCenter);
 
   this->setLayout(layoutTotal);
 
   QPalette pal = palette();
-  pal.setColor(QPalette::Background, Qt::lightGray);
+  pal.setColor(QPalette::Background, Qt::gray);
   setAutoFillBackground(true);
   setPalette(pal);
 
-  connect(midiin, SIGNAL(sigMidiCtrlChanged(int, float)), this, SLOT(receiveMidiCtrl(int,float)));
-  connect(midiin, SIGNAL(sigMidiNoteChanged(int)), this, SLOT(receiveMidiNote(int)));
+  connect(m_midiIn, SIGNAL(sigMidiCtrlChanged(int, float)), this, SLOT(receiveMidiCtrl(int,float)));
+  connect(m_midiIn, SIGNAL(sigMidiNoteChanged(int)), this, SLOT(receiveMidiNote(int)));
   //connections des sliders
   {connect(this->S1, SIGNAL(valueChanged(int)), this, SLOT(sendOscS1(int)));
     connect(this->S2, SIGNAL(valueChanged(int)), this, SLOT(sendOscS2(int)));
