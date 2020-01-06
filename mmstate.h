@@ -36,7 +36,7 @@ public slots:
 private:
   QVector<QString *> v_uri;
   QVector<int > v_rate;
-  QVector <int> v_p_opacity;
+  QVector<int> v_p_opacity;
   QVector<int> v_m_opacity;
   QVector<bool> v_isSolo;
   QVector<bool> v_isVisible;
