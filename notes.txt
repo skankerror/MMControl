@@ -8,6 +8,7 @@ Faire un readme
 
 Pouvoir insérer une cue après le dernier sélectionné
 
+Ajouter 2ème APC Mini et rajoutter assignations des boutons
 
 
 BUGS
@@ -27,3 +28,6 @@ et le go ne l'envoie pas même après édit
 -m_lock est bizarre, il ne se met pas à jour tout seul et le unlock ne marche pas
 bug mapmap ?
 
+-p_color n'apparait pas dans table view mais marche
+
+-dans tab midi visible inversé...

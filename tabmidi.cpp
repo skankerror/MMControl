@@ -1,26 +1,35 @@
+/*
+ * (c) 2020 Michaël Creusy -- creusy(.)michael(@)gmail(.)com
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "tabmidi.h"
 
 TabMidi::TabMidi(MyMidiIn *midiIn, QWidget *parent) :
   QWidget(parent),
     m_midiIn(midiIn)
 {
-  //MyMidiIn *midiin = new MyMidiIn;
   oscSendS = new OscSend(P_OPACITY, 1, 0, 0);
   oscSendB = new OscSend(M_VISIBLE, 1, true);
+
   layoutTotal = new QGridLayout;
-//  headerLayout = new QVBoxLayout;
-  labelb9 = new QLabel("noop");
-  labelb8 = new QLabel("noop");
-  labelb7 = new QLabel("noop");
-  labelb6 = new QLabel("noop");
-  labelb5 = new QLabel("noop");
-  labelb4 = new QLabel("noop");
-  labelb3 = new QLabel("noop");
-  labelb2 = new QLabel("Mesh Not Visible");
-  labelb1 = new QLabel("Mesh Visible");
-  labelS = new QLabel("paint_opacity");
-  labelPid = new QLabel("paint id");
-  labelMid = new QLabel("mesh id");
+
+  labelb9 = new QLabel("noop"); labelb8 = new QLabel("noop"); labelb7 = new QLabel("noop");
+  labelb6 = new QLabel("noop"); labelb5 = new QLabel("noop"); labelb4 = new QLabel("noop");
+  labelb3 = new QLabel("noop"); labelb2 = new QLabel("Mesh Not Visible"); labelb1 = new QLabel("Mesh Visible");
+  labelS = new QLabel("paint_opacity"); labelPid = new QLabel("paint id"); labelMid = new QLabel("mesh id");
   layoutTotal->addWidget(labelb9, 0, 0); layoutTotal->addWidget(labelb8, 1, 0);
   layoutTotal->addWidget(labelb7, 2, 0); layoutTotal->addWidget(labelb6, 3, 0);
   layoutTotal->addWidget(labelb5, 4, 0); layoutTotal->addWidget(labelb4, 5, 0);

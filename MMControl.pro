@@ -31,6 +31,8 @@ HEADERS += \
     tabmmstate.h
 
 DISTFILES += \
+    LICENSE.md \
+    README.md \
     notes.txt
 
 RESOURCES += \

@@ -1,3 +1,20 @@
+/*
+ * (c) 2020 Michaël Creusy -- creusy(.)michael(@)gmail(.)com
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #ifndef TABMIDI_H
 #define TABMIDI_H
 
@@ -55,31 +72,26 @@ public slots:
 
 
 private:
-  OscSend *oscSendS;
-  OscSend *oscSendB;
+  OscSend *oscSendS; // Pour les sliders
+  OscSend *oscSendB; // Pour les Boutons
   MyMidiIn *m_midiIn;
+  // Faire un autre pour là 2ème apcmini
+
   QGridLayout *layoutTotal;
+
+  // Sliders et spinboxs, 3 dernières lignes
   QSlider *S1; QSlider *S2; QSlider *S3; QSlider *S4; QSlider *S5; QSlider *S6; QSlider *S7; QSlider *S8; QSlider *S9;
   QSpinBox *pID1; QSpinBox *pID2; QSpinBox *pID3; QSpinBox *pID4; QSpinBox *pID5; QSpinBox *pID6; QSpinBox *pID7; QSpinBox *pID8; QSpinBox *pID9;
   QSpinBox *mID1; QSpinBox *mID2; QSpinBox *mID3; QSpinBox *mID4; QSpinBox *mID5; QSpinBox *mID6; QSpinBox *mID7; QSpinBox *mID8; QSpinBox *mID9;
 
-  QLabel *labelb9;
-  QLabel *labelb8;
-  QLabel *labelb7;
-  QLabel *labelb6;
-  QLabel *labelb5;
-  QLabel *labelb4;
-  QLabel *labelb3;
-  QLabel *labelb2;
-  QLabel *labelb1;
-  QLabel *labelS;
-  QLabel *labelPid;
-  QLabel *labelMid;
+  // Labels 1ère colonne
+  QLabel *labelb9; QLabel *labelb8; QLabel *labelb7; QLabel *labelb6; QLabel *labelb5; QLabel *labelb4; QLabel *labelb3; QLabel *labelb2; QLabel *labelb1;
+  QLabel *labelS; QLabel *labelPid; QLabel *labelMid;
 
+  // Boutons
   QPushButton *B64; QPushButton *B0; QPushButton *B8; QPushButton *B16; QPushButton *B24; QPushButton *B32; QPushButton *B40; QPushButton *B48; QPushButton *B56;
   QPushButton *B65; QPushButton *B1; QPushButton *B9; QPushButton *B17; QPushButton *B25; QPushButton *B33; QPushButton *B41; QPushButton *B49; QPushButton *B57;
-  QPushButton *B66;
-  QPushButton *B2; QPushButton *B10; QPushButton *B18; QPushButton *B26; QPushButton *B34; QPushButton *B42; QPushButton *B50; QPushButton *B58;
+  QPushButton *B66; QPushButton *B2; QPushButton *B10; QPushButton *B18; QPushButton *B26; QPushButton *B34; QPushButton *B42; QPushButton *B50; QPushButton *B58;
   QPushButton *B67; QPushButton *B3; QPushButton *B11; QPushButton *B19; QPushButton *B27; QPushButton *B35; QPushButton *B43; QPushButton *B51; QPushButton *B59;
   QPushButton *B68; QPushButton *B4; QPushButton *B12; QPushButton *B20; QPushButton *B28; QPushButton *B36; QPushButton *B44; QPushButton *B52; QPushButton *B60;
   QPushButton *B69; QPushButton *B5; QPushButton *B13; QPushButton *B21; QPushButton *B29; QPushButton *B37; QPushButton *B45; QPushButton *B53; QPushButton *B61;
