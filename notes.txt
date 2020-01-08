@@ -8,7 +8,8 @@ Faire un readme
 
 Pouvoir insérer une cue après le dernier sélectionné
 
-rajoutter assignations des boutons et revoir la façon dont on ouvre les ports:
+rajoutter assignations des boutons
+revoir la façon dont on ouvre les ports:
 https://github.com/thestk/rtmidi/blob/master/tests/cmidiin.cpp
 Faire 2 midiout pour alllumer les boutons. Voir doc apcmini
 

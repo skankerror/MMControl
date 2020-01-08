@@ -95,7 +95,7 @@ void MyMidiIn::sendMidiToOsc(double deltatime,
   if ((int)unMessage->at(0) == control)
   {
     std::cout << "#0 : controller : ";
-    int m_ID = (int)unMessage->at(1) - 47;
+    int m_ID = (int)unMessage->at(1) - 47; // -47 car les sliders apc mini commencent leur ID à 48
     std::cout << "paintID : " << m_ID;
     int m_temp  = (int)unMessage->at(2);
     float m_varFloat = (float)m_temp;
