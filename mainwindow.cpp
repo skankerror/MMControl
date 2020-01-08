@@ -22,8 +22,8 @@ MainWindow::MainWindow() :
 {
   icon = QIcon(":/graphics/Icon");
   setWindowIcon(icon);
-  setWindowTitle("Mapmap Controller");
-  setGeometry(200, 200, 1424, 768);
+  setWindowTitle(WINDOW_TITLE);
+  setGeometry(X_WINDOW_OFFSET, Y_WINDOW_OFFSET, WINDOW_WIDTH, WINDOW_HEIGHT);
   QPalette pal = palette();
   pal.setColor(QPalette::Background, Qt::gray);
   setAutoFillBackground(true);

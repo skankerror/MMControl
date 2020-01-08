@@ -21,6 +21,7 @@ SOURCES += \
     tabmmstate.cpp
 
 HEADERS += \
+    MMC.h \
     mainwindow.h \
     mymidiin.h \
     tabmidi.h \

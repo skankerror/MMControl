@@ -38,32 +38,32 @@ MyMidiIn::MyMidiIn(int id, Api api, const std::string &clientName,
   case 1:
       for (int i = 0; i<nPorts; i++)
       {
-        if (RtMidiIn::getPortName(i) == apcmini)
+        if (RtMidiIn::getPortName(i) == APCMINI_1)
         {
-          RtMidiIn::openPort(i, myPortName);  // On ouvre le port de l'APCMini
+          RtMidiIn::openPort(i, MYPORTNAME_1);  // On ouvre le port de l'APCMini
           std::cout << "Succés sur le port #" << i << std::endl;
           break;
         }
         else
         {
           std::cout << " Pas le bon nom : le nom système : " << RtMidiIn::getPortName(i)
-                    << "\nLe nom programme : " << apcmini  << std::endl;
+                    << "\nLe nom programme : " << APCMINI_1  << std::endl;
         }
       }
     break;
   case 2:
     for (int i = 0; i<nPorts; i++)
     {
-      if (RtMidiIn::getPortName(i) == apcmini2)
+      if (RtMidiIn::getPortName(i) == APCMINI_2)
       {
-        RtMidiIn::openPort(i, myPortName2);  // On ouvre le port de l'APCMini2
+        RtMidiIn::openPort(i, MYPORTNAME_2);  // On ouvre le port de l'APCMini2
         std::cout << "Succés sur le port #" << i << std::endl;
         break;
       }
       else
       {
         std::cout << " Pas le bon nom : le nom système : " << RtMidiIn::getPortName(i)
-                  << "\nLe nom programme : " << apcmini2  << std::endl;
+                  << "\nLe nom programme : " << APCMINI_2  << std::endl;
       }
     }
   break;
@@ -92,7 +92,7 @@ void MyMidiIn::sendMidiToOsc(double deltatime,
   // On caste le void* pour pouvoir le déréférencer.
   MyMidiIn *unMidiIn = static_cast<MyMidiIn*>(userData);
 
-  if ((int)unMessage->at(0) == control)
+  if ((int)unMessage->at(0) == MIDI_CONTROL)
   {
     std::cout << "#0 : controller : ";
     int m_ID = (int)unMessage->at(1) - 47; // -47 car les sliders apc mini commencent leur ID à 48
@@ -105,7 +105,7 @@ void MyMidiIn::sendMidiToOsc(double deltatime,
     // Maintenant on y accède pour lancer le signal à *parent
     unMidiIn->midiControlChanged(m_ID, m_varFloat);
   }
-  else if ((int)unMessage->at(0) == buttonPressed)
+  else if ((int)unMessage->at(0) == MIDI_BUTTON_PRESSED)
   {
     std::cout << "Button " << (int)unMessage->at(1) << " pressed \n";
     unMidiIn->midiNoteChanged((int)unMessage->at(1));

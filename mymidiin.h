@@ -22,18 +22,7 @@
 #include <rtmidi/RtMidi.h>
 #include <iostream>
 #include <QString>
-
-// define API for RtMidi
-#define __LINUX_ALSA__
-
-const std::string apcmini = "APC MINI:APC MINI MIDI 1 24:0";
-const std::string apcmini2 = "APC MINI:APC MINI MIDI 1 28:0";
-const std::string myPortName = "MMControl Input Port";
-const std::string myPortName2 = "MMControl Input Port2";
-const int control = 176;
-const int buttonPressed = 144;
-const int buttonReleased = 128;
-const int opacity = 5;
+#include "MMC.h"
 
 class MyMidiIn : public QObject, public RtMidiIn
 {

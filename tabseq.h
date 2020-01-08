@@ -24,7 +24,6 @@
 #include "osccuelist.h"
 #include <QBoxLayout>
 #include <unistd.h>
-//#include <QFile>
 
 class TabSeq : public QWidget
 {

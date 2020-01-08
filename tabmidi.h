@@ -115,7 +115,7 @@ private:
 
   QGridLayout *layoutTotal;
 
-  // Sliders et spinboxs, 3 dernières lignes
+  // Sliders et spinboxs, 3 dernières lignes // changer spinboxes 18 en label
   QSlider *S1; QSlider *S2; QSlider *S3; QSlider *S4; QSlider *S5; QSlider *S6; QSlider *S7; QSlider *S8; QSlider *S9; //apc 1
   QSpinBox *pID1; QSpinBox *pID2; QSpinBox *pID3; QSpinBox *pID4; QSpinBox *pID5; QSpinBox *pID6; QSpinBox *pID7; QSpinBox *pID8; QSpinBox *pID9; //apc1
   QSpinBox *mID1; QSpinBox *mID2; QSpinBox *mID3; QSpinBox *mID4; QSpinBox *mID5; QSpinBox *mID6; QSpinBox *mID7; QSpinBox *mID8; QSpinBox *mID9;
@@ -148,6 +148,8 @@ private:
   QPushButton *B70_2; QPushButton *B6_2; QPushButton *B14_2; QPushButton *B22_2; QPushButton *B30_2; QPushButton *B38_2; QPushButton *B46_2; QPushButton *B54_2; QPushButton *B62_2;
   QPushButton *B71_2; QPushButton *B7_2; QPushButton *B15_2; QPushButton *B23_2; QPushButton *B31_2; QPushButton *B39_2; QPushButton *B47_2; QPushButton *B55_2; QPushButton *B63_2;
   QPushButton *B98_2; QPushButton *B89_2; QPushButton *B88_2; QPushButton *B87_2; QPushButton *B86_2; QPushButton *B85_2; QPushButton *B84_2; QPushButton *B83_2; QPushButton *B82_2;
+
+  // Labels dernière colonne
 };
 
 #endif // TABMIDI_H

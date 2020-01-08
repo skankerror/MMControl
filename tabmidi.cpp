@@ -959,7 +959,7 @@ void TabMidi::sendOscAPCB62(){ oscSendB->m_champ = P_REWIND; oscSendB->m_p_ID1 =
 void TabMidi::sendOscAPCB63(){ oscSendB->m_champ = P_REWIND; oscSendB->m_p_ID1 = pID8->value(); oscSendB->ExecuteSend(); }
 void TabMidi::sendOscAPCB82(){ oscSendB->m_champ = P_REWIND; oscSendB->m_p_ID1 = pID9->value(); oscSendB->ExecuteSend(); }
 
-// APC 2
+// APC 2 // Reprendre les dernières lignes pour en faire des masters regexp et play/pause
 // mapping visible false
 void TabMidi::sendOscAPCB64_2(){ oscSendB->m_champ = M_VISIBLE; oscSendB->m_m_ID1 = mID10->value(); oscSendB->m_m_isvisible = false; oscSendB->ExecuteSend(); }
 void TabMidi::sendOscAPCB65_2(){ oscSendB->m_champ = M_VISIBLE; oscSendB->m_m_ID1 = mID11->value(); oscSendB->m_m_isvisible = false; oscSendB->ExecuteSend(); }

@@ -1,18 +1,14 @@
-changer les données membre privées en _name
-
 Revoir les constructeurs de oscsend, c'est l'bordel !
-
-Commenter le code
-
-Faire un readme
+Rajouter regexp
 
 Pouvoir insérer une cue après le dernier sélectionné
 
-rajoutter assignations des boutons
+changer assignations des boutons dernière colonne
 revoir la façon dont on ouvre les ports:
 https://github.com/thestk/rtmidi/blob/master/tests/cmidiin.cpp
 Faire 2 midiout pour alllumer les boutons. Voir doc apcmini
 
+Faire MMC.h pour y mettre les constantes
 
 BUGS
 

@@ -26,6 +26,7 @@
 #include "tabmmstate.h"
 #include "oscsend.h"
 #include "osccuelist.h"
+#include "MMC.h"
 
 
 class MainWindow : public QMainWindow

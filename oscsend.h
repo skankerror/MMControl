@@ -28,35 +28,7 @@
 #include "contrib/oscpack/ip/UdpSocket.h"
 #include "contrib/oscpack/ip/NetworkingUtils.h"
 #include "contrib/oscpack/ip/IpEndpointName.h"
-
-#define ADDRESS "127.0.0.1" // IP cible
-#define PORT 12345 // Port cible
-
-#define OUTPUT_BUFFER_SIZE 512
-
-enum champMM
-{
-  NOOP = 0,
-  PLAY = 1,
-  PAUSE = 2,
-  REWIND = 3,
-  QUIT = 4,
-  P_NAME = 5,
-  P_REWIND = 6,
-  P_OPACITY = 7,
-  P_VOLUME = 8,
-  P_RATE = 9,
-  P_URI = 10,
-  P_COLOR = 11,
-  M_NAME = 12,
-  M_OPACITY = 13,
-  M_VISIBLE = 14,
-  M_SOLO = 15,
-  M_LOCK = 16,
-  M_DEPTH = 17,
-  P_XFADE = 18,
-  P_FADE = 19
-};
+#include "MMC.h"
 
 class OscSend : public QObject,
     public UdpTransmitSocket
@@ -71,6 +43,8 @@ public:
           int time); // 7, 8, 9, 13, 17, 18; gros bordel !
   OscSend(champMM champ, int ID1, bool isproperty,
           int time = 0); // 14 15 16 19
+
+  // Faire constructeur pour regexp
 
   void ExecuteSend();
   void ExecuteXFade(int ID1, int ID2, int time);
