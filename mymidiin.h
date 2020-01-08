@@ -27,8 +27,9 @@
 #define __LINUX_ALSA__
 
 const std::string apcmini = "APC MINI:APC MINI MIDI 1 24:0";
-const std::string apcmini2 = "APC MINI:APC MINI MIDI 1 16:0";
+const std::string apcmini2 = "APC MINI:APC MINI MIDI 1 28:0";
 const std::string myPortName = "MMControl Input Port";
+const std::string myPortName2 = "MMControl Input Port2";
 const int control = 176;
 const int buttonPressed = 144;
 const int buttonReleased = 128;
@@ -38,7 +39,8 @@ class MyMidiIn : public QObject, public RtMidiIn
 {
   Q_OBJECT
 public:
-  MyMidiIn(RtMidi::Api api = LINUX_ALSA,
+  MyMidiIn(int id = 1,
+           RtMidi::Api api = LINUX_ALSA,
            const std::string &clientName = "OscControlMapmap Input Client",
            unsigned int queueSizeLimit = 100);
 

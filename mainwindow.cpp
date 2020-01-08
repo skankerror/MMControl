@@ -23,7 +23,7 @@ MainWindow::MainWindow() :
   icon = QIcon(":/graphics/Icon");
   setWindowIcon(icon);
   setWindowTitle("Mapmap Controller");
-  setGeometry(400, 200, 1024, 768);
+  setGeometry(200, 200, 1424, 768);
   QPalette pal = palette();
   pal.setColor(QPalette::Background, Qt::gray);
   setAutoFillBackground(true);
@@ -31,7 +31,8 @@ MainWindow::MainWindow() :
 
   state = new MMState(this);
   oscCueList = new OscCueList(this);
-  midiIn = new MyMidiIn;
+  midiIn = new MyMidiIn(1);
+  midiIn2 = new MyMidiIn(2);
 
   createToolBar();
   createCentralWidget();
@@ -52,7 +53,7 @@ MainWindow::MainWindow() :
 
 void MainWindow::createCentralWidget()
 {
-  tabmidi = new TabMidi(midiIn);
+  tabmidi = new TabMidi(midiIn, midiIn2);
   tabseq = new TabSeq(oscCueList);
   tabmmstate = new TabMMState(state);
   tabwidget = new QTabWidget;

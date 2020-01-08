@@ -17,9 +17,10 @@
 
 #include "tabmidi.h"
 
-TabMidi::TabMidi(MyMidiIn *midiIn, QWidget *parent) :
+TabMidi::TabMidi(MyMidiIn *midiIn, MyMidiIn *midiIn2 , QWidget *parent) :
   QWidget(parent),
-    m_midiIn(midiIn)
+    m_midiIn(midiIn),
+    m_midiIn2(midiIn2)
 {
   oscSendS = new OscSend(P_OPACITY, 1, 0, 0);
   oscSendB = new OscSend(M_VISIBLE, 1, true);
@@ -28,7 +29,7 @@ TabMidi::TabMidi(MyMidiIn *midiIn, QWidget *parent) :
 
   labelb9 = new QLabel("noop"); labelb8 = new QLabel("noop"); labelb7 = new QLabel("noop");
   labelb6 = new QLabel("noop"); labelb5 = new QLabel("noop"); labelb4 = new QLabel("noop");
-  labelb3 = new QLabel("noop"); labelb2 = new QLabel("Mesh Not Visible"); labelb1 = new QLabel("Mesh Visible");
+  labelb3 = new QLabel("noop"); labelb2 = new QLabel("Mesh Visible"); labelb1 = new QLabel("Mesh Not Visible");
   labelS = new QLabel("paint_opacity"); labelPid = new QLabel("paint id"); labelMid = new QLabel("mesh id");
   layoutTotal->addWidget(labelb9, 0, 0); layoutTotal->addWidget(labelb8, 1, 0);
   layoutTotal->addWidget(labelb7, 2, 0); layoutTotal->addWidget(labelb6, 3, 0);
@@ -37,6 +38,7 @@ TabMidi::TabMidi(MyMidiIn *midiIn, QWidget *parent) :
   layoutTotal->addWidget(labelb1, 8, 0); layoutTotal->addWidget(labelS, 9, 0);
   layoutTotal->addWidget(labelPid, 10, 0); layoutTotal->addWidget(labelMid, 11, 0);
 
+  // APC1
   B64 = new QPushButton; B0 = new QPushButton; B8 = new QPushButton;
   B16 = new QPushButton; B24 = new QPushButton; B32 = new QPushButton;
   B40 = new QPushButton; B48 = new QPushButton; B56 = new QPushButton;
@@ -145,7 +147,7 @@ TabMidi::TabMidi(MyMidiIn *midiIn, QWidget *parent) :
   layoutTotal->addWidget(B98, 8, 9); layoutTotal->addWidget(S9, 9, 9);
   layoutTotal->addWidget(pID9, 10, 9); layoutTotal->addWidget(mID9, 11, 9);
 
-  // align sliders
+  // align sliders APC1
   layoutTotal->setAlignment(S1, Qt::AlignHCenter);
   layoutTotal->setAlignment(S2, Qt::AlignHCenter);
   layoutTotal->setAlignment(S3, Qt::AlignHCenter);
@@ -156,6 +158,135 @@ TabMidi::TabMidi(MyMidiIn *midiIn, QWidget *parent) :
   layoutTotal->setAlignment(S8, Qt::AlignHCenter);
   layoutTotal->setAlignment(S9, Qt::AlignHCenter);
 
+  // APC2
+  B64_2 = new QPushButton; B0_2 = new QPushButton; B8_2 = new QPushButton;
+  B16_2 = new QPushButton; B24_2 = new QPushButton; B32_2 = new QPushButton;
+  B40_2 = new QPushButton; B48_2 = new QPushButton; B56_2 = new QPushButton;
+  S10 = new QSlider(Qt::Vertical);
+  pID10 = new QSpinBox; pID10->setValue(10); mID10 = new QSpinBox; mID10->setValue(10);
+  layoutTotal->addWidget(B56_2, 0, 10); layoutTotal->addWidget(B48_2, 1, 10);
+  layoutTotal->addWidget(B40_2, 2, 10); layoutTotal->addWidget(B32_2, 3, 10);
+  layoutTotal->addWidget(B24_2, 4, 10); layoutTotal->addWidget(B16_2, 5, 10);
+  layoutTotal->addWidget(B8_2, 6, 10); layoutTotal->addWidget(B0_2, 7, 10);
+  layoutTotal->addWidget(B64_2, 8, 10); layoutTotal->addWidget(S10, 9, 10);
+  layoutTotal->addWidget(pID10, 10, 10); layoutTotal->addWidget(mID10, 11, 10);
+
+  B65_2 = new QPushButton; B1_2 = new QPushButton; B9_2 = new QPushButton;
+  B17_2 = new QPushButton; B25_2 = new QPushButton; B33_2 = new QPushButton;
+  B41_2 = new QPushButton; B49_2 = new QPushButton; B57_2 = new QPushButton;
+  S11 = new QSlider(Qt::Vertical);
+  pID11 = new QSpinBox; pID11->setValue(11); mID11 = new QSpinBox; mID11->setValue(11);
+  layoutTotal->addWidget(B57_2, 0, 11); layoutTotal->addWidget(B49_2, 1, 11);
+  layoutTotal->addWidget(B41_2, 2, 11); layoutTotal->addWidget(B33_2, 3, 11);
+  layoutTotal->addWidget(B25_2, 4, 11); layoutTotal->addWidget(B17_2, 5, 11);
+  layoutTotal->addWidget(B9_2, 6, 11); layoutTotal->addWidget(B1_2, 7, 11);
+  layoutTotal->addWidget(B65_2, 8, 11); layoutTotal->addWidget(S11, 9, 11);
+  layoutTotal->addWidget(pID11, 10, 11); layoutTotal->addWidget(mID11, 11, 11);
+
+  B66_2 = new QPushButton; B2_2 = new QPushButton; B10_2 = new QPushButton;
+  B18_2 = new QPushButton; B26_2 = new QPushButton; B34_2 = new QPushButton;
+  B42_2 = new QPushButton; B50_2 = new QPushButton; B58_2 = new QPushButton;
+  S12 = new QSlider(Qt::Vertical);
+  pID12 = new QSpinBox; pID12->setValue(12); mID12 = new QSpinBox; mID12->setValue(12);
+  layoutTotal->addWidget(B58_2, 0, 12); layoutTotal->addWidget(B50_2, 1, 12);
+  layoutTotal->addWidget(B42_2, 2, 12); layoutTotal->addWidget(B34_2, 3, 12);
+  layoutTotal->addWidget(B26_2, 4, 12); layoutTotal->addWidget(B18_2, 5, 12);
+  layoutTotal->addWidget(B10_2, 6, 12); layoutTotal->addWidget(B2_2, 7, 12);
+  layoutTotal->addWidget(B66_2, 8, 12); layoutTotal->addWidget(S12, 9, 12);
+  layoutTotal->addWidget(pID12, 10, 12); layoutTotal->addWidget(mID12, 11, 12);
+
+  B67_2 = new QPushButton; B3_2 = new QPushButton; B11_2 = new QPushButton;
+  B19_2 = new QPushButton; B27_2 = new QPushButton; B35_2 = new QPushButton;
+  B43_2 = new QPushButton; B51_2 = new QPushButton; B59_2 = new QPushButton;
+  S13 = new QSlider(Qt::Vertical);
+  pID13 = new QSpinBox; pID13->setValue(13); mID13 = new QSpinBox; mID13->setValue(13);
+  layoutTotal->addWidget(B59_2, 0, 13); layoutTotal->addWidget(B51_2, 1, 13);
+  layoutTotal->addWidget(B43_2, 2, 13); layoutTotal->addWidget(B35_2, 3, 13);
+  layoutTotal->addWidget(B27_2, 4, 13); layoutTotal->addWidget(B19_2, 5, 13);
+  layoutTotal->addWidget(B11_2, 6, 13); layoutTotal->addWidget(B3_2, 7, 13);
+  layoutTotal->addWidget(B67_2, 8, 13); layoutTotal->addWidget(S13, 9, 13);
+  layoutTotal->addWidget(pID13, 10, 13); layoutTotal->addWidget(mID13, 11, 13);
+
+  B68_2 = new QPushButton; B4_2 = new QPushButton; B12_2 = new QPushButton;
+  B20_2 = new QPushButton; B28_2 = new QPushButton; B36_2 = new QPushButton;
+  B44_2 = new QPushButton; B52_2 = new QPushButton; B60_2 = new QPushButton;
+  S14 = new QSlider(Qt::Vertical);
+  pID14 = new QSpinBox; pID14->setValue(14); mID14 = new QSpinBox; mID14->setValue(14);
+  layoutTotal->addWidget(B60_2, 0, 14); layoutTotal->addWidget(B52_2, 1, 14);
+  layoutTotal->addWidget(B44_2, 2, 14); layoutTotal->addWidget(B36_2, 3, 14);
+  layoutTotal->addWidget(B28_2, 4, 14); layoutTotal->addWidget(B20_2, 5, 14);
+  layoutTotal->addWidget(B12_2, 6, 14); layoutTotal->addWidget(B4_2, 7, 14);
+  layoutTotal->addWidget(B68_2, 8, 14); layoutTotal->addWidget(S14, 9, 14);
+  layoutTotal->addWidget(pID14, 10, 14); layoutTotal->addWidget(mID14, 11, 14);
+
+  B69_2 = new QPushButton; B5_2 = new QPushButton; B13_2 = new QPushButton;
+  B21_2 = new QPushButton; B29_2 = new QPushButton; B37_2 = new QPushButton;
+  B45_2 = new QPushButton; B53_2 = new QPushButton; B61_2 = new QPushButton;
+  S15 = new QSlider(Qt::Vertical);
+  pID15 = new QSpinBox; pID15->setValue(15); mID15 = new QSpinBox; mID15->setValue(15);
+  layoutTotal->addWidget(B61_2, 0, 15); layoutTotal->addWidget(B53_2, 1, 15);
+  layoutTotal->addWidget(B45_2, 2, 15); layoutTotal->addWidget(B37_2, 3, 15);
+  layoutTotal->addWidget(B29_2, 4, 15); layoutTotal->addWidget(B21_2, 5, 15);
+  layoutTotal->addWidget(B13_2, 6, 15); layoutTotal->addWidget(B5_2, 7, 15);
+  layoutTotal->addWidget(B69_2, 8, 15); layoutTotal->addWidget(S15, 9, 15);
+  layoutTotal->addWidget(pID15, 10, 15); layoutTotal->addWidget(mID15, 11, 15);
+
+  B70_2 = new QPushButton; B6_2 = new QPushButton; B14_2 = new QPushButton;
+  B22_2 = new QPushButton; B30_2 = new QPushButton; B38_2 = new QPushButton;
+  B46_2 = new QPushButton; B54_2 = new QPushButton; B62_2 = new QPushButton;
+  S16 = new QSlider(Qt::Vertical);
+  pID16 = new QSpinBox; pID16->setValue(16); mID16 = new QSpinBox; mID16->setValue(16);
+  layoutTotal->addWidget(B62_2, 0, 16); layoutTotal->addWidget(B54_2, 1, 16);
+  layoutTotal->addWidget(B46_2, 2, 16); layoutTotal->addWidget(B38_2, 3, 16);
+  layoutTotal->addWidget(B30_2, 4, 16); layoutTotal->addWidget(B22_2, 5, 16);
+  layoutTotal->addWidget(B14_2, 6, 16); layoutTotal->addWidget(B6_2, 7, 16);
+  layoutTotal->addWidget(B70_2, 8, 16); layoutTotal->addWidget(S16, 9, 16);
+  layoutTotal->addWidget(pID16, 10, 16); layoutTotal->addWidget(mID16, 11, 16);
+
+  B71_2 = new QPushButton; B7_2 = new QPushButton; B15_2 = new QPushButton;
+  B23_2 = new QPushButton; B31_2 = new QPushButton; B39_2 = new QPushButton;
+  B47_2 = new QPushButton; B55_2 = new QPushButton; B63_2 = new QPushButton;
+  S17 = new QSlider(Qt::Vertical);
+  pID17 = new QSpinBox; pID17->setValue(17); mID17 = new QSpinBox; mID17->setValue(17);
+  layoutTotal->addWidget(B63_2, 0, 17); layoutTotal->addWidget(B55_2, 1, 17);
+  layoutTotal->addWidget(B47_2, 2, 17); layoutTotal->addWidget(B39_2, 3, 17);
+  layoutTotal->addWidget(B31_2, 4, 17); layoutTotal->addWidget(B23_2, 5, 17);
+  layoutTotal->addWidget(B15_2, 6, 17); layoutTotal->addWidget(B7_2, 7, 17);
+  layoutTotal->addWidget(B71_2, 8, 17); layoutTotal->addWidget(S17, 9, 17);
+  layoutTotal->addWidget(pID17, 10, 17); layoutTotal->addWidget(mID17, 11, 17);
+
+  B98_2 = new QPushButton; B89_2 = new QPushButton; B88_2 = new QPushButton;
+  B87_2 = new QPushButton; B86_2 = new QPushButton; B85_2 = new QPushButton;
+  B84_2 = new QPushButton; B83_2 = new QPushButton; B82_2 = new QPushButton;
+  S18 = new QSlider(Qt::Vertical);
+  pID18 = new QSpinBox; pID18->setValue(18); mID18 = new QSpinBox; mID18->setValue(18);
+  layoutTotal->addWidget(B82_2, 0, 18); layoutTotal->addWidget(B83_2, 1, 18);
+  layoutTotal->addWidget(B84_2, 2, 18); layoutTotal->addWidget(B85_2, 3, 18);
+  layoutTotal->addWidget(B86_2, 4, 18); layoutTotal->addWidget(B87_2, 5, 18);
+  layoutTotal->addWidget(B88_2, 6, 18); layoutTotal->addWidget(B89_2, 7, 18);
+  layoutTotal->addWidget(B98_2, 8, 18); layoutTotal->addWidget(S18, 9, 18);
+  layoutTotal->addWidget(pID18, 10, 18); layoutTotal->addWidget(mID18, 11, 18);
+
+//  // align sliders APC2
+  layoutTotal->setAlignment(S1, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S2, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S3, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S4, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S5, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S6, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S7, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S8, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S9, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S10, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S11, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S12, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S13, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S14, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S15, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S16, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S17, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S18, Qt::AlignHCenter);
+
   this->setLayout(layoutTotal);
 
   QPalette pal = palette();
@@ -163,10 +294,16 @@ TabMidi::TabMidi(MyMidiIn *midiIn, QWidget *parent) :
   setAutoFillBackground(true);
   setPalette(pal);
 
+  // connect midiIn1
   connect(m_midiIn, SIGNAL(sigMidiCtrlChanged(int, float)), this, SLOT(receiveMidiCtrl(int,float)));
   connect(m_midiIn, SIGNAL(sigMidiNoteChanged(int)), this, SLOT(receiveMidiNote(int)));
+  // connect midiIn2
+  connect(m_midiIn2, SIGNAL(sigMidiCtrlChanged(int, float)), this, SLOT(receiveMidiCtrl2(int,float)));
+  connect(m_midiIn2, SIGNAL(sigMidiNoteChanged(int)), this, SLOT(receiveMidiNote2(int)));
+
   //connections des sliders
-  {connect(this->S1, SIGNAL(valueChanged(int)), this, SLOT(sendOscS1(int)));
+  { //APC1
+    connect(this->S1, SIGNAL(valueChanged(int)), this, SLOT(sendOscS1(int)));
     connect(this->S2, SIGNAL(valueChanged(int)), this, SLOT(sendOscS2(int)));
     connect(this->S3, SIGNAL(valueChanged(int)), this, SLOT(sendOscS3(int)));
     connect(this->S4, SIGNAL(valueChanged(int)), this, SLOT(sendOscS4(int)));
@@ -174,9 +311,19 @@ TabMidi::TabMidi(MyMidiIn *midiIn, QWidget *parent) :
     connect(this->S6, SIGNAL(valueChanged(int)), this, SLOT(sendOscS6(int)));
     connect(this->S7, SIGNAL(valueChanged(int)), this, SLOT(sendOscS7(int)));
     connect(this->S8, SIGNAL(valueChanged(int)), this, SLOT(sendOscS8(int)));
-    connect(this->S9, SIGNAL(valueChanged(int)), this, SLOT(sendOscS9(int)));}
+    connect(this->S9, SIGNAL(valueChanged(int)), this, SLOT(sendOscS9(int)));
+    //APC2
+    connect(this->S10, SIGNAL(valueChanged(int)), this, SLOT(sendOscS10(int)));
+    connect(this->S11, SIGNAL(valueChanged(int)), this, SLOT(sendOscS11(int)));
+    connect(this->S12, SIGNAL(valueChanged(int)), this, SLOT(sendOscS12(int)));
+    connect(this->S13, SIGNAL(valueChanged(int)), this, SLOT(sendOscS13(int)));
+    connect(this->S14, SIGNAL(valueChanged(int)), this, SLOT(sendOscS14(int)));
+    connect(this->S15, SIGNAL(valueChanged(int)), this, SLOT(sendOscS15(int)));
+    connect(this->S16, SIGNAL(valueChanged(int)), this, SLOT(sendOscS16(int)));
+    connect(this->S17, SIGNAL(valueChanged(int)), this, SLOT(sendOscS17(int)));
+    connect(this->S18, SIGNAL(valueChanged(int)), this, SLOT(sendOscS18(int)));}
 
-  // connections de tous les boutons !
+  // connections de tous les boutons APC1
   {connect(this->B64, SIGNAL(clicked()), this, SLOT(sendOscAPCB64()));
     connect(this->B65, SIGNAL(clicked()), this, SLOT(sendOscAPCB65()));
     connect(this->B66, SIGNAL(clicked()), this, SLOT(sendOscAPCB66()));
@@ -267,10 +414,100 @@ TabMidi::TabMidi(MyMidiIn *midiIn, QWidget *parent) :
     connect(this->B63, SIGNAL(clicked()), this, SLOT(sendOscAPCB63()));
     connect(this->B82, SIGNAL(clicked()), this, SLOT(sendOscAPCB82()));}
 
+  // connections de tous les boutons APC2
+  {connect(this->B64_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB64_2()));
+    connect(this->B65_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB65_2()));
+    connect(this->B66_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB66_2()));
+    connect(this->B67_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB67_2()));
+    connect(this->B68_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB68_2()));
+    connect(this->B69_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB69_2()));
+    connect(this->B70_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB70_2()));
+    connect(this->B71_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB71_2()));
+    connect(this->B98_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB98_2()));
+
+    connect(this->B0_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB0_2()));
+    connect(this->B1_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB1_2()));
+    connect(this->B2_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB2_2()));
+    connect(this->B3_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB3_2()));
+    connect(this->B4_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB4_2()));
+    connect(this->B5_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB5_2()));
+    connect(this->B6_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB6_2()));
+    connect(this->B7_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB7_2()));
+    connect(this->B89_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB89_2()));
+
+    connect(this->B8_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB8_2()));
+    connect(this->B9_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB9_2()));
+    connect(this->B10_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB10_2()));
+    connect(this->B11_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB11_2()));
+    connect(this->B12_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB12_2()));
+    connect(this->B13_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB13_2()));
+    connect(this->B14_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB14_2()));
+    connect(this->B15_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB15_2()));
+    connect(this->B88_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB88_2()));
+
+    connect(this->B16_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB16_2()));
+    connect(this->B17_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB17_2()));
+    connect(this->B18_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB18_2()));
+    connect(this->B19_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB19_2()));
+    connect(this->B20_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB20_2()));
+    connect(this->B21_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB21_2()));
+    connect(this->B22_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB22_2()));
+    connect(this->B23_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB23_2()));
+    connect(this->B87_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB87_2()));
+
+    connect(this->B24_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB24_2()));
+    connect(this->B25_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB25_2()));
+    connect(this->B26_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB26_2()));
+    connect(this->B27_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB27_2()));
+    connect(this->B28_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB28_2()));
+    connect(this->B29_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB29_2()));
+    connect(this->B30_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB30_2()));
+    connect(this->B31_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB31_2()));
+    connect(this->B86_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB86_2()));
+
+    connect(this->B32_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB32_2()));
+    connect(this->B33_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB33_2()));
+    connect(this->B34_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB34_2()));
+    connect(this->B35_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB35_2()));
+    connect(this->B36_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB36_2()));
+    connect(this->B37_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB37_2()));
+    connect(this->B38_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB38_2()));
+    connect(this->B39_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB39_2()));
+    connect(this->B85_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB85_2()));
+
+    connect(this->B40_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB40_2()));
+    connect(this->B41_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB41_2()));
+    connect(this->B42_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB42_2()));
+    connect(this->B43_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB43_2()));
+    connect(this->B44_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB44_2()));
+    connect(this->B45_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB45_2()));
+    connect(this->B46_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB46_2()));
+    connect(this->B47_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB47_2()));
+    connect(this->B84_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB84_2()));
+
+    connect(this->B48_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB48_2()));
+    connect(this->B49_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB49_2()));
+    connect(this->B50_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB50_2()));
+    connect(this->B51_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB51_2()));
+    connect(this->B52_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB52_2()));
+    connect(this->B53_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB53_2()));
+    connect(this->B54_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB54_2()));
+    connect(this->B55_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB55_2()));
+    connect(this->B83_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB83_2()));
+
+    connect(this->B56_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB56_2()));
+    connect(this->B57_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB57_2()));
+    connect(this->B58_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB58_2()));
+    connect(this->B59_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB59_2()));
+    connect(this->B60_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB60_2()));
+    connect(this->B61_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB61_2()));
+    connect(this->B62_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB62_2()));
+    connect(this->B63_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB63_2()));
+    connect(this->B82_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB82_2()));}
 }
 
 
-void TabMidi::receiveMidiCtrl(int unID, float uneOpacite)
+void TabMidi::receiveMidiCtrl(int unID, float uneOpacite) // APC1
 {
 
   switch(unID)
@@ -284,11 +521,28 @@ void TabMidi::receiveMidiCtrl(int unID, float uneOpacite)
   case 7: this->S7->setValue((int)(uneOpacite*100)); break;
   case 8: this->S8->setValue((int)(uneOpacite*100)); break;
   case 9: this->S9->setValue((int)(uneOpacite*100)); break;
-
   default : break;
   }
 }
 
+void TabMidi::receiveMidiCtrl2(int unID, float uneOpacite) // APC2
+{
+
+  switch(unID)
+  {
+  case 1: this->S10->setValue((int)(uneOpacite*100)); break;
+  case 2: this->S11->setValue((int)(uneOpacite*100)); break;
+  case 3: this->S12->setValue((int)(uneOpacite*100)); break;
+  case 4: this->S13->setValue((int)(uneOpacite*100)); break;
+  case 5: this->S14->setValue((int)(uneOpacite*100)); break;
+  case 6: this->S15->setValue((int)(uneOpacite*100)); break;
+  case 7: this->S16->setValue((int)(uneOpacite*100)); break;
+  case 8: this->S17->setValue((int)(uneOpacite*100)); break;
+  case 9: this->S18->setValue((int)(uneOpacite*100)); break;
+  default : break;
+  }
+}
+// APC1
 void TabMidi::sendOscS1(int uneOpacite)
 {
   oscSendS->m_p_ID1 = pID1->value();
@@ -344,7 +598,63 @@ void TabMidi::sendOscS9(int uneOpacite)
   oscSendS->ExecuteSend();
 }
 
-void TabMidi::receiveMidiNote(int unBouton)
+// APC2
+void TabMidi::sendOscS10(int uneOpacite)
+{
+  oscSendS->m_p_ID1 = pID10->value();
+  oscSendS->m_p_opacity = uneOpacite;
+  oscSendS->ExecuteSend();
+}
+void TabMidi::sendOscS11(int uneOpacite)
+{
+  oscSendS->m_p_ID1 = pID11->value();
+  oscSendS->m_p_opacity = uneOpacite;
+  oscSendS->ExecuteSend();
+}
+void TabMidi::sendOscS12(int uneOpacite)
+{
+  oscSendS->m_p_ID1 = pID12->value();
+  oscSendS->m_p_opacity = uneOpacite;
+  oscSendS->ExecuteSend();
+}
+void TabMidi::sendOscS13(int uneOpacite)
+{
+  oscSendS->m_p_ID1 = pID13->value();
+  oscSendS->m_p_opacity = uneOpacite;
+  oscSendS->ExecuteSend();
+}
+void TabMidi::sendOscS14(int uneOpacite)
+{
+  oscSendS->m_p_ID1 = pID14->value();
+  oscSendS->m_p_opacity = uneOpacite;
+  oscSendS->ExecuteSend();
+}
+void TabMidi::sendOscS15(int uneOpacite)
+{
+  oscSendS->m_p_ID1 = pID15->value();
+  oscSendS->m_p_opacity = uneOpacite;
+  oscSendS->ExecuteSend();
+}
+void TabMidi::sendOscS16(int uneOpacite)
+{
+  oscSendS->m_p_ID1 = pID16->value();
+  oscSendS->m_p_opacity = uneOpacite;
+  oscSendS->ExecuteSend();
+}
+void TabMidi::sendOscS17(int uneOpacite)
+{
+  oscSendS->m_p_ID1 = pID17->value();
+  oscSendS->m_p_opacity = uneOpacite;
+  oscSendS->ExecuteSend();
+}
+void TabMidi::sendOscS18(int uneOpacite)
+{
+  oscSendS->m_p_ID1 = pID18->value();
+  oscSendS->m_p_opacity = uneOpacite;
+  oscSendS->ExecuteSend();
+}
+
+void TabMidi::receiveMidiNote(int unBouton) // APC1
 {
 
   switch (unBouton)
@@ -454,6 +764,117 @@ void TabMidi::receiveMidiNote(int unBouton)
 
 }
 
+void TabMidi::receiveMidiNote2(int unBouton) // APC 2
+{
+
+  switch (unBouton)
+  {
+  // rangée 9 au dessus des sliders paint/color
+  case 64: this->B64_2->animateClick(); break;
+  case 65: this->B65_2->animateClick(); break;
+  case 66: this->B66_2->animateClick(); break;
+  case 67: this->B67_2->animateClick(); break;
+  case 68: this->B68_2->animateClick(); break;
+  case 69: this->B69_2->animateClick(); break;
+  case 70: this->B70_2->animateClick(); break;
+  case 71: this->B71_2->animateClick(); break;
+  case 98: this->B98_2->animateClick(); break;
+
+    // rangée 8 paint/rate
+  case 0: this->B0_2->animateClick(); break;
+  case 1: this->B1_2->animateClick(); break;
+  case 2: this->B2_2->animateClick(); break;
+  case 3: this->B3_2->animateClick(); break;
+  case 4: this->B4_2->animateClick(); break;
+  case 5: this->B5_2->animateClick(); break;
+  case 6: this->B6_2->animateClick(); break;
+  case 7: this->B7_2->animateClick(); break;
+  case 89: this->B89_2->animateClick(); break;
+
+    //rangée 7 mapping/solo off
+  case 8: this->B8_2->animateClick(); break;
+  case 9: this->B9_2->animateClick(); break;
+  case 10: this->B10_2->animateClick(); break;
+  case 11: this->B11_2->animateClick(); break;
+  case 12: this->B12_2->animateClick(); break;
+  case 13: this->B13_2->animateClick(); break;
+  case 14: this->B14_2->animateClick(); break;
+  case 15: this->B15_2->animateClick(); break;
+  case 88: this->B88_2->animateClick(); break;
+
+    // rangée 6 mapping/solo on
+  case 16: this->B16_2->animateClick(); break;
+  case 17: this->B17_2->animateClick(); break;
+  case 18: this->B18_2->animateClick(); break;
+  case 19: this->B19_2->animateClick(); break;
+  case 20: this->B20_2->animateClick(); break;
+  case 21: this->B21_2->animateClick(); break;
+  case 22: this->B22_2->animateClick(); break;
+  case 23: this->B23_2->animateClick(); break;
+  case 87: this->B87_2->animateClick(); break;
+
+    // rangée 5 mapping/visible off
+  case 24: this->B24_2->animateClick(); break;
+  case 25: this->B25_2->animateClick(); break;
+  case 26: this->B26_2->animateClick(); break;
+  case 27: this->B27_2->animateClick(); break;
+  case 28: this->B28_2->animateClick(); break;
+  case 29: this->B29_2->animateClick(); break;
+  case 30: this->B30_2->animateClick(); break;
+  case 31: this->B31_2->animateClick(); break;
+  case 86: this->B86_2->animateClick(); break;
+
+    // rangée 4 mapping/visible on
+  case 32: this->B32_2->animateClick(); break;
+  case 33: this->B33_2->animateClick(); break;
+  case 34: this->B34_2->animateClick(); break;
+  case 35: this->B35_2->animateClick(); break;
+  case 36: this->B36_2->animateClick(); break;
+  case 37: this->B37_2->animateClick(); break;
+  case 38: this->B38_2->animateClick(); break;
+  case 39: this->B39_2->animateClick(); break;
+  case 85: this->B85_2->animateClick(); break;
+
+    // rangée 3 paint/uri/ previous
+  case 40: this->B40_2->animateClick(); break;
+  case 41: this->B41_2->animateClick(); break;
+  case 42: this->B42_2->animateClick(); break;
+  case 43: this->B43_2->animateClick(); break;
+  case 44: this->B44_2->animateClick(); break;
+  case 45: this->B45_2->animateClick(); break;
+  case 46: this->B46_2->animateClick(); break;
+  case 47: this->B47_2->animateClick(); break;
+  case 84: this->B84_2->animateClick(); break;
+
+    // rangée 2 paint/uri next
+  case 48: this->B48_2->animateClick(); break;
+  case 49: this->B49_2->animateClick(); break;
+  case 50: this->B50_2->animateClick(); break;
+  case 51: this->B51_2->animateClick(); break;
+  case 52: this->B52_2->animateClick(); break;
+  case 53: this->B53_2->animateClick(); break;
+  case 54: this->B54_2->animateClick(); break;
+  case 55: this->B55_2->animateClick(); break;
+  case 83: this->B83_2->animateClick(); break;
+
+    // rangée 1 paint/uri uri
+  case 56: this->B56_2->animateClick(); break;
+  case 57: this->B57_2->animateClick(); break;
+  case 58: this->B58_2->animateClick(); break;
+  case 59: this->B59_2->animateClick(); break;
+  case 60: this->B60_2->animateClick(); break;
+  case 61: this->B61_2->animateClick(); break;
+  case 62: this->B62_2->animateClick(); break;
+  case 63: this->B63_2->animateClick(); break;
+  case 82: this->B82_2->animateClick(); break;
+
+  default:
+    break;
+  }
+
+}
+
+// APC 1
 void TabMidi::sendOscAPCB64(){ oscSendB->m_champ = M_VISIBLE; oscSendB->m_m_ID1 = mID1->value(); oscSendB->m_m_isvisible = false; oscSendB->ExecuteSend(); }
 void TabMidi::sendOscAPCB65(){ oscSendB->m_champ = M_VISIBLE; oscSendB->m_m_ID1 = mID2->value(); oscSendB->m_m_isvisible = false; oscSendB->ExecuteSend(); }
 void TabMidi::sendOscAPCB66(){ oscSendB->m_champ = M_VISIBLE; oscSendB->m_m_ID1 = mID3->value(); oscSendB->m_m_isvisible = false; oscSendB->ExecuteSend(); }
@@ -543,3 +964,94 @@ void TabMidi::sendOscAPCB61(){ /*Paint uri 6 */  }
 void TabMidi::sendOscAPCB62(){ /*Paint uri 7 */  }
 void TabMidi::sendOscAPCB63(){ /*Paint uri 8 */  }
 void TabMidi::sendOscAPCB82(){ /*Paint uri 9 */  }
+
+// APC 2
+void TabMidi::sendOscAPCB64_2(){ oscSendB->m_champ = M_VISIBLE; oscSendB->m_m_ID1 = mID10->value(); oscSendB->m_m_isvisible = false; oscSendB->ExecuteSend(); }
+void TabMidi::sendOscAPCB65_2(){ oscSendB->m_champ = M_VISIBLE; oscSendB->m_m_ID1 = mID11->value(); oscSendB->m_m_isvisible = false; oscSendB->ExecuteSend(); }
+void TabMidi::sendOscAPCB66_2(){ oscSendB->m_champ = M_VISIBLE; oscSendB->m_m_ID1 = mID12->value(); oscSendB->m_m_isvisible = false; oscSendB->ExecuteSend(); }
+void TabMidi::sendOscAPCB67_2(){ oscSendB->m_champ = M_VISIBLE; oscSendB->m_m_ID1 = mID13->value(); oscSendB->m_m_isvisible = false; oscSendB->ExecuteSend(); }
+void TabMidi::sendOscAPCB68_2(){ oscSendB->m_champ = M_VISIBLE; oscSendB->m_m_ID1 = mID14->value(); oscSendB->m_m_isvisible = false; oscSendB->ExecuteSend(); }
+void TabMidi::sendOscAPCB69_2(){ oscSendB->m_champ = M_VISIBLE; oscSendB->m_m_ID1 = mID15->value(); oscSendB->m_m_isvisible = false; oscSendB->ExecuteSend(); }
+void TabMidi::sendOscAPCB70_2(){ oscSendB->m_champ = M_VISIBLE; oscSendB->m_m_ID1 = mID16->value(); oscSendB->m_m_isvisible = false; oscSendB->ExecuteSend(); }
+void TabMidi::sendOscAPCB71_2(){ oscSendB->m_champ = M_VISIBLE; oscSendB->m_m_ID1 = mID17->value(); oscSendB->m_m_isvisible = false; oscSendB->ExecuteSend(); }
+void TabMidi::sendOscAPCB98_2(){ oscSendB->m_champ = M_VISIBLE; oscSendB->m_m_ID1 = mID18->value(); oscSendB->m_m_isvisible = false; oscSendB->ExecuteSend(); }
+
+void TabMidi::sendOscAPCB0_2(){ oscSendB->m_champ = M_VISIBLE; oscSendB->m_m_ID1 = mID10->value(); oscSendB->m_m_isvisible = true; oscSendB->ExecuteSend();}
+void TabMidi::sendOscAPCB1_2(){ oscSendB->m_champ = M_VISIBLE; oscSendB->m_m_ID1 = mID11->value(); oscSendB->m_m_isvisible = true; oscSendB->ExecuteSend();}
+void TabMidi::sendOscAPCB2_2(){ oscSendB->m_champ = M_VISIBLE; oscSendB->m_m_ID1 = mID12->value(); oscSendB->m_m_isvisible = true; oscSendB->ExecuteSend();}
+void TabMidi::sendOscAPCB3_2(){ oscSendB->m_champ = M_VISIBLE; oscSendB->m_m_ID1 = mID13->value(); oscSendB->m_m_isvisible = true; oscSendB->ExecuteSend();}
+void TabMidi::sendOscAPCB4_2(){ oscSendB->m_champ = M_VISIBLE; oscSendB->m_m_ID1 = mID14->value(); oscSendB->m_m_isvisible = true; oscSendB->ExecuteSend();}
+void TabMidi::sendOscAPCB5_2(){ oscSendB->m_champ = M_VISIBLE; oscSendB->m_m_ID1 = mID15->value(); oscSendB->m_m_isvisible = true; oscSendB->ExecuteSend();}
+void TabMidi::sendOscAPCB6_2(){ oscSendB->m_champ = M_VISIBLE; oscSendB->m_m_ID1 = mID16->value(); oscSendB->m_m_isvisible = true; oscSendB->ExecuteSend();}
+void TabMidi::sendOscAPCB7_2(){ oscSendB->m_champ = M_VISIBLE; oscSendB->m_m_ID1 = mID17->value(); oscSendB->m_m_isvisible = true; oscSendB->ExecuteSend();}
+void TabMidi::sendOscAPCB89_2(){ oscSendB->m_champ = M_VISIBLE; oscSendB->m_m_ID1 = mID18->value(); oscSendB->m_m_isvisible = true; oscSendB->ExecuteSend();}
+
+void TabMidi::sendOscAPCB8_2(){  }
+void TabMidi::sendOscAPCB9_2(){  }
+void TabMidi::sendOscAPCB10_2(){  }
+void TabMidi::sendOscAPCB11_2(){  }
+void TabMidi::sendOscAPCB12_2(){  }
+void TabMidi::sendOscAPCB13_2(){  }
+void TabMidi::sendOscAPCB14_2(){  }
+void TabMidi::sendOscAPCB15_2(){  }
+void TabMidi::sendOscAPCB88_2(){  }
+
+void TabMidi::sendOscAPCB16_2(){  }
+void TabMidi::sendOscAPCB17_2(){  }
+void TabMidi::sendOscAPCB18_2(){  }
+void TabMidi::sendOscAPCB19_2(){  }
+void TabMidi::sendOscAPCB20_2(){  }
+void TabMidi::sendOscAPCB21_2(){  }
+void TabMidi::sendOscAPCB22_2(){  }
+void TabMidi::sendOscAPCB23_2(){  }
+void TabMidi::sendOscAPCB87_2(){  }
+
+void TabMidi::sendOscAPCB24_2(){  }
+void TabMidi::sendOscAPCB25_2(){  }
+void TabMidi::sendOscAPCB26_2(){  }
+void TabMidi::sendOscAPCB27_2(){  }
+void TabMidi::sendOscAPCB28_2(){  }
+void TabMidi::sendOscAPCB29_2(){  }
+void TabMidi::sendOscAPCB30_2(){  }
+void TabMidi::sendOscAPCB31_2(){  }
+void TabMidi::sendOscAPCB86_2(){  }
+
+void TabMidi::sendOscAPCB32_2(){  }
+void TabMidi::sendOscAPCB33_2(){  }
+void TabMidi::sendOscAPCB34_2(){  }
+void TabMidi::sendOscAPCB35_2(){  }
+void TabMidi::sendOscAPCB36_2(){  }
+void TabMidi::sendOscAPCB37_2(){  }
+void TabMidi::sendOscAPCB38_2(){  }
+void TabMidi::sendOscAPCB39_2(){  }
+void TabMidi::sendOscAPCB85_2(){  }
+
+void TabMidi::sendOscAPCB40_2(){ /*Paint uri prev 1 */  }
+void TabMidi::sendOscAPCB41_2(){ /*Paint uri prev 2 */  }
+void TabMidi::sendOscAPCB42_2(){ /*Paint uri prev 3 */  }
+void TabMidi::sendOscAPCB43_2(){ /*Paint uri prev 4 */  }
+void TabMidi::sendOscAPCB44_2(){ /*Paint uri prev 5 */  }
+void TabMidi::sendOscAPCB45_2(){ /*Paint uri prev 6 */  }
+void TabMidi::sendOscAPCB46_2(){ /*Paint uri prev 7 */  }
+void TabMidi::sendOscAPCB47_2(){ /*Paint uri prev 8 */  }
+void TabMidi::sendOscAPCB84_2(){ /*Paint uri prev 9 */  }
+
+void TabMidi::sendOscAPCB48_2(){ /*Paint uri next 1 */  }
+void TabMidi::sendOscAPCB49_2(){ /*Paint uri next 2 */  }
+void TabMidi::sendOscAPCB50_2(){ /*Paint uri next 3 */  }
+void TabMidi::sendOscAPCB51_2(){ /*Paint uri next 4 */  }
+void TabMidi::sendOscAPCB52_2(){ /*Paint uri next 5 */  }
+void TabMidi::sendOscAPCB53_2(){ /*Paint uri next 6 */  }
+void TabMidi::sendOscAPCB54_2(){ /*Paint uri next 7 */  }
+void TabMidi::sendOscAPCB55_2(){ /*Paint uri next 8 */  }
+void TabMidi::sendOscAPCB83_2(){ /*Paint uri next 9 */  }
+
+void TabMidi::sendOscAPCB56_2(){ /*Paint uri 1 */  }
+void TabMidi::sendOscAPCB57_2(){ /*Paint uri 2 */  }
+void TabMidi::sendOscAPCB58_2(){ /*Paint uri 3 */  }
+void TabMidi::sendOscAPCB59_2(){ /*Paint uri 4 */  }
+void TabMidi::sendOscAPCB60_2(){ /*Paint uri 5 */  }
+void TabMidi::sendOscAPCB61_2(){ /*Paint uri 6 */  }
+void TabMidi::sendOscAPCB62_2(){ /*Paint uri 7 */  }
+void TabMidi::sendOscAPCB63_2(){ /*Paint uri 8 */  }
+void TabMidi::sendOscAPCB82_2(){ /*Paint uri 9 */  }

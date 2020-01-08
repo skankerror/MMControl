@@ -17,8 +17,8 @@
 
 #include "mymidiin.h"
 
-MyMidiIn::MyMidiIn(Api api, const std::string &clientName,
-                   unsigned int queueSizeLimit) :
+MyMidiIn::MyMidiIn(int id, Api api, const std::string &clientName,
+                   unsigned int queueSizeLimit):
   QObject(),
   RtMidiIn(api, clientName, queueSizeLimit)
 {
@@ -33,22 +33,41 @@ MyMidiIn::MyMidiIn(Api api, const std::string &clientName,
   }
 
   ignoreTypes(); // Pour ignorer sysex et cie...
-
-  for (int i = 0; i<nPorts; i++)
+  switch(id)
   {
-    if (RtMidiIn::getPortName(i) == apcmini || RtMidiIn::getPortName(i) == apcmini2)
+  case 1:
+      for (int i = 0; i<nPorts; i++)
+      {
+        if (RtMidiIn::getPortName(i) == apcmini)
+        {
+          RtMidiIn::openPort(i, myPortName);  // On ouvre le port de l'APCMini
+          std::cout << "Succés sur le port #" << i << std::endl;
+          break;
+        }
+        else
+        {
+          std::cout << " Pas le bon nom : le nom système : " << RtMidiIn::getPortName(i)
+                    << "\nLe nom programme : " << apcmini  << std::endl;
+        }
+      }
+    break;
+  case 2:
+    for (int i = 0; i<nPorts; i++)
     {
-      RtMidiIn::openPort(i, myPortName);  // On ouvre le port de l'APCMini
-      std::cout << "Succés sur le port #" << i << std::endl;
-      break;
+      if (RtMidiIn::getPortName(i) == apcmini2)
+      {
+        RtMidiIn::openPort(i, myPortName2);  // On ouvre le port de l'APCMini2
+        std::cout << "Succés sur le port #" << i << std::endl;
+        break;
+      }
+      else
+      {
+        std::cout << " Pas le bon nom : le nom système : " << RtMidiIn::getPortName(i)
+                  << "\nLe nom programme : " << apcmini2  << std::endl;
+      }
     }
-    else
-    {
-      std::cout << " Pas le bon nom : le nom système : " << RtMidiIn::getPortName(i)
-                << "\nLe nom programme : " << apcmini << " ou " << apcmini2 << std::endl;
-    }
+  break;
   }
-
   // Pour lire les entrées avec callback
   RtMidiIn::setCallback(&sendMidiToOsc, this);
   std::cout << "J'écoute... ";

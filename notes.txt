@@ -8,7 +8,7 @@ Faire un readme
 
 Pouvoir insérer une cue après le dernier sélectionné
 
-Ajouter 2ème APC Mini et rajoutter assignations des boutons et revoir la façon dont on ouvre les ports:
+rajoutter assignations des boutons et revoir la façon dont on ouvre les ports:
 https://github.com/thestk/rtmidi/blob/master/tests/cmidiin.cpp
 Faire 2 midiout pour alllumer les boutons. Voir doc apcmini
 
@@ -32,4 +32,3 @@ bug mapmap ?
 
 -p_color n'apparait pas dans table view mais marche
 
--dans tab midi visible inversé...
