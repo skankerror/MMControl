@@ -1,3 +1,5 @@
+TODO
+
 Revoir les constructeurs de oscsend, c'est l'bordel !
 Rajouter regexp
 
@@ -8,7 +10,10 @@ revoir la façon dont on ouvre les ports:
 https://github.com/thestk/rtmidi/blob/master/tests/cmidiin.cpp
 Faire 2 midiout pour alllumer les boutons. Voir doc apcmini
 
-Faire MMC.h pour y mettre les constantes
+Voir la gestion du wait (rajouter un addtocue enchainé ?)
+
+-Quand on charge un csv il rajoute les cue au modèle, il faudrait d'abord
+effacer et mettre un warning avant
 
 BUGS
 
@@ -24,8 +29,13 @@ le go ne l'envoie pas même après un edit
 -m_name ne marche ni pour send, n'envoie pas de string à cuelist
 et le go ne l'envoie pas même après édit
 
--m_lock est bizarre, il ne se met pas à jour tout seul et le unlock ne marche pas
+-m_lock est bizarre, il ne se met pas à jour tout seul
+et le unlock ne marche pas
 bug mapmap ?
 
 -p_color n'apparait pas dans table view mais marche
+
+-le wait ne s'enregistre pas dans la cuelist depuis le csv
+(unused parameter warning, ...)
+
 

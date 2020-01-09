@@ -188,7 +188,7 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
   bool m_m_isvisible = false;
   bool m_m_issolo = false;
   bool m_m_islocked = false;
-  bool m_m_depth = false; // ???
+  int m_m_depth = 0; // ???
   int m_time = 0;
   bool m_isfadein = false;
   bool m_iswaiting = false;
@@ -199,10 +199,8 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
     QString val = lineToken.at(j);
     std::cout << val.toStdString() << ", ";
     QVariant value(val);
-//    int m_champInt;
     switch(j)
     {
-//    case 0: m_champ = static_cast<champMM>(value.toInt()); std::cout << m_champ << "bluk"; break;
     case 0:
       if (val.toStdString() == "NOOP") m_champInt = NOOP;
       if (val.toStdString() == "PLAY") m_champInt = PLAY;
@@ -224,8 +222,6 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
       if (val.toStdString() == "M_DEPTH") m_champInt = M_DEPTH;
       if (val.toStdString() == "P_XFADE") m_champInt = P_XFADE;
       if (val.toStdString() == "P_FADE") m_champInt = P_FADE;
-      //else m_champInt = NOOP;
-      //int champInt = static_cast<champMM>(m_champ);
       std::cout << "bluk" << val.toStdString()<< " " << m_champInt << "bluk";
       break;
     case 1: m_p_uri = value.toString(); break;
@@ -247,7 +243,6 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
     }
   m_champ = static_cast<champMM>(m_champInt);
   }
-//  m_champ = static_cast<champMM>(m_champInt);
   std::cout << m_champ << "bluk2";
   switch(m_champInt)
   {
@@ -275,7 +270,6 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
   default: oscsend = new OscSend(m_champ); break;
   }
   // renvoyer les oscsend...
-
   return oscsend;
 }
 
