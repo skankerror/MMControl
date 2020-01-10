@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapmap>
+<project version="0.6.3">
+  <paints>
+    <paint locked="false" id="1" className="Color" name="P1">
+      <opacity>0.9200000166893005</opacity>
+      <color>#aa0000</color>
+    </paint>
+    <paint locked="false" id="2" className="Color" name="P2">
+      <opacity>0.9900000095367432</opacity>
+      <color>#aa0000</color>
+    </paint>
+    <paint locked="false" id="3" className="Color" name="P3">
+      <opacity>0.9900000095367432</opacity>
+      <color>#aa0000</color>
+    </paint>
+    <paint locked="false" id="4" className="Color" name="P4">
+      <opacity>0.9900000095367432</opacity>
+      <color>#aa0000</color>
+    </paint>
+    <paint locked="false" id="5" className="Color" name="P5">
+      <opacity>0.9900000095367432</opacity>
+      <color>#aa0000</color>
+    </paint>
+    <paint locked="false" id="6" className="Color" name="P6">
+      <opacity>0.9900000095367432</opacity>
+      <color>#aa0000</color>
+    </paint>
+    <paint locked="false" id="7" className="Color" name="P7">
+      <opacity>0.9900000095367432</opacity>
+      <color>#aa0000</color>
+    </paint>
+    <paint locked="false" id="8" className="Color" name="P8">
+      <opacity>0.9900000095367432</opacity>
+      <color>#aa0000</color>
+    </paint>
+    <paint locked="false" id="9" className="Color" name="P9">
+      <opacity>0.9900000095367432</opacity>
+      <color>#aa0000</color>
+    </paint>
+    <paint locked="false" id="10" className="Color" name="P10">
+      <opacity>0.9900000095367432</opacity>
+      <color>#aa0000</color>
+    </paint>
+    <paint locked="false" id="11" className="Color" name="P11">
+      <opacity>0.9900000095367432</opacity>
+      <color>#aa0000</color>
+    </paint>
+    <paint locked="false" id="12" className="Color" name="P12">
+      <opacity>0.9900000095367432</opacity>
+      <color>#aa0000</color>
+    </paint>
+    <paint locked="false" id="13" className="Color" name="P13">
+      <opacity>0.9900000095367432</opacity>
+      <color>#aa0000</color>
+    </paint>
+    <paint locked="false" id="14" className="Color" name="P14">
+      <opacity>0.949999988079071</opacity>
+      <color>#aa0000</color>
+    </paint>
+    <paint locked="false" id="15" className="Color" name="P15">
+      <opacity>0.9900000095367432</opacity>
+      <color>#aa0000</color>
+    </paint>
+    <paint locked="false" id="16" className="Color" name="P16">
+      <opacity>0.9900000095367432</opacity>
+      <color>#aa0000</color>
+    </paint>
+    <paint locked="false" id="17" className="Color" name="P17">
+      <opacity>0.9900000095367432</opacity>
+      <color>#aa0000</color>
+    </paint>
+  </paints>
+  <mappings>
+    <mapping paintId="1" locked="false" depth="1" visible="true" id="1" solo="false" className="ColorMapping" name="Triangle 1">
+      <opacity>1</opacity>
+      <destination className="Triangle">
+        <locked>false</locked>
+        <vertices>
+          <vertex x="89.4" y="548.6"/>
+          <vertex x="294.4" y="551.6"/>
+          <vertex x="205.4" y="356.6"/>
+        </vertices>
+      </destination>
+    </mapping>
+    <mapping paintId="2" locked="false" depth="2" visible="true" id="2" solo="false" className="ColorMapping" name="Triangle 2">
+      <opacity>1</opacity>
+      <destination className="Triangle">
+        <locked>false</locked>
+        <vertices>
+          <vertex x="-155.6" y="530.8"/>
+          <vertex x="49.4" y="533.8"/>
+          <vertex x="-39.6" y="338.8"/>
+        </vertices>
+      </destination>
+    </mapping>
+    <mapping paintId="3" locked="false" depth="3" visible="true" id="3" solo="false" className="ColorMapping" name="Triangle 3">
+      <opacity>1</opacity>
+      <destination className="Triangle">
+        <locked>false</locked>
+        <vertices>
+          <vertex x="-200.4" y="310"/>
+          <vertex x="4.6" y="313"/>
+          <vertex x="-84.4" y="118"/>
+        </vertices>
+      </destination>
+    </mapping>
+    <mapping paintId="4" locked="false" depth="4" visible="true" id="4" solo="false" className="ColorMapping" name="Triangle 4">
+      <opacity>1</opacity>
+      <destination className="Triangle">
+        <locked>false</locked>
+        <vertices>
+          <vertex x="-193.4" y="92"/>
+          <vertex x="11.6" y="95"/>
+          <vertex x="-77.4" y="-100"/>
+        </vertices>
+      </destination>
+    </mapping>
+    <mapping paintId="5" locked="false" depth="5" visible="true" id="5" solo="false" className="ColorMapping" name="Triangle 5">
+      <opacity>1</opacity>
+      <destination className="Triangle">
+        <locked>false</locked>
+        <vertices>
+          <vertex x="-158.4" y="-128.8"/>
+          <vertex x="46.6" y="-125.8"/>
+          <vertex x="-42.4" y="-320.8"/>
+        </vertices>
+      </destination>
+    </mapping>
+    <mapping paintId="6" locked="false" depth="6" visible="true" id="6" solo="false" className="ColorMapping" name="Triangle 6">
+      <opacity>1</opacity>
+      <destination className="Triangle">
+        <locked>false</locked>
+        <vertices>
+          <vertex x="6.8" y="-321.6"/>
+          <vertex x="211.8" y="-318.6"/>
+          <vertex x="122.8" y="-513.6"/>
+        </vertices>
+      </destination>
+    </mapping>
+    <mapping paintId="7" locked="false" depth="7" visible="true" id="7" solo="false" className="ColorMapping" name="Triangle 7">
+      <opacity>1</opacity>
+      <destination className="Triangle">
+        <locked>false</locked>
+        <vertices>
+          <vertex x="246.2" y="-347.8"/>
+          <vertex x="451.2" y="-344.8"/>
+          <vertex x="362.2" y="-539.8"/>
+        </vertices>
+      </destination>
+    </mapping>
+    <mapping paintId="8" locked="false" depth="8" visible="true" id="8" solo="false" className="ColorMapping" name="Triangle 8">
+      <opacity>1</opacity>
+      <destination className="Triangle">
+        <locked>false</locked>
+        <vertices>
+          <vertex x="502.4" y="-357.2"/>
+          <vertex x="707.4" y="-354.2"/>
+          <vertex x="618.4" y="-549.2"/>
+        </vertices>
+      </destination>
+    </mapping>
+    <mapping paintId="9" locked="false" depth="9" visible="true" id="9" solo="false" className="ColorMapping" name="Triangle 9">
+      <opacity>1</opacity>
+      <destination className="Triangle">
+        <locked>false</locked>
+        <vertices>
+          <vertex x="779.6" y="-348.4"/>
+          <vertex x="984.6" y="-345.4"/>
+          <vertex x="895.6" y="-540.4"/>
+        </vertices>
+      </destination>
+    </mapping>
+    <mapping paintId="10" locked="false" depth="10" visible="true" id="10" solo="false" className="ColorMapping" name="Triangle 10">
+      <opacity>1</opacity>
+      <destination className="Triangle">
+        <locked>false</locked>
+        <vertices>
+          <vertex x="1052.6" y="-335.4"/>
+          <vertex x="1257.6" y="-332.4"/>
+          <vertex x="1168.6" y="-527.4"/>
+        </vertices>
+      </destination>
+    </mapping>
+    <mapping paintId="11" locked="false" depth="11" visible="true" id="11" solo="false" className="ColorMapping" name="Triangle 11">
+      <opacity>1</opacity>
+      <destination className="Triangle">
+        <locked>false</locked>
+        <vertices>
+          <vertex x="1168.8" y="-123.6"/>
+          <vertex x="1373.8" y="-120.6"/>
+          <vertex x="1284.8" y="-315.6"/>
+        </vertices>
+      </destination>
+    </mapping>
+    <mapping paintId="12" locked="false" depth="12" visible="true" id="12" solo="false" className="ColorMapping" name="Triangle 12">
+      <opacity>1</opacity>
+      <destination className="Triangle">
+        <locked>false</locked>
+        <vertices>
+          <vertex x="1167.4" y="127.4"/>
+          <vertex x="1372.4" y="130.4"/>
+          <vertex x="1283.4" y="-64.6"/>
+        </vertices>
+      </destination>
+    </mapping>
+    <mapping paintId="13" locked="false" depth="13" visible="true" id="13" solo="false" className="ColorMapping" name="Triangle 13">
+      <opacity>1</opacity>
+      <destination className="Triangle">
+        <locked>false</locked>
+        <vertices>
+          <vertex x="1147.8" y="339.2"/>
+          <vertex x="1352.8" y="342.2"/>
+          <vertex x="1263.8" y="147.2"/>
+        </vertices>
+      </destination>
+    </mapping>
+    <mapping paintId="14" locked="false" depth="14" visible="true" id="14" solo="false" className="ColorMapping" name="Triangle 14">
+      <opacity>1</opacity>
+      <destination className="Triangle">
+        <locked>false</locked>
+        <vertices>
+          <vertex x="1048.4" y="546.8"/>
+          <vertex x="1253.4" y="549.8"/>
+          <vertex x="1164.4" y="354.8"/>
+        </vertices>
+      </destination>
+    </mapping>
+    <mapping paintId="15" locked="false" depth="15" visible="true" id="15" solo="false" className="ColorMapping" name="Triangle 15">
+      <opacity>1</opacity>
+      <destination className="Triangle">
+        <locked>false</locked>
+        <vertices>
+          <vertex x="797.8" y="555.6"/>
+          <vertex x="1002.8" y="558.6"/>
+          <vertex x="913.8" y="363.6"/>
+        </vertices>
+      </destination>
+    </mapping>
+    <mapping paintId="16" locked="false" depth="16" visible="true" id="16" solo="false" className="ColorMapping" name="Triangle 16">
+      <opacity>1</opacity>
+      <destination className="Triangle">
+        <locked>false</locked>
+        <vertices>
+          <vertex x="547.2" y="558.8"/>
+          <vertex x="752.2" y="561.8"/>
+          <vertex x="663.2" y="366.8"/>
+        </vertices>
+      </destination>
+    </mapping>
+    <mapping paintId="17" locked="false" depth="17" visible="true" id="17" solo="false" className="ColorMapping" name="Triangle 17">
+      <opacity>1</opacity>
+      <destination className="Triangle">
+        <locked>false</locked>
+        <vertices>
+          <vertex x="321" y="566.4"/>
+          <vertex x="526" y="569.4"/>
+          <vertex x="437" y="374.4"/>
+        </vertices>
+      </destination>
+    </mapping>
+  </mappings>
+</project>
