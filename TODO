@@ -1,8 +1,6 @@
-TODO
+-Pouvoir insérer une cue après le dernier sélectionné
 
-Pouvoir insérer une cue après le dernier sélectionné
-
-changer assignations des boutons dernière colonne
+-changer assignations des boutons dernière colonne
 revoir la façon dont on ouvre les ports:
 https://github.com/thestk/rtmidi/blob/master/tests/cmidiin.cpp
 Faire 2 midiout pour alllumer les boutons. Voir doc apcmini
@@ -19,12 +17,3 @@ Mais ça oblige à revoir les constructeurs...
 -Remplacer les std::cout par des qdebug
 
 -Mettre QList plutôt que QVector ? pour insert pour addtocue ?
-
-BUGS
-
--Execute go plante s'il n'y a aucune cue de sélectionnée
-
--le wait ne s'enregistre pas dans la cuelist depuis le csv
-(unused parameter warning, ...)
-
--Revoir NOOP pour pause ça marche pas, ça envoie la cue d'après

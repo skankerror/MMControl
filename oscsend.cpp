@@ -22,8 +22,8 @@ OscSend::OscSend(champMM champ, int time):
   QObject(),
   UdpTransmitSocket(IpEndpointName(ADDRESS, PORT)),
   m_champ(champ),
-  m_time(time),
-  m_iswaiting(true)
+  m_time(time)/*,
+  m_iswaiting(true)*/
 {
   if (m_champ > 4)
   {
@@ -37,8 +37,8 @@ OscSend::OscSend(champMM champ, int time):
 OscSend::OscSend(champMM champ, int unInt, QString name, int time):
   UdpTransmitSocket(IpEndpointName(ADDRESS, PORT)),
   m_champ(champ),
-  m_time(time),
-  m_iswaiting(true)
+  m_time(time)/*,
+  m_iswaiting(true)*/
 {
   switch(m_champ)
   {
@@ -61,8 +61,8 @@ OscSend::OscSend(champMM champ,int p_ID1, int time):
   UdpTransmitSocket(IpEndpointName(ADDRESS, PORT)),
   m_champ(champ),
   m_p_ID1(p_ID1),
-  m_time(time),
-  m_iswaiting(true)
+  m_time(time)/*,
+  m_iswaiting(true)*/
 {
   if (m_champ != P_REWIND)
   {
@@ -76,8 +76,8 @@ OscSend::OscSend(champMM champ, int ID1, int var,int time):
   QObject(),
   UdpTransmitSocket(IpEndpointName(ADDRESS, PORT)),
   m_champ(champ),
-  m_time(time),
-  m_iswaiting(true)
+  m_time(time)/*,
+  m_iswaiting(true)*/
 {
   switch(m_champ)
   {
@@ -96,8 +96,8 @@ OscSend::OscSend(champMM champ, int ID1, bool isproperty, int time):
   QObject(),
   UdpTransmitSocket(IpEndpointName(ADDRESS, PORT)),
   m_champ(champ),
-  m_time(time),
-  m_iswaiting(true)
+  m_time(time)/*,
+  m_iswaiting(true)*/
 {
   switch (m_champ)
   {
@@ -115,8 +115,8 @@ OscSend::OscSend(champMM champ, QString name, int time):
   UdpTransmitSocket(IpEndpointName(ADDRESS, PORT)),
   m_champ(champ),
   m_p_name(name),
-  m_time(time),
-  m_iswaiting(true)
+  m_time(time)/*,
+  m_iswaiting(true)*/
 {
   if (m_champ != R_P_REWIND)
   {
@@ -130,8 +130,8 @@ OscSend::OscSend(champMM champ, QString name1, QString name2, int time):
   QObject(),
   UdpTransmitSocket(IpEndpointName(ADDRESS, PORT)),
   m_champ(champ),
-  m_time(time),
-  m_iswaiting(true)
+  m_time(time)/*,
+  m_iswaiting(true)*/
 {
   switch(m_champ)
   {
@@ -149,8 +149,8 @@ OscSend::OscSend(champMM champ, QString name, bool isproperty, int time):
   QObject(),
   UdpTransmitSocket(IpEndpointName(ADDRESS, PORT)),
   m_champ(champ),
-  m_time(time),
-  m_iswaiting(true)
+  m_time(time)/*,
+  m_iswaiting(true)*/
 {
   switch (m_champ)
   {

@@ -302,13 +302,13 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
     case 11: m_m_name2 = value.toString(); break;
     case 12: m_m_ID1 = value.toInt(); break;
     case 13: m_m_opacity = value.toInt(); break;
-    case 14: m_m_isvisible = value.toBool(); break;
-    case 15: m_m_issolo = value.toBool(); break;
-    case 16: m_m_islocked = value.toBool(); break;
+    case 14: m_m_isvisible = value.toInt(); break;
+    case 15: m_m_issolo = value.toInt(); break;
+    case 16: m_m_islocked = value.toInt(); break;
     case 17: m_m_depth = value.toInt(); break;
-    case 18: m_isfadein = value.toBool(); break;
+    case 18: m_isfadein = value.toInt(); break;
     case 19: m_time = value.toInt(); break;
-    case 20: m_iswaiting = value.toBool(); break;
+    case 20: m_iswaiting = value.toInt(); break;
     default: break;
     }
   m_champ = static_cast<champMM>(m_champInt);

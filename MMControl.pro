@@ -32,9 +32,10 @@ HEADERS += \
     tabmmstate.h
 
 DISTFILES += \
+    BUGS \
     LICENSE.md \
     README.md \
-    notes.txt
+    TODO
 
 RESOURCES += \
   resources/resources.qrc
