@@ -35,33 +35,44 @@ class OscSend : public QObject,
 {
   Q_OBJECT
 public:
-  OscSend(champMM champ, int time = 0); // 0, 1, 2, 3, 4
-  OscSend(champMM champ, int ID1, QString name,
-          int time = 0); // 5, 10, 11, 12;
-  OscSend(champMM champ, int p_ID1, int time); // 6
-  OscSend(champMM champ, int ID1, int var,
-          int time); // 7, 8, 9, 13, 17, 18; gros bordel !
-  OscSend(champMM champ, int ID1, bool isproperty,
-          int time = 0); // 14 15 16 19
-
-  // Faire constructeur pour regexp
+  // cstr 1: 0 NOOP, 1 PLAY, 2 PAUSE, 3 REWIND, 4 QUIT
+  OscSend(champMM champ, int time = 0);
+  // cstr 2: 5 P_NAME, 10 P_URI, 11 P_COLOR, 12 M_NAME, 22 R_P_OPACITY, 23 R_P_VOLUME,
+  // 24 R_P_RATE, 28 R_M_OPACITY, 32 R_M_DEPTH
+  OscSend(champMM champ, int unInt, QString name, int time = 0);
+  // cstr 3: 6 P_REWIND
+  OscSend(champMM champ, int p_ID1, int time);
+  // cstr 4: 7 P_OPACITY, 8 P_VOLUME, 9 P_RATE, 13 M_OPACITY, 17 M_DEPTH, 18 P_XFADE
+  OscSend(champMM champ, int ID1, int var, int time);
+  // cstr 5: 14 M_VISIBLE, 15 M_SOLO, 16 M_LOCK, 19 P_FADE
+  OscSend(champMM champ, int ID1, bool isproperty, int time = 0);
+  // cstr 6 : 21 R_P_REWIND
+  OscSend(champMM champ, QString name, int time = 0);
+  // cstr 7 : 20 R_P_NAME, 25 R_P_URI, 26 R_P_COLOR, 27 R_M_NAME, 34 R_P_XFADE
+  OscSend(champMM champ, QString name1, QString name2, int time = 0);
+  // CSTR 8 : 29 R_M_VISIBLE, 30 R_M_SOLO, 31 R_M_LOCK, 33 R_P_FADE
+  OscSend(champMM champ, QString name, bool isproperty, int time = 0);
 
   void ExecuteSend();
   void ExecuteXFade(int ID1, int ID2, int time);
   void ExecuteFade(int ID1, int time, bool isfadein);
+  void ExecutePXFade(QString p_name1, QString p_name2, int time);
+  void ExecutePFade(QString p_name, int time, bool isfadein);
 
   champMM m_champ;
 
   QString m_p_uri = "";
   QString m_p_name = "";
+  QString m_p_name2 = ""; // pour R_P_NAME, R_P_XFADE
   QString m_p_color = "";
   int m_p_ID1 = 0;
-  int m_p_ID2 = 0; // pour boucle...
+  int m_p_ID2 = 0; // pour P_XFade
   int m_p_rate = 0;
   int m_p_opacity = 0;
   int m_p_volume = 0;
 
   QString m_m_name = "";
+  QString m_m_name2 = ""; // pour R_M_NAME
   int m_m_ID1 = 0;
   int m_m_opacity = 0;
   bool m_m_isvisible = false;
@@ -70,8 +81,8 @@ public:
   int m_m_depth = 0;
 
   int m_time = 0;
-  bool m_isfadein = false;
-  bool m_iswaiting = true;
+  bool m_isfadein = false; // pour P_FADE
+  bool m_iswaiting = true; // pour savoir si la cue doit s'enchaîner
 };
 
 #endif // OSCSEND_H

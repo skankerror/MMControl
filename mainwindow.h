@@ -50,8 +50,6 @@ public slots:
   void sendFromToolBar();
   void setP_UriLabel();
   void setP_ColorLabel();
- // void setP_Name();
- // void setM_Name();
   void addToCue();
 
 private:
@@ -66,9 +64,10 @@ private:
   QToolBar *myToolBar;
     QLabel *champLabel;
     QComboBox *champComboBox;
+    QLineEdit *p_nameLineEdit;
+    QLineEdit *p_nameLineEdit2;
     QLabel *p_uriLabel;
     QPushButton *p_uriPushButton;
-    QLineEdit *p_nameLineEdit;
     QLabel *p_colorLabel;
     QPushButton *p_colorPushButton;
     QLabel *p_ID1Label;
@@ -82,6 +81,7 @@ private:
     QLabel *p_volumeLabel;
     QSpinBox *p_volumeSpinBox;
     QLineEdit *m_nameLineEdit;
+    QLineEdit *m_nameLineEdit2;
     QLabel *m_IDLabel;
     QSpinBox *m_IDSpinBox;
     QLabel *m_opacityLabel;

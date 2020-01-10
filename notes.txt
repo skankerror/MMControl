@@ -1,8 +1,5 @@
 TODO
 
-Revoir les constructeurs de oscsend, c'est l'bordel !
-Rajouter regexp
-
 Pouvoir insérer une cue après le dernier sélectionné
 
 changer assignations des boutons dernière colonne
@@ -10,32 +7,20 @@ revoir la façon dont on ouvre les ports:
 https://github.com/thestk/rtmidi/blob/master/tests/cmidiin.cpp
 Faire 2 midiout pour alllumer les boutons. Voir doc apcmini
 
-Voir la gestion du wait (rajouter un addtocue enchainé ?)
-
 -Quand on charge un csv il rajoute les cue au modèle, il faudrait d'abord
 effacer et mettre un warning avant
+
+-Mettre à la fin de tous les constructeurs oscsend un bool iswaiting
+pour pouvoir le récupérer dans le fichier.
+Mais ça oblige à revoir les constructeurs...
+
+-Augmenter la taille mini de champ dans la tableview
 
 BUGS
 
 -Execute go plante s'il n'y a aucune cue de sélectionnée
 
--addtocue ne prend pas p_name dans la cuelist (send marche),
-le go ne l'envoie pas même après un edit
-
--dans la toolbar opacity ne va que jusqu'à 99
-
--vérifier rate qui ne va pas à 0 ni dans les négatifs...
-
--m_name ne marche ni pour send, n'envoie pas de string à cuelist
-et le go ne l'envoie pas même après édit
-
--m_lock est bizarre, il ne se met pas à jour tout seul
-et le unlock ne marche pas
-bug mapmap ?
-
--p_color n'apparait pas dans table view mais marche
-
 -le wait ne s'enregistre pas dans la cuelist depuis le csv
 (unused parameter warning, ...)
 
-
+-Revoir NOOP pour pause ça marche pas, ça envoie la cue d'après

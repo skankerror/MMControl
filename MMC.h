@@ -18,8 +18,6 @@
 #ifndef MMC_H
 #define MMC_H
 
-#include <iostream>
-
 // MainWindow
 #define WINDOW_TITLE "Mapmap Controller"
 #define X_WINDOW_OFFSET 200
@@ -52,7 +50,22 @@ enum champMM
   M_LOCK = 16,
   M_DEPTH = 17,
   P_XFADE = 18,
-  P_FADE = 19
+  P_FADE = 19,
+  R_P_NAME = 20,
+  R_P_REWIND = 21,
+  R_P_OPACITY = 22,
+  R_P_VOLUME = 23,
+  R_P_RATE = 24,
+  R_P_URI = 25,
+  R_P_COLOR = 26,
+  R_M_NAME = 27,
+  R_M_OPACITY = 28,
+  R_M_VISIBLE = 29,
+  R_M_SOLO = 30,
+  R_M_LOCK = 31,
+  R_M_DEPTH = 32,
+  R_P_FADE = 33,
+  R_P_XFADE = 34
 };
 
 // MyMidiIn

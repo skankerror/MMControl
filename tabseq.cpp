@@ -116,7 +116,7 @@ void TabSeq::removeCue()
 
 void TabSeq::saveAs()
 {
-  QString fileName = QFileDialog::getSaveFileName(this);
+  QString fileName = QFileDialog::getSaveFileName(this /*améliorer*/);
   if (fileName.isEmpty())
     return;
   else
@@ -137,19 +137,8 @@ void TabSeq::saveAs()
       {
         for (int j = 0; j < columns; j++)
         {
-//          if (j == 0)
-//          {
-//            QString champTemp = m_oscCueList->data(m_oscCueList->index(i,j)).toString();
-//            int intTemp = static_cast<champMM>(champTemp.toInt());
-//            std::cout << champTemp.toStdString() << " " << intTemp << std::endl;
-//            textData += intTemp;
-//            textData += ", ";
-//          }
-//          else
-//          {
             textData += m_oscCueList->data(m_oscCueList->index(i,j)).toString();
             textData += ", ";
-//          }
         }
         textData += "\n";
       }
@@ -161,7 +150,7 @@ void TabSeq::saveAs()
 }
 void TabSeq::loadFile()
 {
-  QString fileName = QFileDialog::getOpenFileName(this);
+  QString fileName = QFileDialog::getOpenFileName(this /*améliorer*/);
   QFile file(fileName);
   if (fileName.isEmpty())
   {
