@@ -146,7 +146,6 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const // voir pour
 
 bool OscCueList::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-  role = Qt::EditRole;
   switch(index.column())
   {
   case 0: v_listCue.at(index.row())->m_champ = static_cast<champMM>(value.toInt()); break;
@@ -170,7 +169,7 @@ bool OscCueList::setData(const QModelIndex &index, const QVariant &value, int ro
   case 18: v_listCue.at(index.row())->m_isfadein = value.toBool(); break;
   case 19: v_listCue.at(index.row())->m_time = value.toInt(); break;
   case 20: v_listCue.at(index.row())->m_iswaiting = value.toBool(); break;
-  default: break;
+  default: std::cout << role << "\n"; break; // Pour éviter unused parameter
   }
   emit dataChanged(index, index);
   return true;
@@ -221,8 +220,8 @@ Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const
 OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
 {
   OscSend *oscsend;
-  champMM m_champ;
-  int m_champInt;
+  champMM m_champ = NOOP;
+  int m_champInt = 0;
   QString m_p_name = "";
   QString m_p_name2 = "";
   QString m_p_uri = "";

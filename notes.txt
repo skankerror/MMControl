@@ -16,6 +16,10 @@ Mais ça oblige à revoir les constructeurs...
 
 -Augmenter la taille mini de champ dans la tableview
 
+-Remplacer les std::cout par des qdebug
+
+-Mettre QList plutôt que QVector ? pour insert pour addtocue ?
+
 BUGS
 
 -Execute go plante s'il n'y a aucune cue de sélectionnée

@@ -92,6 +92,12 @@ void MyMidiIn::sendMidiToOsc(double deltatime,
   // On caste le void* pour pouvoir le déréférencer.
   MyMidiIn *unMidiIn = static_cast<MyMidiIn*>(userData);
 
+  unsigned int nBytes = unMessage->size(); // Pour voir le delta
+  for ( unsigned int i=0; i<nBytes; i++ )
+    std::cout << "Byte " << i << " = " << (int)unMessage->at(i) << ", ";
+  if ( nBytes > 0 )
+    std::cout << "stamp = " << deltatime << std::endl;
+
   if ((int)unMessage->at(0) == MIDI_CONTROL)
   {
     std::cout << "#0 : controller : ";
