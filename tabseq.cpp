@@ -57,8 +57,6 @@ TabSeq::TabSeq(OscCueList *oscCueList) :
   layoutMain->addLayout(layout1);
   this->setLayout(layoutMain);
 
-//  QPalette pal = palette();
-//  pal.setColor(QPalette::Background, Qt::gray);
   setAutoFillBackground(true);
   setPalette(pal);
 
@@ -72,12 +70,20 @@ TabSeq::TabSeq(OscCueList *oscCueList) :
 
 void TabSeq::executeGo()
 {
+  // Vérifier s'il y a une cue sélectionnée
+  if (tableView->currentIndex().isValid())
   m_oscCueList->v_listCue.at((tableView->currentIndex().row()))->ExecuteSend();
+  else
+  {
+    return;
+  }
   if (tableView->currentIndex().siblingAtRow(tableView->currentIndex().row()+1).isValid() == true)
   {
     tableView->setCurrentIndex(tableView->currentIndex().siblingAtRow(tableView->currentIndex().row()+1));
-    if (m_oscCueList->v_listCue.at((tableView->currentIndex().row()-1))->m_iswaiting == false)
+    if (m_oscCueList->v_listCue.at((tableView->currentIndex().row()-1))->m_iswaiting == 0)
     {
+      usleep(1000000 * m_oscCueList->v_listCue.at((tableView->currentIndex().row()-1))->m_time);
+      std::cout << "wait " << m_oscCueList->v_listCue.at((tableView->currentIndex().row()-1))->m_time << " s\n";
       executeGo();
     }
   }

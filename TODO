@@ -8,10 +8,6 @@ Faire 2 midiout pour alllumer les boutons. Voir doc apcmini
 -Quand on charge un csv il rajoute les cue au modèle, il faudrait d'abord
 effacer et mettre un warning avant
 
--Mettre à la fin de tous les constructeurs oscsend un bool iswaiting
-pour pouvoir le récupérer dans le fichier.
-Mais ça oblige à revoir les constructeurs...
-
 -Augmenter la taille mini de champ dans la tableview
 
 -Remplacer les std::cout par des qdebug
