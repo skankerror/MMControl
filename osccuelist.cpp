@@ -17,7 +17,7 @@
 
 #include "osccuelist.h"
 
-OscCueList::OscCueList(QObject *parent):// pas QObject dans le cstr ??
+OscCueList::OscCueList(QObject *parent):
   QAbstractTableModel(parent)
 {}
 
@@ -219,6 +219,7 @@ Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const
 
 OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
 {
+  //beginResetModel();
   OscSend *oscsend;
   champMM m_champ = NOOP;
   int m_champInt = 0;
@@ -248,6 +249,7 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
   {
     QString val = lineToken.at(j);
     std::cout << val.toStdString() << ", ";
+    val = val.trimmed();
     QVariant value(val);
     switch(j)
     {
@@ -358,8 +360,13 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
   default: oscsend = new OscSend(m_champ); break;
   }
   // renvoyer les oscsend...
+  //endResetModel();
   return oscsend;
 }
+
+void OscCueList::beginLoadFile(){ beginResetModel();}
+
+void OscCueList::endLoadFile(){ endResetModel();}
 
 void OscCueList::addCue(OscSend *oscsend)
 {

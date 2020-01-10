@@ -33,13 +33,15 @@ public:
 
 signals:
 
+
+
 public slots:
   void executeGo();
   void movePrevious();
   void moveNext();
   void removeCue();
   void saveAs();
-  void loadFile();
+  void loadFile(/*OscCueList *osccuelist*/);
 
 private:
   OscCueList *m_oscCueList;
@@ -53,7 +55,6 @@ private:
         QPushButton *boutonSaveAs;
         QPushButton *boutonLoad;
     QTableView *tableView;
-
 
 };
 

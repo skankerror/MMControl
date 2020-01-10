@@ -218,7 +218,8 @@ void OscSend::ExecuteSend()
     std::cout << "/mapmap/paint/rate sf " << m_p_name.toStdString().c_str() << " " << ((float)m_p_rate)/100 << std::endl; break;
   case R_P_URI: packet << osc::BeginMessage("/mapmap/paint/uri") << m_p_name.toStdString().c_str() << m_p_uri.toStdString().c_str() << osc::EndMessage;
     std::cout << "/mapmap/paint/uri ss " << m_p_name.toStdString().c_str() << " " << m_p_uri.toStdString().c_str() << std::endl; break;
-  case R_P_COLOR: break;
+  case R_P_COLOR: packet << osc::BeginMessage("/mapmap/paint/color") << m_p_name.toStdString().c_str() << m_p_color.toStdString().c_str() << osc::EndMessage;
+    std::cout << "/mapmap/paint/color ss " << m_p_name.toStdString().c_str() << " " << m_p_color.toStdString().c_str() << std::endl; break;
   case R_M_NAME: packet << osc::BeginMessage("/mapmap/mapping/name") << m_m_name.toStdString().c_str() << m_m_name2.toStdString().c_str() << osc::EndMessage;
     std::cout << "/mapmap/mapping/name ss " << m_m_name.toStdString().c_str() << " " << m_m_name2.toStdString().c_str() << std::endl; break;
   case R_M_OPACITY: packet << osc::BeginMessage("/mapmap/mapping/opacity") << m_m_name.toStdString().c_str() << m_m_opacity << osc::EndMessage;

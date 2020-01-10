@@ -43,7 +43,7 @@ TabSeq::TabSeq(OscCueList *oscCueList) :
   boutonLayout->addWidget(boutonSaveAs);
   boutonLayout->addWidget(boutonLoad);
   tableView = new QTableView();
-  tableView->setModel(oscCueList);
+  tableView->setModel(m_oscCueList);
 
   QPalette pal = palette();
   pal.setColor(QPalette::Background, Qt::gray);
@@ -65,7 +65,8 @@ TabSeq::TabSeq(OscCueList *oscCueList) :
   connect(boutonNext, SIGNAL(clicked(bool)), SLOT(moveNext()));
   connect(boutonRemove, SIGNAL(clicked(bool)), SLOT(removeCue()));
   connect(boutonSaveAs, SIGNAL(clicked(bool)), SLOT(saveAs()));
-  connect(boutonLoad, SIGNAL(clicked(bool)), SLOT(loadFile()));
+  connect(boutonLoad, SIGNAL(clicked(bool)), SLOT(loadFile(/*m_oscCueList*/)));
+//  connect(this, SIGNAL(
 }
 
 void TabSeq::executeGo()
@@ -154,7 +155,7 @@ void TabSeq::saveAs()
     }
   }
 }
-void TabSeq::loadFile()
+void TabSeq::loadFile(/*OscCueList *osccuelist*/)
 {
   QString fileName = QFileDialog::getOpenFileName(this /*améliorer*/);
   QFile file(fileName);
@@ -165,6 +166,8 @@ void TabSeq::loadFile()
   if (file.open(QIODevice::ReadOnly))
   {
     // peut-être remove cue existantes ?
+    tableView->reset();
+    OscSend *oscsend = new OscSend(NOOP);
     int lineindex = 0;                     // file line counter
     QTextStream in(&file);                 // read to text stream
     while (!in.atEnd())
@@ -172,11 +175,12 @@ void TabSeq::loadFile()
 
         // read one line from textstream(separated by "\n")
         QString fileLine = in.readLine();
-        QStringList lineToken = fileLine.split(",", QString::SkipEmptyParts); // parse the read line into separate pieces(tokens) with "," as the delimiter
-        m_oscCueList->addCue(m_oscCueList->retOscsendFromFileLine(lineToken));
+        // parse the read line into separate pieces(tokens) with "," as the delimiter
+        QStringList lineToken = fileLine.split(",", QString::SkipEmptyParts);
+        oscsend = m_oscCueList->retOscsendFromFileLine(lineToken);
+        m_oscCueList->addCue(oscsend);
     }
     lineindex++;
   }
-
   file.close();
 }

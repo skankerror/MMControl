@@ -19,7 +19,6 @@
 #include <QTranslator>
 #include <QLocale>
 #include <QLibraryInfo>
-//#include <QPixmap>
 #include "mainwindow.h"
 
 int main(int argc, char **argv)
