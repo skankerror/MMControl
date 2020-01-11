@@ -70,7 +70,7 @@ MyMidiIn::MyMidiIn(int id, Api api, const std::string &clientName,
   }
   // Pour lire les entrées avec callback
   RtMidiIn::setCallback(&sendMidiToOsc, this);
-  std::cout << "J'écoute... ";
+  std::cout << "J'écoute... \n";
 
 }
 // Un slot qui appelle le signal connecté dans parent

@@ -123,7 +123,7 @@ void TabSeq::removeCue()
 
 void TabSeq::saveAs()
 {
-  QString fileName = QFileDialog::getSaveFileName(this /*améliorer*/);
+  QString fileName = QFileDialog::getSaveFileName(this, "Choose File", "/home/ray/boulot");
   if (fileName.isEmpty())
     return;
   else
@@ -155,9 +155,9 @@ void TabSeq::saveAs()
     }
   }
 }
-void TabSeq::loadFile(/*OscCueList *osccuelist*/)
+void TabSeq::loadFile()
 {
-  QString fileName = QFileDialog::getOpenFileName(this /*améliorer*/);
+  QString fileName = QFileDialog::getOpenFileName(this, "Choose File", "/home/ray/boulot");
   QFile file(fileName);
   if (fileName.isEmpty())
   {

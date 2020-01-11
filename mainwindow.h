@@ -96,6 +96,7 @@ private:
     QCheckBox *fadeCheckBox;
     QPushButton *sendPushButton;
     QPushButton *addToCuePushButton;
+
 };
 
 #endif // MAINWINDOW_H

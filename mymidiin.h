@@ -31,7 +31,7 @@ public:
   MyMidiIn(int id = 1,
            RtMidi::Api api = LINUX_ALSA,
            const std::string &clientName = "OscControlMapmap Input Client",
-           unsigned int queueSizeLimit = 100);
+           unsigned int queueSizeLimit = QUEUE_SIZE_LIMIT);
 
   // Fn static pour le callback. Elle est statique mais elle peut accéder
   // aux fonctions des objets. On lui enverrra this en arg userData.

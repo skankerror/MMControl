@@ -148,14 +148,10 @@ TabMidi::TabMidi(MyMidiIn *midiIn, MyMidiIn *midiIn2 , QWidget *parent) :
   layoutTotal->addWidget(pID9, 10, 9); layoutTotal->addWidget(mID9, 11, 9);
 
   // align sliders APC1
-  layoutTotal->setAlignment(S1, Qt::AlignHCenter);
-  layoutTotal->setAlignment(S2, Qt::AlignHCenter);
-  layoutTotal->setAlignment(S3, Qt::AlignHCenter);
-  layoutTotal->setAlignment(S4, Qt::AlignHCenter);
-  layoutTotal->setAlignment(S5, Qt::AlignHCenter);
-  layoutTotal->setAlignment(S6, Qt::AlignHCenter);
-  layoutTotal->setAlignment(S7, Qt::AlignHCenter);
-  layoutTotal->setAlignment(S8, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S1, Qt::AlignHCenter); layoutTotal->setAlignment(S2, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S3, Qt::AlignHCenter); layoutTotal->setAlignment(S4, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S5, Qt::AlignHCenter); layoutTotal->setAlignment(S6, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S7, Qt::AlignHCenter); layoutTotal->setAlignment(S8, Qt::AlignHCenter);
   layoutTotal->setAlignment(S9, Qt::AlignHCenter);
 
   layoutTotal->setColumnMinimumWidth(10, 10); // Pour avoir une séparation entre les 2 apcmini col 10
@@ -270,17 +266,11 @@ TabMidi::TabMidi(MyMidiIn *midiIn, MyMidiIn *midiIn2 , QWidget *parent) :
   layoutTotal->addWidget(pID18, 10, 19); layoutTotal->addWidget(mID18, 11, 19);
 
   // align sliders APC2
-  layoutTotal->setAlignment(S10, Qt::AlignHCenter);
-  layoutTotal->setAlignment(S11, Qt::AlignHCenter);
-  layoutTotal->setAlignment(S12, Qt::AlignHCenter);
-  layoutTotal->setAlignment(S13, Qt::AlignHCenter);
-  layoutTotal->setAlignment(S14, Qt::AlignHCenter);
-  layoutTotal->setAlignment(S15, Qt::AlignHCenter);
-  layoutTotal->setAlignment(S16, Qt::AlignHCenter);
-  layoutTotal->setAlignment(S17, Qt::AlignHCenter);
-  layoutTotal->setAlignment(S18, Qt::AlignHCenter);
-
-  this->setLayout(layoutTotal);
+  layoutTotal->setAlignment(S10, Qt::AlignHCenter); layoutTotal->setAlignment(S11, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S12, Qt::AlignHCenter); layoutTotal->setAlignment(S13, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S14, Qt::AlignHCenter); layoutTotal->setAlignment(S15, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S16, Qt::AlignHCenter); layoutTotal->setAlignment(S17, Qt::AlignHCenter);
+  layoutTotal->setAlignment(S18, Qt::AlignHCenter);  this->setLayout(layoutTotal);
 
   QPalette pal = palette();
   pal.setColor(QPalette::Background, Qt::gray);
@@ -505,16 +495,11 @@ void TabMidi::receiveMidiCtrl(int unID, float uneOpacite) // APC1
 
   switch(unID)
   {
-  case 1: this->S1->setValue((int)(uneOpacite*100)); break;
-  case 2: this->S2->setValue((int)(uneOpacite*100)); break;
-  case 3: this->S3->setValue((int)(uneOpacite*100)); break;
-  case 4: this->S4->setValue((int)(uneOpacite*100)); break;
-  case 5: this->S5->setValue((int)(uneOpacite*100)); break;
-  case 6: this->S6->setValue((int)(uneOpacite*100)); break;
-  case 7: this->S7->setValue((int)(uneOpacite*100)); break;
-  case 8: this->S8->setValue((int)(uneOpacite*100)); break;
-  case 9: this->S9->setValue((int)(uneOpacite*100)); break;
-  default : break;
+  case 1: this->S1->setValue((int)(uneOpacite*100)); break; case 2: this->S2->setValue((int)(uneOpacite*100)); break;
+  case 3: this->S3->setValue((int)(uneOpacite*100)); break; case 4: this->S4->setValue((int)(uneOpacite*100)); break;
+  case 5: this->S5->setValue((int)(uneOpacite*100)); break; case 6: this->S6->setValue((int)(uneOpacite*100)); break;
+  case 7: this->S7->setValue((int)(uneOpacite*100)); break; case 8: this->S8->setValue((int)(uneOpacite*100)); break;
+  case 9: this->S9->setValue((int)(uneOpacite*100)); break; default : break;
   }
 }
 
@@ -523,128 +508,87 @@ void TabMidi::receiveMidiCtrl2(int unID, float uneOpacite) // APC2
 
   switch(unID)
   {
-  case 1: this->S10->setValue((int)(uneOpacite*100)); break;
-  case 2: this->S11->setValue((int)(uneOpacite*100)); break;
-  case 3: this->S12->setValue((int)(uneOpacite*100)); break;
-  case 4: this->S13->setValue((int)(uneOpacite*100)); break;
-  case 5: this->S14->setValue((int)(uneOpacite*100)); break;
-  case 6: this->S15->setValue((int)(uneOpacite*100)); break;
-  case 7: this->S16->setValue((int)(uneOpacite*100)); break;
-  case 8: this->S17->setValue((int)(uneOpacite*100)); break;
-  case 9: this->S18->setValue((int)(uneOpacite*100)); break;
-  default : break;
+  case 1: this->S10->setValue((int)(uneOpacite*100)); break; case 2: this->S11->setValue((int)(uneOpacite*100)); break;
+  case 3: this->S12->setValue((int)(uneOpacite*100)); break; case 4: this->S13->setValue((int)(uneOpacite*100)); break;
+  case 5: this->S14->setValue((int)(uneOpacite*100)); break; case 6: this->S15->setValue((int)(uneOpacite*100)); break;
+  case 7: this->S16->setValue((int)(uneOpacite*100)); break; case 8: this->S17->setValue((int)(uneOpacite*100)); break;
+  case 9: this->S18->setValue((int)(uneOpacite*100)); break; default : break;
   }
 }
 // APC1
 void TabMidi::sendOscS1(int uneOpacite)
 {
-  oscSendS->m_p_ID1 = pID1->value();
-  oscSendS->m_p_opacity = uneOpacite;
-  oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID1->value(); oscSendS->m_p_opacity = uneOpacite; oscSendS->ExecuteSend();
 }
 void TabMidi::sendOscS2(int uneOpacite)
 {
-  oscSendS->m_p_ID1 = pID2->value();
-  oscSendS->m_p_opacity = uneOpacite;
-  oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID2->value(); oscSendS->m_p_opacity = uneOpacite; oscSendS->ExecuteSend();
 }
 void TabMidi::sendOscS3(int uneOpacite)
 {
-  oscSendS->m_p_ID1 = pID3->value();
-  oscSendS->m_p_opacity = uneOpacite;
-  oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID3->value(); oscSendS->m_p_opacity = uneOpacite; oscSendS->ExecuteSend();
 }
 void TabMidi::sendOscS4(int uneOpacite)
 {
-  oscSendS->m_p_ID1 = pID4->value();
-  oscSendS->m_p_opacity = uneOpacite;
-  oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID4->value(); oscSendS->m_p_opacity = uneOpacite; oscSendS->ExecuteSend();
 }
 void TabMidi::sendOscS5(int uneOpacite)
 {
-  oscSendS->m_p_ID1 = pID5->value();
-  oscSendS->m_p_opacity = uneOpacite;
-  oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID5->value(); oscSendS->m_p_opacity = uneOpacite; oscSendS->ExecuteSend();
 }
 void TabMidi::sendOscS6(int uneOpacite)
 {
-  oscSendS->m_p_ID1 = pID6->value();
-  oscSendS->m_p_opacity = uneOpacite;
-  oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID6->value(); oscSendS->m_p_opacity = uneOpacite; oscSendS->ExecuteSend();
 }
 void TabMidi::sendOscS7(int uneOpacite)
 {
-  oscSendS->m_p_ID1 = pID7->value();
-  oscSendS->m_p_opacity = uneOpacite;
-  oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID7->value(); oscSendS->m_p_opacity = uneOpacite; oscSendS->ExecuteSend();
 }
 void TabMidi::sendOscS8(int uneOpacite)
 {
-  oscSendS->m_p_ID1 = pID8->value();
-  oscSendS->m_p_opacity = uneOpacite;
-  oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID8->value(); oscSendS->m_p_opacity = uneOpacite; oscSendS->ExecuteSend();
 }
 void TabMidi::sendOscS9(int uneOpacite)
 {
-  oscSendS->m_p_ID1 = pID9->value();
-  oscSendS->m_p_opacity = uneOpacite;
-  oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID9->value(); oscSendS->m_p_opacity = uneOpacite; oscSendS->ExecuteSend();
 }
 
 // APC2
 void TabMidi::sendOscS10(int uneOpacite)
 {
-  oscSendS->m_p_ID1 = pID10->value();
-  oscSendS->m_p_opacity = uneOpacite;
-  oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID10->value(); oscSendS->m_p_opacity = uneOpacite; oscSendS->ExecuteSend();
 }
 void TabMidi::sendOscS11(int uneOpacite)
 {
-  oscSendS->m_p_ID1 = pID11->value();
-  oscSendS->m_p_opacity = uneOpacite;
-  oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID11->value(); oscSendS->m_p_opacity = uneOpacite; oscSendS->ExecuteSend();
 }
 void TabMidi::sendOscS12(int uneOpacite)
 {
-  oscSendS->m_p_ID1 = pID12->value();
-  oscSendS->m_p_opacity = uneOpacite;
-  oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID12->value(); oscSendS->m_p_opacity = uneOpacite; oscSendS->ExecuteSend();
 }
 void TabMidi::sendOscS13(int uneOpacite)
 {
-  oscSendS->m_p_ID1 = pID13->value();
-  oscSendS->m_p_opacity = uneOpacite;
-  oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID13->value(); oscSendS->m_p_opacity = uneOpacite; oscSendS->ExecuteSend();
 }
 void TabMidi::sendOscS14(int uneOpacite)
 {
-  oscSendS->m_p_ID1 = pID14->value();
-  oscSendS->m_p_opacity = uneOpacite;
-  oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID14->value(); oscSendS->m_p_opacity = uneOpacite; oscSendS->ExecuteSend();
 }
 void TabMidi::sendOscS15(int uneOpacite)
 {
-  oscSendS->m_p_ID1 = pID15->value();
-  oscSendS->m_p_opacity = uneOpacite;
-  oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID15->value(); oscSendS->m_p_opacity = uneOpacite; oscSendS->ExecuteSend();
 }
 void TabMidi::sendOscS16(int uneOpacite)
 {
-  oscSendS->m_p_ID1 = pID16->value();
-  oscSendS->m_p_opacity = uneOpacite;
-  oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID16->value(); oscSendS->m_p_opacity = uneOpacite; oscSendS->ExecuteSend();
 }
 void TabMidi::sendOscS17(int uneOpacite)
 {
-  oscSendS->m_p_ID1 = pID17->value();
-  oscSendS->m_p_opacity = uneOpacite;
-  oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID17->value(); oscSendS->m_p_opacity = uneOpacite; oscSendS->ExecuteSend();
 }
 void TabMidi::sendOscS18(int uneOpacite)
 {
-  oscSendS->m_p_ID1 = pID18->value();
-  oscSendS->m_p_opacity = uneOpacite;
-  oscSendS->ExecuteSend();
+  oscSendS->m_p_ID1 = pID18->value(); oscSendS->m_p_opacity = uneOpacite; oscSendS->ExecuteSend();
 }
 
 void TabMidi::receiveMidiNote(int unBouton) // APC1

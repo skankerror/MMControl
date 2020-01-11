@@ -248,8 +248,8 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
   for (int j = 0; j < lineToken.size(); j++)
   {
     QString val = lineToken.at(j);
-    std::cout << val.toStdString() << ", ";
     val = val.trimmed();
+    std::cout << val.toStdString() << ", ";
     QVariant value(val);
     switch(j)
     {
@@ -360,7 +360,6 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
   default: oscsend = new OscSend(m_champ); break;
   }
   // renvoyer les oscsend...
-  //endResetModel();
   return oscsend;
 }
 
@@ -376,7 +375,6 @@ void OscCueList::addCue(OscSend *oscsend)
   endInsertRows();
 
   std::cout << "cue added" << std::endl;
-
 }
 
 void OscCueList::moveCuePrev(int rowCue)

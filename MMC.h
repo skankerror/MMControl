@@ -76,5 +76,6 @@ enum champMM
 #define MYPORTNAME_2 "MMControl Input Port 2"
 #define MIDI_CONTROL 176
 #define MIDI_BUTTON_PRESSED 144
+#define QUEUE_SIZE_LIMIT 100
 
 #endif // MMC_H

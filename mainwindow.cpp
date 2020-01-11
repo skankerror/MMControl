@@ -39,13 +39,9 @@ MainWindow::MainWindow() :
 
   // connect pour afficher les bons widgets sur la toolbar
   connect(champComboBox, SIGNAL(currentIndexChanged(int)), SLOT(showWidgets(int)));
-  // Connect pour send
   connect(sendPushButton, SIGNAL(clicked()), SLOT(sendFromToolBar()));
-  // Connect pour l'uri
   connect(p_uriPushButton, SIGNAL(clicked()), SLOT(setP_UriLabel()));
-  // Connect pour Color
   connect(p_colorPushButton, SIGNAL(clicked()), SLOT(setP_ColorLabel()));
-  // Connect pour AddToCue
   connect(addToCuePushButton, SIGNAL(clicked()), SLOT(addToCue()));
 }
 
@@ -554,7 +550,7 @@ void MainWindow::setP_UriLabel()
 }
 void MainWindow::setP_ColorLabel()
 {
-  QColor colorTemp = QColorDialog::getColor();
+  QColor colorTemp = QColorDialog::getColor(Qt::green, this, "Select Color", QColorDialog::DontUseNativeDialog);
   p_colorLabel->setText(colorTemp.name());
 }
 void MainWindow::addToCue()

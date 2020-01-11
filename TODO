@@ -28,4 +28,6 @@ La sous-classer ?
 
 -Mettre warning êtes-vous surs de vouloir quitter à la fermeture
 
--Rajoutter exemples
+-Mettre time en dizième de secondes, rajouter un label pour le préciser
+
+-Mettre des tooltips aux widgets
