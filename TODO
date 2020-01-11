@@ -30,4 +30,6 @@ La sous-classer ?
 
 -Renvoyer mymidiin2 à tabseq pour avoir le bouton go
 
+-Ne permettre qu'à un seul cue d'être sélectionné
+
 
