@@ -606,7 +606,6 @@ void TabMidi::receiveMidiNote(int unBouton) // APC1
   case 70: this->B70->animateClick(); break;
   case 71: this->B71->animateClick(); break;
   case 98: this->B98->animateClick(); break;
-
     // rangée 8 paint/rate
   case 0: this->B0->animateClick(); break;
   case 1: this->B1->animateClick(); break;
@@ -617,7 +616,6 @@ void TabMidi::receiveMidiNote(int unBouton) // APC1
   case 6: this->B6->animateClick(); break;
   case 7: this->B7->animateClick(); break;
   case 89: this->B89->animateClick(); break;
-
     //rangée 7 mapping/solo off
   case 8: this->B8->animateClick(); break;
   case 9: this->B9->animateClick(); break;
@@ -628,7 +626,6 @@ void TabMidi::receiveMidiNote(int unBouton) // APC1
   case 14: this->B14->animateClick(); break;
   case 15: this->B15->animateClick(); break;
   case 88: this->B88->animateClick(); break;
-
     // rangée 6 mapping/solo on
   case 16: this->B16->animateClick(); break;
   case 17: this->B17->animateClick(); break;
@@ -639,7 +636,6 @@ void TabMidi::receiveMidiNote(int unBouton) // APC1
   case 22: this->B22->animateClick(); break;
   case 23: this->B23->animateClick(); break;
   case 87: this->B87->animateClick(); break;
-
     // rangée 5 mapping/visible off
   case 24: this->B24->animateClick(); break;
   case 25: this->B25->animateClick(); break;
@@ -650,7 +646,6 @@ void TabMidi::receiveMidiNote(int unBouton) // APC1
   case 30: this->B30->animateClick(); break;
   case 31: this->B31->animateClick(); break;
   case 86: this->B86->animateClick(); break;
-
     // rangée 4 mapping/visible on
   case 32: this->B32->animateClick(); break;
   case 33: this->B33->animateClick(); break;
@@ -661,7 +656,6 @@ void TabMidi::receiveMidiNote(int unBouton) // APC1
   case 38: this->B38->animateClick(); break;
   case 39: this->B39->animateClick(); break;
   case 85: this->B85->animateClick(); break;
-
     // rangée 3 paint/uri/ previous
   case 40: this->B40->animateClick(); break;
   case 41: this->B41->animateClick(); break;
@@ -672,7 +666,6 @@ void TabMidi::receiveMidiNote(int unBouton) // APC1
   case 46: this->B46->animateClick(); break;
   case 47: this->B47->animateClick(); break;
   case 84: this->B84->animateClick(); break;
-
     // rangée 2 paint/uri next
   case 48: this->B48->animateClick(); break;
   case 49: this->B49->animateClick(); break;
@@ -683,7 +676,6 @@ void TabMidi::receiveMidiNote(int unBouton) // APC1
   case 54: this->B54->animateClick(); break;
   case 55: this->B55->animateClick(); break;
   case 83: this->B83->animateClick(); break;
-
     // rangée 1 paint/uri uri
   case 56: this->B56->animateClick(); break;
   case 57: this->B57->animateClick(); break;
@@ -694,11 +686,8 @@ void TabMidi::receiveMidiNote(int unBouton) // APC1
   case 62: this->B62->animateClick(); break;
   case 63: this->B63->animateClick(); break;
   case 82: this->B82->animateClick(); break;
-
-  default:
-    break;
+  default: break;
   }
-
 }
 
 void TabMidi::receiveMidiNote2(int unBouton) // APC 2
@@ -716,7 +705,6 @@ void TabMidi::receiveMidiNote2(int unBouton) // APC 2
   case 70: this->B70_2->animateClick(); break;
   case 71: this->B71_2->animateClick(); break;
   case 98: this->B98_2->animateClick(); break;
-
     // rangée 8 paint/rate
   case 0: this->B0_2->animateClick(); break;
   case 1: this->B1_2->animateClick(); break;
@@ -727,7 +715,6 @@ void TabMidi::receiveMidiNote2(int unBouton) // APC 2
   case 6: this->B6_2->animateClick(); break;
   case 7: this->B7_2->animateClick(); break;
   case 89: this->B89_2->animateClick(); break;
-
     //rangée 7 mapping/solo off
   case 8: this->B8_2->animateClick(); break;
   case 9: this->B9_2->animateClick(); break;
@@ -738,7 +725,6 @@ void TabMidi::receiveMidiNote2(int unBouton) // APC 2
   case 14: this->B14_2->animateClick(); break;
   case 15: this->B15_2->animateClick(); break;
   case 88: this->B88_2->animateClick(); break;
-
     // rangée 6 mapping/solo on
   case 16: this->B16_2->animateClick(); break;
   case 17: this->B17_2->animateClick(); break;
@@ -749,7 +735,6 @@ void TabMidi::receiveMidiNote2(int unBouton) // APC 2
   case 22: this->B22_2->animateClick(); break;
   case 23: this->B23_2->animateClick(); break;
   case 87: this->B87_2->animateClick(); break;
-
     // rangée 5 mapping/visible off
   case 24: this->B24_2->animateClick(); break;
   case 25: this->B25_2->animateClick(); break;
@@ -760,7 +745,6 @@ void TabMidi::receiveMidiNote2(int unBouton) // APC 2
   case 30: this->B30_2->animateClick(); break;
   case 31: this->B31_2->animateClick(); break;
   case 86: this->B86_2->animateClick(); break;
-
     // rangée 4 mapping/visible on
   case 32: this->B32_2->animateClick(); break;
   case 33: this->B33_2->animateClick(); break;
@@ -771,7 +755,6 @@ void TabMidi::receiveMidiNote2(int unBouton) // APC 2
   case 38: this->B38_2->animateClick(); break;
   case 39: this->B39_2->animateClick(); break;
   case 85: this->B85_2->animateClick(); break;
-
     // rangée 3 paint/uri/ previous
   case 40: this->B40_2->animateClick(); break;
   case 41: this->B41_2->animateClick(); break;
@@ -782,7 +765,6 @@ void TabMidi::receiveMidiNote2(int unBouton) // APC 2
   case 46: this->B46_2->animateClick(); break;
   case 47: this->B47_2->animateClick(); break;
   case 84: this->B84_2->animateClick(); break;
-
     // rangée 2 paint/uri next
   case 48: this->B48_2->animateClick(); break;
   case 49: this->B49_2->animateClick(); break;
@@ -793,7 +775,6 @@ void TabMidi::receiveMidiNote2(int unBouton) // APC 2
   case 54: this->B54_2->animateClick(); break;
   case 55: this->B55_2->animateClick(); break;
   case 83: this->B83_2->animateClick(); break;
-
     // rangée 1 paint/uri uri
   case 56: this->B56_2->animateClick(); break;
   case 57: this->B57_2->animateClick(); break;
@@ -804,11 +785,8 @@ void TabMidi::receiveMidiNote2(int unBouton) // APC 2
   case 62: this->B62_2->animateClick(); break;
   case 63: this->B63_2->animateClick(); break;
   case 82: this->B82_2->animateClick(); break;
-
-  default:
-    break;
+  default: break;
   }
-
 }
 
 // APC 1
@@ -984,7 +962,7 @@ void TabMidi::sendOscAPCB53_2(){ oscSendB->m_champ = P_RATE; oscSendB->m_p_ID1 =
 void TabMidi::sendOscAPCB54_2(){ oscSendB->m_champ = P_RATE; oscSendB->m_p_ID1 = pID16->value(); oscSendB->m_p_rate = 200; oscSendB->ExecuteSend(); }
 void TabMidi::sendOscAPCB55_2(){ oscSendB->m_champ = P_RATE; oscSendB->m_p_ID1 = pID17->value(); oscSendB->m_p_rate = 200; oscSendB->ExecuteSend(); }
 void TabMidi::sendOscAPCB83_2(){ oscSendB->m_champ = P_RATE; oscSendB->m_p_ID1 = pID18->value(); oscSendB->m_p_rate = 200; oscSendB->ExecuteSend(); }
-
+// rewind
 void TabMidi::sendOscAPCB56_2(){ oscSendB->m_champ = P_REWIND; oscSendB->m_p_ID1 = pID10->value(); oscSendB->ExecuteSend(); }
 void TabMidi::sendOscAPCB57_2(){ oscSendB->m_champ = P_REWIND; oscSendB->m_p_ID1 = pID11->value(); oscSendB->ExecuteSend(); }
 void TabMidi::sendOscAPCB58_2(){ oscSendB->m_champ = P_REWIND; oscSendB->m_p_ID1 = pID12->value(); oscSendB->ExecuteSend(); }

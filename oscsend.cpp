@@ -138,7 +138,7 @@ OscSend::OscSend(champMM champ, QString name1, QString name2, int time):
   case R_P_NAME: m_p_name = name1; m_p_name2 = name2; break;
   case R_P_URI: m_p_name = name1; m_p_uri = name2; break;
   case R_P_COLOR: m_p_name = name1; m_p_color = name2; break;
-  case R_M_NAME: m_m_name = name1; ; break;
+  case R_M_NAME: m_m_name = name1; m_m_name2 = name2; break;
   case R_P_XFADE: m_p_name = name1; m_p_name2 = name2; break;
   default: std::cout << "error cstr 7 \n"; return; break;
   }
@@ -222,8 +222,8 @@ void OscSend::ExecuteSend()
     std::cout << "/mapmap/paint/color ss " << m_p_name.toStdString().c_str() << " " << m_p_color.toStdString().c_str() << std::endl; break;
   case R_M_NAME: packet << osc::BeginMessage("/mapmap/mapping/name") << m_m_name.toStdString().c_str() << m_m_name2.toStdString().c_str() << osc::EndMessage;
     std::cout << "/mapmap/mapping/name ss " << m_m_name.toStdString().c_str() << " " << m_m_name2.toStdString().c_str() << std::endl; break;
-  case R_M_OPACITY: packet << osc::BeginMessage("/mapmap/mapping/opacity") << m_m_name.toStdString().c_str() << m_m_opacity << osc::EndMessage;
-    std::cout << "/mapmap/mapping/opacity si " << m_m_name.toStdString().c_str() << " " << m_m_opacity << std::endl; break;
+  case R_M_OPACITY: packet << osc::BeginMessage("/mapmap/mapping/opacity") << m_m_name.toStdString().c_str() << ((float)m_m_opacity)/100 << osc::EndMessage;
+    std::cout << "/mapmap/mapping/opacity sf " << m_m_name.toStdString().c_str() << " " << ((float)m_m_opacity)/100 << std::endl; break;
   case R_M_VISIBLE: packet << osc::BeginMessage("/mapmap/mapping/visible") << m_m_name.toStdString().c_str() << m_m_isvisible << osc::EndMessage;
     std::cout << "/mapmap/mapping/visible si " << m_m_name.toStdString().c_str() << m_m_isvisible << std::endl; break;
   case R_M_SOLO: packet << osc::BeginMessage("/mapmap/mapping/solo") << m_m_name.toStdString().c_str() << m_m_issolo << osc::EndMessage;

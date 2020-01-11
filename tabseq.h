@@ -21,16 +21,15 @@
 #include <QWidget>
 #include <QtWidgets>
 #include <QTableView>
-//#include <QModelIndex>
-#include "osccuelist.h"
 #include <QBoxLayout>
 #include <unistd.h>
+#include "osccuelist.h"
 
 class TabSeq : public QWidget
 {
   Q_OBJECT
 public:
-  TabSeq(OscCueList *);
+  TabSeq(OscCueList *, QTableView *);
 
 signals:
 
@@ -42,10 +41,11 @@ public slots:
   void moveNext();
   void removeCue();
   void saveAs();
-  void loadFile(/*OscCueList *osccuelist*/);
+  void loadFile();
 
 private:
   OscCueList *m_oscCueList;
+
   QHBoxLayout *layoutMain;
     QHBoxLayout *layout1;
       QVBoxLayout *boutonLayout;
@@ -55,7 +55,10 @@ private:
         QPushButton *boutonGo;
         QPushButton *boutonSaveAs;
         QPushButton *boutonLoad;
-    QTableView *tableView;
+//    QTableView *tableView;
+
+public:
+  QTableView *tableView;
 
 };
 

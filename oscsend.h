@@ -60,7 +60,7 @@ public:
   void ExecutePFade(QString p_name, int time, bool isfadein);
 
   champMM m_champ;
-
+  // paint var
   QString m_p_uri = "";
   QString m_p_name = "";
   QString m_p_name2 = ""; // pour R_P_NAME, R_P_XFADE
@@ -70,7 +70,7 @@ public:
   int m_p_rate = 0;
   int m_p_opacity = 0;
   int m_p_volume = 0;
-
+  // mapping var
   QString m_m_name = "";
   QString m_m_name2 = ""; // pour R_M_NAME
   int m_m_ID1 = 0;
@@ -79,7 +79,7 @@ public:
   bool m_m_issolo = false;
   bool m_m_islocked = false;
   int m_m_depth = 0;
-
+  // general var
   int m_time = 0;
   bool m_isfadein = false; // pour P_FADE
   bool m_iswaiting = true; // pour savoir si la cue doit s'enchaîner

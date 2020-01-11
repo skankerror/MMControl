@@ -17,9 +17,10 @@
 
 #include "tabseq.h"
 
-TabSeq::TabSeq(OscCueList *oscCueList) :
+TabSeq::TabSeq(OscCueList *oscCueList, QTableView *aTableView) :
   QWidget(),
-  m_oscCueList(oscCueList)
+  m_oscCueList(oscCueList),
+  tableView(aTableView)
 {
   layoutMain = new QHBoxLayout;
   layout1 = new QHBoxLayout;
@@ -65,7 +66,7 @@ TabSeq::TabSeq(OscCueList *oscCueList) :
   connect(boutonNext, SIGNAL(clicked(bool)), SLOT(moveNext()));
   connect(boutonRemove, SIGNAL(clicked(bool)), SLOT(removeCue()));
   connect(boutonSaveAs, SIGNAL(clicked(bool)), SLOT(saveAs()));
-  connect(boutonLoad, SIGNAL(clicked(bool)), SLOT(loadFile(/*m_oscCueList*/)));
+  connect(boutonLoad, SIGNAL(clicked(bool)), SLOT(loadFile()));
 }
 
 void TabSeq::executeGo()
@@ -177,7 +178,6 @@ void TabSeq::loadFile()
     }
     if (file.open(QIODevice::ReadOnly))
     {
-      // peut-être remove cue existantes ?
       m_oscCueList->removeAllCue();
       OscSend *oscsend = new OscSend(NOOP);
       int lineindex = 0;                     // file line counter

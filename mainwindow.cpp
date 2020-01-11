@@ -33,12 +33,12 @@ MainWindow::MainWindow() :
   oscCueList = new OscCueList(this);
   midiIn = new MyMidiIn(1);
   midiIn2 = new MyMidiIn(2);
+  tableView = new QTableView;
 
   createToolBar();
   createCentralWidget();
 
-  // connect pour afficher les bons widgets sur la toolbar
-  connect(champComboBox, SIGNAL(currentIndexChanged(int)), SLOT(showWidgets(int)));
+  connect(champComboBox, SIGNAL(currentIndexChanged(int)), SLOT(showWidgets(int))); // Pour afficher les widgets
   connect(sendPushButton, SIGNAL(clicked()), SLOT(sendFromToolBar()));
   connect(p_uriPushButton, SIGNAL(clicked()), SLOT(setP_UriLabel()));
   connect(p_colorPushButton, SIGNAL(clicked()), SLOT(setP_ColorLabel()));
@@ -48,7 +48,7 @@ MainWindow::MainWindow() :
 void MainWindow::createCentralWidget()
 {
   tabmidi = new TabMidi(midiIn, midiIn2);
-  tabseq = new TabSeq(oscCueList);
+  tabseq = new TabSeq(oscCueList, tableView);
   tabmmstate = new TabMMState(state);
   tabwidget = new QTabWidget;
 
@@ -88,9 +88,7 @@ void MainWindow::createToolBar()
   champComboBox->addItem("M_VISIBLE");//14
   champComboBox->addItem("M_SOLO");//15
   champComboBox->addItem("M_LOCK");//16
-  champComboBox->addItem("M_DEPTH");//17//#include <QTranslator>
-  //#include <QLocale>
-  //#include <QLibraryInfo>
+  champComboBox->addItem("M_DEPTH");//17
   champComboBox->addItem("P_XFADE");//18
   champComboBox->addItem("P_FADE");//19
   champComboBox->addItem("R_P_NAME");//20
@@ -538,7 +536,7 @@ void MainWindow::sendFromToolBar()
   case R_M_VISIBLE: oscsend = new OscSend(index, m_nameLineEdit->text(), m_visibleCheckBox->isChecked()); break;
   case R_M_SOLO: oscsend = new OscSend(index, m_nameLineEdit->text(), m_soloCheckBox->isChecked()); break;
   case R_M_LOCK: oscsend = new OscSend(index, m_nameLineEdit->text(), m_lockCheckBox->isChecked()); break;
-  case R_P_FADE: oscsend = new OscSend(index, p_nameLineEdit->text(), fadeCheckBox->isChecked()); break;
+  case R_P_FADE: oscsend = new OscSend(index, p_nameLineEdit->text(), fadeCheckBox->isChecked(), timeSpinBox->value()); break;
   default: oscsend = new OscSend(index); std::cout << "error send bad champ\n"; break;
   }
   oscsend->ExecuteSend();
@@ -559,6 +557,8 @@ void MainWindow::addToCue()
 {
   champMM index = static_cast<champMM>(champComboBox->currentIndex());
   OscSend *oscsend;
+  int row = tabseq->tableView->currentIndex().row();
+  std::cout << "row selected : " << row << "\n";
   switch (index)
   {
   // cstr 1
@@ -606,5 +606,16 @@ void MainWindow::addToCue()
   case R_P_FADE: oscsend = new OscSend(index, p_nameLineEdit->text(), fadeCheckBox->isChecked(), timeSpinBox->value()); break;
   default: oscsend = new OscSend(index); std::cout << "error addcue bad champ\n"; break;
   }
-  oscCueList->addCue(oscsend);
+  if (tabseq->tableView->currentIndex().isValid())
+  {
+    oscCueList->insertCue(oscsend, row);
+    std::cout << "insertCue\n";
+  }
+  else
+  {
+    oscCueList->addCue(oscsend);
+    std::cout << "addCue\n";
+  }
+  // Toujours sélectionner le dernier après un ajout
+  tabseq->tableView->setCurrentIndex(tabseq->tableView->currentIndex().siblingAtRow(oscCueList->v_listCue.size()));
 }

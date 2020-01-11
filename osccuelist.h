@@ -22,10 +22,10 @@
 #include <QVector>
 #include <QAbstractTableModel>
 #include <QVariant>
-#include "oscsend.h"
 #include <QBrush>
 #include <QTextStream>
 #include <QStringList>
+#include "oscsend.h"
 
 class OscCueList :
     public QAbstractTableModel
@@ -47,6 +47,7 @@ signals:
 
 public slots:
   void addCue(OscSend *oscsend);
+  void insertCue(OscSend *oscsend, int row);
   void moveCuePrev(int rowCue);
   void removeCue(int rowCue);
   void removeAllCue();

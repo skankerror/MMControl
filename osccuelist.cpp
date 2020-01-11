@@ -358,7 +358,6 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
   case R_P_FADE: oscsend = new OscSend(m_champ, m_p_name, m_isfadein, m_time); oscsend->m_iswaiting = m_iswaiting; break;
   default: oscsend = new OscSend(m_champ); break;
   }
-  // renvoyer les oscsend...
   return oscsend;
 }
 
@@ -370,6 +369,14 @@ void OscCueList::addCue(OscSend *oscsend)
   endInsertRows();
 
   std::cout << "cue added" << std::endl;
+}
+
+void OscCueList::insertCue(OscSend *oscsend, int row)
+{
+  QModelIndex indexTemp = QModelIndex();
+  beginInsertRows(indexTemp, row + 1, row + 1);
+  v_listCue.insert(row + 1, oscsend);
+  endInsertRows();
 }
 
 void OscCueList::moveCuePrev(int rowCue)

@@ -38,11 +38,6 @@ public:
   void createCentralWidget();
   void createToolBar();
 
-  OscCueList *oscCueList;
-  MMState *state;
-  MyMidiIn *midiIn;
-  MyMidiIn *midiIn2;
-
 signals:
 
 public slots:
@@ -53,6 +48,12 @@ public slots:
   void addToCue();
 
 private:
+  OscCueList *oscCueList;
+  MMState *state;
+  MyMidiIn *midiIn;
+  MyMidiIn *midiIn2;
+  QTableView *tableView;
+
   QIcon icon;
 
   QTabWidget *tabwidget;
