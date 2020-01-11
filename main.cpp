@@ -16,9 +16,6 @@
  */
 
 #include <QApplication>
-#include <QTranslator>
-#include <QLocale>
-#include <QLibraryInfo>
 #include "mainwindow.h"
 
 int main(int argc, char **argv)
@@ -48,6 +45,5 @@ int main(int argc, char **argv)
 
   MainWindow win;
   win.show();
-
   return app.exec();
 }

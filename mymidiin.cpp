@@ -36,20 +36,20 @@ MyMidiIn::MyMidiIn(int id, Api api, const std::string &clientName,
   switch(id)
   {
   case 1:
-      for (int i = 0; i<nPorts; i++)
+    for (int i = 0; i<nPorts; i++)
+    {
+      if (RtMidiIn::getPortName(i) == APCMINI_1)
       {
-        if (RtMidiIn::getPortName(i) == APCMINI_1)
-        {
-          RtMidiIn::openPort(i, MYPORTNAME_1);  // On ouvre le port de l'APCMini
-          std::cout << "Succés sur le port #" << i << std::endl;
-          break;
-        }
-        else
-        {
-          std::cout << " Pas le bon nom : le nom système : " << RtMidiIn::getPortName(i)
-                    << "\nLe nom programme : " << APCMINI_1  << std::endl;
-        }
+        RtMidiIn::openPort(i, MYPORTNAME_1);  // On ouvre le port de l'APCMini
+        std::cout << "Succés sur le port #" << i << std::endl;
+        break;
       }
+      else
+      {
+        std::cout << " Pas le bon nom : le nom système : " << RtMidiIn::getPortName(i)
+                  << "\nLe nom programme : " << APCMINI_1  << std::endl;
+      }
+    }
     break;
   case 2:
     for (int i = 0; i<nPorts; i++)

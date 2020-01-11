@@ -219,7 +219,6 @@ Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const
 
 OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
 {
-  //beginResetModel();
   OscSend *oscsend;
   champMM m_champ = NOOP;
   int m_champInt = 0;
@@ -363,10 +362,6 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
   return oscsend;
 }
 
-void OscCueList::beginLoadFile(){ beginResetModel();}
-
-void OscCueList::endLoadFile(){ endResetModel();}
-
 void OscCueList::addCue(OscSend *oscsend)
 {
   QModelIndex indexTemp = QModelIndex();
@@ -393,3 +388,12 @@ void OscCueList::removeCue(int rowCue)
   endRemoveRows();
 }
 
+void OscCueList::removeAllCue()
+{
+  if (!(v_listCue.size())) return;
+  int rows = rowCount();
+  for (int i = 0; i < rows; i++)
+  {
+    removeCue(0);
+  }
+}

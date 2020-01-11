@@ -21,6 +21,7 @@
 #include <QWidget>
 #include <QtWidgets>
 #include <QTableView>
+//#include <QModelIndex>
 #include "osccuelist.h"
 #include <QBoxLayout>
 #include <unistd.h>

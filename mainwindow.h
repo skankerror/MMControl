@@ -53,7 +53,6 @@ public slots:
   void addToCue();
 
 private:
-
   QIcon icon;
 
   QTabWidget *tabwidget;

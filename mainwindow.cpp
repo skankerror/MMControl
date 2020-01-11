@@ -88,7 +88,9 @@ void MainWindow::createToolBar()
   champComboBox->addItem("M_VISIBLE");//14
   champComboBox->addItem("M_SOLO");//15
   champComboBox->addItem("M_LOCK");//16
-  champComboBox->addItem("M_DEPTH");//17
+  champComboBox->addItem("M_DEPTH");//17//#include <QTranslator>
+  //#include <QLocale>
+  //#include <QLibraryInfo>
   champComboBox->addItem("P_XFADE");//18
   champComboBox->addItem("P_FADE");//19
   champComboBox->addItem("R_P_NAME");//20

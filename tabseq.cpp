@@ -66,11 +66,11 @@ TabSeq::TabSeq(OscCueList *oscCueList) :
   connect(boutonRemove, SIGNAL(clicked(bool)), SLOT(removeCue()));
   connect(boutonSaveAs, SIGNAL(clicked(bool)), SLOT(saveAs()));
   connect(boutonLoad, SIGNAL(clicked(bool)), SLOT(loadFile(/*m_oscCueList*/)));
-//  connect(this, SIGNAL(
 }
 
 void TabSeq::executeGo()
 {
+  tableView->resizeColumnsToContents();
   // Vérifier s'il y a une cue sélectionnée
   if (tableView->currentIndex().isValid())
   m_oscCueList->v_listCue.at((tableView->currentIndex().row()))->ExecuteSend();
@@ -81,6 +81,8 @@ void TabSeq::executeGo()
   if (tableView->currentIndex().siblingAtRow(tableView->currentIndex().row()+1).isValid() == true)
   {
     tableView->setCurrentIndex(tableView->currentIndex().siblingAtRow(tableView->currentIndex().row()+1));
+    // trouver pour afficher le nouveau select
+//    tableView->selectRow(tableView->currentIndex().row());
     if (m_oscCueList->v_listCue.at((tableView->currentIndex().row()-1))->m_iswaiting == 0)
     {
       usleep(1000000 * m_oscCueList->v_listCue.at((tableView->currentIndex().row()-1))->m_time);
@@ -100,6 +102,7 @@ void TabSeq::movePrevious()
       m_oscCueList->moveCuePrev(tableView->currentIndex().row());
     }
   }
+  tableView->resizeColumnsToContents();
 }
 
 void TabSeq::moveNext()
@@ -111,6 +114,7 @@ void TabSeq::moveNext()
       m_oscCueList->moveCuePrev(tableView->currentIndex().row() + 1);
     }
   }
+  tableView->resizeColumnsToContents();
 }
 
 void TabSeq::removeCue()
@@ -119,6 +123,7 @@ void TabSeq::removeCue()
   {
     m_oscCueList->removeCue(tableView->currentIndex().row());
   }
+  tableView->resizeColumnsToContents();
 }
 
 void TabSeq::saveAs()
@@ -157,21 +162,28 @@ void TabSeq::saveAs()
 }
 void TabSeq::loadFile()
 {
-  QString fileName = QFileDialog::getOpenFileName(this, "Choose File", "/home/ray/boulot");
-  QFile file(fileName);
-  if (fileName.isEmpty())
+  QMessageBox msgBox(QMessageBox::Warning, tr("QMessageBox::warning()"),
+                     "WARNING, this will destroy all cues", nullptr, this);
+  msgBox.addButton(tr("OK"), QMessageBox::AcceptRole);
+  msgBox.addButton(tr("CANCEL"), QMessageBox::RejectRole);
+  if (msgBox.exec() == QMessageBox::RejectRole) return;
+  else
   {
-    return;
-  }
-  if (file.open(QIODevice::ReadOnly))
-  {
-    // peut-être remove cue existantes ?
-    tableView->reset();
-    OscSend *oscsend = new OscSend(NOOP);
-    int lineindex = 0;                     // file line counter
-    QTextStream in(&file);                 // read to text stream
-    while (!in.atEnd())
+    QString fileName = QFileDialog::getOpenFileName(this, "Choose File", "/home/ray/boulot");
+    QFile file(fileName);
+    if (fileName.isEmpty())
     {
+      return;
+    }
+    if (file.open(QIODevice::ReadOnly))
+    {
+      // peut-être remove cue existantes ?
+      m_oscCueList->removeAllCue();
+      OscSend *oscsend = new OscSend(NOOP);
+      int lineindex = 0;                     // file line counter
+      QTextStream in(&file);                 // read to text stream
+      while (!in.atEnd())
+      {
 
         // read one line from textstream(separated by "\n")
         QString fileLine = in.readLine();
@@ -179,8 +191,10 @@ void TabSeq::loadFile()
         QStringList lineToken = fileLine.split(",", QString::SkipEmptyParts);
         oscsend = m_oscCueList->retOscsendFromFileLine(lineToken);
         m_oscCueList->addCue(oscsend);
+      }
+      lineindex++;
     }
-    lineindex++;
+    file.close();
+    tableView->resizeColumnsToContents();
   }
-  file.close();
 }
