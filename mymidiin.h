@@ -30,7 +30,7 @@ class MyMidiIn : public QObject, public RtMidiIn
 public:
   MyMidiIn(int id = 1,
            RtMidi::Api api = LINUX_ALSA,
-           const std::string &clientName = "OscControlMapmap Input Client",
+           const std::string &clientName = "MMControl Input Client",
            unsigned int queueSizeLimit = QUEUE_SIZE_LIMIT);
 
   // Fn static pour le callback. Elle est statique mais elle peut accéder

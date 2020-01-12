@@ -25,7 +25,7 @@ MyMidiIn::MyMidiIn(int id, Api api, const std::string &clientName,
 
   int nPorts = RtMidiIn::getPortCount();
 
-  std::cout << " Api # : " << RtMidiIn::getCurrentApi() << std::endl;
+  std::cout << "Api # : " << RtMidiIn::getCurrentApi() << std::endl;
   std::cout << "Nombre de ports : " << nPorts << std::endl;
   for (int i = 0; i<nPorts; i++)
   {
@@ -40,7 +40,7 @@ MyMidiIn::MyMidiIn(int id, Api api, const std::string &clientName,
     {
       if (RtMidiIn::getPortName(i) == APCMINI_1)
       {
-        RtMidiIn::openPort(i, MYPORTNAME_1);  // On ouvre le port de l'APCMini
+        RtMidiIn::openPort(i, MYPORTNAME_IN_1);  // On ouvre le port de l'APCMini
         std::cout << "Succés sur le port #" << i << std::endl;
         break;
       }
@@ -56,7 +56,7 @@ MyMidiIn::MyMidiIn(int id, Api api, const std::string &clientName,
     {
       if (RtMidiIn::getPortName(i) == APCMINI_2)
       {
-        RtMidiIn::openPort(i, MYPORTNAME_2);  // On ouvre le port de l'APCMini2
+        RtMidiIn::openPort(i, MYPORTNAME_IN_2);  // On ouvre le port de l'APCMini2
         std::cout << "Succés sur le port #" << i << std::endl;
         break;
       }
@@ -66,12 +66,12 @@ MyMidiIn::MyMidiIn(int id, Api api, const std::string &clientName,
                   << "\nLe nom programme : " << APCMINI_2  << std::endl;
       }
     }
-  break;
+  default: break;
   }
   // Pour lire les entrées avec callback
   RtMidiIn::setCallback(&sendMidiToOsc, this);
-  std::cout << "J'écoute... \n";
-
+  if (RtMidiIn::isPortOpen()) std::cout << "Midi in " << id << " opened\n";
+  else std::cout << "Midi in " << id << " not opened\n";
 }
 // Un slot qui appelle le signal connecté dans parent
 void MyMidiIn::midiControlChanged(int unID, float uneOpacite)

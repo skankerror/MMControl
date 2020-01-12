@@ -17,9 +17,19 @@
 
 #include "tabseq.h"
 
-TabSeq::TabSeq(OscCueList *oscCueList, QTableView *aTableView) :
+TabSeq::TabSeq(OscCueList *oscCueList,
+               TableView *aTableView,
+               MyMidiIn *midiIn1,
+               MyMidiIn *midiIn2,
+               MyMidiOut *midiOut1,
+               MyMidiOut *midiOut2
+               ) :
   QWidget(),
   m_oscCueList(oscCueList),
+  m_midiIn1(midiIn1),
+  m_midiIn2(midiIn2),
+  m_midiOut1(midiOut1),
+  m_midiOut2(midiOut2),
   tableView(aTableView)
 {
   layoutMain = new QHBoxLayout;
@@ -43,7 +53,7 @@ TabSeq::TabSeq(OscCueList *oscCueList, QTableView *aTableView) :
   boutonLayout->addWidget(boutonGo);
   boutonLayout->addWidget(boutonSaveAs);
   boutonLayout->addWidget(boutonLoad);
-  tableView = new QTableView();
+  tableView = new TableView();
   tableView->setModel(m_oscCueList);
 
   QPalette pal = palette();

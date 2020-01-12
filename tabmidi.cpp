@@ -17,10 +17,16 @@
 
 #include "tabmidi.h"
 
-TabMidi::TabMidi(MyMidiIn *midiIn, MyMidiIn *midiIn2 , QWidget *parent) :
+TabMidi::TabMidi(MyMidiIn *midiIn1,
+                 MyMidiIn *midiIn2,
+                 MyMidiOut *midiOut1,
+                 MyMidiOut *midiOut2,
+                 QWidget *parent) :
   QWidget(parent),
-    m_midiIn(midiIn),
-    m_midiIn2(midiIn2)
+    m_midiIn1(midiIn1),
+    m_midiIn2(midiIn2),
+    m_midiOut1(midiOut1),
+    m_midiOut2(midiOut2)
 {
   oscSendS = new OscSend(P_OPACITY, 1, 0, 0);
   oscSendB = new OscSend(M_VISIBLE, 1, true);
@@ -278,8 +284,8 @@ TabMidi::TabMidi(MyMidiIn *midiIn, MyMidiIn *midiIn2 , QWidget *parent) :
   setPalette(pal);
 
   // connect midiIn1
-  connect(m_midiIn, SIGNAL(sigMidiCtrlChanged(int, float)), this, SLOT(receiveMidiCtrl(int,float)));
-  connect(m_midiIn, SIGNAL(sigMidiNoteChanged(int)), this, SLOT(receiveMidiNote(int)));
+  connect(m_midiIn1, SIGNAL(sigMidiCtrlChanged(int, float)), this, SLOT(receiveMidiCtrl(int,float)));
+  connect(m_midiIn1, SIGNAL(sigMidiNoteChanged(int)), this, SLOT(receiveMidiNote(int)));
   // connect midiIn2
   connect(m_midiIn2, SIGNAL(sigMidiCtrlChanged(int, float)), this, SLOT(receiveMidiCtrl2(int,float)));
   connect(m_midiIn2, SIGNAL(sigMidiNoteChanged(int)), this, SLOT(receiveMidiNote2(int)));

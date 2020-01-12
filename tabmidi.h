@@ -25,13 +25,18 @@
 #include <QPushButton>
 #include <QSpinBox>
 #include "mymidiin.h"
+#include "mymidiout.h"
 #include "oscsend.h"
 
 class TabMidi : public QWidget
 {
   Q_OBJECT
 public:
-  explicit TabMidi(MyMidiIn *midiIn, MyMidiIn *midiIn2, QWidget *parent = nullptr);
+  explicit TabMidi(MyMidiIn *midiIn1,
+                   MyMidiIn *midiIn2,
+                   MyMidiOut *midiOut1,
+                   MyMidiOut *midiOut2,
+                   QWidget *parent = nullptr);
 
 signals:
 
@@ -110,8 +115,10 @@ public slots:
 private:
   OscSend *oscSendS; // Pour les sliders
   OscSend *oscSendB; // Pour les Boutons
-  MyMidiIn *m_midiIn;
+  MyMidiIn *m_midiIn1;
   MyMidiIn *m_midiIn2;
+  MyMidiOut *m_midiOut1;
+  MyMidiOut *m_midiOut2;
 
   QGridLayout *layoutTotal;
 

@@ -21,6 +21,8 @@
 #include <QtWidgets>
 #include "mmstate.h"
 #include "mymidiin.h"
+#include "mymidiout.h"
+#include "tableview.h"
 #include "tabmidi.h"
 #include "tabseq.h"
 #include "tabmmstate.h"
@@ -38,6 +40,9 @@ public:
   void createCentralWidget();
   void createToolBar();
 
+protected:
+  void closeEvent(QCloseEvent *event) override;
+
 signals:
 
 public slots:
@@ -50,9 +55,11 @@ public slots:
 private:
   OscCueList *oscCueList;
   MMState *state;
-  MyMidiIn *midiIn;
+  MyMidiIn *midiIn1;
   MyMidiIn *midiIn2;
-  QTableView *tableView;
+  MyMidiOut *midiOut1;
+  MyMidiOut *midiOut2;
+  TableView *tableView;
 
   QIcon icon;
 

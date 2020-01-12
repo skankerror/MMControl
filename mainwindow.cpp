@@ -31,9 +31,11 @@ MainWindow::MainWindow() :
 
   state = new MMState(this);
   oscCueList = new OscCueList(this);
-  midiIn = new MyMidiIn(1);
+  midiIn1 = new MyMidiIn(1);
   midiIn2 = new MyMidiIn(2);
-  tableView = new QTableView;
+  midiOut1 = new MyMidiOut(1);
+  midiOut2 = new MyMidiOut(2);
+  tableView = new TableView;
 
   createToolBar();
   createCentralWidget();
@@ -47,8 +49,8 @@ MainWindow::MainWindow() :
 
 void MainWindow::createCentralWidget()
 {
-  tabmidi = new TabMidi(midiIn, midiIn2);
-  tabseq = new TabSeq(oscCueList, tableView);
+  tabmidi = new TabMidi(midiIn1, midiIn2, midiOut1, midiOut2);
+  tabseq = new TabSeq(oscCueList, tableView, midiIn1, midiIn2, midiOut1, midiOut2);
   tabmmstate = new TabMMState(state);
   tabwidget = new QTabWidget;
 
@@ -618,4 +620,15 @@ void MainWindow::addToCue()
   }
   // Toujours sélectionner le dernier après un ajout
   tabseq->tableView->setCurrentIndex(tabseq->tableView->currentIndex().siblingAtRow(oscCueList->v_listCue.size()));
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+  QMessageBox msgBox(QMessageBox::Warning, "",
+                     "WARNING, are you sure you want to quit ?", nullptr, this);
+  msgBox.setWindowIcon(icon);
+  msgBox.addButton(tr("OK"), QMessageBox::AcceptRole);
+  msgBox.addButton(tr("CANCEL"), QMessageBox::RejectRole);
+  if (msgBox.exec() == QMessageBox::RejectRole) event->ignore();
+  else event->accept();
 }

@@ -72,8 +72,10 @@ enum champMM
 #define __LINUX_ALSA // define API for RtMidi needed by MyMidiIn class
 #define APCMINI_1 "APC MINI:APC MINI MIDI 1 24:0"
 #define APCMINI_2 "APC MINI:APC MINI MIDI 1 28:0"
-#define MYPORTNAME_1 "MMControl Input Port 1"
-#define MYPORTNAME_2 "MMControl Input Port 2"
+#define MYPORTNAME_IN_1 "MMControl Input Port 1"
+#define MYPORTNAME_IN_2 "MMControl Input Port 2"
+#define MYPORTNAME_OUT_1 "MMControl Output Port 1"
+#define MYPORTNAME_OUT_2 "MMControl Output Port 2"
 #define MIDI_CONTROL 176
 #define MIDI_BUTTON_PRESSED 144
 #define QUEUE_SIZE_LIMIT 100

@@ -1,15 +1,11 @@
 -changer assignations des boutons dernière colonne
 revoir la façon dont on ouvre les ports:
 https://github.com/thestk/rtmidi/blob/master/tests/cmidiin.cpp
-Faire 2 midiout pour alllumer les boutons. Voir doc apcmini
-
--Revoir les file dialog
+Allumer les boutons avec les midiout
 
 -Tweaker mieux la taille des colonnes
 
 -Remplacer les std::cout par des qdebug
-
--Mettre QList plutôt que QVector ? pour insert pour addtocue ?
 
 -Lors de wait on n'a plus la main. S'il n'y a que des waits on crée une boucle infinie
 Voir comment faire (threads ?) pthread signal...
@@ -22,13 +18,11 @@ and call QFutureWatcher::result() to get the function's return value."
 -Voir Item delegate pour améliorer la vue de la tableview.
 La sous-classer ?
 
--Mettre warning êtes-vous surs de vouloir quitter à la fermeture
-
 -Mettre time en dizième de secondes, rajouter un label pour le préciser ou mettre des floats ?
 
 -Mettre des tooltips aux widgets
 
--Renvoyer mymidiin2 à tabseq pour avoir le bouton go
+-Implémenter le midi pour bouton go
 
 -Ne permettre qu'à un seul cue d'être sélectionné
 

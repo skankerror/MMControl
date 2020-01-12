@@ -20,16 +20,23 @@
 
 #include <QWidget>
 #include <QtWidgets>
-#include <QTableView>
 #include <QBoxLayout>
 #include <unistd.h>
 #include "osccuelist.h"
+#include "tableview.h"
+#include "mymidiin.h"
+#include "mymidiout.h"
 
 class TabSeq : public QWidget
 {
   Q_OBJECT
 public:
-  TabSeq(OscCueList *, QTableView *);
+  TabSeq(OscCueList *oscCueList,
+         TableView *aTableView,
+         MyMidiIn *midiIn1,
+         MyMidiIn *midiIn2,
+         MyMidiOut *midiOut1,
+         MyMidiOut *midiOut2);
 
 signals:
 
@@ -45,6 +52,10 @@ public slots:
 
 private:
   OscCueList *m_oscCueList;
+  MyMidiIn *m_midiIn1;
+  MyMidiIn *m_midiIn2;
+  MyMidiOut *m_midiOut1;
+  MyMidiOut *m_midiOut2;
 
   QHBoxLayout *layoutMain;
     QHBoxLayout *layout1;
@@ -55,10 +66,9 @@ private:
         QPushButton *boutonGo;
         QPushButton *boutonSaveAs;
         QPushButton *boutonLoad;
-//    QTableView *tableView;
 
 public:
-  QTableView *tableView;
+  TableView *tableView;
 
 };
 

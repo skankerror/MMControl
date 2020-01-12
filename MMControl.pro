@@ -13,6 +13,8 @@ SOURCES += \
     contrib/oscpack/ip/IpEndpointName.cpp \
     mainwindow.cpp \
     mymidiin.cpp \
+    mymidiout.cpp \
+    tableview.cpp \
     tabmidi.cpp \
     tabseq.cpp \
     oscsend.cpp \
@@ -24,6 +26,8 @@ HEADERS += \
     MMC.h \
     mainwindow.h \
     mymidiin.h \
+    mymidiout.h \
+    tableview.h \
     tabmidi.h \
     tabseq.h \
     oscsend.h \
