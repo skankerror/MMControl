@@ -24,7 +24,7 @@ int main(int argc, char **argv)
 
   app.setStyleSheet("QSlider::groove:vertical {"
                       "background: red;"
-                      "position: absolute;" /* absolutely position 4px from the left and right of the widget. setting margins on the widget should work too... */
+//                      "position: absolute;"
                       "left: 6px; right: 6px;"
                   "}"
 

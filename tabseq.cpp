@@ -56,6 +56,17 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   tableView = new TableView();
   tableView->setModel(m_oscCueList);
 
+//  QCheckBox *checkbox_visible = new QCheckBox();
+//  QItemDelegate *checkBoxDelegate = new QItemDelegate(checkbox_visible);
+//  tableView->setItemDelegateForColumn(0, comboBoxDelegate); // Champ
+//  tableView->setItemDelegateForColumn(3, fileDialogDelegate); // p_uri
+//  tableView->setItemDelegateForColumn(4, colordialogDelegate); // p_color
+//  tableView->setItemDelegateForColumn(14, checkBoxDelegate); // visible
+//  tableView->setItemDelegateForColumn(15, checkBoxDelegate); // solo
+//  tableView->setItemDelegateForColumn(16, checkBoxDelegate); // lock
+//  tableView->setItemDelegateForColumn(18, checkBoxDelegate); // fadein
+//  tableView->setItemDelegateForColumn(20, checkBoxDelegate); // wait
+
   QPalette pal = palette();
   pal.setColor(QPalette::Background, Qt::gray);
   tableView->setAutoFillBackground(true);
@@ -173,7 +184,7 @@ void TabSeq::saveAs()
 }
 void TabSeq::loadFile()
 {
-  QMessageBox msgBox(QMessageBox::Warning, tr("QMessageBox::warning()"),
+  QMessageBox msgBox(QMessageBox::Warning, "Load file warning",
                      "WARNING, this will destroy all cues", nullptr, this);
   msgBox.addButton(tr("OK"), QMessageBox::AcceptRole);
   msgBox.addButton(tr("CANCEL"), QMessageBox::RejectRole);

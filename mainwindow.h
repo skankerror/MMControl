@@ -99,7 +99,7 @@ private:
     QLabel *m_depthLabel;
     QSpinBox *m_depthSpinBox;
     QLabel *timeLabel;
-    QSpinBox *timeSpinBox;
+    QDoubleSpinBox *timeSpinBox;
     QCheckBox *fadeCheckBox;
     QPushButton *sendPushButton;
     QPushButton *addToCuePushButton;

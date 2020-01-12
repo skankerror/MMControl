@@ -3,9 +3,11 @@ revoir la façon dont on ouvre les ports:
 https://github.com/thestk/rtmidi/blob/master/tests/cmidiin.cpp
 Allumer les boutons avec les midiout
 
+-Voir Item delegate pour améliorer la vue de la tableview.
+La sous-classer ?
 -Tweaker mieux la taille des colonnes
-
--Remplacer les std::cout par des qdebug
+-Suivre le select quand la cue s'enchaîne
+-Ne permettre qu'à un seul cue d'être sélectionné
 
 -Lors de wait on n'a plus la main. S'il n'y a que des waits on crée une boucle infinie
 Voir comment faire (threads ?) pthread signal...
@@ -13,17 +15,8 @@ Voir comment faire (threads ?) pthread signal...
 Have a QFutureWatcher emit the finished() signal when the function has returned,
 and call QFutureWatcher::result() to get the function's return value."
 
--Suivre le select quand la cue s'enchaîne
-
--Voir Item delegate pour améliorer la vue de la tableview.
-La sous-classer ?
-
--Mettre time en dizième de secondes, rajouter un label pour le préciser ou mettre des floats ?
-
 -Mettre des tooltips aux widgets
 
 -Implémenter le midi pour bouton go
 
--Ne permettre qu'à un seul cue d'être sélectionné
-
-
+-Remplacer les std::cout par des qdebug

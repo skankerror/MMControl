@@ -167,7 +167,7 @@ bool OscCueList::setData(const QModelIndex &index, const QVariant &value, int ro
   case 16: v_listCue.at(index.row())->m_m_islocked = value.toBool(); break;
   case 17: v_listCue.at(index.row())->m_m_depth = value.toInt(); break;
   case 18: v_listCue.at(index.row())->m_isfadein = value.toBool(); break;
-  case 19: v_listCue.at(index.row())->m_time = value.toInt(); break;
+  case 19: v_listCue.at(index.row())->m_time = value.toDouble(); break;
   case 20: v_listCue.at(index.row())->m_iswaiting = value.toBool(); break;
   default: std::cout << role << "\n"; break; // Pour éviter unused parameter
   }
@@ -239,7 +239,7 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
   bool m_m_issolo = false;
   bool m_m_islocked = false;
   int m_m_depth = 0;
-  int m_time = 0;
+  double m_time = 0;
   bool m_isfadein = false;
   bool m_iswaiting = false;
 
@@ -308,7 +308,7 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
     case 16: m_m_islocked = value.toInt(); break;
     case 17: m_m_depth = value.toInt(); break;
     case 18: m_isfadein = value.toInt(); break;
-    case 19: m_time = value.toInt(); break;
+    case 19: m_time = value.toDouble(); break;
     case 20: m_iswaiting = value.toInt(); break;
     default: break;
     }

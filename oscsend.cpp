@@ -18,7 +18,7 @@
 #include "oscsend.h"
 
 // cstr 1: 0 NOOP, 1 PLAY, 2 PAUSE, 3 REWIND, 4 QUIT
-OscSend::OscSend(champMM champ, int time):
+OscSend::OscSend(champMM champ, double time):
   QObject(),
   UdpTransmitSocket(IpEndpointName(ADDRESS, PORT)),
   m_champ(champ),
@@ -33,7 +33,7 @@ OscSend::OscSend(champMM champ, int time):
 
 // cstr 2: 5 P_NAME, 10 P_URI, 11 P_COLOR, 12 M_NAME, 22 R_P_OPACITY, 23 R_P_VOLUME,
 // 24 R_P_RATE, 28 R_M_OPACITY, 32 R_M_DEPTH
-OscSend::OscSend(champMM champ, int unInt, QString name, int time):
+OscSend::OscSend(champMM champ, int unInt, QString name, double time):
   UdpTransmitSocket(IpEndpointName(ADDRESS, PORT)),
   m_champ(champ),
   m_time(time)
@@ -54,7 +54,7 @@ OscSend::OscSend(champMM champ, int unInt, QString name, int time):
 }
 
 // cstr 3: 6 P_REWIND
-OscSend::OscSend(champMM champ,int p_ID1, int time):
+OscSend::OscSend(champMM champ,int p_ID1, double time):
   QObject(),
   UdpTransmitSocket(IpEndpointName(ADDRESS, PORT)),
   m_champ(champ),
@@ -69,7 +69,7 @@ OscSend::OscSend(champMM champ,int p_ID1, int time):
 }
 
 // cstr 4: 7 P_OPACITY, 8 P_VOLUME, 9 P_RATE, 13 M_OPACITY, 17 M_DEPTH, 18 P_XFADE
-OscSend::OscSend(champMM champ, int ID1, int var,int time): 
+OscSend::OscSend(champMM champ, int ID1, int var,double time):
   QObject(),
   UdpTransmitSocket(IpEndpointName(ADDRESS, PORT)),
   m_champ(champ),
@@ -88,7 +88,7 @@ OscSend::OscSend(champMM champ, int ID1, int var,int time):
 }
 
 // cstr 5: 14 M_VISIBLE, 15 M_SOLO, 16 M_LOCK, 19 P_FADE
-OscSend::OscSend(champMM champ, int ID1, bool isproperty, int time):
+OscSend::OscSend(champMM champ, int ID1, bool isproperty, double time):
   QObject(),
   UdpTransmitSocket(IpEndpointName(ADDRESS, PORT)),
   m_champ(champ),
@@ -105,7 +105,7 @@ OscSend::OscSend(champMM champ, int ID1, bool isproperty, int time):
 }
 
 // cstr 6 : 21 R_P_REWIND
-OscSend::OscSend(champMM champ, QString name, int time):
+OscSend::OscSend(champMM champ, QString name, double time):
   QObject(),
   UdpTransmitSocket(IpEndpointName(ADDRESS, PORT)),
   m_champ(champ),
@@ -120,7 +120,7 @@ OscSend::OscSend(champMM champ, QString name, int time):
 }
 
 // cstr 7 : 20 R_P_NAME, 25 R_P_URI, 26 R_P_COLOR, 27 R_M_NAME, 34 R_P_XFADE
-OscSend::OscSend(champMM champ, QString name1, QString name2, int time):
+OscSend::OscSend(champMM champ, QString name1, QString name2, double time):
   QObject(),
   UdpTransmitSocket(IpEndpointName(ADDRESS, PORT)),
   m_champ(champ),
@@ -138,7 +138,7 @@ OscSend::OscSend(champMM champ, QString name1, QString name2, int time):
 }
 
 // CSTR 8 : 29 R_M_VISIBLE, 30 R_M_SOLO, 31 R_M_LOCK, 33 R_P_FADE
-OscSend::OscSend(champMM champ, QString name, bool isproperty, int time):
+OscSend::OscSend(champMM champ, QString name, bool isproperty, double time):
   QObject(),
   UdpTransmitSocket(IpEndpointName(ADDRESS, PORT)),
   m_champ(champ),
@@ -233,7 +233,7 @@ void OscSend::ExecuteSend()
   packet << osc::EndBundle;
   Send(packet.Data(), packet.Size());
 }
-void OscSend::ExecuteXFade(int ID1, int ID2, int time)
+void OscSend::ExecuteXFade(int ID1, int ID2, double time)
 {
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);
@@ -255,7 +255,7 @@ void OscSend::ExecuteXFade(int ID1, int ID2, int time)
     usleep(10000 * time);
   }
 }
-void OscSend::ExecuteFade(int ID1, int time, bool isfadein)
+void OscSend::ExecuteFade(int ID1, double time, bool isfadein)
 {
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);
@@ -278,7 +278,7 @@ void OscSend::ExecuteFade(int ID1, int time, bool isfadein)
   }
 }
 
-void OscSend::ExecutePXFade(QString p_name, QString p_name2, int time)
+void OscSend::ExecutePXFade(QString p_name, QString p_name2, double time)
 {
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);
@@ -300,7 +300,7 @@ void OscSend::ExecutePXFade(QString p_name, QString p_name2, int time)
     usleep(10000 * time);
   }
 }
-void OscSend::ExecutePFade(QString p_name, int time, bool isfadein)
+void OscSend::ExecutePFade(QString p_name, double time, bool isfadein)
 {
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);

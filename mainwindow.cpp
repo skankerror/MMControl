@@ -129,6 +129,7 @@ void MainWindow::createToolBar()
   p_ID2SpinBox = new QSpinBox;
   p_ID2SpinBox->setMaximum(100);
   p_ID2SpinBox->setMinimum(1);
+  p_ID2SpinBox->setValue(2);
   // 9 P_RATE, 24 R_P_RATE
   p_rateLabel = new QLabel("rate %");
   p_rateSpinBox = new QSpinBox;
@@ -168,10 +169,12 @@ void MainWindow::createToolBar()
   m_depthLabel = new QLabel("depth");
   m_depthSpinBox = new QSpinBox;
   // tout le temps
-  timeLabel = new QLabel("time");
-  timeSpinBox = new QSpinBox;
+  timeLabel = new QLabel("time in s");
+  timeSpinBox = new QDoubleSpinBox;
   timeSpinBox->setMaximum(1000);
   timeSpinBox->setMinimum(0);
+  timeSpinBox->setDecimals(1);
+  timeSpinBox->setValue(2);
   // 19 P_FADE, 33 R_P_FADE
   fadeCheckBox = new QCheckBox("fade in");
   // tout le temps
@@ -232,14 +235,24 @@ void MainWindow::showWidgets(int index)
 {
   switch (index)
   {
-  case NOOP: case PLAY: case PAUSE: case REWIND: case QUIT:
+  case NOOP:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
     p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
     m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(2); break;
+  case PLAY: case PAUSE: case REWIND: case QUIT:
+    p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLabel->hide();
+    p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
+    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
+    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
+    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
+    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(0); break;
   case P_NAME:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->show(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->show(); p_ID1SpinBox->show(); p_ID2Label->hide();
@@ -247,7 +260,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
     m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(0); break;
   case P_REWIND:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->show(); p_ID1SpinBox->show(); p_ID2Label->hide();
@@ -255,7 +269,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
     m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(0); break;
   case P_OPACITY:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->show(); p_ID1SpinBox->show(); p_ID2Label->hide();
@@ -263,7 +278,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->show(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
     m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(0); break;
   case P_VOLUME:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->show(); p_ID1SpinBox->show(); p_ID2Label->hide();
@@ -271,7 +287,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->show(); p_volumeSpinBox->show(); m_nameLineEdit->hide();
     m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(0); break;
   case P_RATE:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->show(); p_ID1SpinBox->show(); p_ID2Label->hide();
@@ -279,7 +296,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
     m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(0); break;
   case P_URI:
     p_uriLabel->show(); p_uriPushButton->show(); p_nameLineEdit->hide(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->show(); p_ID1SpinBox->show(); p_ID2Label->hide();
@@ -287,7 +305,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
     m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(0); break;
   case P_COLOR:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLabel->show();
     p_colorPushButton->show(); p_ID1Label->show(); p_ID1SpinBox->show(); p_ID2Label->hide();
@@ -295,7 +314,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
     m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(0); break;
   case M_NAME:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
@@ -303,7 +323,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->show();
     m_IDLabel->show(); m_IDSpinBox->show(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(0); break;
   case M_OPACITY:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
@@ -311,7 +332,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
     m_IDLabel->show(); m_IDSpinBox->show(); m_opacityLabel->show(); m_opacitySpinBox->show();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(0); break;
   case M_VISIBLE:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
@@ -319,7 +341,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
     m_IDLabel->show(); m_IDSpinBox->show(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->show(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(0); break;
   case M_SOLO:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
@@ -327,7 +350,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
     m_IDLabel->show(); m_IDSpinBox->show(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->show(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(0); break;
   case M_LOCK:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
@@ -335,7 +359,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
     m_IDLabel->show(); m_IDSpinBox->show(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->show(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(0); break;
   case M_DEPTH:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
@@ -343,7 +368,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
     m_IDLabel->show(); m_IDSpinBox->show(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->show();
-    m_depthSpinBox->show(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->show(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(0); break;
   case P_XFADE:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->show(); p_ID1SpinBox->show(); p_ID2Label->show();
@@ -351,7 +377,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
     m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(2); break;
   case P_FADE:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->show(); p_ID1SpinBox->show(); p_ID2Label->hide();
@@ -359,7 +386,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
     m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->show(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->show(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(2); break;
   case R_P_NAME:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->show(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
@@ -367,7 +395,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
     m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->show(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->show(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(0); break;
   case R_P_REWIND:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->show(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
@@ -375,7 +404,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
     m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(0); break;
   case R_P_OPACITY:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->show(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
@@ -383,7 +413,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->show(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
     m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(0); break;
   case R_P_VOLUME:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->show(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
@@ -391,7 +422,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->show(); p_volumeSpinBox->show(); m_nameLineEdit->hide();
     m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(0); break;
   case R_P_RATE:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->show(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
@@ -399,7 +431,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
     m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(0); break;
   case R_P_URI:
     p_uriLabel->show(); p_uriPushButton->show(); p_nameLineEdit->show(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
@@ -407,7 +440,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
     m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(0); break;
   case R_P_COLOR:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->show(); p_colorLabel->show();
     p_colorPushButton->show(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
@@ -415,7 +449,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
     m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(0); break;
   case R_M_NAME:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
@@ -423,7 +458,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->show();
     m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->show(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->show();
+    timeSpinBox->setValue(0); break;
   case R_M_OPACITY:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
@@ -431,7 +467,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->show();
     m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->show(); m_opacitySpinBox->show();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(0); break;
   case R_M_VISIBLE:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
@@ -439,7 +476,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->show();
     m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->show(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(0); break;
   case R_M_SOLO:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
@@ -447,7 +485,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->show();
     m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->show(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(0); break;
   case R_M_LOCK:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
@@ -455,7 +494,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->show();
     m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->show(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(0); break;
   case R_M_DEPTH:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
@@ -463,7 +503,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->show();
     m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->show();
-    m_depthSpinBox->show(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->show(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(0); break;
   case R_P_FADE:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->show(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
@@ -471,7 +512,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
     m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->show(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->show(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(2); break;
   case R_P_XFADE:
     p_uriLabel->hide(); p_uriPushButton->hide(); p_nameLineEdit->show(); p_colorLabel->hide();
     p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
@@ -479,7 +521,8 @@ void MainWindow::showWidgets(int index)
     p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
     m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->show(); m_nameLineEdit2->hide(); break;
+    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->show(); m_nameLineEdit2->hide();
+    timeSpinBox->setValue(2); break;
   default:
     p_nameLineEdit->hide(); p_nameLineEdit2->hide(); p_uriLabel->hide(); p_uriPushButton->hide();
     p_colorLabel->hide(); p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide();
@@ -511,7 +554,7 @@ void MainWindow::sendFromToolBar()
   case R_M_OPACITY: oscsend = new OscSend(index, m_opacitySpinBox->value(), m_nameLineEdit->text()); break;
   case R_M_DEPTH: oscsend = new OscSend(index, m_depthSpinBox->value(), m_nameLineEdit->text()); break;
   // cstr 3
-  case P_REWIND: oscsend = new OscSend(index, p_ID1SpinBox->value(), 0); break;
+  case P_REWIND: oscsend = new OscSend(index, p_ID1SpinBox->value(), 0.0); break;
   // cstr 4
   case P_OPACITY: oscsend = new OscSend(index, p_ID1SpinBox->value(), p_opacitySpinBox->value(), 0); break;
   case P_VOLUME: oscsend = new OscSend(index, p_ID1SpinBox->value(), p_volumeSpinBox->value(), 0); break;
@@ -569,7 +612,7 @@ void MainWindow::addToCue()
   case P_NAME: oscsend = new OscSend(index, p_ID1SpinBox->value(), p_nameLineEdit->text(), timeSpinBox->value()); break;
   case M_NAME: oscsend = new OscSend(index, m_IDSpinBox->value(), m_nameLineEdit->text(), timeSpinBox->value()); break;
   case P_URI: while (p_uriLabel->text() == "Choose->") setP_UriLabel();
-    oscsend = new OscSend(index, p_ID1SpinBox->value(), p_uriLabel->text(), timeSpinBox->value()); break;
+    oscsend = new OscSend(index, p_ID1SpinBox->value(), p_uriLabel->text(),timeSpinBox->value()); break;
   case P_COLOR: while (p_colorLabel->text() == "Choose->") setP_ColorLabel();
     oscsend = new OscSend(index, p_ID1SpinBox->value(), p_colorLabel->text(), timeSpinBox->value()); break;
   case R_P_OPACITY: oscsend = new OscSend(index, p_opacitySpinBox->value(), p_nameLineEdit->text(), timeSpinBox->value()); break;
