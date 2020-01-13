@@ -46,7 +46,7 @@ QTabBar::tab:selected, QTabBar::tab:hover {
 }
 
 QHeaderView {
-  background: #414D59;
+  background: #5B6772;
 }
 
 QHeaderView::section {
@@ -179,7 +179,7 @@ QDoubleSpinBox {
 }
 
 TableView  {
-  background: #414D59;
+  background: #778390;
 }
 
 TabSeq {

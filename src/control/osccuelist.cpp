@@ -35,70 +35,71 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const // voir pour
 {
   OscSend *tempSend = v_listCue.at(index.row());
   int col = index.column();
-  QBrush salmonColor(QColor("#AB3C29"));
-  if (role == Qt::DisplayRole)
+  QBrush salmonColor(QColor("#A86D63"));
+  if (role == Qt::DisplayRole && index.flags().testFlag(Qt::ItemIsEditable)) //if (index.flags() == Qt::ItemIsEnabled)
   {
+    std::cout << index.flags();
     switch (col) {
     case 0:
       switch(tempSend->m_champ) {
-      case NOOP: return QString("NOOP"); // No break ???
-      case PLAY: return QString("PLAY");
-      case PAUSE: return QString("PAUSE");
-      case REWIND: return QString("REWIND");
-      case QUIT: return QString("QUIT");
-      case P_NAME: return QString("P_NAME");
-      case P_REWIND: return QString("P_REWIND");
-      case P_OPACITY: return QString("P_OPACITY");
-      case P_VOLUME: return QString("P_VOLUME");
-      case P_RATE: return QString("P_RATE");
-      case P_URI: return QString("P_URI");
-      case P_COLOR: return QString("P_COLOR");
-      case M_NAME: return QString("M_NAME");
-      case M_OPACITY: return QString("M_OPACITY");
-      case M_VISIBLE: return QString("M_VISIBLE");
-      case M_SOLO: return QString("M_SOLO");
-      case M_LOCK: return QString("M_LOCK");
-      case M_DEPTH: return QString("M_DEPTH");
-      case P_XFADE: return QString("P_XFADE");
-      case P_FADE: return QString("P_FADE");
-      case R_P_NAME: return QString("R_P_NAME");
-      case R_P_REWIND: return QString("R_P_REWIND");
-      case R_P_OPACITY: return QString("R_P_OPACITY");
-      case R_P_VOLUME: return QString("R_P_VOLUME");
-      case R_P_RATE: return QString("R_P_RATE");
-      case R_P_URI: return QString("R_P_URI");
-      case R_P_COLOR: return QString("R_P_COLOR");
-      case R_M_NAME: return QString("R_M_NAME");
-      case R_M_OPACITY: return QString("R_M_OPACITY");
-      case R_M_VISIBLE: return QString("R_M_VISIBLE");
-      case R_M_SOLO: return QString("R_M_SOLO");
-      case R_M_LOCK: return QString("R_M_LOCK");
-      case R_M_DEPTH: return QString("R_M_DEPTH");
-      case R_P_FADE: return QString("R_P_FADE");
-      case R_P_XFADE: return QString("R_P_XFADE");
+      case NOOP: return QString("NOOP"); break;
+      case PLAY: return QString("PLAY"); break;
+      case PAUSE: return QString("PAUSE"); break;
+      case REWIND: return QString("REWIND"); break;
+      case QUIT: return QString("QUIT"); break;
+      case P_NAME: return QString("P_NAME"); break;
+      case P_REWIND: return QString("P_REWIND"); break;
+      case P_OPACITY: return QString("P_OPACITY"); break;
+      case P_VOLUME: return QString("P_VOLUME"); break;
+      case P_RATE: return QString("P_RATE"); break;
+      case P_URI: return QString("P_URI"); break;
+      case P_COLOR: return QString("P_COLOR"); break;
+      case M_NAME: return QString("M_NAME"); break;
+      case M_OPACITY: return QString("M_OPACITY"); break;
+      case M_VISIBLE: return QString("M_VISIBLE"); break;
+      case M_SOLO: return QString("M_SOLO"); break;
+      case M_LOCK: return QString("M_LOCK"); break;
+      case M_DEPTH: return QString("M_DEPTH"); break;
+      case P_XFADE: return QString("P_XFADE"); break;
+      case P_FADE: return QString("P_FADE"); break;
+      case R_P_NAME: return QString("R_P_NAME"); break;
+      case R_P_REWIND: return QString("R_P_REWIND"); break;
+      case R_P_OPACITY: return QString("R_P_OPACITY"); break;
+      case R_P_VOLUME: return QString("R_P_VOLUME"); break;
+      case R_P_RATE: return QString("R_P_RATE"); break;
+      case R_P_URI: return QString("R_P_URI"); break;
+      case R_P_COLOR: return QString("R_P_COLOR"); break;
+      case R_M_NAME: return QString("R_M_NAME"); break;
+      case R_M_OPACITY: return QString("R_M_OPACITY"); break;
+      case R_M_VISIBLE: return QString("R_M_VISIBLE"); break;
+      case R_M_SOLO: return QString("R_M_SOLO"); break;
+      case R_M_LOCK: return QString("R_M_LOCK"); break;
+      case R_M_DEPTH: return QString("R_M_DEPTH"); break;
+      case R_P_FADE: return QString("R_P_FADE"); break;
+      case R_P_XFADE: return QString("R_P_XFADE"); break;
       default: break;
       }
       break;
-    case 1: return tempSend->m_p_name; // Pas de break ??
-    case 2: return tempSend->m_p_name2;
-    case 3: return tempSend->m_p_uri;
-    case 4: return tempSend->m_p_color;
-    case 5: return QString::number(tempSend->m_p_ID1);
-    case 6: return QString::number(tempSend->m_p_ID2);
-    case 7: return QString::number(tempSend->m_p_rate);
-    case 8: return QString::number(tempSend->m_p_opacity);
-    case 9: return QString::number(tempSend->m_p_volume);
-    case 10: return tempSend->m_m_name;
-    case 11: return tempSend->m_m_name2;
-    case 12: return QString::number(tempSend->m_m_ID1);
-    case 13: return QString::number(tempSend->m_m_opacity);
-    case 14: return QString::number(tempSend->m_m_isvisible);
-    case 15: return QString::number(tempSend->m_m_issolo);
-    case 16: return QString::number(tempSend->m_m_islocked);
-    case 17: return QString::number(tempSend->m_m_depth);
-    case 18: return QString::number(tempSend->m_isfadein);
-    case 19: return QString::number(tempSend->m_time);
-    case 20: return QString::number(tempSend->m_iswaiting);
+    case 1: return tempSend->m_p_name; break;
+    case 2: return tempSend->m_p_name2; break;
+    case 3: return tempSend->m_p_uri; break;
+    case 4: return tempSend->m_p_color; break;
+    case 5: return QString::number(tempSend->m_p_ID1); break;
+    case 6: return QString::number(tempSend->m_p_ID2); break;
+    case 7: return QString::number(tempSend->m_p_rate); break;
+    case 8: return QString::number(tempSend->m_p_opacity); break;
+    case 9: return QString::number(tempSend->m_p_volume); break;
+    case 10: return tempSend->m_m_name; break;
+    case 11: return tempSend->m_m_name2; break;
+    case 12: return QString::number(tempSend->m_m_ID1); break;
+    case 13: return QString::number(tempSend->m_m_opacity); break;
+    case 14: return QString::number(tempSend->m_m_isvisible); break;
+    case 15: return QString::number(tempSend->m_m_issolo); break;
+    case 16: return QString::number(tempSend->m_m_islocked); break;
+    case 17: return QString::number(tempSend->m_m_depth); break;
+    case 18: return QString::number(tempSend->m_isfadein); break;
+    case 19: return QString::number(tempSend->m_time); break;
+    case 20: return QString::number(tempSend->m_iswaiting); break;
     default: break;
     }
 
@@ -139,11 +140,13 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const // voir pour
     case R_P_XFADE: if(col == 1 || col == 2 || col == 19) return salmonColor; break;
     default: break;
     }
+    if (!(tempSend->m_iswaiting)) return QBrush(Qt::Dense4Pattern);
+
   }
   if (role == Qt::TextAlignmentRole) return Qt::AlignCenter;
   if (role == Qt::ForegroundRole)
   {
-    if (!(tempSend->m_iswaiting)) return QColor(Qt::gray);
+// à voir
   }
 
   return QVariant();
@@ -151,7 +154,7 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const // voir pour
 
 bool OscCueList::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-  switch(index.column())
+  switch(index.column()) // revoir l'édition pour ne pas accepter toutes les valeurs et revenir à l'ancien paramètre
   {
   case 0: v_listCue.at(index.row())->m_champ = static_cast<champMM>(value.toInt()); break;
   case 1: v_listCue.at(index.row())->m_p_name = value.toString(); break;
@@ -173,7 +176,7 @@ bool OscCueList::setData(const QModelIndex &index, const QVariant &value, int ro
   case 17: v_listCue.at(index.row())->m_m_depth = value.toInt(); break;
   case 18: v_listCue.at(index.row())->m_isfadein = value.toBool(); break;
   case 19: v_listCue.at(index.row())->m_time = value.toDouble(); break;
-  case 20: v_listCue.at(index.row())->m_iswaiting = value.toBool(); break;
+  case 20: v_listCue.at(index.row())->m_iswaiting = value.toBool(); break; // if true rajouter remise à zéro de time sauf sur fade
   default: std::cout << role << "\n"; break; // Pour éviter unused parameter
   }
   emit dataChanged(index, index);
@@ -219,72 +222,46 @@ QVariant OscCueList::headerData(int section, Qt::Orientation orientation, int ro
 
 Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const
 {
-//  OscSend *tempSend = v_listCue.at(index.row());
-//  int col = index.column();
-//  switch(tempSend->m_champ){
-//  case NOOP: if(!(col == 0 || col == 19 || col == 20)) return Qt::ItemIsEditable; break;
-//  case PLAY: case PAUSE: case REWIND: if(!(col == 0  || col == 20)) return Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case P_NAME: if(!(col == 0 || col == 1 || col == 5 || col == 20)) return Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case P_REWIND: if(col == 0 || col == 5 || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case P_COLOR: if(col == 0 || col == 4 || col == 5  || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case P_OPACITY: if(col == 0 || col == 5 || col == 8  || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case P_VOLUME: if(col == 0 || col == 5 || col == 9  || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case P_RATE: if(col == 0 || col == 5 || col == 7  || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case P_URI: if(col == 0 || col == 3 || col == 5  || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case M_NAME: if(col == 0 || col == 10 || col == 12  || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case M_OPACITY: if(col == 0 || col == 12 || col == 13  || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case M_VISIBLE: if(col == 0 || col == 12 || col == 14  || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case M_SOLO: if(col == 0 || col == 12 || col == 15  || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case M_LOCK: if(col == 0 || col == 12 || col == 16  || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case M_DEPTH: if(col == 0 || col == 12 || col == 17 || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case P_XFADE: if(col == 0 || col == 5 || col == 6 || col == 18 || col == 19  || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case P_FADE: if(col == 0 || col == 5 || col == 18 || col == 19  || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case R_P_NAME: if(col == 0 || col == 1 || col == 2 || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case R_P_REWIND: if(col == 0 || col == 1 || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case R_P_OPACITY: if(col == 0 || col == 1 || col == 8 || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case R_P_VOLUME: if(col == 0 || col == 1 || col == 9 || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case R_P_RATE: if(col == 0 || col == 1 || col == 7 || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case R_P_URI: if(col == 0 || col == 1 || col == 3 || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case R_P_COLOR: if(col == 0 || col == 1 || col == 4 || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case R_M_NAME: if(col == 0 || col == 10 || col == 11 || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case R_M_OPACITY: if(col == 0 || col == 10 || col == 13 || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case R_M_VISIBLE: if(col == 0 || col == 10 || col == 14 || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case R_M_SOLO: if(col == 0 || col == 10 || col == 15 || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case R_M_LOCK: if(col == 0 || col == 10 || col == 16 || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case R_M_DEPTH: if(col == 0 || col == 10 || col == 17 || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-////    if(!(tempSend->m_iswaiting) && col == 19) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case R_P_FADE: if(col == 0 || col == 1 || col == 18 || col == 19  || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  case R_P_XFADE: if(col == 0 || col == 1 || col == 2 || col == 19  || col == 20) return Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
-//  default: break;
-//  }
 
-  return Qt:: ItemIsEditable | QAbstractTableModel::flags(index);
+  OscSend *tempSend = v_listCue.at(index.row());
+  int col = index.column();
+  champMM champ = tempSend->m_champ;
+
+  if (col == 0 || col == 20) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
+  else if (tempSend->m_iswaiting == false && col == 19) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
+  else if (champ == P_NAME) {if (col == 1 || col == 5) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ == P_REWIND) {if (col == 5) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ == P_REWIND) {if (col == 5) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ == P_COLOR) {if (col == 4 || col == 5)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ == P_OPACITY) {if (col == 5 || col == 8)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ == P_VOLUME) {if (col == 5 || col == 9)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ == P_RATE) {if (col == 5 || col == 7)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ == P_URI) {if (col == 3 || col == 5)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ == M_NAME) {if (col == 10 || col == 12)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ == M_OPACITY) {if (col == 12 || col == 13)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ == M_VISIBLE) {if (col == 12 || col == 14)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ == M_SOLO) {if (col == 12 || col == 15)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ == M_LOCK) {if (col == 12 || col == 16)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ == M_DEPTH) {if (col == 12 || col == 17)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ == P_XFADE) {if (col == 5 || col == 6 || col == 18 || col == 19)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ == P_FADE) {if (col == 5 || col == 18 || col == 19)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ == R_P_NAME) {if (col == 1 || col == 2)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ == R_P_REWIND) {if (col == 1)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ ==  R_P_OPACITY) {if (col == 1 || col == 8)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ ==  R_P_VOLUME) {if (col == 1 || col == 9)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ ==  R_P_RATE) {if (col == 1 || col == 7)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ ==  R_P_URI) {if (col == 1 || col == 3)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ ==  R_P_COLOR) {if (col == 1 || col == 4)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ ==  R_M_NAME) {if (col == 10 || col == 11)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ ==  R_M_OPACITY) {if (col == 10 || col == 13)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ ==  R_M_VISIBLE) {if (col == 10 || col == 14)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ ==  R_M_SOLO) {if (col == 10 || col == 15)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ ==  R_M_LOCK) {if (col == 10 || col == 16)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ ==  R_M_DEPTH) {if (col ==10 || col == 17)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ ==  R_P_FADE) {if (col == 1 || col == 18 || col == 19)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ ==  R_P_XFADE) {if (col == 1 || col == 2 || col == 19)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+
+  return QAbstractTableModel::flags(index);
 }
 
 OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)

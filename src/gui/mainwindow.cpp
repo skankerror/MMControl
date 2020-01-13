@@ -598,7 +598,8 @@ void MainWindow::addToCue()
   switch (index)
   {
   // cstr 1
-  case NOOP: case PLAY: case PAUSE: case REWIND: case QUIT: oscsend = new OscSend(index, timeSpinBox->value()); break;
+  case NOOP: oscsend = new OscSend(index, timeSpinBox->value()); oscsend->m_iswaiting = false; break;
+  case PLAY: case PAUSE: case REWIND: case QUIT: oscsend = new OscSend(index, timeSpinBox->value()); break;
   // cstr 2
   case P_NAME: oscsend = new OscSend(index, p_ID1SpinBox->value(), p_nameLineEdit->text(), timeSpinBox->value()); break;
   case M_NAME: oscsend = new OscSend(index, m_IDSpinBox->value(), m_nameLineEdit->text(), timeSpinBox->value()); break;

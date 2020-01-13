@@ -3,8 +3,7 @@ revoir la façon dont on ouvre les ports:
 https://github.com/thestk/rtmidi/blob/master/tests/cmidiin.cpp
 Allumer les boutons avec les midiout
 
--Voir Item delegate pour améliorer la vue de la tableview.
-La sous-classer ?
+-Voir Item delegate pour l'édition
 -Tweaker mieux la taille des colonnes
 -Suivre le select quand la cue s'enchaîne
 -Ne permettre qu'à un seul cue d'être sélectionné
@@ -21,20 +20,4 @@ and call QFutureWatcher::result() to get the function's return value."
 
 -Remplacer les std::cout par des qdebug
 
-NOOP addtocue mettre wait à 0 par défaut
-
-NOTES
-
-styles dispo :
-
-bb10dark
-bb10bright
-kvantum-dark
-kvantum
-cleanlooks
-gtk2
-cde
-motif
-plastique
-Windows
-Fusion
+-Remplacer bool wait par un double waittime
