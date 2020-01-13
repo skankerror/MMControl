@@ -35,9 +35,7 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const // voir pour
 {
   OscSend *tempSend = v_listCue.at(index.row());
   int col = index.column();
-  QBrush yellowBackground(Qt::yellow);
-  QBrush cyanBackground(Qt::cyan);
-  QBrush blueForeground(Qt::blue);
+  QBrush salmonColor(QColor("#AB3C29"));
   if (role == Qt::DisplayRole)
   {
     switch (col) {
@@ -107,45 +105,45 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const // voir pour
   }
   if (role == Qt::BackgroundRole)
   {
-    if(col == 0) return cyanBackground;
+    if(col == 0) return salmonColor;
     switch(tempSend->m_champ){
-    case P_NAME: if(col == 1 || col == 5) return yellowBackground; break;
-    case P_REWIND: if(col == 5) return yellowBackground; break;
-    case P_COLOR: if(col == 4 || col == 5) return yellowBackground; break;
-    case P_OPACITY: if(col == 5 || col == 8) return yellowBackground; break;
-    case P_VOLUME: if(col == 5 || col == 9) return yellowBackground; break;
-    case P_RATE: if(col == 5 || col == 7) return yellowBackground; break;
-    case P_URI: if(col == 3 || col == 5) return yellowBackground; break;
-    case M_NAME: if(col == 10 || col == 12) return yellowBackground; break;
-    case M_OPACITY: if(col == 12 || col == 13) return yellowBackground; break;
-    case M_VISIBLE: if(col == 12 || col == 14) return yellowBackground; break;
-    case M_SOLO: if(col == 12 || col == 15) return yellowBackground; break;
-    case M_LOCK: if(col == 12 || col == 16) return yellowBackground; break;
-    case M_DEPTH: if(col == 12 || col == 17) return yellowBackground; break;
-    case P_XFADE: if(col == 5 || col == 6 || col == 18 || col == 19) return yellowBackground; break;
-    case P_FADE: if(col == 5 || col == 18 || col == 19) return yellowBackground; break;
-    case R_P_NAME: if(col == 1 || col == 2) return yellowBackground; break;
-    case R_P_REWIND: if(col == 1) return yellowBackground; break;
-    case R_P_OPACITY: if(col == 1 || col == 8) return yellowBackground; break;
-    case R_P_VOLUME: if(col == 1 || col == 9) return yellowBackground; break;
-    case R_P_RATE: if(col == 1 || col == 7) return yellowBackground; break;
-    case R_P_URI: if(col == 1 || col == 3) return yellowBackground; break;
-    case R_P_COLOR: if(col == 1 || col == 4) return yellowBackground; break;
-    case R_M_NAME: if(col == 10 || col == 11) return yellowBackground; break;
-    case R_M_OPACITY: if(col == 10 || col == 13) return yellowBackground; break;
-    case R_M_VISIBLE: if(col == 10 || col == 14) return yellowBackground; break;
-    case R_M_SOLO: if(col == 10 || col == 15) return yellowBackground; break;
-    case R_M_LOCK: if(col == 10 || col == 16) return yellowBackground; break;
-    case R_M_DEPTH: if(col == 10 || col == 17) return yellowBackground; break;
-    case R_P_FADE: if(col == 1 || col == 18 || col == 19) return yellowBackground; break;
-    case R_P_XFADE: if(col == 1 || col == 2 || col == 19) return yellowBackground; break;
+    case P_NAME: if(col == 1 || col == 5) return salmonColor; break;
+    case P_REWIND: if(col == 5) return salmonColor; break;
+    case P_COLOR: if(col == 4 || col == 5) return salmonColor; break;
+    case P_OPACITY: if(col == 5 || col == 8) return salmonColor; break;
+    case P_VOLUME: if(col == 5 || col == 9) return salmonColor; break;
+    case P_RATE: if(col == 5 || col == 7) return salmonColor; break;
+    case P_URI: if(col == 3 || col == 5) return salmonColor; break;
+    case M_NAME: if(col == 10 || col == 12) return salmonColor; break;
+    case M_OPACITY: if(col == 12 || col == 13) return salmonColor; break;
+    case M_VISIBLE: if(col == 12 || col == 14) return salmonColor; break;
+    case M_SOLO: if(col == 12 || col == 15) return salmonColor; break;
+    case M_LOCK: if(col == 12 || col == 16) return salmonColor; break;
+    case M_DEPTH: if(col == 12 || col == 17) return salmonColor; break;
+    case P_XFADE: if(col == 5 || col == 6 || col == 18 || col == 19) return salmonColor; break;
+    case P_FADE: if(col == 5 || col == 18 || col == 19) return salmonColor; break;
+    case R_P_NAME: if(col == 1 || col == 2) return salmonColor; break;
+    case R_P_REWIND: if(col == 1) return salmonColor; break;
+    case R_P_OPACITY: if(col == 1 || col == 8) return salmonColor; break;
+    case R_P_VOLUME: if(col == 1 || col == 9) return salmonColor; break;
+    case R_P_RATE: if(col == 1 || col == 7) return salmonColor; break;
+    case R_P_URI: if(col == 1 || col == 3) return salmonColor; break;
+    case R_P_COLOR: if(col == 1 || col == 4) return salmonColor; break;
+    case R_M_NAME: if(col == 10 || col == 11) return salmonColor; break;
+    case R_M_OPACITY: if(col == 10 || col == 13) return salmonColor; break;
+    case R_M_VISIBLE: if(col == 10 || col == 14) return salmonColor; break;
+    case R_M_SOLO: if(col == 10 || col == 15) return salmonColor; break;
+    case R_M_LOCK: if(col == 10 || col == 16) return salmonColor; break;
+    case R_M_DEPTH: if(col == 10 || col == 17) return salmonColor; break;
+    case R_P_FADE: if(col == 1 || col == 18 || col == 19) return salmonColor; break;
+    case R_P_XFADE: if(col == 1 || col == 2 || col == 19) return salmonColor; break;
     default: break;
     }
   }
   if (role == Qt::TextAlignmentRole) return Qt::AlignCenter;
   if (role == Qt::ForegroundRole)
   {
-    if (!(tempSend->m_iswaiting)) return blueForeground;
+    if (!(tempSend->m_iswaiting)) return QColor(Qt::gray);
   }
 
   return QVariant();
