@@ -24,10 +24,6 @@ MainWindow::MainWindow() :
   setWindowIcon(icon);
   setWindowTitle(WINDOW_TITLE);
   setGeometry(X_WINDOW_OFFSET, Y_WINDOW_OFFSET, WINDOW_WIDTH, WINDOW_HEIGHT);
-  QPalette pal = palette();
-  pal.setColor(QPalette::Background, Qt::gray);
-  setAutoFillBackground(true);
-  setPalette(pal);
 
   state = new MMState(this);
   oscCueList = new OscCueList(this);
@@ -57,11 +53,6 @@ void MainWindow::createCentralWidget()
   tabwidget->addTab(tabmidi, "Midi In");
   tabwidget->addTab(tabseq, "Sequencer");
   tabwidget->addTab(tabmmstate, "Mapmap State");
-
-  QPalette pal = palette();
-  pal.setColor(QPalette::Background, Qt::lightGray);
-  tabwidget->setAutoFillBackground(true);
-  tabwidget->setPalette(pal);
 
   setCentralWidget(tabwidget);
 }

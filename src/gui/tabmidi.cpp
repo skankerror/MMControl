@@ -56,6 +56,7 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   layoutTotal->addWidget(B8, 6, 1); layoutTotal->addWidget(B0, 7, 1);
   layoutTotal->addWidget(B64, 8, 1); layoutTotal->addWidget(S1, 9, 1);
   layoutTotal->addWidget(pID1, 10, 1); layoutTotal->addWidget(mID1, 11, 1);
+  S1->setMinimumWidth(20);
 
   B65 = new QPushButton; B1 = new QPushButton; B9 = new QPushButton;
   B17 = new QPushButton; B25 = new QPushButton; B33 = new QPushButton;
@@ -277,11 +278,6 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   layoutTotal->setAlignment(S14, Qt::AlignHCenter); layoutTotal->setAlignment(S15, Qt::AlignHCenter);
   layoutTotal->setAlignment(S16, Qt::AlignHCenter); layoutTotal->setAlignment(S17, Qt::AlignHCenter);
   layoutTotal->setAlignment(S18, Qt::AlignHCenter);  this->setLayout(layoutTotal);
-
-  QPalette pal = palette();
-  pal.setColor(QPalette::Background, Qt::gray);
-  setAutoFillBackground(true);
-  setPalette(pal);
 
   // connect midiIn1
   connect(m_midiIn1, SIGNAL(sigMidiCtrlChanged(int, float)), this, SLOT(receiveMidiCtrl(int,float)));

@@ -67,11 +67,6 @@ TabSeq::TabSeq(OscCueList *oscCueList,
 //  tableView->setItemDelegateForColumn(18, checkBoxDelegate); // fadein
 //  tableView->setItemDelegateForColumn(20, checkBoxDelegate); // wait
 
-  QPalette pal = palette();
-  pal.setColor(QPalette::Background, Qt::gray);
-  tableView->setAutoFillBackground(true);
-  tableView->setPalette(pal);
-
   tableView->show();
   tableView->resizeColumnsToContents();
   layout1->addWidget(tableView);
@@ -80,7 +75,7 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   this->setLayout(layoutMain);
 
   setAutoFillBackground(true);
-  setPalette(pal);
+//  setPalette(pal);
 
   connect(boutonGo, SIGNAL(clicked(bool)), SLOT(executeGo()));
   connect(boutonPrev, SIGNAL(clicked(bool)), SLOT(movePrevious()));

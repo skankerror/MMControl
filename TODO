@@ -20,3 +20,21 @@ and call QFutureWatcher::result() to get the function's return value."
 -Implémenter le midi pour bouton go
 
 -Remplacer les std::cout par des qdebug
+
+NOOP addtocue mettre wait à 0 par défaut
+
+NOTES
+
+styles dispo :
+
+bb10dark
+bb10bright
+kvantum-dark
+kvantum
+cleanlooks
+gtk2
+cde
+motif
+plastique
+Windows
+Fusion

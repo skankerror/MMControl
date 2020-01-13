@@ -17,31 +17,19 @@
 
 #include <QApplication>
 #include "mainwindow.h"
+#include <iostream>
 
 int main(int argc, char **argv)
 {
   QApplication app(argc, argv);
 
-  app.setStyleSheet("QSlider::groove:vertical {"
-                      "background: red;"
-//                      "position: absolute;"
-                      "left: 6px; right: 6px;"
-                  "}"
+  QFile file(":/qss/MyStyleSheet");
+      file.open(QFile::ReadOnly);
+      QString styleSheet = QString::fromLatin1(file.readAll());
 
-                  "QSlider::handle:vertical {"
-                      "height: 15px;"
-                      "background: blue;"
-                      "width: 40px;"
-                      "margin: 0 -40px;" /* expand outside the groove */
-                  "}"
+      app.setStyleSheet(styleSheet);
 
-                  "QSlider::add-page:vertical {"
-                      "background: black;"
-                  "}"
 
-                  "QSlider::sub-page:vertical {"
-                      "background: white;"
-                  "}");
 
   MainWindow win;
   win.show();

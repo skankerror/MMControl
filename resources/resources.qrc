@@ -2,4 +2,8 @@
     <qresource prefix="/graphics">
         <file alias="Icon">MMControl.png</file>
     </qresource>
+    <qresource prefix="/"/>
+    <qresource prefix="/qss">
+        <file alias="MyStyleSheet">qss/MyStyleSheet.qss</file>
+    </qresource>
 </RCC>
