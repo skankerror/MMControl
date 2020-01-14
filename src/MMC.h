@@ -18,6 +18,8 @@
 #ifndef MMC_H
 #define MMC_H
 
+#include <QObject>
+
 // MainWindow
 #define WINDOW_TITLE "Mapmap Controller"
 #define X_WINDOW_OFFSET 200
@@ -29,6 +31,7 @@
 #define ADDRESS "127.0.0.1" // IP cible
 #define PORT 12345 // Port cible
 #define OUTPUT_BUFFER_SIZE 512
+
 enum champMM
 {
   NOOP = 0,
@@ -66,6 +69,14 @@ enum champMM
   R_M_DEPTH = 32,
   R_P_FADE = 33,
   R_P_XFADE = 34
+};
+
+// OscCueList
+enum columns
+{
+  Champ, P_name, P_name2, Uri, Color, P_Id, P_Id2, Rate, P_opac, Vol,
+  M_name, M_name2, M_Id, M_opac, Visible, Solo, Lock, Depth,
+  Fade_In, Time, Wait, Count = Wait + 1
 };
 
 // MyMidiIn

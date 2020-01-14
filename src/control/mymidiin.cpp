@@ -25,8 +25,8 @@ MyMidiIn::MyMidiIn(int id, Api api, const std::string &clientName,
 
   int nPorts = RtMidiIn::getPortCount();
 
-  std::cout << "Api # : " << RtMidiIn::getCurrentApi() << std::endl;
-  std::cout << "Nombre de ports : " << nPorts << std::endl;
+  qDebug() << "Api # : " << RtMidiIn::getCurrentApi();
+  qDebug() << "Nombre de ports : " << nPorts;
   for (int i = 0; i<nPorts; i++)
   {
     std::cout << "Port #" << i << " : " << RtMidiIn::getPortName(i) << std::endl;
@@ -41,7 +41,7 @@ MyMidiIn::MyMidiIn(int id, Api api, const std::string &clientName,
       if (RtMidiIn::getPortName(i) == APCMINI_1)
       {
         RtMidiIn::openPort(i, MYPORTNAME_IN_1);  // On ouvre le port de l'APCMini
-        std::cout << "Succés sur le port #" << i << std::endl;
+        qDebug() << "Succés sur le port #" << i;
         break;
       }
       else
@@ -57,7 +57,7 @@ MyMidiIn::MyMidiIn(int id, Api api, const std::string &clientName,
       if (RtMidiIn::getPortName(i) == APCMINI_2)
       {
         RtMidiIn::openPort(i, MYPORTNAME_IN_2);  // On ouvre le port de l'APCMini2
-        std::cout << "Succés sur le port #" << i << std::endl;
+        qDebug() << "Succés sur le port #" << i;
         break;
       }
       else
@@ -70,8 +70,8 @@ MyMidiIn::MyMidiIn(int id, Api api, const std::string &clientName,
   }
   // Pour lire les entrées avec callback
   RtMidiIn::setCallback(&sendMidiToOsc, this);
-  if (RtMidiIn::isPortOpen()) std::cout << "Midi in " << id << " opened\n";
-  else std::cout << "Midi in " << id << " not opened\n";
+  if (RtMidiIn::isPortOpen()) qDebug() << "Midi in " << id << " opened\n";
+  else qDebug() << "Midi in " << id << " not opened";
 }
 // Un slot qui appelle le signal connecté dans parent
 void MyMidiIn::midiControlChanged(int unID, float uneOpacite)
@@ -94,26 +94,26 @@ void MyMidiIn::sendMidiToOsc(double deltatime,
 
   unsigned int nBytes = unMessage->size(); // Pour voir le delta
   for ( unsigned int i=0; i<nBytes; i++ )
-    std::cout << "Byte " << i << " = " << (int)unMessage->at(i) << ", ";
+    qDebug() << "Byte " << i << " = " << (int)unMessage->at(i) << ", ";
   if ( nBytes > 0 )
-    std::cout << "stamp = " << deltatime << std::endl;
+    qDebug() << "stamp = " << deltatime;
 
   if ((int)unMessage->at(0) == MIDI_CONTROL)
   {
-    std::cout << "#0 : controller : ";
+    qDebug() << "#0 : controller : ";
     int m_ID = (int)unMessage->at(1) - 47; // -47 car les sliders apc mini commencent leur ID à 48
-    std::cout << "paintID : " << m_ID;
+    qDebug() << "paintID : " << m_ID;
     int m_temp  = (int)unMessage->at(2);
     float m_varFloat = (float)m_temp;
     m_varFloat /=127;
-    std::cout << " Opacity % : " << m_varFloat*100 << '\n';
+    qDebug() << " Opacity % : " << m_varFloat*100 << '\n';
 
     // Maintenant on y accède pour lancer le signal à *parent
     unMidiIn->midiControlChanged(m_ID, m_varFloat);
   }
   else if ((int)unMessage->at(0) == MIDI_BUTTON_PRESSED)
   {
-    std::cout << "Button " << (int)unMessage->at(1) << " pressed \n";
+    qDebug() << "Button " << (int)unMessage->at(1) << " pressed \n";
     unMidiIn->midiNoteChanged((int)unMessage->at(1));
   }
 

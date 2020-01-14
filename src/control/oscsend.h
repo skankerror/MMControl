@@ -22,6 +22,7 @@
 #include <QString>
 #include <QFile>
 #include <QColor>
+#include <QDebug>
 #include <iostream>
 #include <unistd.h>
 #include "contrib/oscpack/osc/OscOutboundPacketStream.h"
@@ -30,28 +31,37 @@
 #include "contrib/oscpack/ip/IpEndpointName.h"
 #include "MMC.h"
 
+
 class OscSend : public QObject,
     public UdpTransmitSocket
 {
   Q_OBJECT
+
 public:
-  // cstr 1: 0 NOOP, 1 PLAY, 2 PAUSE, 3 REWIND, 4 QUIT
-  OscSend(champMM champ, double time = 0);
-  // cstr 2: 5 P_NAME, 10 P_URI, 11 P_COLOR, 12 M_NAME, 22 R_P_OPACITY, 23 R_P_VOLUME,
-  // 24 R_P_RATE, 28 R_M_OPACITY, 32 R_M_DEPTH
-  OscSend(champMM champ, int unInt, QString name, double time = 0);
-  // cstr 3: 6 P_REWIND
-  OscSend(champMM champ, int p_ID1, double time);
-  // cstr 4: 7 P_OPACITY, 8 P_VOLUME, 9 P_RATE, 13 M_OPACITY, 17 M_DEPTH, 18 P_XFADE
-  OscSend(champMM champ, int ID1, int var, double time);
-  // cstr 5: 14 M_VISIBLE, 15 M_SOLO, 16 M_LOCK, 19 P_FADE
-  OscSend(champMM champ, int ID1, bool isproperty, double time = 0);
-  // cstr 6 : 21 R_P_REWIND
-  OscSend(champMM champ, QString name, double time = 0);
-  // cstr 7 : 20 R_P_NAME, 25 R_P_URI, 26 R_P_COLOR, 27 R_M_NAME, 34 R_P_XFADE
-  OscSend(champMM champ, QString name1, QString name2, double time = 0);
-  // CSTR 8 : 29 R_M_VISIBLE, 30 R_M_SOLO, 31 R_M_LOCK, 33 R_P_FADE
-  OscSend(champMM champ, QString name, bool isproperty, double time = 0);
+
+  Q_ENUM(champMM)
+
+  OscSend(champMM champ = NOOP,
+          QString p_uri = "",
+          QString p_name = "",
+          QString p_name2 = "",
+          QString p_color = "",
+          int p_ID1 = 0,
+          int p_ID2 = 0,
+          int p_rate = 0,
+          int p_opacity = 0,
+          int p_volume = 0,
+          QString m_name = "",
+          QString m_name2 = "",
+          int m_ID1 = 0,
+          int m_opacity = 0,
+          bool m_isvisible = false,
+          bool m_issolo = false,
+          bool m_islocked = false,
+          int m_depth = 0,
+          double time = 0,
+          bool isfadein = false,
+          double waitTime = 0);
 
   void ExecuteSend();
   void ExecuteXFade(int ID1, int ID2, double time);
@@ -82,7 +92,7 @@ public:
   // general var
   double m_time = 0;
   bool m_isfadein = false; // pour P_FADE
-  bool m_iswaiting = true; // pour savoir si la cue doit s'enchaîner
+  double m_timeWait = 0; // pour savoir si la cue doit s'enchaîner
 };
 
 #endif // OSCSEND_H

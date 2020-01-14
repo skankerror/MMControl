@@ -28,8 +28,8 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
     m_midiOut1(midiOut1),
     m_midiOut2(midiOut2)
 {
-  oscSendS = new OscSend(P_OPACITY, 1, 0, 0);
-  oscSendB = new OscSend(M_VISIBLE, 1, true);
+  oscSendS = new OscSend(P_OPACITY); // Oscsend Slider
+  oscSendB = new OscSend(); // OscSend Buttons
 
   layoutTotal = new QGridLayout;
 
@@ -517,6 +517,7 @@ void TabMidi::receiveMidiCtrl2(int unID, float uneOpacite) // APC2
   case 9: this->S18->setValue((int)(uneOpacite*100)); break; default : break;
   }
 }
+
 // APC1
 void TabMidi::sendOscS1(int uneOpacite)
 {

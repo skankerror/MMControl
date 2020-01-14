@@ -22,6 +22,7 @@
 #include <rtmidi/RtMidi.h>
 #include <iostream>
 #include <QString>
+#include <QDebug>
 #include "MMC.h"
 
 class MyMidiIn : public QObject, public RtMidiIn

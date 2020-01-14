@@ -6,8 +6,8 @@ MyMidiOut::MyMidiOut(int id, Api api, const std::string &clientName):
 {
   int nPorts = RtMidiOut::getPortCount();
 
-  std::cout << "Api # : " << RtMidiOut::getCurrentApi() << "\n";
-  std::cout << "Nombre de ports : " << nPorts << std::endl;
+  qDebug() << "Api # : " << RtMidiOut::getCurrentApi();
+  qDebug() << "Nombre de ports : " << nPorts;
   for (int i = 0; i<nPorts; i++)
   {
     std::cout << "Port #" << i << " : " << RtMidiOut::getPortName(i) << std::endl;
@@ -20,7 +20,7 @@ MyMidiOut::MyMidiOut(int id, Api api, const std::string &clientName):
       if (RtMidiOut::getPortName(i) == APCMINI_1)
       {
         RtMidiOut::openPort(i, MYPORTNAME_OUT_1);  // On ouvre le port de l'APCMini
-        std::cout << "Succés sur le port #" << i << std::endl;
+        qDebug() << "Succés sur le port #" << i;
         break;
       }
       else
@@ -36,7 +36,7 @@ MyMidiOut::MyMidiOut(int id, Api api, const std::string &clientName):
       if (RtMidiOut::getPortName(i) == APCMINI_2)
       {
         RtMidiOut::openPort(i, MYPORTNAME_OUT_2);  // On ouvre le port de l'APCMini2
-        std::cout << "Succés sur le port #" << i << std::endl;
+        qDebug() << "Succés sur le port #" << i;
         break;
       }
       else
@@ -47,6 +47,6 @@ MyMidiOut::MyMidiOut(int id, Api api, const std::string &clientName):
     }
   default: break;
   }
-  if (RtMidiOut::isPortOpen()) std::cout << "Midi out " << id << " opened\n";
-  else std::cout << "Midi out " << id << " not opened\n";
+  if (RtMidiOut::isPortOpen()) qDebug() << "Midi out " << id << " opened";
+  else qDebug() << "Midi out " << id << " not opened";
 }

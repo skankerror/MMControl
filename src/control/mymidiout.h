@@ -5,6 +5,7 @@
 #include <rtmidi/RtMidi.h>
 #include <iostream>
 #include <QString>
+#include <QDebug>
 #include "MMC.h"
 
 class MyMidiOut : public QObject, public RtMidiOut

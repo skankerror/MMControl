@@ -26,12 +26,18 @@
 #include <QTextStream>
 #include <QStringList>
 #include "oscsend.h"
+#include "MMC.h"
+
+
 
 class OscCueList :
     public QAbstractTableModel
 {
   Q_OBJECT
+  Q_ENUM(columns)
+
 public:
+
   OscCueList(QObject *parent);
   int rowCount(const QModelIndex &parent = QModelIndex()) const override;
   int columnCount(const QModelIndex &parent = QModelIndex()) const override;

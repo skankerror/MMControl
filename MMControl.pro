@@ -3,6 +3,10 @@ QT +=widgets
 LIBS += -L/alsa/ -lasound\
     -lrtmidi\
 
+#TARGET +=qtdebug
+#TEMPLATE = app
+#CONFIG += debug
+
 INCLUDEPATH += \
     $$PWD/src \
     $$PWD/src/control \
@@ -49,3 +53,4 @@ DISTFILES += \
 
 RESOURCES += \
     resources/resources.qrc
+

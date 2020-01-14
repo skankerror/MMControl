@@ -112,6 +112,9 @@ public slots:
   void sendOscAPCB60_2(); void sendOscAPCB61_2(); void sendOscAPCB62_2(); void sendOscAPCB63_2(); void sendOscAPCB82_2();
 
 
+//  void SendOscS(int ID, int uneOpacite);
+
+
 private:
   OscSend *oscSendS; // Pour les sliders
   OscSend *oscSendB; // Pour les Boutons

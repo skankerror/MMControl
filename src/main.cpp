@@ -29,8 +29,6 @@ int main(int argc, char **argv)
 
       app.setStyleSheet(styleSheet);
 
-
-
   MainWindow win;
   win.show();
   return app.exec();

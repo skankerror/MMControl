@@ -101,6 +101,9 @@ private:
     QLabel *timeLabel;
     QDoubleSpinBox *timeSpinBox;
     QCheckBox *fadeCheckBox;
+    QLabel *waitTimeLabel;
+    QDoubleSpinBox *waitTimeSpinBox;
+
     QPushButton *sendPushButton;
     QPushButton *addToCuePushButton;
 

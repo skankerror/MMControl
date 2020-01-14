@@ -23,7 +23,7 @@ TabSeq::TabSeq(OscCueList *oscCueList,
                MyMidiIn *midiIn2,
                MyMidiOut *midiOut1,
                MyMidiOut *midiOut2
-               ) :
+               ):
   QWidget(),
   m_oscCueList(oscCueList),
   m_midiIn1(midiIn1),
@@ -69,6 +69,7 @@ TabSeq::TabSeq(OscCueList *oscCueList,
 
   tableView->show();
   tableView->resizeColumnsToContents();
+  tableView->resizeRowsToContents();
   layout1->addWidget(tableView);
   layoutMain->addLayout(boutonLayout);
   layoutMain->addLayout(layout1);
@@ -87,7 +88,8 @@ TabSeq::TabSeq(OscCueList *oscCueList,
 
 void TabSeq::executeGo()
 {
-  tableView->resizeColumnsToContents();
+  tableView->resizeColumnsToContents(); // ? les mettre à toute insertion d'une cue...
+  tableView->resizeRowsToContents(); // ?
   // Vérifier s'il y a une cue sélectionnée
   if (tableView->currentIndex().isValid())
   m_oscCueList->v_listCue.at((tableView->currentIndex().row()))->ExecuteSend();
@@ -100,10 +102,10 @@ void TabSeq::executeGo()
     tableView->setCurrentIndex(tableView->currentIndex().siblingAtRow(tableView->currentIndex().row()+1));
     // trouver pour afficher le nouveau select
 //    tableView->selectRow(tableView->currentIndex().row());
-    if (m_oscCueList->v_listCue.at((tableView->currentIndex().row()-1))->m_iswaiting == 0)
+    if (m_oscCueList->v_listCue.at((tableView->currentIndex().row()-1))->m_timeWait > 0)
     {
-      usleep(1000000 * m_oscCueList->v_listCue.at((tableView->currentIndex().row()-1))->m_time);
-      std::cout << "wait " << m_oscCueList->v_listCue.at((tableView->currentIndex().row()-1))->m_time << " s\n";
+      usleep(1000000 * m_oscCueList->v_listCue.at((tableView->currentIndex().row()-1))->m_timeWait);
+      qDebug() << "wait " << m_oscCueList->v_listCue.at((tableView->currentIndex().row()-1))->m_timeWait << " s";
       executeGo();
     }
   }
