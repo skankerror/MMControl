@@ -4,7 +4,6 @@ MainWindow, QDialog
  color: #E6E6E6; 
 }
 
-
 QTextBrowser 
 { 
  background-color: #3A444F; 
@@ -27,7 +26,7 @@ QLabel {
 }*/
 
 QTabWidget::pane {
-    border: 0px;
+    border: 1px;
 }
 
 QTabWidget::tab-bar {
@@ -46,13 +45,13 @@ QTabBar::tab:selected, QTabBar::tab:hover {
 }
 
 QHeaderView {
-  background: #5B6772;
+  background: #414D59;
 }
 
 QHeaderView::section {
     background: #55616f;
     color: white;
-    border: 0px;
+    border: 1px;
     padding: 3px;
 }
 
@@ -158,6 +157,11 @@ QPushButton {
   color: white;
 }
 
+/*QPushButton#B64 {
+  background: white;
+  border-radius: 40px;
+}*/
+
 QLineEdit {
   background: #414D59;
   color: white;
@@ -179,7 +183,7 @@ QDoubleSpinBox {
 }
 
 TableView  {
-  background: #778390;
+  background: #414D59;
 }
 
 TabSeq {
@@ -187,5 +191,5 @@ TabSeq {
 }
 
 TableView QTableCornerButton::section {
-  background-color: #404B57;
+  background-color: #414D59;
 }

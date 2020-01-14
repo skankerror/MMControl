@@ -20,4 +20,6 @@ and call QFutureWatcher::result() to get the function's return value."
 
 -Remplacer les std::cout par des qdebug
 
--Remplacer bool wait par un double waittime
+-Remplacer bool wait par un double waittime ?
+
+-Revoir tabmidi

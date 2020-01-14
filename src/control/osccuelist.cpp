@@ -35,10 +35,9 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const // voir pour
 {
   OscSend *tempSend = v_listCue.at(index.row());
   int col = index.column();
-  QBrush salmonColor(QColor("#A86D63"));
+  QBrush salmonColor(QColor("#59271E"));
   if (role == Qt::DisplayRole && index.flags().testFlag(Qt::ItemIsEditable)) //if (index.flags() == Qt::ItemIsEnabled)
   {
-    std::cout << index.flags();
     switch (col) {
     case 0:
       switch(tempSend->m_champ) {
@@ -121,7 +120,7 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const // voir pour
     case M_SOLO: if(col == 12 || col == 15) return salmonColor; break;
     case M_LOCK: if(col == 12 || col == 16) return salmonColor; break;
     case M_DEPTH: if(col == 12 || col == 17) return salmonColor; break;
-    case P_XFADE: if(col == 5 || col == 6 || col == 18 || col == 19) return salmonColor; break;
+    case P_XFADE: if(col == 5 || col == 6 || col == 19) return salmonColor; break;
     case P_FADE: if(col == 5 || col == 18 || col == 19) return salmonColor; break;
     case R_P_NAME: if(col == 1 || col == 2) return salmonColor; break;
     case R_P_REWIND: if(col == 1) return salmonColor; break;
@@ -243,7 +242,7 @@ Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const
   else if (champ == M_SOLO) {if (col == 12 || col == 15)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
   else if (champ == M_LOCK) {if (col == 12 || col == 16)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
   else if (champ == M_DEPTH) {if (col == 12 || col == 17)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-  else if (champ == P_XFADE) {if (col == 5 || col == 6 || col == 18 || col == 19)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  else if (champ == P_XFADE) {if (col == 5 || col == 6 || col == 19)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
   else if (champ == P_FADE) {if (col == 5 || col == 18 || col == 19)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
   else if (champ == R_P_NAME) {if (col == 1 || col == 2)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
   else if (champ == R_P_REWIND) {if (col == 1)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
