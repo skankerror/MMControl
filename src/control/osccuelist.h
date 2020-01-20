@@ -26,6 +26,7 @@
 #include <QTextStream>
 #include <QStringList>
 #include "oscsend.h"
+#include "osccuelistdelegate.h"
 #include "MMC.h"
 
 

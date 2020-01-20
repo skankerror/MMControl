@@ -55,6 +55,8 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   boutonLayout->addWidget(boutonLoad);
   tableView = new TableView();
   tableView->setModel(m_oscCueList);
+  m_delegate = new OscCuelistDelegate;
+  tableView->setItemDelegate(m_delegate);
 
 //  QCheckBox *checkbox_visible = new QCheckBox();
 //  QItemDelegate *checkBoxDelegate = new QItemDelegate(checkbox_visible);
@@ -76,7 +78,6 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   this->setLayout(layoutMain);
 
   setAutoFillBackground(true);
-//  setPalette(pal);
 
   connect(boutonGo, SIGNAL(clicked(bool)), SLOT(executeGo()));
   connect(boutonPrev, SIGNAL(clicked(bool)), SLOT(movePrevious()));
@@ -88,8 +89,8 @@ TabSeq::TabSeq(OscCueList *oscCueList,
 
 void TabSeq::executeGo()
 {
-  tableView->resizeColumnsToContents(); // ? les mettre à toute insertion d'une cue...
-  tableView->resizeRowsToContents(); // ?
+  tableView->resizeColumnsToContents();
+  tableView->resizeRowsToContents();
   // Vérifier s'il y a une cue sélectionnée
   if (tableView->currentIndex().isValid())
   m_oscCueList->v_listCue.at((tableView->currentIndex().row()))->ExecuteSend();
@@ -97,16 +98,14 @@ void TabSeq::executeGo()
   {
     return;
   }
-  if (tableView->currentIndex().siblingAtRow(tableView->currentIndex().row()+1).isValid() == true)
+    if (tableView->currentIndex().siblingAtRow(tableView->currentIndex().row()+1).isValid() == true)
   {
     tableView->setCurrentIndex(tableView->currentIndex().siblingAtRow(tableView->currentIndex().row()+1));
-    // trouver pour afficher le nouveau select
-//    tableView->selectRow(tableView->currentIndex().row());
-    if (m_oscCueList->v_listCue.at((tableView->currentIndex().row()-1))->m_timeWait > 0)
+    double timeWait = m_oscCueList->v_listCue.at((tableView->currentIndex().row()-1))->m_timeWait;
+    if (timeWait > 0)
     {
-      usleep(1000000 * m_oscCueList->v_listCue.at((tableView->currentIndex().row()-1))->m_timeWait);
       qDebug() << "wait " << m_oscCueList->v_listCue.at((tableView->currentIndex().row()-1))->m_timeWait << " s";
-      executeGo();
+      QTimer::singleShot(100 * (int)(timeWait*10), this, SLOT(executeGo()));
     }
   }
   else tableView->setCurrentIndex(tableView->currentIndex().siblingAtRow(0));
@@ -121,6 +120,7 @@ void TabSeq::movePrevious()
       m_oscCueList->moveCuePrev(tableView->currentIndex().row());
     }
   }
+  tableView->resizeRowsToContents();
   tableView->resizeColumnsToContents();
 }
 
@@ -133,6 +133,7 @@ void TabSeq::moveNext()
       m_oscCueList->moveCuePrev(tableView->currentIndex().row() + 1);
     }
   }
+  tableView->resizeRowsToContents();
   tableView->resizeColumnsToContents();
 }
 
@@ -142,6 +143,7 @@ void TabSeq::removeCue()
   {
     m_oscCueList->removeCue(tableView->currentIndex().row());
   }
+  tableView->resizeRowsToContents();
   tableView->resizeColumnsToContents();
 }
 
@@ -213,6 +215,7 @@ void TabSeq::loadFile()
       lineindex++;
     }
     file.close();
+    tableView->resizeRowsToContents();
     tableView->resizeColumnsToContents();
   }
 }

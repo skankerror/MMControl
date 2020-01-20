@@ -21,11 +21,13 @@
 #include <QWidget>
 #include <QtWidgets>
 #include <QBoxLayout>
+#include <QTimer>
 #include <unistd.h>
 #include "osccuelist.h"
 #include "tableview.h"
 #include "mymidiin.h"
 #include "mymidiout.h"
+#include "osccuelistdelegate.h"
 
 class TabSeq : public QWidget
 {
@@ -56,6 +58,7 @@ private:
   MyMidiIn *m_midiIn2;
   MyMidiOut *m_midiOut1;
   MyMidiOut *m_midiOut2;
+  OscCuelistDelegate *m_delegate;
 
   QHBoxLayout *layoutMain;
     QHBoxLayout *layout1;

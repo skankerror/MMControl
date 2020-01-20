@@ -10,7 +10,7 @@ MyMidiOut::MyMidiOut(int id, Api api, const std::string &clientName):
   qDebug() << "Nombre de ports : " << nPorts;
   for (int i = 0; i<nPorts; i++)
   {
-    std::cout << "Port #" << i << " : " << RtMidiOut::getPortName(i) << std::endl;
+    qDebug() << "Port #" << i << " : " << RtMidiOut::getPortName(i).c_str();
   }
   switch(id)
   {
@@ -25,8 +25,8 @@ MyMidiOut::MyMidiOut(int id, Api api, const std::string &clientName):
       }
       else
       {
-        std::cout << " Pas le bon nom : le nom système : " << RtMidiOut::getPortName(i)
-                  << "\nLe nom programme : " << APCMINI_1  << std::endl;
+        qDebug() << " Pas le bon nom : le nom système : " << RtMidiOut::getPortName(i).c_str()
+                  << "\nLe nom programme : " << APCMINI_1;
       }
     }
     break;
@@ -41,8 +41,8 @@ MyMidiOut::MyMidiOut(int id, Api api, const std::string &clientName):
       }
       else
       {
-        std::cout << " Pas le bon nom : le nom système : " << RtMidiOut::getPortName(i)
-                  << "\nLe nom programme : " << APCMINI_2  << std::endl;
+        qDebug() << " Pas le bon nom : le nom système : " << RtMidiOut::getPortName(i).c_str()
+                  << "\nLe nom programme : " << APCMINI_2;
       }
     }
   default: break;

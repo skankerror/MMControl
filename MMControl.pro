@@ -6,6 +6,7 @@ LIBS += -L/alsa/ -lasound\
 #TARGET +=qtdebug
 #TEMPLATE = app
 #CONFIG += debug
+CONFIG += console debug
 
 INCLUDEPATH += \
     $$PWD/src \
@@ -15,6 +16,7 @@ INCLUDEPATH += \
     $$PWD/contrib/oscpack/ip
 
 SOURCES += \
+    src/gui/osccuelistdelegate.cpp \
     src/main.cpp \
     contrib/oscpack/osc/OscTypes.cpp \
     contrib/oscpack/osc/OscOutboundPacketStream.cpp \
@@ -37,6 +39,7 @@ HEADERS += \
     src/gui/mainwindow.h \
     src/control/mymidiin.h \
     src/control/mymidiout.h \
+    src/gui/osccuelistdelegate.h \
     src/gui/tableview.h \
     src/gui/tabmidi.h \
     src/gui/tabseq.h \
@@ -44,6 +47,7 @@ HEADERS += \
     src/control/osccuelist.h \
     src/control/mmstate.h \
     src/gui/tabmmstate.h
+
 
 DISTFILES += \
     BUGS \

@@ -3,23 +3,13 @@ revoir la façon dont on ouvre les ports:
 https://github.com/thestk/rtmidi/blob/master/tests/cmidiin.cpp
 Allumer les boutons avec les midiout
 
--Voir Item delegate pour l'édition
--Tweaker mieux la taille des colonnes
--Suivre le select quand la cue s'enchaîne
--Ne permettre qu'à un seul cue d'être sélectionné
+-Voir Item delegate pour le mvc
+-Ne permettre qu'à un seul cue d'être sélectionné (par QItemSelectionModel ?)
 
--Lors de wait on n'a plus la main. S'il n'y a que des waits on crée une boucle infinie
-Voir comment faire (threads ?) pthread signal...
-"Run the function using QtConcurrent::run().
-Have a QFutureWatcher emit the finished() signal when the function has returned,
-and call QFutureWatcher::result() to get the function's return value."
+-Mettre un QThread lors de l'éxécution d'un oscsend
 
 -Mettre des tooltips aux widgets
 
 -Implémenter le midi pour bouton go
 
--Remplacer les std::cout par des qdebug
 
--Remplacer bool wait par un double waittime ?
-
--Revoir tabmidi

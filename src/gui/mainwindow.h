@@ -48,8 +48,8 @@ signals:
 public slots:
   void showWidgets(int index);
   void sendFromToolBar();
-  void setP_UriLabel();
-  void setP_ColorLabel();
+  void setP_UriLine();
+  void setP_ColorLine();
   void addToCue();
 
 private:
@@ -73,9 +73,11 @@ private:
     QComboBox *champComboBox;
     QLineEdit *p_nameLineEdit;
     QLineEdit *p_nameLineEdit2;
-    QLabel *p_uriLabel;
+//    QLabel *p_uriLabel;
+    QLineEdit *p_uriLine;
     QPushButton *p_uriPushButton;
-    QLabel *p_colorLabel;
+//    QLabel *p_colorLabel;
+    QLineEdit *p_colorLine;
     QPushButton *p_colorPushButton;
     QLabel *p_ID1Label;
     QSpinBox *p_ID1SpinBox;

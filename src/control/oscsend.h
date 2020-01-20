@@ -23,7 +23,6 @@
 #include <QFile>
 #include <QColor>
 #include <QDebug>
-#include <iostream>
 #include <unistd.h>
 #include "contrib/oscpack/osc/OscOutboundPacketStream.h"
 #include "contrib/oscpack/ip/UdpSocket.h"

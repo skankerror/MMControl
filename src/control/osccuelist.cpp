@@ -19,7 +19,9 @@
 
 OscCueList::OscCueList(QObject *parent):
   QAbstractTableModel(parent)
-{}
+{
+
+}
 
 int OscCueList::rowCount(const QModelIndex &index) const
 {
@@ -269,7 +271,6 @@ Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const
 
 OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
 {
-//  OscSend *oscsend;
   champMM m_champ = NOOP;
   int m_champInt = 0;
   QString m_p_name = "";

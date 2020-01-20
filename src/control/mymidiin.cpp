@@ -16,6 +16,7 @@
  */
 
 #include "mymidiin.h"
+#include <string>
 
 MyMidiIn::MyMidiIn(int id, Api api, const std::string &clientName,
                    unsigned int queueSizeLimit):
@@ -29,7 +30,7 @@ MyMidiIn::MyMidiIn(int id, Api api, const std::string &clientName,
   qDebug() << "Nombre de ports : " << nPorts;
   for (int i = 0; i<nPorts; i++)
   {
-    std::cout << "Port #" << i << " : " << RtMidiIn::getPortName(i) << std::endl;
+    qDebug() << "Port #" << i << " : " << RtMidiIn::getPortName(i).c_str();
   }
 
   ignoreTypes(); // Pour ignorer sysex et cie...
@@ -46,8 +47,8 @@ MyMidiIn::MyMidiIn(int id, Api api, const std::string &clientName,
       }
       else
       {
-        std::cout << " Pas le bon nom : le nom système : " << RtMidiIn::getPortName(i)
-                  << "\nLe nom programme : " << APCMINI_1  << std::endl;
+        qDebug() << " Pas le bon nom : le nom système : " << RtMidiIn::getPortName(i).c_str()
+                  << "\nLe nom programme : " << APCMINI_1;
       }
     }
     break;
@@ -62,8 +63,8 @@ MyMidiIn::MyMidiIn(int id, Api api, const std::string &clientName,
       }
       else
       {
-        std::cout << " Pas le bon nom : le nom système : " << RtMidiIn::getPortName(i)
-                  << "\nLe nom programme : " << APCMINI_2  << std::endl;
+        qDebug() << " Pas le bon nom : le nom système : " << RtMidiIn::getPortName(i).c_str()
+                  << "\nLe nom programme : " << APCMINI_2;
       }
     }
   default: break;
