@@ -18,34 +18,35 @@
 #include "tabseq.h"
 
 TabSeq::TabSeq(OscCueList *oscCueList,
-               TableView *aTableView,
+               QTreeView *aTreeView,
                MyMidiIn *midiIn1,
                MyMidiIn *midiIn2,
                MyMidiOut *midiOut1,
-               MyMidiOut *midiOut2
+               MyMidiOut *midiOut2,
+               QWidget *parent
                ):
-  QWidget(),
+  QWidget(parent),
   m_oscCueList(oscCueList),
   m_midiIn1(midiIn1),
   m_midiIn2(midiIn2),
   m_midiOut1(midiOut1),
   m_midiOut2(midiOut2),
-  tableView(aTableView)
+  treeView(aTreeView)
 {
-  layoutMain = new QHBoxLayout;
-  layout1 = new QHBoxLayout;
-  boutonLayout = new QVBoxLayout;
-  boutonPrev = new QPushButton;
+  layoutMain = new QHBoxLayout(this);
+  layout1 = new QHBoxLayout(this);
+  boutonLayout = new QVBoxLayout(this);
+  boutonPrev = new QPushButton(this);
   boutonPrev->setText("<");
-  boutonNext = new QPushButton;
+  boutonNext = new QPushButton(this);
   boutonNext->setText(">");
-  boutonRemove = new QPushButton;
+  boutonRemove = new QPushButton(this);
   boutonRemove->setText("-");
-  boutonGo = new QPushButton;
+  boutonGo = new QPushButton(this);
   boutonGo->setText("GO !");
-  boutonSaveAs = new QPushButton;
+  boutonSaveAs = new QPushButton(this);
   boutonSaveAs->setText("Save As");
-  boutonLoad = new QPushButton;
+  boutonLoad = new QPushButton(this);
   boutonLoad->setText("Load");
   boutonLayout->addWidget(boutonPrev);
   boutonLayout->addWidget(boutonNext);
@@ -53,10 +54,10 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   boutonLayout->addWidget(boutonGo);
   boutonLayout->addWidget(boutonSaveAs);
   boutonLayout->addWidget(boutonLoad);
-  tableView = new TableView();
-  tableView->setModel(m_oscCueList);
-  m_delegate = new OscCuelistDelegate;
-  tableView->setItemDelegate(m_delegate);
+//  treeView = new QTreeView(this);
+  treeView->setModel(m_oscCueList);
+  m_delegate = new OscCuelistDelegate(this);
+  treeView->setItemDelegate(m_delegate);
 
 //  QCheckBox *checkbox_visible = new QCheckBox();
 //  QItemDelegate *checkBoxDelegate = new QItemDelegate(checkbox_visible);
@@ -69,10 +70,10 @@ TabSeq::TabSeq(OscCueList *oscCueList,
 //  tableView->setItemDelegateForColumn(18, checkBoxDelegate); // fadein
 //  tableView->setItemDelegateForColumn(20, checkBoxDelegate); // wait
 
-  tableView->show();
-  tableView->resizeColumnsToContents();
-  tableView->resizeRowsToContents();
-  layout1->addWidget(tableView);
+  treeView->show();
+//  tableView->resizeColumnsToContents();
+//  tableView->resizeRowsToContents();
+  layout1->addWidget(treeView);
   layoutMain->addLayout(boutonLayout);
   layoutMain->addLayout(layout1);
   this->setLayout(layoutMain);
@@ -89,62 +90,62 @@ TabSeq::TabSeq(OscCueList *oscCueList,
 
 void TabSeq::executeGo()
 {
-  tableView->resizeColumnsToContents();
-  tableView->resizeRowsToContents();
-  // Vérifier s'il y a une cue sélectionnée
-  if (tableView->currentIndex().isValid())
-  m_oscCueList->v_listCue.at((tableView->currentIndex().row()))->ExecuteSend();
-  else
-  {
-    return;
-  }
-    if (tableView->currentIndex().siblingAtRow(tableView->currentIndex().row()+1).isValid() == true)
-  {
-    tableView->setCurrentIndex(tableView->currentIndex().siblingAtRow(tableView->currentIndex().row()+1));
-    double timeWait = m_oscCueList->v_listCue.at((tableView->currentIndex().row()-1))->m_timeWait;
-    if (timeWait > 0)
-    {
-      qDebug() << "wait " << m_oscCueList->v_listCue.at((tableView->currentIndex().row()-1))->m_timeWait << " s";
-      QTimer::singleShot(100 * (int)(timeWait*10), this, SLOT(executeGo()));
-    }
-  }
-  else tableView->setCurrentIndex(tableView->currentIndex().siblingAtRow(0));
+////  tableView->resizeColumnsToContents();
+////  tableView->resizeRowsToContents();
+//  // Vérifier s'il y a une cue sélectionnée
+//  if (treeView->currentIndex().isValid())
+//  m_oscCueList->v_listCue.at((treeView->currentIndex().row()))->ExecuteSend();
+//  else
+//  {
+//    return;
+//  }
+//    if (tableView->currentIndex().siblingAtRow(tableView->currentIndex().row()+1).isValid() == true)
+//  {
+//    tableView->setCurrentIndex(tableView->currentIndex().siblingAtRow(tableView->currentIndex().row()+1));
+//    double timeWait = m_oscCueList->v_listCue.at((tableView->currentIndex().row()-1))->m_timeWait;
+//    if (timeWait > 0)
+//    {
+//      qDebug() << "wait " << m_oscCueList->v_listCue.at((tableView->currentIndex().row()-1))->m_timeWait << " s";
+//      QTimer::singleShot(100 * (int)(timeWait*10), this, SLOT(executeGo()));
+//    }
+//  }
+//  else tableView->setCurrentIndex(tableView->currentIndex().siblingAtRow(0));
 }
 
 void TabSeq::movePrevious()
 {
-  if (tableView->currentIndex().isValid())
-  {
-    if (tableView->currentIndex().siblingAtRow(tableView->currentIndex().row()-1).isValid())
-    {
-      m_oscCueList->moveCuePrev(tableView->currentIndex().row());
-    }
-  }
-  tableView->resizeRowsToContents();
-  tableView->resizeColumnsToContents();
-}
+//  if (tableView->currentIndex().isValid())
+//  {
+//    if (tableView->currentIndex().siblingAtRow(tableView->currentIndex().row()-1).isValid())
+//    {
+//      m_oscCueList->moveCuePrev(tableView->currentIndex().row());
+//    }
+//  }
+//  tableView->resizeRowsToContents();
+//  tableView->resizeColumnsToContents();
+//}
 
-void TabSeq::moveNext()
-{
-  if (tableView->currentIndex().isValid())
-  {
-    if (tableView->currentIndex().siblingAtRow(tableView->currentIndex().row()+1).isValid())
-    {
-      m_oscCueList->moveCuePrev(tableView->currentIndex().row() + 1);
-    }
-  }
-  tableView->resizeRowsToContents();
-  tableView->resizeColumnsToContents();
+//void TabSeq::moveNext()
+//{
+//  if (tableView->currentIndex().isValid())
+//  {
+//    if (tableView->currentIndex().siblingAtRow(tableView->currentIndex().row()+1).isValid())
+//    {
+//      m_oscCueList->moveCuePrev(tableView->currentIndex().row() + 1);
+//    }
+//  }
+//  tableView->resizeRowsToContents();
+//  tableView->resizeColumnsToContents();
 }
 
 void TabSeq::removeCue()
 {
-  if (tableView->currentIndex().isValid())
-  {
-    m_oscCueList->removeCue(tableView->currentIndex().row());
-  }
-  tableView->resizeRowsToContents();
-  tableView->resizeColumnsToContents();
+//  if (tableView->currentIndex().isValid())
+//  {
+//    m_oscCueList->removeCue(tableView->currentIndex().row());
+//  }
+//  tableView->resizeRowsToContents();
+//  tableView->resizeColumnsToContents();
 }
 
 void TabSeq::saveAs()
@@ -199,7 +200,7 @@ void TabSeq::loadFile()
     if (file.open(QIODevice::ReadOnly))
     {
       m_oscCueList->removeAllCue();
-      OscSend *oscsend = new OscSend(NOOP);
+      OscSend *oscsend = new OscSend(this, NOOP);
       int lineindex = 0;                     // file line counter
       QTextStream in(&file);                 // read to text stream
       while (!in.atEnd())
@@ -215,7 +216,7 @@ void TabSeq::loadFile()
       lineindex++;
     }
     file.close();
-    tableView->resizeRowsToContents();
-    tableView->resizeColumnsToContents();
+//    tableView->resizeRowsToContents();
+//    tableView->resizeColumnsToContents();
   }
 }

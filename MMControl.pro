@@ -16,6 +16,7 @@ INCLUDEPATH += \
     $$PWD/contrib/oscpack/ip
 
 SOURCES += \
+    src/control/osccue.cpp \
     src/gui/osccuelistdelegate.cpp \
     src/main.cpp \
     contrib/oscpack/osc/OscTypes.cpp \
@@ -36,6 +37,7 @@ SOURCES += \
 
 HEADERS += \
     src/MMC.h \
+    src/control/osccue.h \
     src/gui/mainwindow.h \
     src/control/mymidiin.h \
     src/control/mymidiout.h \

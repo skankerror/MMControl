@@ -35,7 +35,7 @@ class MainWindow : public QMainWindow
 {
   Q_OBJECT
 public:
-  MainWindow();
+  explicit MainWindow();
 
   void createCentralWidget();
   void createToolBar();
@@ -59,7 +59,8 @@ private:
   MyMidiIn *midiIn2;
   MyMidiOut *midiOut1;
   MyMidiOut *midiOut2;
-  TableView *tableView;
+//  TableView *tableView;
+  QTreeView *treeView;
 
   QIcon icon;
 

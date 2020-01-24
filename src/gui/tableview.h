@@ -8,7 +8,7 @@ class TableView: public QTableView
 {
   Q_OBJECT
 public:
-  TableView();
+  TableView(QWidget *parent = nullptr);
 };
 
 #endif // TABLEVIEW_H

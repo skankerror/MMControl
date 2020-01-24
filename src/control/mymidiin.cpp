@@ -16,11 +16,11 @@
  */
 
 #include "mymidiin.h"
-#include <string>
+//#include <string>
 
-MyMidiIn::MyMidiIn(int id, Api api, const std::string &clientName,
+MyMidiIn::MyMidiIn(int id, QObject *parent, Api api, const std::string &clientName,
                    unsigned int queueSizeLimit):
-  QObject(),
+  QObject(parent),
   RtMidiIn(api, clientName, queueSizeLimit)
 {
 

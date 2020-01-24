@@ -40,7 +40,8 @@ public:
 
   Q_ENUM(champMM)
 
-  OscSend(champMM champ = NOOP,
+  OscSend(QObject *parent = nullptr,
+          champMM champ = NOOP,
           QString p_uri = "",
           QString p_name = "",
           QString p_name2 = "",

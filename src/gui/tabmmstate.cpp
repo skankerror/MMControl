@@ -17,8 +17,8 @@
 
 #include "tabmmstate.h"
 
-TabMMState::TabMMState(MMState * mmstate) :
-  QWidget(),
+TabMMState::TabMMState(MMState * mmstate, QWidget *parent) :
+  QWidget(parent),
   m_mmstate(mmstate)
 {
 

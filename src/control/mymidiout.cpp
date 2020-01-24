@@ -1,7 +1,7 @@
 #include "mymidiout.h"
 
-MyMidiOut::MyMidiOut(int id, Api api, const std::string &clientName):
-  QObject(),
+MyMidiOut::MyMidiOut(int id, QObject *parent = nullptr, Api api, const std::string &clientName):
+  QObject(parent),
   RtMidiOut(api, clientName)
 {
   int nPorts = RtMidiOut::getPortCount();

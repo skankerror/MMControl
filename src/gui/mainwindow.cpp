@@ -27,12 +27,12 @@ MainWindow::MainWindow() :
 
   state = new MMState(this);
   oscCueList = new OscCueList(this);
-  midiIn1 = new MyMidiIn(1);
-  midiIn2 = new MyMidiIn(2);
-  midiOut1 = new MyMidiOut(1);
-  midiOut2 = new MyMidiOut(2);
-  tableView = new TableView;
-
+  midiIn1 = new MyMidiIn(1, this);
+  midiIn2 = new MyMidiIn(2, this);
+  midiOut1 = new MyMidiOut(1, this);
+  midiOut2 = new MyMidiOut(2, this);
+//  tableView = new TableView(this);
+  treeView = new QTreeView(this);
   createToolBar();
   createCentralWidget();
 
@@ -45,10 +45,10 @@ MainWindow::MainWindow() :
 
 void MainWindow::createCentralWidget()
 {
-  tabmidi = new TabMidi(midiIn1, midiIn2, midiOut1, midiOut2);
-  tabseq = new TabSeq(oscCueList, tableView, midiIn1, midiIn2, midiOut1, midiOut2);
-  tabmmstate = new TabMMState(state);
-  tabwidget = new QTabWidget;
+  tabmidi = new TabMidi(midiIn1, midiIn2, midiOut1, midiOut2, this);
+  tabseq = new TabSeq(oscCueList, treeView, midiIn1, midiIn2, midiOut1, midiOut2, this);
+  tabmmstate = new TabMMState(state, this);
+  tabwidget = new QTabWidget(this);
 
   tabwidget->addTab(tabmidi, "Midi In");
   tabwidget->addTab(tabseq, "Sequencer");
@@ -59,11 +59,11 @@ void MainWindow::createCentralWidget()
 void MainWindow::createToolBar()
 {
   myToolBar = addToolBar("MessageToolBar");
-  QWidget *myToolBarWidget = new QWidget;
-  QHBoxLayout *layout = new QHBoxLayout;
+  QWidget *myToolBarWidget = new QWidget(this);
+  QHBoxLayout *layout = new QHBoxLayout(this);
   // tout le temps
-  champLabel = new QLabel("champ");
-  champComboBox = new QComboBox;
+  champLabel = new QLabel("champ", this);
+  champComboBox = new QComboBox(this);
   champComboBox->addItem("NOOP");//0
   champComboBox->addItem("PLAY");//1
   champComboBox->addItem("PAUSE");//2
@@ -101,83 +101,83 @@ void MainWindow::createToolBar()
   champComboBox->addItem("R_P_XFADE");//34
   champComboBox->setCurrentIndex(NOOP);
   // 5 P_NAME, 20 R_P_NAME, 21 R_P_REWIND, 22 R_P_OPACITY, 23 R_P_VOLUME, 24 R_P_RATE, 25 R_P_URI, 26 R_P_COLOR, 33 R_P_FADE, 34 R_P_XFADE
-  p_nameLineEdit = new QLineEdit("Name");
+  p_nameLineEdit = new QLineEdit("Name", this);
   // 20 R_P_NAME, 34 R_P_XFADE
-  p_nameLineEdit2 = new QLineEdit("Name2");
+  p_nameLineEdit2 = new QLineEdit("Name2", this);
   // 10 P_URI, 25 R_P_URI
-  p_uriLine = new QLineEdit("Choose->");
-  p_uriPushButton = new QPushButton("File");
+  p_uriLine = new QLineEdit("Choose->", this);
+  p_uriPushButton = new QPushButton("File", this);
   // 11 P_COLOR
-  p_colorLine = new QLineEdit("Choose->");
-  p_colorPushButton = new QPushButton("Color");
+  p_colorLine = new QLineEdit("Choose->", this);
+  p_colorPushButton = new QPushButton("Color", this);
   // 5 P_NAME, 6 P_REWIND, 7 P_OPACITY, 8 P_VOLUME, 9 P_RATE, 10 P_URI, 11 P_COLOR, 18 P_XFADE, 19 P_FADE
-  p_ID1Label = new QLabel("ID");
-  p_ID1SpinBox = new QSpinBox;
+  p_ID1Label = new QLabel("ID", this);
+  p_ID1SpinBox = new QSpinBox(this);
   p_ID1SpinBox->setMaximum(100);
   p_ID1SpinBox->setMinimum(1);
   // 18 P_XFADE
-  p_ID2Label = new QLabel("ID2");
-  p_ID2SpinBox = new QSpinBox;
+  p_ID2Label = new QLabel("ID2", this);
+  p_ID2SpinBox = new QSpinBox(this);
   p_ID2SpinBox->setMaximum(100);
   p_ID2SpinBox->setMinimum(1);
   p_ID2SpinBox->setValue(2);
   // 9 P_RATE, 24 R_P_RATE
-  p_rateLabel = new QLabel("rate %");
-  p_rateSpinBox = new QSpinBox;
+  p_rateLabel = new QLabel("rate %", this);
+  p_rateSpinBox = new QSpinBox(this);
   p_rateSpinBox->setMaximum(1000);
   p_rateSpinBox->setMinimum(-1000);
   // 7 P_OPACITY, 22 R_P_OPACITY
-  p_opacityLabel = new QLabel("opacity %");
-  p_opacitySpinBox = new QSpinBox;
+  p_opacityLabel = new QLabel("opacity %", this);
+  p_opacitySpinBox = new QSpinBox(this);
   p_opacitySpinBox->setMaximum(100);
   p_opacitySpinBox->setMinimum(0);
   // 8 P_VOLUME, 23 R_P_VOLUME
-  p_volumeLabel = new QLabel("volume %");
-  p_volumeSpinBox = new QSpinBox;
+  p_volumeLabel = new QLabel("volume %", this);
+  p_volumeSpinBox = new QSpinBox(this);
   p_volumeSpinBox->setMaximum(100);
   p_volumeSpinBox->setMinimum(0);
   // 12 M_NAME, 27 R_M_NAME, 28 R_M_OPACITY, 29 R_M_VISIBLE, 30 R_M_SOLO, 31 R_M_LOCK, 32 R_M_DEPTH,
-  m_nameLineEdit = new QLineEdit("Name");
+  m_nameLineEdit = new QLineEdit("Name", this);
   // 27 R_M_NAME
-  m_nameLineEdit2 = new QLineEdit("Name2");
+  m_nameLineEdit2 = new QLineEdit("Name2", this);
   // 12 M_NAME, 13 M_OPACITY, 14 M_VISIBLE, 15 M_SOLO, 16 M_LOCK, 17 M_DEPTH
-  m_IDLabel = new QLabel("ID");
-  m_IDSpinBox = new QSpinBox;
+  m_IDLabel = new QLabel("ID", this);
+  m_IDSpinBox = new QSpinBox(this);
   m_IDSpinBox->setMaximum(100);
   m_IDSpinBox->setMinimum(1);
   // 13 M_OPACITY, 28 R_M_OPACITY
-  m_opacityLabel = new QLabel("opacity %");
-  m_opacitySpinBox = new QSpinBox;
+  m_opacityLabel = new QLabel("opacity %", this);
+  m_opacitySpinBox = new QSpinBox(this);
   m_opacitySpinBox->setMaximum(100);
   m_opacitySpinBox->setMinimum(0);
   // 14 M_VISIBLE, 29 R_M_VISIBLE
-  m_visibleCheckBox = new QCheckBox("Visible");
+  m_visibleCheckBox = new QCheckBox("Visible", this);
   // 15 M_SOLO, 30 R_M_SOLO
-  m_soloCheckBox = new QCheckBox("Solo");
+  m_soloCheckBox = new QCheckBox("Solo", this);
   // 16 M_LOCK, 31 R_M_LOCK
-  m_lockCheckBox = new QCheckBox("Lock");
+  m_lockCheckBox = new QCheckBox("Lock", this);
   // 17 M_DEPTH, 32 R_M_DEPTH
-  m_depthLabel = new QLabel("depth");
-  m_depthSpinBox = new QSpinBox;
+  m_depthLabel = new QLabel("depth", this);
+  m_depthSpinBox = new QSpinBox(this);
   // tout le temps ??
-  timeLabel = new QLabel("time in s");
-  timeSpinBox = new QDoubleSpinBox;
+  timeLabel = new QLabel("time in s", this);
+  timeSpinBox = new QDoubleSpinBox(this);
   timeSpinBox->setMaximum(1000);
   timeSpinBox->setMinimum(0);
   timeSpinBox->setDecimals(1);
   timeSpinBox->setValue(2);
   // 19 P_FADE, 33 R_P_FADE
-  fadeCheckBox = new QCheckBox("fade in");
+  fadeCheckBox = new QCheckBox("fade in", this);
   // tout le temps
-  waitTimeLabel = new QLabel("waitTime in s");
-  waitTimeSpinBox = new QDoubleSpinBox;
+  waitTimeLabel = new QLabel("waitTime in s", this);
+  waitTimeSpinBox = new QDoubleSpinBox(this);
   waitTimeSpinBox->setMaximum(1000);
   waitTimeSpinBox->setMinimum(0);
   waitTimeSpinBox->setDecimals(1);
   waitTimeSpinBox->setValue(2);
 
-  sendPushButton = new QPushButton("Send !");
-  addToCuePushButton = new QPushButton("Add to Cue !");
+  sendPushButton = new QPushButton("Send !", this);
+  addToCuePushButton = new QPushButton("Add to Cue !", this);
 
   layout->addWidget(champLabel);
   layout->addWidget(champComboBox);
@@ -542,6 +542,7 @@ void MainWindow::sendFromToolBar()
 {
   champMM index = static_cast<champMM>(champComboBox->currentIndex());
   OscSend *oscsend = new OscSend(
+        this,
         index,
         p_uriLine->text(),
         p_nameLineEdit->text(),
@@ -586,10 +587,11 @@ void MainWindow::setP_ColorLine()
 }
 void MainWindow::addToCue()
 {
-  tableView->resizeRowsToContents();
-  tableView->resizeColumnsToContents();
+//  treeView->resizeRowsToContents();
+//  treeView->resizeColumnsToContents();
   champMM index = static_cast<champMM>(champComboBox->currentIndex());
   OscSend *oscsend = new OscSend(
+        this,
         index,
         p_uriLine->text(),
         p_nameLineEdit->text(),
@@ -631,7 +633,7 @@ void MainWindow::addToCue()
     qDebug() << "OscCueList addCue fn called";
   }
   // Toujours sélectionner le dernier après un ajout
-  tabseq->tableView->setCurrentIndex(tabseq->tableView->currentIndex().siblingAtRow(oscCueList->v_listCue.size()));
+//  tabseq->tableView->setCurrentIndex(tabseq->tableView->currentIndex().siblingAtRow(oscCueList->v_listCue.size()));
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)

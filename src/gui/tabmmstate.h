@@ -28,7 +28,7 @@ class TabMMState : public QWidget
 {
   Q_OBJECT
 public:
-  explicit TabMMState(MMState *);
+  explicit TabMMState(MMState *state, QWidget *parent = nullptr);
 
 signals:
 

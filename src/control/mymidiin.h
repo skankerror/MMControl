@@ -28,7 +28,7 @@ class MyMidiIn : public QObject, public RtMidiIn
 {
   Q_OBJECT
 public:
-  MyMidiIn(int id = 1,
+  MyMidiIn(int id = 1, QObject *parent = nullptr,
            RtMidi::Api api = LINUX_ALSA,
            const std::string &clientName = "MMControl Input Client",
            unsigned int queueSizeLimit = QUEUE_SIZE_LIMIT);

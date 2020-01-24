@@ -28,15 +28,15 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
     m_midiOut1(midiOut1),
     m_midiOut2(midiOut2)
 {
-  oscSendS = new OscSend(P_OPACITY); // Oscsend Slider
-  oscSendB = new OscSend(); // OscSend Buttons
+  oscSendS = new OscSend(this, P_OPACITY); // Oscsend Slider
+  oscSendB = new OscSend(this); // OscSend Buttons
 
-  layoutTotal = new QGridLayout;
+  layoutTotal = new QGridLayout(this);
 
-  labelb9 = new QLabel("Source Rewind"); labelb8 = new QLabel("Source Rate 200%"); labelb7 = new QLabel("Source Rate 100%");
-  labelb6 = new QLabel("Source Rate 50%"); labelb5 = new QLabel("Source Rate -100%"); labelb4 = new QLabel("Layer Solo");
-  labelb3 = new QLabel("Layer Not Solo"); labelb2 = new QLabel("Layer Visible"); labelb1 = new QLabel("Layer Not Visible");
-  labelS = new QLabel("Source Opacity"); labelPid = new QLabel("Source Id"); labelMid = new QLabel("Layer Id");
+  labelb9 = new QLabel("Source Rewind", this); labelb8 = new QLabel("Source Rate 200%", this); labelb7 = new QLabel("Source Rate 100%", this);
+  labelb6 = new QLabel("Source Rate 50%", this); labelb5 = new QLabel("Source Rate -100%", this); labelb4 = new QLabel("Layer Solo", this);
+  labelb3 = new QLabel("Layer Not Solo", this); labelb2 = new QLabel("Layer Visible", this); labelb1 = new QLabel("Layer Not Visible", this);
+  labelS = new QLabel("Source Opacity", this); labelPid = new QLabel("Source Id", this); labelMid = new QLabel("Layer Id", this);
   layoutTotal->addWidget(labelb9, 0, 0); layoutTotal->addWidget(labelb8, 1, 0);
   layoutTotal->addWidget(labelb7, 2, 0); layoutTotal->addWidget(labelb6, 3, 0);
   layoutTotal->addWidget(labelb5, 4, 0); layoutTotal->addWidget(labelb4, 5, 0);
@@ -45,11 +45,11 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   layoutTotal->addWidget(labelPid, 10, 0); layoutTotal->addWidget(labelMid, 11, 0);
 
   // APC1
-  B64 = new QPushButton; B0 = new QPushButton; B8 = new QPushButton;
-  B16 = new QPushButton; B24 = new QPushButton; B32 = new QPushButton;
-  B40 = new QPushButton; B48 = new QPushButton; B56 = new QPushButton;
-  S1 = new QSlider(Qt::Vertical);
-  pID1 = new QSpinBox; pID1->setValue(1); mID1 = new QSpinBox; mID1->setValue(1);
+  B64 = new QPushButton(this); B0 = new QPushButton(this); B8 = new QPushButton(this);
+  B16 = new QPushButton(this); B24 = new QPushButton(this); B32 = new QPushButton(this);
+  B40 = new QPushButton(this); B48 = new QPushButton(this); B56 = new QPushButton(this);
+  S1 = new QSlider(Qt::Vertical, this);
+  pID1 = new QSpinBox(this); pID1->setValue(1); mID1 = new QSpinBox(this); mID1->setValue(1);
   layoutTotal->addWidget(B56, 0, 1); layoutTotal->addWidget(B48, 1, 1);
   layoutTotal->addWidget(B40, 2, 1); layoutTotal->addWidget(B32, 3, 1);
   layoutTotal->addWidget(B24, 4, 1); layoutTotal->addWidget(B16, 5, 1);
@@ -58,11 +58,11 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   layoutTotal->addWidget(pID1, 10, 1); layoutTotal->addWidget(mID1, 11, 1);
   S1->setMinimumWidth(20);
 
-  B65 = new QPushButton; B1 = new QPushButton; B9 = new QPushButton;
-  B17 = new QPushButton; B25 = new QPushButton; B33 = new QPushButton;
-  B41 = new QPushButton; B49 = new QPushButton; B57 = new QPushButton;
-  S2 = new QSlider(Qt::Vertical);
-  pID2 = new QSpinBox; pID2->setValue(2); mID2 = new QSpinBox; mID2->setValue(2);
+  B65 = new QPushButton(this); B1 = new QPushButton(this); B9 = new QPushButton(this);
+  B17 = new QPushButton(this); B25 = new QPushButton(this); B33 = new QPushButton(this);
+  B41 = new QPushButton(this); B49 = new QPushButton(this); B57 = new QPushButton(this);
+  S2 = new QSlider(Qt::Vertical, this);
+  pID2 = new QSpinBox(this); pID2->setValue(2); mID2 = new QSpinBox(this); mID2->setValue(2);
   layoutTotal->addWidget(B57, 0, 2); layoutTotal->addWidget(B49, 1, 2);
   layoutTotal->addWidget(B41, 2, 2); layoutTotal->addWidget(B33, 3, 2);
   layoutTotal->addWidget(B25, 4, 2); layoutTotal->addWidget(B17, 5, 2);
@@ -70,11 +70,11 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   layoutTotal->addWidget(B65, 8, 2); layoutTotal->addWidget(S2, 9, 2);
   layoutTotal->addWidget(pID2, 10, 2); layoutTotal->addWidget(mID2, 11, 2);
 
-  B66 = new QPushButton; B2 = new QPushButton; B10 = new QPushButton;
-  B18 = new QPushButton; B26 = new QPushButton; B34 = new QPushButton;
-  B42 = new QPushButton; B50 = new QPushButton; B58 = new QPushButton;
-  S3 = new QSlider(Qt::Vertical);
-  pID3 = new QSpinBox; pID3->setValue(3); mID3 = new QSpinBox; mID3->setValue(3);
+  B66 = new QPushButton(this); B2 = new QPushButton(this); B10 = new QPushButton(this);
+  B18 = new QPushButton(this); B26 = new QPushButton(this); B34 = new QPushButton(this);
+  B42 = new QPushButton(this); B50 = new QPushButton(this); B58 = new QPushButton(this);
+  S3 = new QSlider(Qt::Vertical, this);
+  pID3 = new QSpinBox(this); pID3->setValue(3); mID3 = new QSpinBox(this); mID3->setValue(3);
   layoutTotal->addWidget(B58, 0, 3); layoutTotal->addWidget(B50, 1, 3);
   layoutTotal->addWidget(B42, 2, 3); layoutTotal->addWidget(B34, 3, 3);
   layoutTotal->addWidget(B26, 4, 3); layoutTotal->addWidget(B18, 5, 3);
@@ -82,11 +82,11 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   layoutTotal->addWidget(B66, 8, 3); layoutTotal->addWidget(S3, 9, 3);
   layoutTotal->addWidget(pID3, 10, 3); layoutTotal->addWidget(mID3, 11, 3);
 
-  B67 = new QPushButton; B3 = new QPushButton; B11 = new QPushButton;
-  B19 = new QPushButton; B27 = new QPushButton; B35 = new QPushButton;
-  B43 = new QPushButton; B51 = new QPushButton; B59 = new QPushButton;
-  S4 = new QSlider(Qt::Vertical);
-  pID4 = new QSpinBox; pID4->setValue(4); mID4 = new QSpinBox; mID4->setValue(4);
+  B67 = new QPushButton(this); B3 = new QPushButton(this); B11 = new QPushButton(this);
+  B19 = new QPushButton(this); B27 = new QPushButton(this); B35 = new QPushButton(this);
+  B43 = new QPushButton(this); B51 = new QPushButton(this); B59 = new QPushButton(this);
+  S4 = new QSlider(Qt::Vertical, this);
+  pID4 = new QSpinBox(this); pID4->setValue(4); mID4 = new QSpinBox(this); mID4->setValue(4);
   layoutTotal->addWidget(B59, 0, 4); layoutTotal->addWidget(B51, 1, 4);
   layoutTotal->addWidget(B43, 2, 4); layoutTotal->addWidget(B35, 3, 4);
   layoutTotal->addWidget(B27, 4, 4); layoutTotal->addWidget(B19, 5, 4);
@@ -94,11 +94,11 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   layoutTotal->addWidget(B67, 8, 4); layoutTotal->addWidget(S4, 9, 4);
   layoutTotal->addWidget(pID4, 10, 4); layoutTotal->addWidget(mID4, 11, 4);
 
-  B68 = new QPushButton; B4 = new QPushButton; B12 = new QPushButton;
-  B20 = new QPushButton; B28 = new QPushButton; B36 = new QPushButton;
-  B44 = new QPushButton; B52 = new QPushButton; B60 = new QPushButton;
-  S5 = new QSlider(Qt::Vertical);
-  pID5 = new QSpinBox; pID5->setValue(5); mID5 = new QSpinBox; mID5->setValue(5);
+  B68 = new QPushButton(this); B4 = new QPushButton(this); B12 = new QPushButton(this);
+  B20 = new QPushButton(this); B28 = new QPushButton(this); B36 = new QPushButton(this);
+  B44 = new QPushButton(this); B52 = new QPushButton(this); B60 = new QPushButton(this);
+  S5 = new QSlider(Qt::Vertical, this);
+  pID5 = new QSpinBox(this); pID5->setValue(5); mID5 = new QSpinBox(this); mID5->setValue(5);
   layoutTotal->addWidget(B60, 0, 5); layoutTotal->addWidget(B52, 1, 5);
   layoutTotal->addWidget(B44, 2, 5); layoutTotal->addWidget(B36, 3, 5);
   layoutTotal->addWidget(B28, 4, 5); layoutTotal->addWidget(B20, 5, 5);
@@ -106,11 +106,11 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   layoutTotal->addWidget(B68, 8, 5); layoutTotal->addWidget(S5, 9, 5);
   layoutTotal->addWidget(pID5, 10, 5); layoutTotal->addWidget(mID5, 11, 5);
 
-  B69 = new QPushButton; B5 = new QPushButton; B13 = new QPushButton;
-  B21 = new QPushButton; B29 = new QPushButton; B37 = new QPushButton;
-  B45 = new QPushButton; B53 = new QPushButton; B61 = new QPushButton;
-  S6 = new QSlider(Qt::Vertical);
-  pID6 = new QSpinBox; pID6->setValue(6); mID6 = new QSpinBox; mID6->setValue(6);
+  B69 = new QPushButton(this); B5 = new QPushButton(this); B13 = new QPushButton(this);
+  B21 = new QPushButton(this); B29 = new QPushButton(this); B37 = new QPushButton(this);
+  B45 = new QPushButton(this); B53 = new QPushButton(this); B61 = new QPushButton(this);
+  S6 = new QSlider(Qt::Vertical, this);
+  pID6 = new QSpinBox(this); pID6->setValue(6); mID6 = new QSpinBox(this); mID6->setValue(6);
   layoutTotal->addWidget(B61, 0, 6); layoutTotal->addWidget(B53, 1, 6);
   layoutTotal->addWidget(B45, 2, 6); layoutTotal->addWidget(B37, 3, 6);
   layoutTotal->addWidget(B29, 4, 6); layoutTotal->addWidget(B21, 5, 6);
@@ -118,11 +118,11 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   layoutTotal->addWidget(B69, 8, 6); layoutTotal->addWidget(S6, 9, 6);
   layoutTotal->addWidget(pID6, 10, 6); layoutTotal->addWidget(mID6, 11, 6);
 
-  B70 = new QPushButton; B6 = new QPushButton; B14 = new QPushButton;
-  B22 = new QPushButton; B30 = new QPushButton; B38 = new QPushButton;
-  B46 = new QPushButton; B54 = new QPushButton; B62 = new QPushButton;
-  S7 = new QSlider(Qt::Vertical);
-  pID7 = new QSpinBox; pID7->setValue(7); mID7 = new QSpinBox; mID7->setValue(7);
+  B70 = new QPushButton(this); B6 = new QPushButton(this); B14 = new QPushButton(this);
+  B22 = new QPushButton(this); B30 = new QPushButton(this); B38 = new QPushButton(this);
+  B46 = new QPushButton(this); B54 = new QPushButton(this); B62 = new QPushButton(this);
+  S7 = new QSlider(Qt::Vertical, this);
+  pID7 = new QSpinBox(this); pID7->setValue(7); mID7 = new QSpinBox(this); mID7->setValue(7);
   layoutTotal->addWidget(B62, 0, 7); layoutTotal->addWidget(B54, 1, 7);
   layoutTotal->addWidget(B46, 2, 7); layoutTotal->addWidget(B38, 3, 7);
   layoutTotal->addWidget(B30, 4, 7); layoutTotal->addWidget(B22, 5, 7);
@@ -130,11 +130,11 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   layoutTotal->addWidget(B70, 8, 7); layoutTotal->addWidget(S7, 9, 7);
   layoutTotal->addWidget(pID7, 10, 7); layoutTotal->addWidget(mID7, 11, 7);
 
-  B71 = new QPushButton; B7 = new QPushButton; B15 = new QPushButton;
-  B23 = new QPushButton; B31 = new QPushButton; B39 = new QPushButton;
-  B47 = new QPushButton; B55 = new QPushButton; B63 = new QPushButton;
-  S8 = new QSlider(Qt::Vertical);
-  pID8 = new QSpinBox; pID8->setValue(8); mID8 = new QSpinBox; mID8->setValue(8);
+  B71 = new QPushButton(this); B7 = new QPushButton(this); B15 = new QPushButton(this);
+  B23 = new QPushButton(this); B31 = new QPushButton(this); B39 = new QPushButton(this);
+  B47 = new QPushButton(this); B55 = new QPushButton(this); B63 = new QPushButton(this);
+  S8 = new QSlider(Qt::Vertical, this);
+  pID8 = new QSpinBox(this); pID8->setValue(8); mID8 = new QSpinBox(this); mID8->setValue(8);
   layoutTotal->addWidget(B63, 0, 8); layoutTotal->addWidget(B55, 1, 8);
   layoutTotal->addWidget(B47, 2, 8); layoutTotal->addWidget(B39, 3, 8);
   layoutTotal->addWidget(B31, 4, 8); layoutTotal->addWidget(B23, 5, 8);
@@ -142,11 +142,11 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   layoutTotal->addWidget(B71, 8, 8); layoutTotal->addWidget(S8, 9, 8);
   layoutTotal->addWidget(pID8, 10, 8); layoutTotal->addWidget(mID8, 11, 8);
 
-  B98 = new QPushButton; B89 = new QPushButton; B88 = new QPushButton;
-  B87 = new QPushButton; B86 = new QPushButton; B85 = new QPushButton;
-  B84 = new QPushButton; B83 = new QPushButton; B82 = new QPushButton;
-  S9 = new QSlider(Qt::Vertical);
-  pID9 = new QSpinBox; pID9->setValue(9); mID9 = new QSpinBox; mID9->setValue(9);
+  B98 = new QPushButton(this); B89 = new QPushButton(this); B88 = new QPushButton(this);
+  B87 = new QPushButton(this); B86 = new QPushButton(this); B85 = new QPushButton(this);
+  B84 = new QPushButton(this); B83 = new QPushButton(this); B82 = new QPushButton(this);
+  S9 = new QSlider(Qt::Vertical, this);
+  pID9 = new QSpinBox(this); pID9->setValue(9); mID9 = new QSpinBox(this); mID9->setValue(9);
   layoutTotal->addWidget(B82, 0, 9); layoutTotal->addWidget(B83, 1, 9);
   layoutTotal->addWidget(B84, 2, 9); layoutTotal->addWidget(B85, 3, 9);
   layoutTotal->addWidget(B86, 4, 9); layoutTotal->addWidget(B87, 5, 9);
@@ -164,11 +164,11 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   layoutTotal->setColumnMinimumWidth(10, 10); // Pour avoir une séparation entre les 2 apcmini col 10
 
   // APC2
-  B64_2 = new QPushButton; B0_2 = new QPushButton; B8_2 = new QPushButton;
-  B16_2 = new QPushButton; B24_2 = new QPushButton; B32_2 = new QPushButton;
-  B40_2 = new QPushButton; B48_2 = new QPushButton; B56_2 = new QPushButton;
-  S10 = new QSlider(Qt::Vertical);
-  pID10 = new QSpinBox; pID10->setValue(10); mID10 = new QSpinBox; mID10->setValue(10);
+  B64_2 = new QPushButton(this); B0_2 = new QPushButton(this); B8_2 = new QPushButton(this);
+  B16_2 = new QPushButton(this); B24_2 = new QPushButton(this); B32_2 = new QPushButton(this);
+  B40_2 = new QPushButton(this); B48_2 = new QPushButton(this); B56_2 = new QPushButton(this);
+  S10 = new QSlider(Qt::Vertical, this);
+  pID10 = new QSpinBox(this); pID10->setValue(10); mID10 = new QSpinBox(this); mID10->setValue(10);
   layoutTotal->addWidget(B56_2, 0, 11); layoutTotal->addWidget(B48_2, 1, 11);
   layoutTotal->addWidget(B40_2, 2, 11); layoutTotal->addWidget(B32_2, 3, 11);
   layoutTotal->addWidget(B24_2, 4, 11); layoutTotal->addWidget(B16_2, 5, 11);
@@ -176,11 +176,11 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   layoutTotal->addWidget(B64_2, 8, 11); layoutTotal->addWidget(S10, 9, 11);
   layoutTotal->addWidget(pID10, 10, 11); layoutTotal->addWidget(mID10, 11, 11);
 
-  B65_2 = new QPushButton; B1_2 = new QPushButton; B9_2 = new QPushButton;
-  B17_2 = new QPushButton; B25_2 = new QPushButton; B33_2 = new QPushButton;
-  B41_2 = new QPushButton; B49_2 = new QPushButton; B57_2 = new QPushButton;
-  S11 = new QSlider(Qt::Vertical);
-  pID11 = new QSpinBox; pID11->setValue(11); mID11 = new QSpinBox; mID11->setValue(11);
+  B65_2 = new QPushButton(this); B1_2 = new QPushButton(this); B9_2 = new QPushButton(this);
+  B17_2 = new QPushButton(this); B25_2 = new QPushButton(this); B33_2 = new QPushButton(this);
+  B41_2 = new QPushButton(this); B49_2 = new QPushButton(this); B57_2 = new QPushButton(this);
+  S11 = new QSlider(Qt::Vertical, this);
+  pID11 = new QSpinBox(this); pID11->setValue(11); mID11 = new QSpinBox(this); mID11->setValue(11);
   layoutTotal->addWidget(B57_2, 0, 12); layoutTotal->addWidget(B49_2, 1, 12);
   layoutTotal->addWidget(B41_2, 2, 12); layoutTotal->addWidget(B33_2, 3, 12);
   layoutTotal->addWidget(B25_2, 4, 12); layoutTotal->addWidget(B17_2, 5, 12);
@@ -188,11 +188,11 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   layoutTotal->addWidget(B65_2, 8, 12); layoutTotal->addWidget(S11, 9, 12);
   layoutTotal->addWidget(pID11, 10, 12); layoutTotal->addWidget(mID11, 11, 12);
 
-  B66_2 = new QPushButton; B2_2 = new QPushButton; B10_2 = new QPushButton;
-  B18_2 = new QPushButton; B26_2 = new QPushButton; B34_2 = new QPushButton;
-  B42_2 = new QPushButton; B50_2 = new QPushButton; B58_2 = new QPushButton;
-  S12 = new QSlider(Qt::Vertical);
-  pID12 = new QSpinBox; pID12->setValue(12); mID12 = new QSpinBox; mID12->setValue(12);
+  B66_2 = new QPushButton(this); B2_2 = new QPushButton(this); B10_2 = new QPushButton(this);
+  B18_2 = new QPushButton(this); B26_2 = new QPushButton(this); B34_2 = new QPushButton(this);
+  B42_2 = new QPushButton(this); B50_2 = new QPushButton(this); B58_2 = new QPushButton(this);
+  S12 = new QSlider(Qt::Vertical, this);
+  pID12 = new QSpinBox(this); pID12->setValue(12); mID12 = new QSpinBox(this); mID12->setValue(12);
   layoutTotal->addWidget(B58_2, 0, 13); layoutTotal->addWidget(B50_2, 1, 13);
   layoutTotal->addWidget(B42_2, 2, 13); layoutTotal->addWidget(B34_2, 3, 13);
   layoutTotal->addWidget(B26_2, 4, 13); layoutTotal->addWidget(B18_2, 5, 13);
@@ -200,11 +200,11 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   layoutTotal->addWidget(B66_2, 8, 13); layoutTotal->addWidget(S12, 9, 13);
   layoutTotal->addWidget(pID12, 10, 13); layoutTotal->addWidget(mID12, 11, 13);
 
-  B67_2 = new QPushButton; B3_2 = new QPushButton; B11_2 = new QPushButton;
-  B19_2 = new QPushButton; B27_2 = new QPushButton; B35_2 = new QPushButton;
-  B43_2 = new QPushButton; B51_2 = new QPushButton; B59_2 = new QPushButton;
-  S13 = new QSlider(Qt::Vertical);
-  pID13 = new QSpinBox; pID13->setValue(13); mID13 = new QSpinBox; mID13->setValue(13);
+  B67_2 = new QPushButton(this); B3_2 = new QPushButton(this); B11_2 = new QPushButton(this);
+  B19_2 = new QPushButton(this); B27_2 = new QPushButton(this); B35_2 = new QPushButton(this);
+  B43_2 = new QPushButton(this); B51_2 = new QPushButton(this); B59_2 = new QPushButton(this);
+  S13 = new QSlider(Qt::Vertical, this);
+  pID13 = new QSpinBox(this); pID13->setValue(13); mID13 = new QSpinBox(this); mID13->setValue(13);
   layoutTotal->addWidget(B59_2, 0, 14); layoutTotal->addWidget(B51_2, 1, 14);
   layoutTotal->addWidget(B43_2, 2, 14); layoutTotal->addWidget(B35_2, 3, 14);
   layoutTotal->addWidget(B27_2, 4, 14); layoutTotal->addWidget(B19_2, 5, 14);
@@ -212,11 +212,11 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   layoutTotal->addWidget(B67_2, 8, 14); layoutTotal->addWidget(S13, 9, 14);
   layoutTotal->addWidget(pID13, 10, 14); layoutTotal->addWidget(mID13, 11, 14);
 
-  B68_2 = new QPushButton; B4_2 = new QPushButton; B12_2 = new QPushButton;
-  B20_2 = new QPushButton; B28_2 = new QPushButton; B36_2 = new QPushButton;
-  B44_2 = new QPushButton; B52_2 = new QPushButton; B60_2 = new QPushButton;
-  S14 = new QSlider(Qt::Vertical);
-  pID14 = new QSpinBox; pID14->setValue(14); mID14 = new QSpinBox; mID14->setValue(14);
+  B68_2 = new QPushButton(this); B4_2 = new QPushButton(this); B12_2 = new QPushButton(this);
+  B20_2 = new QPushButton(this); B28_2 = new QPushButton(this); B36_2 = new QPushButton(this);
+  B44_2 = new QPushButton(this); B52_2 = new QPushButton(this); B60_2 = new QPushButton(this);
+  S14 = new QSlider(Qt::Vertical, this);
+  pID14 = new QSpinBox(this); pID14->setValue(14); mID14 = new QSpinBox(this); mID14->setValue(14);
   layoutTotal->addWidget(B60_2, 0, 15); layoutTotal->addWidget(B52_2, 1, 15);
   layoutTotal->addWidget(B44_2, 2, 15); layoutTotal->addWidget(B36_2, 3, 15);
   layoutTotal->addWidget(B28_2, 4, 15); layoutTotal->addWidget(B20_2, 5, 15);
@@ -224,11 +224,11 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   layoutTotal->addWidget(B68_2, 8, 15); layoutTotal->addWidget(S14, 9, 15);
   layoutTotal->addWidget(pID14, 10, 15); layoutTotal->addWidget(mID14, 11, 15);
 
-  B69_2 = new QPushButton; B5_2 = new QPushButton; B13_2 = new QPushButton;
-  B21_2 = new QPushButton; B29_2 = new QPushButton; B37_2 = new QPushButton;
-  B45_2 = new QPushButton; B53_2 = new QPushButton; B61_2 = new QPushButton;
-  S15 = new QSlider(Qt::Vertical);
-  pID15 = new QSpinBox; pID15->setValue(15); mID15 = new QSpinBox; mID15->setValue(15);
+  B69_2 = new QPushButton(this); B5_2 = new QPushButton(this); B13_2 = new QPushButton(this);
+  B21_2 = new QPushButton(this); B29_2 = new QPushButton(this); B37_2 = new QPushButton(this);
+  B45_2 = new QPushButton(this); B53_2 = new QPushButton(this); B61_2 = new QPushButton(this);
+  S15 = new QSlider(Qt::Vertical, this);
+  pID15 = new QSpinBox(this); pID15->setValue(15); mID15 = new QSpinBox(this); mID15->setValue(15);
   layoutTotal->addWidget(B61_2, 0, 16); layoutTotal->addWidget(B53_2, 1, 16);
   layoutTotal->addWidget(B45_2, 2, 16); layoutTotal->addWidget(B37_2, 3, 16);
   layoutTotal->addWidget(B29_2, 4, 16); layoutTotal->addWidget(B21_2, 5, 16);
@@ -236,11 +236,11 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   layoutTotal->addWidget(B69_2, 8, 16); layoutTotal->addWidget(S15, 9, 16);
   layoutTotal->addWidget(pID15, 10, 16); layoutTotal->addWidget(mID15, 11, 16);
 
-  B70_2 = new QPushButton; B6_2 = new QPushButton; B14_2 = new QPushButton;
-  B22_2 = new QPushButton; B30_2 = new QPushButton; B38_2 = new QPushButton;
-  B46_2 = new QPushButton; B54_2 = new QPushButton; B62_2 = new QPushButton;
-  S16 = new QSlider(Qt::Vertical);
-  pID16 = new QSpinBox; pID16->setValue(16); mID16 = new QSpinBox; mID16->setValue(16);
+  B70_2 = new QPushButton(this); B6_2 = new QPushButton(this); B14_2 = new QPushButton(this);
+  B22_2 = new QPushButton(this); B30_2 = new QPushButton(this); B38_2 = new QPushButton(this);
+  B46_2 = new QPushButton(this); B54_2 = new QPushButton(this); B62_2 = new QPushButton(this);
+  S16 = new QSlider(Qt::Vertical, this);
+  pID16 = new QSpinBox(this); pID16->setValue(16); mID16 = new QSpinBox(this); mID16->setValue(16);
   layoutTotal->addWidget(B62_2, 0, 17); layoutTotal->addWidget(B54_2, 1, 17);
   layoutTotal->addWidget(B46_2, 2, 17); layoutTotal->addWidget(B38_2, 3, 17);
   layoutTotal->addWidget(B30_2, 4, 17); layoutTotal->addWidget(B22_2, 5, 17);
@@ -248,11 +248,11 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   layoutTotal->addWidget(B70_2, 8, 17); layoutTotal->addWidget(S16, 9, 17);
   layoutTotal->addWidget(pID16, 10, 17); layoutTotal->addWidget(mID16, 11, 17);
 
-  B71_2 = new QPushButton; B7_2 = new QPushButton; B15_2 = new QPushButton;
-  B23_2 = new QPushButton; B31_2 = new QPushButton; B39_2 = new QPushButton;
-  B47_2 = new QPushButton; B55_2 = new QPushButton; B63_2 = new QPushButton;
-  S17 = new QSlider(Qt::Vertical);
-  pID17 = new QSpinBox; pID17->setValue(17); mID17 = new QSpinBox; mID17->setValue(17);
+  B71_2 = new QPushButton(this); B7_2 = new QPushButton(this); B15_2 = new QPushButton(this);
+  B23_2 = new QPushButton(this); B31_2 = new QPushButton(this); B39_2 = new QPushButton(this);
+  B47_2 = new QPushButton(this); B55_2 = new QPushButton(this); B63_2 = new QPushButton(this);
+  S17 = new QSlider(Qt::Vertical, this);
+  pID17 = new QSpinBox(this); pID17->setValue(17); mID17 = new QSpinBox(this); mID17->setValue(17);
   layoutTotal->addWidget(B63_2, 0, 18); layoutTotal->addWidget(B55_2, 1, 18);
   layoutTotal->addWidget(B47_2, 2, 18); layoutTotal->addWidget(B39_2, 3, 18);
   layoutTotal->addWidget(B31_2, 4, 18); layoutTotal->addWidget(B23_2, 5, 18);
@@ -260,11 +260,11 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   layoutTotal->addWidget(B71_2, 8, 18); layoutTotal->addWidget(S17, 9, 18);
   layoutTotal->addWidget(pID17, 10, 18); layoutTotal->addWidget(mID17, 11, 18);
 
-  B98_2 = new QPushButton; B89_2 = new QPushButton; B88_2 = new QPushButton;
-  B87_2 = new QPushButton; B86_2 = new QPushButton; B85_2 = new QPushButton;
-  B84_2 = new QPushButton; B83_2 = new QPushButton; B82_2 = new QPushButton;
-  S18 = new QSlider(Qt::Vertical);
-  pID18 = new QSpinBox; pID18->setValue(18); mID18 = new QSpinBox; mID18->setValue(18);
+  B98_2 = new QPushButton(this); B89_2 = new QPushButton(this); B88_2 = new QPushButton(this);
+  B87_2 = new QPushButton(this); B86_2 = new QPushButton(this); B85_2 = new QPushButton(this);
+  B84_2 = new QPushButton(this); B83_2 = new QPushButton(this); B82_2 = new QPushButton(this);
+  S18 = new QSlider(Qt::Vertical, this);
+  pID18 = new QSpinBox(this); pID18->setValue(18); mID18 = new QSpinBox(this); mID18->setValue(18);
   layoutTotal->addWidget(B82_2, 0, 19); layoutTotal->addWidget(B83_2, 1, 19);
   layoutTotal->addWidget(B84_2, 2, 19); layoutTotal->addWidget(B85_2, 3, 19);
   layoutTotal->addWidget(B86_2, 4, 19); layoutTotal->addWidget(B87_2, 5, 19);

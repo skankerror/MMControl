@@ -18,14 +18,31 @@
 #include "osccuelist.h"
 
 OscCueList::OscCueList(QObject *parent):
-  QAbstractTableModel(parent)
-{
+  QAbstractItemModel(parent)
+{}
 
+OscCueList::~OscCueList()
+{
+  qDeleteAll( v_listCue);
 }
 
 int OscCueList::rowCount(const QModelIndex &index) const
 {
-  return index.isValid() ? 0 : v_listCue.size();
+//  if (!index.isValid()) return 0;
+//  else return v_listCue.size();
+
+  if (!index.isValid()) return 0;
+  else
+  {
+    int oscSendCount = 0;
+//    int cueCount = v_listCue.size();
+    for (int i = 0; i < v_listCue.size(); i++)
+    {
+      oscSendCount += v_listCue.at(i)->oscSendCount() + 1 /*pour la ligne cue*/;
+    }
+    return oscSendCount;
+//    return index.isValid() ? 0 : v_listCue.size();
+  }
 }
 
 int OscCueList::columnCount(const QModelIndex &index) const
@@ -35,12 +52,16 @@ int OscCueList::columnCount(const QModelIndex &index) const
 
 QVariant OscCueList::data(const QModelIndex &index, int role) const // voir pour mettre en italique les cue à enchaîner
 {
-  if (!index.isValid() || index.row() < 0 || index.row() >= v_listCue.size() || !(index.flags().testFlag(Qt::ItemIsEditable)))
-     {
-         return QVariant();
-     }
+//  if (!index.isValid() || index.row() < 0 /*|| !(index.flags().testFlag(Qt::ItemIsEditable))*/) return QVariant();
+//  if (index.column() == 0) return QString("Cue %1").arg(index.row());
+//  if (index.parent().isValid())
+//  {
+//    int col = index.column();
+//    OscCue *tempOscCue = getOscCue(index.parent->row());
+//  }
+
   int col = index.column();
-  OscSend *tempSend = v_listCue.at(index.row());
+  OscSend *tempSend = v_listCue.at(index.row())->getOscSend(index.row()); // pas bon...
   QBrush salmonColor(QColor("#59271E"));
   switch (role)
       {
@@ -159,6 +180,7 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const // voir pour
 
 bool OscCueList::setData(const QModelIndex &index, const QVariant &value, int role)
 {
+  Q_UNUSED(role);
   switch(index.column()) // revoir l'édition pour ne pas accepter toutes les valeurs et revenir à l'ancien paramètre
   {
   case 0: v_listCue.at(index.row())->m_champ = static_cast<champMM>(value.toInt()); break;
@@ -182,7 +204,7 @@ bool OscCueList::setData(const QModelIndex &index, const QVariant &value, int ro
   case 18: v_listCue.at(index.row())->m_isfadein = value.toBool(); break;
   case 19: v_listCue.at(index.row())->m_time = value.toDouble(); break;
   case 20: v_listCue.at(index.row())->m_timeWait = value.toDouble(); break; // if true rajouter remise à zéro de time sauf sur fade
-  default: qDebug() << role; break; // Pour éviter unused parameter
+  default: /*qDebug() << role;*/ break;
   }
   emit dataChanged(index, index);
   return true;
@@ -190,9 +212,9 @@ bool OscCueList::setData(const QModelIndex &index, const QVariant &value, int ro
 
 QVariant OscCueList::headerData(int section, Qt::Orientation orientation, int role) const
 {
-  if (role==Qt::DisplayRole)
+  if (role == Qt::DisplayRole)
   {
-    if (orientation==Qt::Horizontal)
+    if (orientation == Qt::Horizontal)
     {
       switch(section)
       {
@@ -219,8 +241,17 @@ QVariant OscCueList::headerData(int section, Qt::Orientation orientation, int ro
       case 20: return QString("Wait");
       }
     }
-    if (orientation==Qt::Vertical)
+    if (orientation == Qt::Vertical)
+    {
+//      int cueCount = v_listCue.size();
+      for (int i = 0; i < v_listCue.size(); i++)
+      {
+        if (section == 0) return QString("cue 1"); // ?
+        // trouver pour rajouter event % à l'intérieur des cue...
+        else return QString("cue %1").arg(section + 1 - v_listCue.at(i)->v_listOscSend.size()); // A voir.... truc dans ce style
+      }
       return QString("cue %1").arg(section+1);
+    }
   }
   return QVariant();
 }
@@ -228,7 +259,7 @@ QVariant OscCueList::headerData(int section, Qt::Orientation orientation, int ro
 Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const
 {
 
-  OscSend *tempSend = v_listCue.at(index.row());
+  OscSend *tempSend = v_listCue.at(index.row())->v_listOscSend.at(0); // mettre
   int col = index.column();
   champMM champ = tempSend->m_champ;
 
@@ -266,7 +297,23 @@ Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const
   else if (champ ==  R_P_FADE) {if (col == 1 || col == 18 || col == 19)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
   else if (champ ==  R_P_XFADE) {if (col == 1 || col == 2 || col == 19)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
 
-  return QAbstractTableModel::flags(index);
+    return QAbstractTableModel::flags(index);
+}
+
+QModelIndex OscCueList::index(int row, int column, const QModelIndex &parent) const
+{
+
+}
+
+QModelIndex OscCueList::parent(const QModelIndex &index) const
+{
+  if (!index.isValid() || index.column() == 0) return QModelIndex();
+  OscCue *osccue = static_cast<OscCue*>(index.internalPointer());
+}
+
+OscCue* OscCueList::getOscCue(const int row) const
+{
+  return v_listCue.at(row);
 }
 
 OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
@@ -368,6 +415,7 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
   qDebug() << m_champ << " bluk2";
 
   OscSend *oscsend = new OscSend(
+        this,
         m_champ,
         m_p_uri,
         m_p_name,
@@ -393,6 +441,8 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
 
   return oscsend;
 }
+
+
 
 void OscCueList::addCue(OscSend *oscsend)
 {
@@ -441,3 +491,8 @@ void OscCueList::removeAllCue()
 
   qDebug() << "All cue removed";
 }
+
+//void OscCueList::setupModelData(OscCueList *parent)
+//{
+
+//}

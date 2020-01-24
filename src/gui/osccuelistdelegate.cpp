@@ -8,8 +8,8 @@ OscCuelistDelegate::OscCuelistDelegate(QObject *parent):
 
 QWidget *OscCuelistDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-  int col = index.column();
-  if (col == Champ)
+//  int col = index.column();
+  if (index.column() == Champ)
   {
     QComboBox *champComboBox = new QComboBox(parent);
     champComboBox->addItem("NOOP");
@@ -50,32 +50,34 @@ QWidget *OscCuelistDelegate::createEditor(QWidget *parent, const QStyleOptionVie
 //    champComboBox->setCurrentIndex(index.siblingAtRow(index.row()).data());
     return champComboBox;
   }
-  else if (col == P_name || col == P_name2 || col == M_name || col == M_name2 || col == Uri || col == Color)
-  {
-    QLineEdit *lineEdit = new QLineEdit(parent);
-    return lineEdit;
-  }
-  else if (col == Visible || col == Solo || col == Lock || col == Fade_In)
-  {
-    QCheckBox *checkBox = new QCheckBox(parent);
-    return checkBox;
-  }
-  else if (col == Time || col == Wait)
-  {
-    QDoubleSpinBox *doubleSpinBox = new QDoubleSpinBox(parent);
-    return doubleSpinBox;
-  }
-  else
-  {
-    QSpinBox *spinBox = new QSpinBox(parent);
-    return spinBox;
-  }
+  return QStyledItemDelegate::createEditor(parent, option, index);
+
+//  else if (col == P_name || col == P_name2 || col == M_name || col == M_name2 || col == Uri || col == Color)
+//  {
+//    QLineEdit *lineEdit = new QLineEdit(parent);
+//    return lineEdit;
+//  }
+//  else if (col == Visible || col == Solo || col == Lock || col == Fade_In)
+//  {
+//    QCheckBox *checkBox = new QCheckBox(parent);
+//    return checkBox;
+//  }
+//  else if (col == Time || col == Wait)
+//  {
+//    QDoubleSpinBox *doubleSpinBox = new QDoubleSpinBox(parent);
+//    return doubleSpinBox;
+//  }
+//  else
+//  {
+//    QSpinBox *spinBox = new QSpinBox(parent);
+//    return spinBox;
+//  }
 //  else if (col == Uri)
 //  {
 //    QLineEdit *lineEdit = new QLineEdit;
 ////    lineEdit->setText(QFileDialog::getOpenFileName(parent /* ???  pas sur de mon parent...*/, "Choose File",
 ////                                                      "/home/ray/boulot",
-////                                                      "Media Files (*.png, *.jpg, *.gif, *.mov, *.avi, *.mp4"));
+////                                                      "Media Files (*.png, *.jpg, *.tif, *.tiff, *.gif, *.mov, *.avi, *.mp4"));
 //    return lineEdit;
 //  }
 //  else if (col == Color)
@@ -89,15 +91,45 @@ QWidget *OscCuelistDelegate::createEditor(QWidget *parent, const QStyleOptionVie
 
 void OscCuelistDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
-
+  if (index.column() == Champ)
+  {
+    QComboBox *comboBox = qobject_cast<QComboBox *>(editor);
+    if (comboBox)
+    {
+      champMM champ = static_cast<champMM>(index.model()->data(index).toInt());
+      const int value = champ; //revoir
+      comboBox->setCurrentIndex(value);
+    }
+  }
+  else
+  {
+    QStyledItemDelegate::setEditorData(editor, index);
+  }
 }
 
 void OscCuelistDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-
+  if (index.column() == Champ)
+  {
+    QComboBox *comboBox = qobject_cast<QComboBox *>(editor);
+    if (editor)
+    {
+      model->setData(index, comboBox->currentIndex());// voir à faire un cast ? il renvoie toujours 0
+    }
+  }
+  else
+  {
+    QStyledItemDelegate::setModelData(editor, model, index);
+  }
 }
 
 void OscCuelistDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+  Q_UNUSED(index);
+  editor->setGeometry(option.rect);
+}
 
+void OscCuelistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+  QStyledItemDelegate::paint(painter, option, index);
 }

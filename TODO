@@ -3,7 +3,6 @@ revoir la façon dont on ouvre les ports:
 https://github.com/thestk/rtmidi/blob/master/tests/cmidiin.cpp
 Allumer les boutons avec les midiout
 
--Voir Item delegate pour le mvc
 -Ne permettre qu'à un seul cue d'être sélectionné (par QItemSelectionModel ?)
 
 -Mettre un QThread lors de l'éxécution d'un oscsend
@@ -12,4 +11,8 @@ Allumer les boutons avec les midiout
 
 -Implémenter le midi pour bouton go
 
+-Rajouter osccue entre oscsend et osccuelist, oscsend sera un event
 
+-Changer csv en xml
+
+-Voir si on met pas un tree view et un tree model...

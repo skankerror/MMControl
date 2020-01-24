@@ -17,7 +17,8 @@
 
 #include "oscsend.h"
 
-OscSend::OscSend(champMM champ,
+OscSend::OscSend(QObject *parent,
+                 champMM champ,
                  QString p_uri,
                  QString p_name,
                  QString p_name2,
@@ -38,7 +39,7 @@ OscSend::OscSend(champMM champ,
                  double time,
                  bool isfadein,
                  double waitTime):
-  QObject(),
+  QObject(parent),
   UdpTransmitSocket(IpEndpointName(ADDRESS, PORT)),
   m_champ(champ),
   m_p_uri(p_uri),
