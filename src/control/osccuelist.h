@@ -20,9 +20,8 @@
 
 #include <QObject>
 #include <QVector>
-#include <QAbstractItemModel>
-#include <QAbstractTableModel>
 #include <QModelIndex>
+#include <QAbstractTableModel>
 #include <QVariant>
 #include <QBrush>
 #include <QTextStream>
@@ -32,10 +31,8 @@
 #include "osccuelistdelegate.h"
 #include "MMC.h"
 
-
-
 class OscCueList :
-    public QAbstractItemModel
+    public QAbstractTableModel
 {
   Q_OBJECT
   Q_ENUM(columns)
@@ -45,33 +42,34 @@ public:
   explicit OscCueList(QObject *parent = nullptr);
   ~OscCueList();
 
+// Tous les override
   int rowCount(const QModelIndex &parent = QModelIndex()) const override;
   int columnCount(const QModelIndex &parent = QModelIndex()) const override;
   QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
   bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
   QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
   Qt::ItemFlags flags(const QModelIndex &index) const override;
-  QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
-  QModelIndex parent(const QModelIndex &index) const override;
-  OscCue* getOscCue(const int row) const;
+// insertRows ?
+
+  OscCue* getOscCue(const int row) const{ return v_listCue.at(row); };
+  int getOscCueCount(){ return v_listCue.size(); };
+  bool isRowCue(const int row) const;
 
   OscSend* retOscsendFromFileLine(QStringList &lineToken); // revoir en xml ?
-
-//  QVector<OscSend *> v_listCue;
 
 signals:
 
 public slots:
-  void addCue(OscSend *oscsend);
-  void insertCue(OscSend *oscsend, int row);
+  void addCue(OscCue *osccue); // Va pas du tout
+  void insertCue(OscCue *osccue, int row); // Non plus
   void moveCuePrev(int rowCue);
   void removeCue(int rowCue);
   void removeAllCue();
+  // Mettre un slot pour le changement des oscsend à l'intérieur des cue.
+  // Il faut que ça update le modèle aussi
 
 private:
-  QVector<OscCue *> v_listCue;
-
-//  void setupModelData(OscCueList *parent);
+  QVector<OscCue *> v_listCue; // Mettre un string pour donner un nom ?
 
 };
 

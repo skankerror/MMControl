@@ -59,8 +59,8 @@ private:
   MyMidiIn *midiIn2;
   MyMidiOut *midiOut1;
   MyMidiOut *midiOut2;
-//  TableView *tableView;
-  QTreeView *treeView;
+  TableView *tableView;
+//  QTreeView *treeView;
 
   QIcon icon;
 

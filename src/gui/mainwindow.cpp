@@ -27,12 +27,18 @@ MainWindow::MainWindow() :
 
   state = new MMState(this);
   oscCueList = new OscCueList(this);
-  midiIn1 = new MyMidiIn(1, this);
-  midiIn2 = new MyMidiIn(2, this);
-  midiOut1 = new MyMidiOut(1, this);
-  midiOut2 = new MyMidiOut(2, this);
-//  tableView = new TableView(this);
-  treeView = new QTreeView(this);
+    OscCue *osccue = new OscCue(this); // pour tester le modèle view...
+    OscSend *oscsend = new OscSend(this, PLAY);
+    OscSend *oscsend2 = new OscSend(this, PAUSE);
+    osccue->addOscSend(oscsend);
+    osccue->addOscSend(oscsend2);
+    oscCueList->addCue(osccue);
+
+  midiIn1 = new MyMidiIn(this);
+  midiIn2 = new MyMidiIn(this);
+  midiOut1 = new MyMidiOut(this);
+  midiOut2 = new MyMidiOut(this);
+  tableView = new TableView(this);
   createToolBar();
   createCentralWidget();
 
@@ -46,7 +52,7 @@ MainWindow::MainWindow() :
 void MainWindow::createCentralWidget()
 {
   tabmidi = new TabMidi(midiIn1, midiIn2, midiOut1, midiOut2, this);
-  tabseq = new TabSeq(oscCueList, treeView, midiIn1, midiIn2, midiOut1, midiOut2, this);
+  tabseq = new TabSeq(oscCueList, tableView, midiIn1, midiIn2, midiOut1, midiOut2, this);
   tabmmstate = new TabMMState(state, this);
   tabwidget = new QTabWidget(this);
 
@@ -566,8 +572,8 @@ void MainWindow::sendFromToolBar()
         waitTimeSpinBox->value()
         );
   switch(index){
-  case P_URI: case R_P_URI: while (p_uriLine->text() == "Choose->") setP_UriLine(); oscsend->m_p_uri = p_uriLine->text(); break;
-  case P_COLOR: case R_P_COLOR: while (p_colorLine->text() == "Choose->") setP_ColorLine(); oscsend->m_p_color = p_colorLine->text(); break;
+  case P_URI: case R_P_URI: while (p_uriLine->text() == "Choose->") setP_UriLine(); oscsend->setP_uri(p_uriLine->text()); break;
+  case P_COLOR: case R_P_COLOR: while (p_colorLine->text() == "Choose->") setP_ColorLine(); oscsend->setP_color(p_colorLine->text()); break;
   default: break;
   }
 
@@ -615,8 +621,8 @@ void MainWindow::addToCue()
         waitTimeSpinBox->value()
         );
   switch(index){
-  case P_URI: case R_P_URI: while (p_uriLine->text() == "Choose->") setP_UriLine(); oscsend->m_p_uri = p_uriLine->text(); break;
-  case P_COLOR: case R_P_COLOR: while (p_colorLine->text() == "Choose->") setP_ColorLine(); oscsend->m_p_color = p_colorLine->text(); break;
+  case P_URI: case R_P_URI: while (p_uriLine->text() == "Choose->") setP_UriLine(); oscsend->setP_uri(p_uriLine->text()); break;
+  case P_COLOR: case R_P_COLOR: while (p_colorLine->text() == "Choose->") setP_ColorLine(); oscsend->setP_color(p_colorLine->text()); break;
   default: break;
   }
   int row = tabseq->tableView->currentIndex().row();
@@ -624,12 +630,12 @@ void MainWindow::addToCue()
 
   if (tabseq->tableView->currentIndex().isValid())
   {
-    oscCueList->insertCue(oscsend, row);
+//    oscCueList->insertCue(oscsend, row); // À refaire
     qDebug() << "OscCueList insertCue fn called";
   }
   else
   {
-    oscCueList->addCue(oscsend);
+//    oscCueList->addCue(oscsend); // À refaire
     qDebug() << "OscCueList addCue fn called";
   }
   // Toujours sélectionner le dernier après un ajout

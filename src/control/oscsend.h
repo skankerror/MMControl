@@ -62,6 +62,7 @@ public:
           double time = 0,
           bool isfadein = false,
           double waitTime = 0);
+  ~OscSend();
 
   void ExecuteSend();
   void ExecuteXFade(int ID1, int ID2, double time);
@@ -69,6 +70,53 @@ public:
   void ExecutePXFade(QString p_name1, QString p_name2, double time);
   void ExecutePFade(QString p_name, double time, bool isfadein);
 
+  //Getters
+  champMM getChamp(){ return m_champ; };
+  QString getP_uri(){ return m_p_uri; };
+  QString getP_name(){ return m_p_name; };
+  QString getP_name2(){ return m_p_name2; };
+  QString getP_color(){ return m_p_color; };
+  int getP_ID1(){ return m_p_ID1; };
+  int getP_ID2(){ return m_p_ID2; };
+  int getP_rate(){ return m_p_rate; };
+  int getP_opacity(){ return m_p_opacity; };
+  int getP_volume(){ return m_p_volume; };
+  QString getM_name(){ return m_m_name; };
+  QString getM_name2(){ return m_m_name2; };
+  int getM_ID1(){ return m_m_ID1; };
+  int getM_opacity(){ return m_m_opacity;};
+  bool getM_isvisible(){ return m_m_isvisible; };
+  bool getM_issolo(){ return m_m_issolo; };
+  bool getM_islocked(){ return m_m_islocked; };
+  int getM_depth(){ return m_m_depth; };
+  double getTime(){ return m_time; };
+  bool getIsfadein(){ return m_isfadein; };
+  double getTimewait(){ return m_timeWait; };
+
+  //Setters
+  void setChamp(champMM champ){ m_champ = champ; };
+  void setP_uri(QString p_uri){ m_p_uri = p_uri; };
+  void setP_name(QString p_name){ m_p_name = p_name; };
+  void setP_name2(QString p_name2){ m_p_name2 = p_name2; };
+  void setP_color(QString p_color){ m_p_color = p_color; };
+  void setP_ID1(int p_ID1){ m_p_ID1 = p_ID1; };
+  void setP_ID2(int p_ID2){ m_p_ID2 = p_ID2; };
+  void setP_rate(int p_rate){ m_p_rate = p_rate; };
+  void setP_opacity(int p_opacity){ m_p_opacity = p_opacity; };
+  void setP_volume(int p_volume){ m_p_volume = p_volume; };
+  void setM_name(QString m_name){ m_m_name = m_name; };
+  void setM_name2(QString m_name2){ m_m_name2 = m_name2; };
+  void setM_ID1(int m_ID1){ m_m_ID1 = m_ID1; };
+  void setM_opacity(int m_opacity){ m_m_opacity = m_opacity; };
+  void setM_isvisible(bool m_isvisible){ m_m_isvisible = m_isvisible; };
+  void setM_issolo(bool m_issolo){ m_m_issolo = m_issolo; };
+  void setM_islocked(bool m_islocked){ m_m_islocked = m_islocked; };
+  void setM_depth(int m_depth){ m_m_depth = m_depth; };
+  void setTime(double time){ m_time = time; };
+  void setIsfadein(bool isfadein){ m_isfadein = isfadein; };
+  void setTimewait(double timewait){ m_timeWait = timewait; };
+
+private:
   champMM m_champ;
   // paint var
   QString m_p_uri = "";

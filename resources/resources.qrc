@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/graphics">
         <file alias="Icon">MMControl.png</file>
+        <file alias="Refresh">icons8-refresh-100.png</file>
     </qresource>
     <qresource prefix="/"/>
     <qresource prefix="/qss">

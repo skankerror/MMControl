@@ -18,12 +18,7 @@
 #ifndef TABMIDI_H
 #define TABMIDI_H
 
-#include <QWidget>
-#include <QLabel>
-#include <QSlider>
-#include <QBoxLayout>
-#include <QPushButton>
-#include <QSpinBox>
+#include <QtWidgets>
 #include "mymidiin.h"
 #include "mymidiout.h"
 #include "oscsend.h"
@@ -111,9 +106,9 @@ public slots:
   void sendOscAPCB56_2(); void sendOscAPCB57_2(); void sendOscAPCB58_2(); void sendOscAPCB59_2();
   void sendOscAPCB60_2(); void sendOscAPCB61_2(); void sendOscAPCB62_2(); void sendOscAPCB63_2(); void sendOscAPCB82_2();
 
-
-//  void SendOscS(int ID, int uneOpacite);
-
+  // slots connexions midi
+  void getPortNames();void slotConnectMidi1(); void slotConnectMidi2();
+  void slotDisconnectMidi1(); void slotDisconnectMidi2();
 
 private:
   OscSend *oscSendS; // Pour les sliders
@@ -130,8 +125,9 @@ private:
   QSpinBox *pID1; QSpinBox *pID2; QSpinBox *pID3; QSpinBox *pID4; QSpinBox *pID5; QSpinBox *pID6; QSpinBox *pID7; QSpinBox *pID8; QSpinBox *pID9; //apc1
   QSpinBox *mID1; QSpinBox *mID2; QSpinBox *mID3; QSpinBox *mID4; QSpinBox *mID5; QSpinBox *mID6; QSpinBox *mID7; QSpinBox *mID8; QSpinBox *mID9;
   QSlider *S10; QSlider *S11; QSlider *S12; QSlider *S13; QSlider *S14; QSlider *S15; QSlider *S16; QSlider *S17; QSlider *S18; //apc2
-  QSpinBox *pID10; QSpinBox *pID11; QSpinBox *pID12; QSpinBox *pID13; QSpinBox *pID14; QSpinBox *pID15; QSpinBox *pID16; QSpinBox *pID17; QSpinBox *pID18; //apc2
-  QSpinBox *mID10; QSpinBox *mID11; QSpinBox *mID12; QSpinBox *mID13; QSpinBox *mID14; QSpinBox *mID15; QSpinBox *mID16; QSpinBox *mID17; QSpinBox *mID18;
+  QSpinBox *pID10; QSpinBox *pID11; QSpinBox *pID12; QSpinBox *pID13; QSpinBox *pID14; QSpinBox *pID15; QSpinBox *pID16; QSpinBox *pID17; /*QSpinBox *pID18;*/ //apc2
+  QSpinBox *mID10; QSpinBox *mID11; QSpinBox *mID12; QSpinBox *mID13; QSpinBox *mID14; QSpinBox *mID15; QSpinBox *mID16; QSpinBox *mID17; /*QSpinBox *mID18;*/
+  QLabel *labelMaster;
 
   // Labels 1ère colonne
   QLabel *labelb9; QLabel *labelb8; QLabel *labelb7; QLabel *labelb6; QLabel *labelb5; QLabel *labelb4; QLabel *labelb3; QLabel *labelb2; QLabel *labelb1;
@@ -160,6 +156,19 @@ private:
   QPushButton *B98_2; QPushButton *B89_2; QPushButton *B88_2; QPushButton *B87_2; QPushButton *B86_2; QPushButton *B85_2; QPushButton *B84_2; QPushButton *B83_2; QPushButton *B82_2;
 
   // Labels dernière colonne
+  QLabel *labelRewind; QLabel *labelPlay; QLabel *labelPause;
+  QLabel *labelAllSoloOn; QLabel *labelAllSoloOff; QLabel *labelAllVisibleOn; QLabel *labelAllVisibleOff;
+
+  // Connect-Disconnect Midi
+  QHBoxLayout *connectLayout1;
+    QPushButton *connectMidi1;
+    QPushButton *disconnectMidi1;
+    QComboBox *midiPorts1;
+  QHBoxLayout *connectLayout2;
+    QPushButton *connectMidi2;
+    QPushButton *disconnectMidi2;
+    QComboBox *midiPorts2;
+  QPushButton *refreshPorts;
 };
 
 #endif // TABMIDI_H

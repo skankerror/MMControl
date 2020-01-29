@@ -18,62 +18,12 @@
 #include "mymidiin.h"
 //#include <string>
 
-MyMidiIn::MyMidiIn(int id, QObject *parent, Api api, const std::string &clientName,
+MyMidiIn::MyMidiIn(QObject *parent, Api api, const std::string &clientName,
                    unsigned int queueSizeLimit):
   QObject(parent),
   RtMidiIn(api, clientName, queueSizeLimit)
-{
+{}
 
-  int nPorts = RtMidiIn::getPortCount();
-
-  qDebug() << "Api # : " << RtMidiIn::getCurrentApi();
-  qDebug() << "Nombre de ports : " << nPorts;
-  for (int i = 0; i<nPorts; i++)
-  {
-    qDebug() << "Port #" << i << " : " << RtMidiIn::getPortName(i).c_str();
-  }
-
-  ignoreTypes(); // Pour ignorer sysex et cie...
-  switch(id)
-  {
-  case 1:
-    for (int i = 0; i<nPorts; i++)
-    {
-      if (RtMidiIn::getPortName(i) == APCMINI_1)
-      {
-        RtMidiIn::openPort(i, MYPORTNAME_IN_1);  // On ouvre le port de l'APCMini
-        qDebug() << "Succés sur le port #" << i;
-        break;
-      }
-      else
-      {
-        qDebug() << " Pas le bon nom : le nom système : " << RtMidiIn::getPortName(i).c_str()
-                  << "\nLe nom programme : " << APCMINI_1;
-      }
-    }
-    break;
-  case 2:
-    for (int i = 0; i<nPorts; i++)
-    {
-      if (RtMidiIn::getPortName(i) == APCMINI_2)
-      {
-        RtMidiIn::openPort(i, MYPORTNAME_IN_2);  // On ouvre le port de l'APCMini2
-        qDebug() << "Succés sur le port #" << i;
-        break;
-      }
-      else
-      {
-        qDebug() << " Pas le bon nom : le nom système : " << RtMidiIn::getPortName(i).c_str()
-                  << "\nLe nom programme : " << APCMINI_2;
-      }
-    }
-  default: break;
-  }
-  // Pour lire les entrées avec callback
-  RtMidiIn::setCallback(&sendMidiToOsc, this);
-  if (RtMidiIn::isPortOpen()) qDebug() << "Midi in " << id << " opened\n";
-  else qDebug() << "Midi in " << id << " not opened";
-}
 // Un slot qui appelle le signal connecté dans parent
 void MyMidiIn::midiControlChanged(int unID, float uneOpacite)
 {
@@ -90,14 +40,9 @@ void MyMidiIn::sendMidiToOsc(double deltatime,
                              std::vector<unsigned char> *unMessage,
                              void *userData) //on lui a passé this
 {
+  Q_UNUSED(deltatime)
   // On caste le void* pour pouvoir le déréférencer.
   MyMidiIn *unMidiIn = static_cast<MyMidiIn*>(userData);
-
-  unsigned int nBytes = unMessage->size(); // Pour voir le delta
-  for ( unsigned int i=0; i<nBytes; i++ )
-    qDebug() << "Byte " << i << " = " << (int)unMessage->at(i) << ", ";
-  if ( nBytes > 0 )
-    qDebug() << "stamp = " << deltatime;
 
   if ((int)unMessage->at(0) == MIDI_CONTROL)
   {
@@ -115,7 +60,31 @@ void MyMidiIn::sendMidiToOsc(double deltatime,
   else if ((int)unMessage->at(0) == MIDI_BUTTON_PRESSED)
   {
     qDebug() << "Button " << (int)unMessage->at(1) << " pressed \n";
+    qDebug() << unMessage->at(0) << " " << unMessage->at(1) << " " << unMessage->at(2);
     unMidiIn->midiNoteChanged((int)unMessage->at(1));
   }
 
+}
+
+void MyMidiIn::connectMidiIn(int portNumber, int ID)
+{
+  ignoreTypes();
+  if (ID == 1) RtMidiIn::openPort(portNumber, MYPORTNAME_IN_1);
+  else RtMidiIn::openPort(portNumber, MYPORTNAME_IN_2);
+  if (RtMidiIn::isPortOpen())
+  {
+    qDebug() << "Midi in " << ID << " opened on port #" << portNumber;
+    RtMidiIn::setCallback(&sendMidiToOsc, this);
+  }
+  else qDebug() << "Midi in " << ID << " not opened";
+}
+
+void MyMidiIn::disconnectMidiIn()
+{
+  if (RtMidiIn::isPortOpen())
+  {
+    RtMidiIn::closePort();
+    qDebug() << "Port in closed";
+  }
+  else qDebug() << "Port in was not opened...";
 }

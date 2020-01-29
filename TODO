@@ -11,8 +11,4 @@ Allumer les boutons avec les midiout
 
 -Implémenter le midi pour bouton go
 
--Rajouter osccue entre oscsend et osccuelist, oscsend sera un event
-
 -Changer csv en xml
-
--Voir si on met pas un tree view et un tree model...

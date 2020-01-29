@@ -34,7 +34,7 @@ class TabSeq : public QWidget
   Q_OBJECT
 public:
   TabSeq(OscCueList *oscCueList,
-         QTreeView *aTreeView,
+         TableView *aTableView,
          MyMidiIn *midiIn1,
          MyMidiIn *midiIn2,
          MyMidiOut *midiOut1,
@@ -72,7 +72,7 @@ private:
         QPushButton *boutonLoad;
 
 public:
-  QTreeView *treeView;
+  TableView *tableView;
 
 };
 

@@ -16,6 +16,7 @@
  */
 
 #include "oscsend.h"
+#include <QTimer>
 
 OscSend::OscSend(QObject *parent,
                  champMM champ,
@@ -62,6 +63,9 @@ OscSend::OscSend(QObject *parent,
   m_time(time),
   m_isfadein(isfadein),
   m_timeWait(waitTime)
+{}
+
+OscSend::~OscSend()
 {}
 
 void OscSend::ExecuteSend()
@@ -148,7 +152,7 @@ void OscSend::ExecuteXFade(int ID1, int ID2, double time)
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);
 
-  for (float i = 0; i<=1; i += 0.01)
+  for (double i = 0; i < 1.01; i += 0.01)
   {
     packet << osc::BeginBundleImmediate
            << osc::BeginMessage("/mapmap/paint/opacity")
@@ -162,7 +166,7 @@ void OscSend::ExecuteXFade(int ID1, int ID2, double time)
     Send(packet.Data(), packet.Size());
     packet.Clear();
 
-    usleep(10000 * time);
+    usleep(10000 * time);// TODO changer ça en QTimer
     qDebug() << ID1 << " " << 1 - i << " *** " << ID2 << " " << i;
   }
 }
@@ -171,7 +175,7 @@ void OscSend::ExecuteFade(int ID1, double time, bool isfadein)
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);
 
-  for (float i = 0; i<=1; i += 0.01)
+  for (double i = 0; i < 1.01; i += 0.01)
   {
 
     packet << osc::BeginBundleImmediate
@@ -194,7 +198,7 @@ void OscSend::ExecutePXFade(QString p_name, QString p_name2, double time)
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);
 
-  for (float i = 0; i<=1; i += 0.01)
+  for (double i = 0; i < 1.01; i += 0.01)
   {
     packet << osc::BeginBundleImmediate
            << osc::BeginMessage("/mapmap/paint/opacity")
@@ -208,7 +212,7 @@ void OscSend::ExecutePXFade(QString p_name, QString p_name2, double time)
     Send(packet.Data(), packet.Size());
     packet.Clear();
 
-    usleep(10000 * time);
+    usleep(10000 * time);// Mettre QTimer
   }
 }
 void OscSend::ExecutePFade(QString p_name, double time, bool isfadein)
@@ -216,7 +220,7 @@ void OscSend::ExecutePFade(QString p_name, double time, bool isfadein)
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);
 
-  for (float i = 0; i<=1; i += 0.01)
+  for (double i = 0; i < 1.01; i += 0.01)
   {
 
     packet << osc::BeginBundleImmediate
@@ -227,7 +231,7 @@ void OscSend::ExecutePFade(QString p_name, double time, bool isfadein)
       packet << 1 - i;
     packet << osc::EndMessage << osc::EndBundle;
 
-    usleep(10000 * time);
+    usleep(10000 * time);// Mettre QTimer
     Send(packet.Data(), packet.Size());
     qDebug() << "bluk";
     packet.Clear();

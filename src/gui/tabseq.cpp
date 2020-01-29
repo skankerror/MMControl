@@ -18,7 +18,7 @@
 #include "tabseq.h"
 
 TabSeq::TabSeq(OscCueList *oscCueList,
-               QTreeView *aTreeView,
+               TableView *aTableView,
                MyMidiIn *midiIn1,
                MyMidiIn *midiIn2,
                MyMidiOut *midiOut1,
@@ -31,7 +31,7 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   m_midiIn2(midiIn2),
   m_midiOut1(midiOut1),
   m_midiOut2(midiOut2),
-  treeView(aTreeView)
+  tableView(aTableView)
 {
   layoutMain = new QHBoxLayout(this);
   layout1 = new QHBoxLayout(this);
@@ -54,26 +54,14 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   boutonLayout->addWidget(boutonGo);
   boutonLayout->addWidget(boutonSaveAs);
   boutonLayout->addWidget(boutonLoad);
-//  treeView = new QTreeView(this);
-  treeView->setModel(m_oscCueList);
-  m_delegate = new OscCuelistDelegate(this);
-  treeView->setItemDelegate(m_delegate);
+  tableView->setModel(m_oscCueList);
+//  m_delegate = new OscCuelistDelegate(this);
+//  tableView->setItemDelegate(m_delegate);
 
-//  QCheckBox *checkbox_visible = new QCheckBox();
-//  QItemDelegate *checkBoxDelegate = new QItemDelegate(checkbox_visible);
-//  tableView->setItemDelegateForColumn(0, comboBoxDelegate); // Champ
-//  tableView->setItemDelegateForColumn(3, fileDialogDelegate); // p_uri
-//  tableView->setItemDelegateForColumn(4, colordialogDelegate); // p_color
-//  tableView->setItemDelegateForColumn(14, checkBoxDelegate); // visible
-//  tableView->setItemDelegateForColumn(15, checkBoxDelegate); // solo
-//  tableView->setItemDelegateForColumn(16, checkBoxDelegate); // lock
-//  tableView->setItemDelegateForColumn(18, checkBoxDelegate); // fadein
-//  tableView->setItemDelegateForColumn(20, checkBoxDelegate); // wait
-
-  treeView->show();
+  tableView->show();
 //  tableView->resizeColumnsToContents();
 //  tableView->resizeRowsToContents();
-  layout1->addWidget(treeView);
+  layout1->addWidget(tableView);
   layoutMain->addLayout(boutonLayout);
   layoutMain->addLayout(layout1);
   this->setLayout(layoutMain);
@@ -123,10 +111,10 @@ void TabSeq::movePrevious()
 //  }
 //  tableView->resizeRowsToContents();
 //  tableView->resizeColumnsToContents();
-//}
+}
 
-//void TabSeq::moveNext()
-//{
+void TabSeq::moveNext()
+{
 //  if (tableView->currentIndex().isValid())
 //  {
 //    if (tableView->currentIndex().siblingAtRow(tableView->currentIndex().row()+1).isValid())
@@ -182,6 +170,7 @@ void TabSeq::saveAs()
     }
   }
 }
+
 void TabSeq::loadFile()
 {
   QMessageBox msgBox(QMessageBox::Warning, "Load file warning",
@@ -211,7 +200,7 @@ void TabSeq::loadFile()
         // parse the read line into separate pieces(tokens) with "," as the delimiter
         QStringList lineToken = fileLine.split(",", QString::SkipEmptyParts);
         oscsend = m_oscCueList->retOscsendFromFileLine(lineToken);
-        m_oscCueList->addCue(oscsend);
+//        m_oscCueList->addCue(oscsend); // à refaire
       }
       lineindex++;
     }

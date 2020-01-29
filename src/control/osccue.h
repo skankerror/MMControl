@@ -15,17 +15,17 @@ public:
   explicit OscCue(QObject *parent = nullptr);
   ~OscCue();
 
-  int oscSendCount();
-  OscSend* getOscSend(int row) const;
+  int oscSendCount(){ return v_listOscSend.size(); };
+  OscSend* getOscSend(int row) const{ return v_listOscSend.at(row); };
 
 signals:
 
 public slots:
-  void addOscSend(OscSend *oscsend);
-  void insertOscSend(int row, OscSend *oscsend);
-  void removeOscSend(int row);
-  void removeAllOscSend();
-  void moveOscSendPrev(int row);
+  void addOscSend(OscSend *oscsend){ v_listOscSend.append(oscsend); };
+  void insertOscSend(int row, OscSend *oscsend){ v_listOscSend.insert(row, oscsend); };
+  void removeOscSend(int row){ v_listOscSend.remove(row); };
+  void removeAllOscSend(){ qDeleteAll(v_listOscSend); };
+  void moveOscSendPrev(int row){ v_listOscSend.swapItemsAt(row -1, row); };
   void executeCue();
 
 

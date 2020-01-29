@@ -1,52 +1,121 @@
 #include "mymidiout.h"
 
-MyMidiOut::MyMidiOut(int id, QObject *parent = nullptr, Api api, const std::string &clientName):
+MyMidiOut::MyMidiOut(QObject *parent, Api api, const std::string &clientName):
   QObject(parent),
   RtMidiOut(api, clientName)
-{
-  int nPorts = RtMidiOut::getPortCount();
+{}
 
-  qDebug() << "Api # : " << RtMidiOut::getCurrentApi();
-  qDebug() << "Nombre de ports : " << nPorts;
-  for (int i = 0; i<nPorts; i++)
+MyMidiOut::~MyMidiOut()
+{
+  if (RtMidiOut::isPortOpen())
   {
-    qDebug() << "Port #" << i << " : " << RtMidiOut::getPortName(i).c_str();
+    MyMidiOut::allBoutonVisibleOff();
+    MyMidiOut::allBoutonSoloOff();
+    MyMidiOut::sendBoutonOff(83);
+    MyMidiOut::sendBoutonOff(84);
   }
-  switch(id)
+}
+
+void MyMidiOut::connectMidiOut(int portNumber, int ID)
+{
+  if (ID == 1) RtMidiOut::openPort(portNumber, MYPORTNAME_OUT_1);
+  else RtMidiOut::openPort(portNumber, MYPORTNAME_OUT_2);
+  if (RtMidiOut::isPortOpen()) qDebug() << "Midi Out " << ID << "opened on port #" << portNumber;
+  else qDebug() << "Midi Out " << ID << " not opened";
+}
+
+void MyMidiOut::disconnectMidiOut()
+{
+  if (RtMidiOut::isPortOpen())
   {
-  case 1:
-    for (int i = 0; i<nPorts; i++)
-    {
-      if (RtMidiOut::getPortName(i) == APCMINI_1)
-      {
-        RtMidiOut::openPort(i, MYPORTNAME_OUT_1);  // On ouvre le port de l'APCMini
-        qDebug() << "Succés sur le port #" << i;
-        break;
-      }
-      else
-      {
-        qDebug() << " Pas le bon nom : le nom système : " << RtMidiOut::getPortName(i).c_str()
-                  << "\nLe nom programme : " << APCMINI_1;
-      }
-    }
-    break;
-  case 2:
-    for (int i = 0; i<nPorts; i++)
-    {
-      if (RtMidiOut::getPortName(i) == APCMINI_2)
-      {
-        RtMidiOut::openPort(i, MYPORTNAME_OUT_2);  // On ouvre le port de l'APCMini2
-        qDebug() << "Succés sur le port #" << i;
-        break;
-      }
-      else
-      {
-        qDebug() << " Pas le bon nom : le nom système : " << RtMidiOut::getPortName(i).c_str()
-                  << "\nLe nom programme : " << APCMINI_2;
-      }
-    }
-  default: break;
+    RtMidiOut::closePort();
+    qDebug() << "Port out closed";
   }
-  if (RtMidiOut::isPortOpen()) qDebug() << "Midi out " << id << " opened";
-  else qDebug() << "Midi out " << id << " not opened";
+  else qDebug() << "Port out was not opened...";
+}
+
+void MyMidiOut::allBoutonVisibleOff()
+{
+  if (!RtMidiOut::isPortOpen()) return;
+  std::vector<unsigned char> message; // on crée notre message et on l'initialise pour le 1er bouton
+  message.push_back(144);
+  message.push_back(0);
+  message.push_back(00);
+  RtMidiOut::sendMessage(&message);
+  for (int i = 1; i < 8; i++)
+  {
+    message[1] = i;
+    RtMidiOut::sendMessage(&message);
+  }
+  message[1] = 89;
+  RtMidiOut::sendMessage(&message);
+}
+
+void MyMidiOut::allBoutonVisibleOn()
+{
+  if (!RtMidiOut::isPortOpen()) return;
+  std::vector<unsigned char> message; // on crée notre message et on l'initialise pour le 1er bouton
+  message.push_back(144);
+  message.push_back(0);
+  message.push_back(01);
+  RtMidiOut::sendMessage(&message);
+  for (int i = 1; i < 8; i++)
+  {
+    message[1] = i;
+    RtMidiOut::sendMessage(&message);
+  }
+  message[1] = 89;
+  RtMidiOut::sendMessage(&message);
+}
+
+void MyMidiOut::allBoutonSoloOff()
+{
+  if (!RtMidiOut::isPortOpen()) return;
+  std::vector<unsigned char> message; // on crée notre message
+  message.push_back(144);
+  message.push_back(0);
+  message.push_back(00);
+  for (int i = 16; i < 24; i++)
+  {
+    message[1] = i;
+    RtMidiOut::sendMessage(&message);
+  }
+  message[1] = 87;
+  RtMidiOut::sendMessage(&message);
+}
+
+void MyMidiOut::allBoutonSoloOn()
+{
+  if (!RtMidiOut::isPortOpen()) return;
+  std::vector<unsigned char> message; // on crée notre message
+  message.push_back(144);
+  message.push_back(0);
+  message.push_back(01);
+  for (int i = 16; i < 24; i++)
+  {
+    message[1] = i;
+    RtMidiOut::sendMessage(&message);
+  }
+  message[1] = 87;
+  RtMidiOut::sendMessage(&message);
+}
+
+void MyMidiOut::sendBoutonOn(int id)
+{
+  if (!RtMidiOut::isPortOpen()) return;
+  std::vector<unsigned char> message;
+  message.push_back(144);
+  message.push_back(id);
+  message.push_back(01);
+  RtMidiOut::sendMessage(&message);
+}
+
+void MyMidiOut::sendBoutonOff(int id)
+{
+  if (!RtMidiOut::isPortOpen()) return;
+  std::vector<unsigned char> message;
+  message.push_back(144);
+  message.push_back(id);
+  message.push_back(00);
+  RtMidiOut::sendMessage(&message);
 }
