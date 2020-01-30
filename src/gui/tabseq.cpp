@@ -33,6 +33,49 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   m_midiOut2(midiOut2),
   tableView(aTableView)
 {
+  // pour tester
+  OscSend *oscsend = new OscSend(this, P_OPACITY);
+  oscsend->setP_ID1(2);
+  oscsend->setP_opacity(80);
+  oscsend->setTimewait(1.0);
+  OscSend *oscsend2 = new OscSend(this ,PAUSE);
+  OscCue *osccue = new OscCue(this);
+  OscSend *oscsend3 = new OscSend(this, REWIND);
+  OscCue *osccue2 = new OscCue(this);
+  OscSend *oscsend4 = new OscSend(this, PLAY);
+  OscCue *osccue3 = new OscCue(this);
+  osccue->addOscSend(oscsend);
+  osccue->addOscSend(oscsend2);
+  m_oscCueList->addCue(osccue);
+  osccue2->addOscSend(oscsend3);
+  m_oscCueList->addCue(osccue2);
+  osccue3->addOscSend(oscsend4);
+  m_oscCueList->addCue(osccue3);
+  qDebug() << "number of cue : " << m_oscCueList->getOscCueCount();
+//  qDebug() << "number of event : " << m_oscCueList->getOscCue(0)->oscSendCount() << m_oscCueList->getOscCue(1)->oscSendCount();
+  qDebug() << "row count : " << m_oscCueList->rowCount();
+  qDebug() << "column count : " << m_oscCueList->columnCount();
+  for (int i = 0; i < m_oscCueList->rowCount(); i++)
+  {
+    qDebug() << "Row " << i << m_oscCueList->isRowCue(i);
+  }
+  for (int i = 0; i < m_oscCueList->rowCount(); i++)
+  {
+    if (m_oscCueList->isRowCue(i)) qDebug() << "Row" << i << "getCueId" << m_oscCueList->getCueId(i);
+    else
+    {
+      qDebug() << "Row" << i <<
+                  "getSendCueId" << m_oscCueList->getSendCueId(i) <<
+                  "getSendId" << m_oscCueList->getSendId(i);
+
+    }
+  }
+//  qDebug() << "getSendId(6)" << m_oscCueList->getSendId(6);
+//  qDebug() << "getSendCueId(6)" << m_oscCueList->getSendCueId(6);
+//  qDebug() << oscsend->getChamp();
+//  qDebug() << oscsend2->getChamp();
+//  qDebug() << oscsend3->getChamp();
+
   layoutMain = new QHBoxLayout(this);
   layout1 = new QHBoxLayout(this);
   boutonLayout = new QVBoxLayout(this);
@@ -55,18 +98,20 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   boutonLayout->addWidget(boutonSaveAs);
   boutonLayout->addWidget(boutonLoad);
   tableView->setModel(m_oscCueList);
-//  m_delegate = new OscCuelistDelegate(this);
-//  tableView->setItemDelegate(m_delegate);
+  m_delegate = new OscCuelistDelegate(this);
+  tableView->setItemDelegate(m_delegate);
 
   tableView->show();
-//  tableView->resizeColumnsToContents();
-//  tableView->resizeRowsToContents();
+  tableView->resizeColumnsToContents();
+  tableView->resizeRowsToContents();
   layout1->addWidget(tableView);
   layoutMain->addLayout(boutonLayout);
   layoutMain->addLayout(layout1);
   this->setLayout(layoutMain);
 
   setAutoFillBackground(true);
+
+
 
   connect(boutonGo, SIGNAL(clicked(bool)), SLOT(executeGo()));
   connect(boutonPrev, SIGNAL(clicked(bool)), SLOT(movePrevious()));

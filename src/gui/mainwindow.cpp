@@ -27,12 +27,6 @@ MainWindow::MainWindow() :
 
   state = new MMState(this);
   oscCueList = new OscCueList(this);
-    OscCue *osccue = new OscCue(this); // pour tester le modèle view...
-    OscSend *oscsend = new OscSend(this, PLAY);
-    OscSend *oscsend2 = new OscSend(this, PAUSE);
-    osccue->addOscSend(oscsend);
-    osccue->addOscSend(oscsend2);
-    oscCueList->addCue(osccue);
 
   midiIn1 = new MyMidiIn(this);
   midiIn2 = new MyMidiIn(this);
@@ -647,8 +641,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
   QMessageBox msgBox(QMessageBox::Warning, "",
                      "WARNING, are you sure you want to quit ?", nullptr, this);
   msgBox.setWindowIcon(icon);
-  msgBox.addButton(tr("OK"), QMessageBox::AcceptRole);
-  msgBox.addButton(tr("CANCEL"), QMessageBox::RejectRole);
+  msgBox.addButton("OK", QMessageBox::AcceptRole);
+  msgBox.addButton("CANCEL", QMessageBox::RejectRole);
   if (msgBox.exec() == QMessageBox::RejectRole) event->ignore();
   else event->accept();
 }

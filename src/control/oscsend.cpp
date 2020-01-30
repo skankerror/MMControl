@@ -237,3 +237,46 @@ void OscSend::ExecutePFade(QString p_name, double time, bool isfadein)
     packet.Clear();
   }
 }
+
+QString OscSend::getChampToString() const
+{
+  switch(m_champ)
+  {
+  case NOOP: return QString("NOOP"); break;
+  case PLAY: return QString("PLAY"); break;
+  case PAUSE: return QString("PAUSE"); break;
+  case REWIND: return QString("REWIND"); break;
+  case QUIT: return QString("QUIT"); break;
+  case P_NAME: return QString("P_NAME"); break;
+  case P_REWIND: return QString("P_REWIND"); break;
+  case P_OPACITY: return QString("P_OPACITY"); break;
+  case P_VOLUME: return QString("P_VOLUME"); break;
+  case P_RATE: return QString("P_RATE"); break;
+  case P_URI: return QString("P_URI"); break;
+  case P_COLOR: return QString("P_COLOR"); break;
+  case M_NAME: return QString("M_NAME"); break;
+  case M_OPACITY: return QString("M_OPACITY"); break;
+  case M_VISIBLE: return QString("M_VISIBLE"); break;
+  case M_SOLO: return QString("M_SOLO"); break;
+  case M_LOCK: return QString("M_LOCK"); break;
+  case M_DEPTH: return QString("M_DEPTH"); break;
+  case P_XFADE: return QString("P_XFADE"); break;
+  case P_FADE: return QString("P_FADE"); break;
+  case R_P_NAME: return QString("R_P_NAME"); break;
+  case R_P_REWIND: return QString("R_P_REWIND"); break;
+  case R_P_OPACITY: return QString("R_P_OPACITY"); break;
+  case R_P_VOLUME: return QString("R_P_VOLUME"); break;
+  case R_P_RATE: return QString("R_P_RATE"); break;
+  case R_P_URI: return QString("R_P_URI"); break;
+  case R_P_COLOR: return QString("R_P_COLOR"); break;
+  case R_M_NAME: return QString("R_M_NAME"); break;
+  case R_M_OPACITY: return QString("R_M_OPACITY"); break;
+  case R_M_VISIBLE: return QString("R_M_VISIBLE"); break;
+  case R_M_SOLO: return QString("R_M_SOLO"); break;
+  case R_M_LOCK: return QString("R_M_LOCK"); break;
+  case R_M_DEPTH: return QString("R_M_DEPTH"); break;
+  case R_P_FADE: return QString("R_P_FADE"); break;
+  case R_P_XFADE: return QString("R_P_XFADE"); break;
+  default: break;
+  }
+}

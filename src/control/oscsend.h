@@ -71,27 +71,28 @@ public:
   void ExecutePFade(QString p_name, double time, bool isfadein);
 
   //Getters
-  champMM getChamp(){ return m_champ; };
-  QString getP_uri(){ return m_p_uri; };
-  QString getP_name(){ return m_p_name; };
-  QString getP_name2(){ return m_p_name2; };
-  QString getP_color(){ return m_p_color; };
-  int getP_ID1(){ return m_p_ID1; };
-  int getP_ID2(){ return m_p_ID2; };
-  int getP_rate(){ return m_p_rate; };
-  int getP_opacity(){ return m_p_opacity; };
-  int getP_volume(){ return m_p_volume; };
-  QString getM_name(){ return m_m_name; };
-  QString getM_name2(){ return m_m_name2; };
-  int getM_ID1(){ return m_m_ID1; };
-  int getM_opacity(){ return m_m_opacity;};
-  bool getM_isvisible(){ return m_m_isvisible; };
-  bool getM_issolo(){ return m_m_issolo; };
-  bool getM_islocked(){ return m_m_islocked; };
-  int getM_depth(){ return m_m_depth; };
-  double getTime(){ return m_time; };
-  bool getIsfadein(){ return m_isfadein; };
-  double getTimewait(){ return m_timeWait; };
+  champMM getChamp() const { return m_champ; };
+  QString getChampToString() const;
+  QString getP_uri() const { return m_p_uri; };
+  QString getP_name() const { return m_p_name; };
+  QString getP_name2() const{ return m_p_name2; };
+  QString getP_color() const{ return m_p_color; };
+  int getP_ID1() const{ return m_p_ID1; };
+  int getP_ID2() const{ return m_p_ID2; };
+  int getP_rate() const{ return m_p_rate; };
+  int getP_opacity() const{ return m_p_opacity; };
+  int getP_volume() const{ return m_p_volume; };
+  QString getM_name() const{ return m_m_name; };
+  QString getM_name2() const{ return m_m_name2; };
+  int getM_ID1() const{ return m_m_ID1; };
+  int getM_opacity() const{ return m_m_opacity;};
+  bool getM_isvisible() const{ return m_m_isvisible; };
+  bool getM_issolo() const{ return m_m_issolo; };
+  bool getM_islocked() const{ return m_m_islocked; };
+  int getM_depth() const{ return m_m_depth; };
+  double getTime() const{ return m_time; };
+  bool getIsfadein() const{ return m_isfadein; };
+  double getTimewait() const{ return m_timeWait; };
 
   //Setters
   void setChamp(champMM champ){ m_champ = champ; };

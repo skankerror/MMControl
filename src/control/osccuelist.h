@@ -51,9 +51,12 @@ public:
   Qt::ItemFlags flags(const QModelIndex &index) const override;
 // insertRows ?
 
-  OscCue* getOscCue(const int row) const{ return v_listCue.at(row); };
-  int getOscCueCount(){ return v_listCue.size(); };
+  OscCue *getOscCue(const int row) const;
+  int getOscCueCount() const { return v_listCue.size(); };
   bool isRowCue(const int row) const;
+  int getCueId(const int row) const;
+  int getSendId(const int row) const;
+  int getSendCueId(const int row) const;
 
   OscSend* retOscsendFromFileLine(QStringList &lineToken); // revoir en xml ?
 

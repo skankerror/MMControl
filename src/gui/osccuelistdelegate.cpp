@@ -2,13 +2,10 @@
 
 OscCuelistDelegate::OscCuelistDelegate(QObject *parent):
   QStyledItemDelegate(parent)
-{
-
-}
+{}
 
 QWidget *OscCuelistDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-//  int col = index.column();
   if (index.column() == Champ)
   {
     QComboBox *champComboBox = new QComboBox(parent);
@@ -47,7 +44,6 @@ QWidget *OscCuelistDelegate::createEditor(QWidget *parent, const QStyleOptionVie
     champComboBox->addItem("R_M_DEPTH");
     champComboBox->addItem("R_P_FADE");
     champComboBox->addItem("R_P_XFADE");
-//    champComboBox->setCurrentIndex(index.siblingAtRow(index.row()).data());
     return champComboBox;
   }
   return QStyledItemDelegate::createEditor(parent, option, index);

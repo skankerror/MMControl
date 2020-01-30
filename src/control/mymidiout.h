@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include <rtmidi/RtMidi.h>
-#include <QString>
 #include <QDebug>
 #include "MMC.h"
 
