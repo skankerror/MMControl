@@ -58,6 +58,8 @@ public:
   int getSendId(const int row) const;
   int getSendCueId(const int row) const;
 
+  // faire fonction pour avoir le row à partir de l'id de la cue
+
   OscSend* retOscsendFromFileLine(QStringList &lineToken); // revoir en xml ?
 
 signals:

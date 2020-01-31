@@ -439,11 +439,13 @@ void OscCueList::addCue(OscCue *osccue)
   qDebug() << "cue added";
 }
 
-void OscCueList::insertCue(OscCue *osccue, int row)
-{
+void OscCueList::insertCue(OscCue *osccue, int rowCue) // un row d'une cue...
+{//Vérifier
   QModelIndex indexTemp = QModelIndex();
-  beginInsertRows(indexTemp, row + 1, row + 1);
-  v_listCue.insert(row + 1, osccue);
+  int cueId = getCueId(rowCue);
+  OscCue *tempCue = getOscCue(rowCue);
+  beginInsertRows(indexTemp, rowCue + tempCue->oscSendCount() + 1, rowCue + tempCue->oscSendCount() + 1);
+  v_listCue.insert(cueId - 1, osccue);
   endInsertRows();
 
   qDebug() << "cue inserted";
@@ -474,6 +476,8 @@ void OscCueList::removeAllCue()
     removeCue(0);
   }
   qDebug() << "All cue removed";
+  OscCue *newEmptyCue = new OscCue(this);
+  addCue(newEmptyCue);
 }
 
 void OscCueList::addSend(OscSend *oscsend, int rowCue)
@@ -506,7 +510,7 @@ void OscCueList::moveSendPrev(int rowSend)
   endMoveRows();
 }
 
-void OscCueList::removeSend(int rowSend) // Vérifier
+void OscCueList::removeSend(int rowSend)
 { // vérifier
   QModelIndex indexTemp = QModelIndex();
   int cue = getSendCueId(rowSend) - 1;
@@ -516,13 +520,14 @@ void OscCueList::removeSend(int rowSend) // Vérifier
   endRemoveRows();
 }
 
-void OscCueList::removeAllSend(int cueRow) //Vérifier ou sinon faire comme les cues ?
+void OscCueList::removeAllSend(int cueRow)
 { // vérifier
-  QModelIndex indexTemp = QModelIndex();
   int cue = getCueId(cueRow) - 1;
   OscCue *tempCue = v_listCue.at(cue);
-  beginRemoveRows(indexTemp, cueRow + 1, cueRow + 1 + tempCue->oscSendCount());
-  tempCue->removeAllOscSend();
-  endRemoveRows();
+  int rows = tempCue->oscSendCount();
+  for (int i = 0; i < rows; i++)
+  {
+    removeSend(cueRow + 1);
+  }
 }
 

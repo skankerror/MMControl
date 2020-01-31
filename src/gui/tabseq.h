@@ -47,7 +47,8 @@ public slots:
   void executeGo();
   void movePrevious();
   void moveNext();
-  void removeCue();
+  void remove();
+  void addCue();
   void saveAs();
   void loadFile();
 
@@ -68,6 +69,7 @@ private:
         QPushButton *boutonPrev;
         QPushButton *boutonNext;
         QPushButton *boutonRemove;
+        QPushButton *boutonAddCue;
         QPushButton *boutonGo;
         QPushButton *boutonSaveAs;
         QPushButton *boutonLoad;

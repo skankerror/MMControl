@@ -34,48 +34,57 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   tableView(aTableView)
 {
   // pour tester
-  OscSend *oscsend = new OscSend(this, P_OPACITY);
-  oscsend->setP_ID1(2);
-  oscsend->setP_opacity(80);
-  oscsend->setTimewait(1.0);
-  OscSend *oscsend2 = new OscSend(this ,PAUSE);
-  OscCue *osccue = new OscCue(this);
-  OscSend *oscsend3 = new OscSend(this, REWIND);
-  OscCue *osccue2 = new OscCue(this);
-  OscSend *oscsend4 = new OscSend(this, PLAY);
-  OscCue *osccue3 = new OscCue(this);
-  osccue->addOscSend(oscsend);
-  osccue->addOscSend(oscsend2);
-  m_oscCueList->addCue(osccue);
-  osccue2->addOscSend(oscsend3);
-  m_oscCueList->addCue(osccue2);
-  osccue3->addOscSend(oscsend4);
-  m_oscCueList->addCue(osccue3);
-  qDebug() << "number of cue : " << m_oscCueList->getOscCueCount();
-  qDebug() << "row count : " << m_oscCueList->rowCount();
-  qDebug() << "column count : " << m_oscCueList->columnCount();
-  for (int i = 0; i < m_oscCueList->rowCount(); i++)
-  {
-    qDebug() << "Row " << i << m_oscCueList->isRowCue(i);
-  }
-  for (int i = 0; i < m_oscCueList->rowCount(); i++)
-  {
-    if (m_oscCueList->isRowCue(i)) qDebug() << "Row" << i << "getCueId" << m_oscCueList->getCueId(i);
-    else
-    {
-      qDebug() << "Row" << i <<
-                  "getSendCueId" << m_oscCueList->getSendCueId(i) <<
-                  "getSendId" << m_oscCueList->getSendId(i);
-    }
-  }
-  OscSend *oscsendToAdd = new OscSend(this, NOOP);
-  m_oscCueList->addSend(oscsendToAdd, 0);
-  OscSend *oscsendToInsert = new OscSend(this, QUIT);
-  m_oscCueList->insertSend(oscsendToInsert, 5);
-  m_oscCueList->moveSendPrev(3);
-  m_oscCueList->removeSend(1);
-//  m_oscCueList->removeAllSend(0);// marche pas...
+//  OscSend *oscsend = new OscSend(this, P_OPACITY);
+//  oscsend->setP_ID1(2);
+//  oscsend->setP_opacity(80);
+//  oscsend->setTimewait(1.0);
+//  OscSend *oscsend2 = new OscSend(this ,PAUSE);
+//  OscCue *osccue = new OscCue(this);
+//  OscSend *oscsend3 = new OscSend(this, REWIND);
+//  OscCue *osccue2 = new OscCue(this);
+//  OscSend *oscsend4 = new OscSend(this, PLAY);
+//  OscCue *osccue3 = new OscCue(this);
+//  osccue->addOscSend(oscsend);
+//  osccue->addOscSend(oscsend2);
+//  m_oscCueList->addCue(osccue);
+//  osccue2->addOscSend(oscsend3);
+//  m_oscCueList->addCue(osccue2);
+//  osccue3->addOscSend(oscsend4);
+//  m_oscCueList->addCue(osccue3);
+//  qDebug() << "number of cue : " << m_oscCueList->getOscCueCount();
+//  qDebug() << "row count : " << m_oscCueList->rowCount();
+//  qDebug() << "column count : " << m_oscCueList->columnCount();
+//  for (int i = 0; i < m_oscCueList->rowCount(); i++)
+//  {
+//    qDebug() << "Row " << i << m_oscCueList->isRowCue(i);
+//  }
+//  for (int i = 0; i < m_oscCueList->rowCount(); i++)
+//  {
+//    if (m_oscCueList->isRowCue(i)) qDebug() << "Row" << i << "getCueId" << m_oscCueList->getCueId(i);
+//    else
+//    {
+//      qDebug() << "Row" << i <<
+//                  "getSendCueId" << m_oscCueList->getSendCueId(i) <<
+//                  "getSendId" << m_oscCueList->getSendId(i);
+//    }
+//  }
+//  OscSend *oscsendToAdd = new OscSend(this, NOOP);
+//  m_oscCueList->addSend(oscsendToAdd, 0);
+//  OscSend *oscsendToInsert = new OscSend(this, QUIT);
+//  m_oscCueList->insertSend(oscsendToInsert, 5);
+//  m_oscCueList->moveSendPrev(3);
+//  m_oscCueList->removeSend(1);
+////  m_oscCueList->removeAllSend(0);
+//  OscCue *osccueToInsert = new OscCue(this);
+//  m_oscCueList->insertCue(osccueToInsert, 0);
+//  m_oscCueList->moveCuePrev(1);
+//  m_oscCueList->removeCue(0);
+//  m_oscCueList->removeAllCue();
   // fin test
+
+  // On met une cue pour démarrer
+  OscCue *firstCue = new OscCue(this);
+  m_oscCueList->addCue(firstCue);
 
   layoutMain = new QHBoxLayout(this);
   layout1 = new QHBoxLayout(this);
@@ -86,6 +95,8 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   boutonNext->setText(">");
   boutonRemove = new QPushButton(this);
   boutonRemove->setText("-");
+  boutonAddCue = new QPushButton(this);
+  boutonAddCue->setText("Add Cue");
   boutonGo = new QPushButton(this);
   boutonGo->setText("GO !");
   boutonSaveAs = new QPushButton(this);
@@ -95,6 +106,7 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   boutonLayout->addWidget(boutonPrev);
   boutonLayout->addWidget(boutonNext);
   boutonLayout->addWidget(boutonRemove);
+  boutonLayout->addWidget(boutonAddCue);
   boutonLayout->addWidget(boutonGo);
   boutonLayout->addWidget(boutonSaveAs);
   boutonLayout->addWidget(boutonLoad);
@@ -117,6 +129,7 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   connect(boutonPrev, SIGNAL(clicked(bool)), SLOT(movePrevious()));
   connect(boutonNext, SIGNAL(clicked(bool)), SLOT(moveNext()));
   connect(boutonRemove, SIGNAL(clicked(bool)), SLOT(removeCue()));
+  connect(boutonAddCue, SIGNAL(clicked(bool)), SLOT(addCue()));
   connect(boutonSaveAs, SIGNAL(clicked(bool)), SLOT(saveAs()));
   connect(boutonLoad, SIGNAL(clicked(bool)), SLOT(loadFile()));
 }
@@ -175,14 +188,31 @@ void TabSeq::moveNext() // Bouger cue si c'est une cue, bouger send si c'est un 
 //  tableView->resizeColumnsToContents();
 }
 
-void TabSeq::removeCue() // Bouger cue si c'est une cue, bouger send si c'est un send
+void TabSeq::remove() // Bouger cue si c'est une cue, bouger send si c'est un send
 {
 //  if (tableView->currentIndex().isValid())
 //  {
 //    m_oscCueList->removeCue(tableView->currentIndex().row());
 //  }
 //  tableView->resizeRowsToContents();
-//  tableView->resizeColumnsToContents();
+  //  tableView->resizeColumnsToContents();
+}
+
+void TabSeq::addCue()
+{
+  OscCue *newCue = new OscCue(this);
+  if (!tableView->currentIndex().isValid())
+  {
+    m_oscCueList->addCue(newCue);
+  }
+  else if (m_oscCueList->isRowCue(tableView->currentIndex().row())) // Si c'est une cue
+  {
+    m_oscCueList->insertCue(newCue, tableView->currentIndex().row());
+  }
+  else
+  {
+
+  }
 }
 
 void TabSeq::saveAs()
