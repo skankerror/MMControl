@@ -14,7 +14,7 @@ void OscCue::addOscSend(OscSend *oscsend)
   qDebug() << "Add oscsend ";
 }
 
-void OscCue::executeCue()
+void OscCue::executeCue() // peut-être inutile...
 {
   for (int i = 0; i < v_listOscSend.size(); i++)
   {

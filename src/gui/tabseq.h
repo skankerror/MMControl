@@ -43,8 +43,6 @@ public:
 
 signals:
 
-
-
 public slots:
   void executeGo();
   void movePrevious();
@@ -52,6 +50,9 @@ public slots:
   void removeCue();
   void saveAs();
   void loadFile();
+
+protected slots:
+  void selectNextSend();
 
 private:
   OscCueList *m_oscCueList;

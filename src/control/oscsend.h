@@ -64,12 +64,15 @@ public:
           double waitTime = 0);
   ~OscSend();
 
+public slots:
+
   void ExecuteSend();
   void ExecuteXFade(int ID1, int ID2, double time);
   void ExecuteFade(int ID1, double time, bool isfadein);
   void ExecutePXFade(QString p_name1, QString p_name2, double time);
   void ExecutePFade(QString p_name, double time, bool isfadein);
 
+public:
   //Getters
   champMM getChamp() const { return m_champ; };
   QString getChampToString() const;

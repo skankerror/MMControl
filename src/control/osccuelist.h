@@ -63,8 +63,8 @@ public:
 signals:
 
 public slots:
-  void addCue(OscCue *osccue); // Va pas du tout
-  void insertCue(OscCue *osccue, int row); // Non plus
+  void addCue(OscCue *osccue);
+  void insertCue(OscCue *osccue, int row);
   void moveCuePrev(int rowCue);
   void removeCue(int rowCue);
   void removeAllCue();
@@ -72,7 +72,7 @@ public slots:
   // Il faut que ça update le modèle aussi
 
 private:
-  QVector<OscCue *> v_listCue; // Mettre un string pour donner un nom ?
+  QVector<OscCue *> v_listCue;
 
 };
 
