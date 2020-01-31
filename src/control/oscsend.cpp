@@ -143,10 +143,10 @@ void OscSend::ExecuteSend()
   default: packet << osc::BeginMessage("/error_default_champ") << osc::EndMessage;
     qDebug() << "/sa/pa/normal error execute send"; break;
   }
-
   packet << osc::EndBundle;
   Send(packet.Data(), packet.Size());
 }
+
 void OscSend::ExecuteXFade(int ID1, int ID2, double time)
 {
   char buffer[OUTPUT_BUFFER_SIZE];
@@ -170,6 +170,7 @@ void OscSend::ExecuteXFade(int ID1, int ID2, double time)
     qDebug() << ID1 << " " << 1 - i << " *** " << ID2 << " " << i;
   }
 }
+
 void OscSend::ExecuteFade(int ID1, double time, bool isfadein)
 {
   char buffer[OUTPUT_BUFFER_SIZE];
@@ -215,6 +216,7 @@ void OscSend::ExecutePXFade(QString p_name, QString p_name2, double time)
     usleep(10000 * time);// Mettre QTimer
   }
 }
+
 void OscSend::ExecutePFade(QString p_name, double time, bool isfadein)
 {
   char buffer[OUTPUT_BUFFER_SIZE];

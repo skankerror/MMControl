@@ -51,8 +51,8 @@ public slots:
   void saveAs();
   void loadFile();
 
-protected slots:
-  void selectNextSend();
+//protected slots:
+//  void selectNextSend();
 
 private:
   OscCueList *m_oscCueList;

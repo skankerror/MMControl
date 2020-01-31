@@ -1,11 +1,4 @@
--changer assignations des boutons dernière colonne
-revoir la façon dont on ouvre les ports:
-https://github.com/thestk/rtmidi/blob/master/tests/cmidiin.cpp
-Allumer les boutons avec les midiout
-
 -Ne permettre qu'à un seul cue d'être sélectionné (par QItemSelectionModel ?)
-
--Mettre un QThread lors de l'éxécution d'un oscsend
 
 -Mettre des tooltips aux widgets
 

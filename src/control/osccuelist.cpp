@@ -431,7 +431,6 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
 
 void OscCueList::addCue(OscCue *osccue)
 {
-  Q_UNUSED(osccue)
   QModelIndex indexTemp = QModelIndex();
   beginInsertRows(indexTemp, v_listCue.size(), v_listCue.size());
   v_listCue.append(osccue);
@@ -442,7 +441,6 @@ void OscCueList::addCue(OscCue *osccue)
 
 void OscCueList::insertCue(OscCue *osccue, int row)
 {
-//  Q_UNUSED(osccue)
   QModelIndex indexTemp = QModelIndex();
   beginInsertRows(indexTemp, row + 1, row + 1);
   v_listCue.insert(row + 1, osccue);
@@ -475,7 +473,56 @@ void OscCueList::removeAllCue()
   {
     removeCue(0);
   }
-
   qDebug() << "All cue removed";
+}
+
+void OscCueList::addSend(OscSend *oscsend, int rowCue)
+{ // vérifier avant ? ou dans l'appel dans la toolbar ?
+  QModelIndex indexTemp = QModelIndex();
+  OscCue *tempCue = v_listCue.at(getCueId(rowCue) - 1);
+  int row = rowCue + tempCue->oscSendCount();
+  beginInsertRows(indexTemp, row + 1, row + 1);
+  tempCue->addOscSend(oscsend);
+  endInsertRows();
+}
+
+void OscCueList::insertSend(OscSend *oscsend, int rowSend)
+{ // vérifier ?
+  QModelIndex indexTemp = QModelIndex();
+  int cue = getSendCueId(rowSend) - 1;
+  OscCue *tempCue = v_listCue.at(cue);
+  beginInsertRows(indexTemp, rowSend + 1, rowSend +1);
+  tempCue->insertOscSend(getSendId(rowSend), oscsend);
+  endInsertRows();
+}
+
+void OscCueList::moveSendPrev(int rowSend)
+{ // vérifier
+  QModelIndex indexTemp = QModelIndex();
+  int cue = getSendCueId(rowSend) - 1;
+  OscCue *tempCue = v_listCue.at(cue);
+  beginMoveRows(indexTemp, rowSend, rowSend, indexTemp, rowSend - 1);
+  tempCue->moveOscSendPrev(getSendId(rowSend) - 1);
+  endMoveRows();
+}
+
+void OscCueList::removeSend(int rowSend) // Vérifier
+{ // vérifier
+  QModelIndex indexTemp = QModelIndex();
+  int cue = getSendCueId(rowSend) - 1;
+  OscCue *tempCue = v_listCue.at(cue);
+  beginRemoveRows(indexTemp, rowSend, rowSend);
+  tempCue->removeOscSend(getSendId(rowSend) - 1);
+  endRemoveRows();
+}
+
+void OscCueList::removeAllSend(int cueRow) //Vérifier ou sinon faire comme les cues ?
+{ // vérifier
+  QModelIndex indexTemp = QModelIndex();
+  int cue = getCueId(cueRow) - 1;
+  OscCue *tempCue = v_listCue.at(cue);
+  beginRemoveRows(indexTemp, cueRow + 1, cueRow + 1 + tempCue->oscSendCount());
+  tempCue->removeAllOscSend();
+  endRemoveRows();
 }
 

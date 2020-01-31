@@ -68,6 +68,13 @@ TabSeq::TabSeq(OscCueList *oscCueList,
                   "getSendId" << m_oscCueList->getSendId(i);
     }
   }
+  OscSend *oscsendToAdd = new OscSend(this, NOOP);
+  m_oscCueList->addSend(oscsendToAdd, 0);
+  OscSend *oscsendToInsert = new OscSend(this, QUIT);
+  m_oscCueList->insertSend(oscsendToInsert, 5);
+  m_oscCueList->moveSendPrev(3);
+  m_oscCueList->removeSend(1);
+//  m_oscCueList->removeAllSend(0);// marche pas...
   // fin test
 
   layoutMain = new QHBoxLayout(this);
@@ -142,7 +149,7 @@ void TabSeq::executeGo()
   }
 }
 
-void TabSeq::movePrevious()
+void TabSeq::movePrevious() // Bouger cue si c'est une cue, bouger send si c'est un send
 {
 //  if (tableView->currentIndex().isValid())
 //  {
@@ -155,7 +162,7 @@ void TabSeq::movePrevious()
 //  tableView->resizeColumnsToContents();
 }
 
-void TabSeq::moveNext()
+void TabSeq::moveNext() // Bouger cue si c'est une cue, bouger send si c'est un send
 {
 //  if (tableView->currentIndex().isValid())
 //  {
@@ -168,7 +175,7 @@ void TabSeq::moveNext()
 //  tableView->resizeColumnsToContents();
 }
 
-void TabSeq::removeCue()
+void TabSeq::removeCue() // Bouger cue si c'est une cue, bouger send si c'est un send
 {
 //  if (tableView->currentIndex().isValid())
 //  {
@@ -231,7 +238,7 @@ void TabSeq::loadFile()
     if (file.open(QIODevice::ReadOnly))
     {
       m_oscCueList->removeAllCue();
-      OscSend *oscsend = new OscSend(this, NOOP);
+//      OscSend *oscsend = new OscSend(this, NOOP);
       int lineindex = 0;                     // file line counter
       QTextStream in(&file);                 // read to text stream
       while (!in.atEnd())
@@ -241,7 +248,7 @@ void TabSeq::loadFile()
         QString fileLine = in.readLine();
         // parse the read line into separate pieces(tokens) with "," as the delimiter
         QStringList lineToken = fileLine.split(",", QString::SkipEmptyParts);
-        oscsend = m_oscCueList->retOscsendFromFileLine(lineToken);
+//        oscsend = m_oscCueList->retOscsendFromFileLine(lineToken);
 //        m_oscCueList->addCue(oscsend); // à refaire
       }
       lineindex++;
@@ -252,11 +259,11 @@ void TabSeq::loadFile()
   }
 }
 
-void TabSeq::selectNextSend()
-{
-  if (tableView->currentIndex().isValid())
-  {
-    tableView->setCurrentIndex(tableView->currentIndex().siblingAtRow(tableView->currentIndex().row() + 1)); // On sélectionne le suivant
-    if (!tableView->currentIndex().isValid()) tableView->setCurrentIndex(tableView->currentIndex().siblingAtRow(0)); // S'il est pas valide on va à la 1èer cue ?
-  }
-}
+//void TabSeq::selectNextSend()
+//{
+//  if (tableView->currentIndex().isValid())
+//  {
+//    tableView->setCurrentIndex(tableView->currentIndex().siblingAtRow(tableView->currentIndex().row() + 1)); // On sélectionne le suivant
+//    if (!tableView->currentIndex().isValid()) tableView->setCurrentIndex(tableView->currentIndex().siblingAtRow(0)); // S'il est pas valide on va à la 1èer cue ?
+//  }
+//}

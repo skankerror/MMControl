@@ -28,7 +28,6 @@ public slots:
   void moveOscSendPrev(int row){ v_listOscSend.swapItemsAt(row -1, row); };
   void executeCue();
 
-
 private:
   QVector<OscSend *> v_listOscSend;
 

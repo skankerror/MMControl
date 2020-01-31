@@ -63,13 +63,19 @@ public:
 signals:
 
 public slots:
+  // cue
   void addCue(OscCue *osccue);
   void insertCue(OscCue *osccue, int row);
   void moveCuePrev(int rowCue);
   void removeCue(int rowCue);
   void removeAllCue();
-  // Mettre un slot pour le changement des oscsend à l'intérieur des cue.
-  // Il faut que ça update le modèle aussi
+
+  //send
+  void addSend(OscSend *oscsend, int rowCue);
+  void insertSend(OscSend *oscsend, int rowSend);
+  void moveSendPrev(int rowSend);
+  void removeSend(int rowSend);
+  void removeAllSend(int cueRow);
 
 private:
   QVector<OscCue *> v_listCue;
