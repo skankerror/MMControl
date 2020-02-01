@@ -47,7 +47,7 @@ int OscCueList::columnCount(const QModelIndex &index) const
 QVariant OscCueList::data(const QModelIndex &index, int role) const
 {
   if (!index.isValid() || index.row() < 0 || !(index.flags().testFlag(Qt::ItemIsEditable))
-      || index.row() > rowCount() || isRowCue(index.row())) return QVariant();
+      || index.row() > rowCount() || isRowCue(index.row())) return QVariant(); // revoir pour avoir time total dans la ligne cue
   int row = index.row();
   int col = index.column();
   QBrush salmonColor(QColor("#59271E"));
@@ -249,8 +249,13 @@ Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const
   return QAbstractTableModel::flags(index);
 }
 
-OscCue *OscCueList::getOscCue(const int row) const
+OscCue *OscCueList::getOscCue(const int row) const // row pointer dans v_listCue
 {
+  if (row < 0 || row > v_listCue.size()) // aux méths de vérifier
+  {
+    OscCue *voidCue = new OscCue();
+    return voidCue;
+  }
   return v_listCue.at(row);
 }
 
@@ -266,7 +271,7 @@ bool OscCueList::isRowCue(const int row) const
   return false;
 }
 
-int OscCueList::getCueId(const int row) const
+int OscCueList::getCueId(const int row) const // retourne -1 si problème
 {
   if (!isRowCue(row) || !getOscCueCount() || row > rowCount() - 1 || row < 0) return -1;
   int count = 0;
@@ -278,7 +283,7 @@ int OscCueList::getCueId(const int row) const
   return -1;
 }
 
-int OscCueList::getSendId(const int row) const
+int OscCueList::getSendId(const int row) const // retourne -1 si problème
 {
   if (isRowCue(row) || row > rowCount() - 1 || row < 0) return -1;
   int count = 0;
@@ -289,7 +294,7 @@ int OscCueList::getSendId(const int row) const
   return row - count;
 }
 
-int OscCueList::getSendCueId(const int row) const
+int OscCueList::getSendCueId(const int row) const // retourne -1 si problème
 {
   if (isRowCue(row) || row > rowCount() - 1 || row < 0) return -1;
   int count = 0;
@@ -301,6 +306,28 @@ int OscCueList::getSendCueId(const int row) const
     count += getOscCue(i)->oscSendCount() + 1;
   }
   return -1;
+}
+
+int OscCueList::getRowCueFromCueId(int cueId) const
+{
+  if (cueId < 1 || cueId > v_listCue.size()) return -1; // retourne -1 si problème
+  int count = 0;
+  cueId--; // là ça marche...
+  for (int i = 0; i < cueId; i++)
+  {
+    count += 1 + getOscCue(i)->oscSendCount();
+  }
+  return count;
+}
+
+int OscCueList::getLastCueRow() const // retourne -1 si problème
+{
+  int lastCueRow = -1;
+  for (int i = 0; i < rowCount(); i++)
+  {
+    if (isRowCue(i)) lastCueRow = i;
+  }
+  return lastCueRow;
 }
 
 OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
@@ -439,8 +466,9 @@ void OscCueList::addCue(OscCue *osccue)
   qDebug() << "cue added";
 }
 
-void OscCueList::insertCue(OscCue *osccue, int rowCue) // un row d'une cue...
-{//Vérifier
+void OscCueList::insertCue(OscCue *osccue, int rowCue)
+{
+  if (rowCue < 0 || rowCue > rowCount() || !isRowCue(rowCue)) return; // C'est aux meth de vérifier
   QModelIndex indexTemp = QModelIndex();
   int cueId = getCueId(rowCue);
   OscCue *tempCue = getOscCue(rowCue);
@@ -453,17 +481,21 @@ void OscCueList::insertCue(OscCue *osccue, int rowCue) // un row d'une cue...
 
 void OscCueList::moveCuePrev(int rowCue)
 {
+  if (rowCue < 1 || rowCue > rowCount() || !isRowCue(rowCue)) return; // C'est aux meth de vérifier
   QModelIndex indexTemp = QModelIndex();
+  int row = getCueId(rowCue) - 1; // row = pointeur dans v_listCue
   beginMoveRows(indexTemp, rowCue, rowCue, indexTemp, rowCue - 1);
-  v_listCue.move(rowCue, rowCue - 1);
+  v_listCue.move(row, row - 1);
   endMoveRows();
 }
 
 void OscCueList::removeCue(int rowCue)
 {
+  if (rowCue < 0 || rowCue > rowCount() - 1 || !isRowCue(rowCue)) return; // C'est aux meth de vérifier
   QModelIndex indexTemp = QModelIndex();
-  beginRemoveRows(indexTemp, rowCue, rowCue);
-  v_listCue.remove(rowCue);
+  OscCue *tempCue = getOscCue(getCueId(rowCue) - 1); // On extrait la cue pour connaitre sa taille
+  beginRemoveRows(indexTemp, rowCue, rowCue + tempCue->oscSendCount());
+  v_listCue.remove(getCueId(rowCue) - 1);
   endRemoveRows();
 }
 
@@ -481,7 +513,8 @@ void OscCueList::removeAllCue()
 }
 
 void OscCueList::addSend(OscSend *oscsend, int rowCue)
-{ // vérifier avant ? ou dans l'appel dans la toolbar ?
+{
+  if (!isRowCue(rowCue)) return; //c'est aux méthodes appelantes de vérifier
   QModelIndex indexTemp = QModelIndex();
   OscCue *tempCue = v_listCue.at(getCueId(rowCue) - 1);
   int row = rowCue + tempCue->oscSendCount();
@@ -491,7 +524,8 @@ void OscCueList::addSend(OscSend *oscsend, int rowCue)
 }
 
 void OscCueList::insertSend(OscSend *oscsend, int rowSend)
-{ // vérifier ?
+{
+  if (rowSend < 0 || rowSend > rowCount() || isRowCue(rowSend)) return; // C'est aux meth de vérifier
   QModelIndex indexTemp = QModelIndex();
   int cue = getSendCueId(rowSend) - 1;
   OscCue *tempCue = v_listCue.at(cue);
@@ -501,17 +535,59 @@ void OscCueList::insertSend(OscSend *oscsend, int rowSend)
 }
 
 void OscCueList::moveSendPrev(int rowSend)
-{ // vérifier
+{
+  if (rowSend < 2 || rowSend > rowCount() || isRowCue(rowSend)) return; // C'est aux meth de vérifier
   QModelIndex indexTemp = QModelIndex();
-  int cue = getSendCueId(rowSend) - 1;
-  OscCue *tempCue = v_listCue.at(cue);
-  beginMoveRows(indexTemp, rowSend, rowSend, indexTemp, rowSend - 1);
-  tempCue->moveOscSendPrev(getSendId(rowSend) - 1);
-  endMoveRows();
+  int cue = getSendCueId(rowSend) - 1; // pointeur dans v_listCue
+  if (getSendId(rowSend) == 1) // Si c'est le 1er send on le met à la fin de la cue d'avant
+  {
+    if (cue == 0) return; // Si y a pas de cue avant on fait rien
+    OscCue *tempCue = getOscCue(cue); // On pointe la cue actuelle
+    OscSend *tempSend = tempCue->getOscSend(0); // on prend le 1er
+    OscCue *tempCuePrev = getOscCue(cue -1); // On pointe la cue d'avant
+    beginMoveRows(indexTemp, rowSend, rowSend, indexTemp, rowSend - 2);
+    tempCuePrev->addOscSend(tempSend); // On met le send à la fin
+    tempCue->removeOscSend(0); // on l'efface dans l'ancienne cue
+    endMoveRows();
+  }
+  else
+  {
+    OscCue *tempCue = getOscCue(cue);
+    beginMoveRows(indexTemp, rowSend, rowSend, indexTemp, rowSend - 1);
+    tempCue->moveOscSendPrev(getSendId(rowSend) - 1);
+    endMoveRows();
+  }
+}
+
+void OscCueList::moveSendNext(int rowSend)
+{
+  if (rowSend > rowCount() - 2 || isRowCue(rowSend) || rowSend < 1) return; // C'est aux meth de vérifier
+  QModelIndex indexTemp = QModelIndex();
+  int cue = getSendCueId(rowSend) - 1; // pointeur dans v_listCue
+  int send = getSendId(rowSend) - 1; // pointeur dans v_listOscSend
+  if (isRowCue(rowSend + 1)) // Si le row d'après est une cue
+  {
+    OscCue *tempCue = getOscCue(cue); // On pointe la cue actuelle
+    OscSend *tempSend = tempCue->getOscSend(send);
+    OscCue *tempCueNext = getOscCue(cue + 1);
+    beginMoveRows(indexTemp, rowSend, rowSend, indexTemp, rowSend + 2);
+    tempCueNext->insertOscSend(0, tempSend);
+    tempCue->removeOscSend(tempCue->oscSendCount() - 1);
+    endMoveRows();
+  }
+  else // le row d'après est un send
+  {
+    rowSend++;
+    OscCue *tempCue = getOscCue(cue);
+    beginMoveRows(indexTemp, rowSend, rowSend, indexTemp, rowSend - 1);
+    tempCue->moveOscSendPrev(getSendId(rowSend) - 1);
+    endMoveRows();
+  }
 }
 
 void OscCueList::removeSend(int rowSend)
-{ // vérifier
+{
+  if (rowSend < 0 || rowSend > rowCount() || isRowCue(rowSend)) return; // C'est aux meth de vérifier
   QModelIndex indexTemp = QModelIndex();
   int cue = getSendCueId(rowSend) - 1;
   OscCue *tempCue = v_listCue.at(cue);
@@ -521,7 +597,8 @@ void OscCueList::removeSend(int rowSend)
 }
 
 void OscCueList::removeAllSend(int cueRow)
-{ // vérifier
+{
+  if (cueRow < 0 || cueRow > rowCount() || !isRowCue(cueRow)) return; // C'est aux meth de vérifier
   int cue = getCueId(cueRow) - 1;
   OscCue *tempCue = v_listCue.at(cue);
   int rows = tempCue->oscSendCount();

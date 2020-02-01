@@ -57,8 +57,8 @@ public:
   int getCueId(const int row) const;
   int getSendId(const int row) const;
   int getSendCueId(const int row) const;
-
-  // faire fonction pour avoir le row à partir de l'id de la cue
+  int getRowCueFromCueId(int cueId) const;
+  int getLastCueRow() const;
 
   OscSend* retOscsendFromFileLine(QStringList &lineToken); // revoir en xml ?
 
@@ -76,6 +76,7 @@ public slots:
   void addSend(OscSend *oscsend, int rowCue);
   void insertSend(OscSend *oscsend, int rowSend);
   void moveSendPrev(int rowSend);
+  void moveSendNext(int rowSend);
   void removeSend(int rowSend);
   void removeAllSend(int cueRow);
 

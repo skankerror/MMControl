@@ -25,7 +25,7 @@ public slots:
   void insertOscSend(int row, OscSend *oscsend){ v_listOscSend.insert(row, oscsend); };
   void removeOscSend(int row){ v_listOscSend.remove(row); };
   void removeAllOscSend(){ qDeleteAll(v_listOscSend); };
-  void moveOscSendPrev(int row){ v_listOscSend.swapItemsAt(row -1, row); };
+  void moveOscSendPrev(int row);
   void executeCue();
 
 private:

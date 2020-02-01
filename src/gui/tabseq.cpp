@@ -69,7 +69,11 @@ TabSeq::TabSeq(OscCueList *oscCueList,
 //    }
 //  }
 //  OscSend *oscsendToAdd = new OscSend(this, NOOP);
-//  m_oscCueList->addSend(oscsendToAdd, 0);
+//  m_oscCueList->addSend(oscsendToAdd, 3);
+//  for (int i = 0; i < m_oscCueList->getOscCueCount(); i++)
+//  {
+//    qDebug() << "cueId" << i + 1 << "row" << m_oscCueList->getRowCueFromCueId(i + 1);
+//  }
 //  OscSend *oscsendToInsert = new OscSend(this, QUIT);
 //  m_oscCueList->insertSend(oscsendToInsert, 5);
 //  m_oscCueList->moveSendPrev(3);
@@ -128,7 +132,7 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   connect(boutonGo, SIGNAL(clicked(bool)), SLOT(executeGo()));
   connect(boutonPrev, SIGNAL(clicked(bool)), SLOT(movePrevious()));
   connect(boutonNext, SIGNAL(clicked(bool)), SLOT(moveNext()));
-  connect(boutonRemove, SIGNAL(clicked(bool)), SLOT(removeCue()));
+  connect(boutonRemove, SIGNAL(clicked(bool)), SLOT(remove()));
   connect(boutonAddCue, SIGNAL(clicked(bool)), SLOT(addCue()));
   connect(boutonSaveAs, SIGNAL(clicked(bool)), SLOT(saveAs()));
   connect(boutonLoad, SIGNAL(clicked(bool)), SLOT(loadFile()));
@@ -164,41 +168,74 @@ void TabSeq::executeGo()
 
 void TabSeq::movePrevious() // Bouger cue si c'est une cue, bouger send si c'est un send
 {
-//  if (tableView->currentIndex().isValid())
-//  {
-//    if (tableView->currentIndex().siblingAtRow(tableView->currentIndex().row()-1).isValid())
-//    {
-//      m_oscCueList->moveCuePrev(tableView->currentIndex().row());
-//    }
-//  }
+  QModelIndex index = tableView->currentIndex();
+  int row = index.row();
+  qDebug() << "row selected" << row;
+  if (!index.isValid() || row < 1 /* Si c'est 0 on peut pas remonter */ || row > m_oscCueList->rowCount()) return;
+  if (m_oscCueList->isRowCue(row)) // Si c'est une cue
+  {
+    int cueId = m_oscCueList->getCueId(row); // on garde en mémoire l'id de la cue pour la sélectionner après
+    m_oscCueList->moveCuePrev(row);
+    int rowCueNewId = m_oscCueList->getRowCueFromCueId(cueId - 1); // on récupère son nouveau row
+    tableView->setCurrentIndex(m_oscCueList->index(rowCueNewId, 0)); // on le sélectionne
+  }
+  else // c'est un send
+  {
+    int sendId = m_oscCueList->getSendId(row);
+    int cueId = m_oscCueList->getSendCueId(row);
+    m_oscCueList->moveSendPrev(row);
+    if (sendId == 1 && cueId > 1) // Si on a bougé de cue
+      tableView->setCurrentIndex(m_oscCueList->index(row - 1, 0)); // on le resélectionne
+  }
 //  tableView->resizeRowsToContents();
 //  tableView->resizeColumnsToContents();
 }
 
 void TabSeq::moveNext() // Bouger cue si c'est une cue, bouger send si c'est un send
 {
-//  if (tableView->currentIndex().isValid())
-//  {
-//    if (tableView->currentIndex().siblingAtRow(tableView->currentIndex().row()+1).isValid())
-//    {
-//      m_oscCueList->moveCuePrev(tableView->currentIndex().row() + 1);
-//    }
-//  }
-//  tableView->resizeRowsToContents();
-//  tableView->resizeColumnsToContents();
+  QModelIndex index = tableView->currentIndex();
+  int row = index.row();
+  qDebug() << "row selected" << row;
+  if (!index.isValid() || row > m_oscCueList->rowCount() - 2) return; // Si c'est le dernier row on fait rien...
+  if (m_oscCueList->isRowCue(row)) // Si c'est une cue
+  {
+    int cueId = m_oscCueList->getCueId(row);
+    int cueCount = m_oscCueList->getOscCueCount();
+    if (cueId >= cueCount) return; // on pourra pas faire next
+    int rowNextCue = m_oscCueList->getRowCueFromCueId(cueId + 1); // On récupère le row de la next cue
+    m_oscCueList->moveCuePrev(rowNextCue);
+    rowNextCue = m_oscCueList->getRowCueFromCueId(cueId + 1); // On reprend le row de notre cue boougée
+    tableView->setCurrentIndex(m_oscCueList->index(rowNextCue, 0)); // On le sélectionne
+  }
+  else // c'est un send
+  {
+    m_oscCueList->moveSendNext(row);
+  }
+  //  tableView->resizeRowsToContents();
+  //  tableView->resizeColumnsToContents();
 }
 
 void TabSeq::remove() // Bouger cue si c'est une cue, bouger send si c'est un send
 {
-//  if (tableView->currentIndex().isValid())
-//  {
-//    m_oscCueList->removeCue(tableView->currentIndex().row());
-//  }
+  QModelIndex index = tableView->currentIndex();
+  int row = index.row();
+  qDebug() << "row selected" << row;
+  if (!index.isValid() || row > m_oscCueList->rowCount() - 1) return;
+  if (m_oscCueList->isRowCue(row))
+  {
+    m_oscCueList->removeCue(row);
+  }
+  else
+  {
+    m_oscCueList->removeSend(row);
+  }
+  if (!row) tableView->setCurrentIndex(m_oscCueList->index(0, 0));
+  else tableView->setCurrentIndex(m_oscCueList->index(row - 1, 0));
 //  tableView->resizeRowsToContents();
-  //  tableView->resizeColumnsToContents();
+//  tableView->resizeColumnsToContents();
 }
 
-void TabSeq::addCue()
+void TabSeq::addCue() // Rest ça à refaire...
 {
   OscCue *newCue = new OscCue(this);
   if (!tableView->currentIndex().isValid())
@@ -289,11 +326,3 @@ void TabSeq::loadFile()
   }
 }
 
-//void TabSeq::selectNextSend()
-//{
-//  if (tableView->currentIndex().isValid())
-//  {
-//    tableView->setCurrentIndex(tableView->currentIndex().siblingAtRow(tableView->currentIndex().row() + 1)); // On sélectionne le suivant
-//    if (!tableView->currentIndex().isValid()) tableView->setCurrentIndex(tableView->currentIndex().siblingAtRow(0)); // S'il est pas valide on va à la 1èer cue ?
-//  }
-//}

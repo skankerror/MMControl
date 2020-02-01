@@ -587,8 +587,8 @@ void MainWindow::setP_ColorLine()
 }
 void MainWindow::addToCue()
 {
-//  treeView->resizeRowsToContents();
-//  treeView->resizeColumnsToContents();
+  tableView->resizeRowsToContents();
+  tableView->resizeColumnsToContents();
   champMM index = static_cast<champMM>(champComboBox->currentIndex());
   OscSend *oscsend = new OscSend(
         this,
@@ -622,18 +622,30 @@ void MainWindow::addToCue()
   int row = tabseq->tableView->currentIndex().row();
   qDebug() << "row selected : " << row;
 
-  if (tabseq->tableView->currentIndex().isValid())
+  if (!(row == -1)) // si l'index est valide
   {
-//    oscCueList->insertCue(oscsend, row); // À refaire
-    qDebug() << "OscCueList insertCue fn called";
+    if (oscCueList->isRowCue(row)) oscCueList->addSend(oscsend, row); // si c'est une cue on add
+    else
+    {
+      oscCueList->insertSend(oscsend, row); // si c'est un send on ajoute
+      // Et on sélectionne le cue insérer pour continuer l'insertion
+      tabseq->tableView->setCurrentIndex(tabseq->tableView->currentIndex().siblingAtRow(row + 1));
+    }
   }
   else
   {
-//    oscCueList->addCue(oscsend); // À refaire
-    qDebug() << "OscCueList addCue fn called";
+    if (!oscCueList->rowCount())
+    {
+      OscCue *newCue = new OscCue(this);
+      oscCueList->addCue(newCue);
+      oscCueList->addSend(oscsend, 0);
+    }
+    else
+    {
+      int lastCueRow = oscCueList->getLastCueRow();
+      oscCueList->addSend(oscsend, lastCueRow);
+    }
   }
-  // Toujours sélectionner le dernier après un ajout
-//  tabseq->tableView->setCurrentIndex(tabseq->tableView->currentIndex().siblingAtRow(oscCueList->v_listCue.size()));
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
