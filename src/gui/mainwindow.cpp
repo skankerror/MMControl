@@ -628,22 +628,22 @@ void MainWindow::addToCue()
     else
     {
       oscCueList->insertSend(oscsend, row); // si c'est un send on ajoute
-      // Et on sélectionne le cue insérer pour continuer l'insertion
+      // Et on sélectionne le cue inséré pour continuer l'insertion
       tabseq->tableView->setCurrentIndex(tabseq->tableView->currentIndex().siblingAtRow(row + 1));
     }
   }
-  else
+  else // si l'index est pas valide
   {
-    if (!oscCueList->rowCount())
+    if (!oscCueList->rowCount()) //S'il n'y a pas de row
     {
-      OscCue *newCue = new OscCue(this);
+      OscCue *newCue = new OscCue(this); // On crée une cue
       oscCueList->addCue(newCue);
       oscCueList->addSend(oscsend, 0);
     }
     else
     {
-      int lastCueRow = oscCueList->getLastCueRow();
-      oscCueList->addSend(oscsend, lastCueRow);
+      int lastCueRow = oscCueList->getLastCueRow(); // On prend le row de la dernière cue
+      oscCueList->addSend(oscsend, lastCueRow); // On ajoute le send
     }
   }
 }

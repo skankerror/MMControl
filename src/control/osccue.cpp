@@ -33,7 +33,6 @@ void OscCue::addOscSend(OscSend *oscsend)
 
 void OscCue::insertOscSend(int vectAt, OscSend *oscsend)
 {
-//  if (vectAt == 0 && oscSendCount() == 0) v_listOscSend.append(oscsend);
   if (vectAt < 0 || vectAt > oscSendCount()/* - 1*/) return;
   v_listOscSend.insert(vectAt, oscsend);
   qDebug() << "OscCue::insertOscSend success, new size fur cue :" << oscSendCount();
@@ -59,10 +58,3 @@ void OscCue::moveOscSendPrev(int vectAt) // row pointeur dans v_listOscSend
   qDebug() << "OscCue::moveOscSendPrev success, swap :" << vectAt - 1 << vectAt;
 }
 
-//void OscCue::executeCue() // peut-être inutile...
-//{
-//  for (int i = 0; i < v_listOscSend.size(); i++)
-//  {
-//    v_listOscSend.at(i)->ExecuteSend(); // TODO à voir ça de plus près
-//  }
-//}

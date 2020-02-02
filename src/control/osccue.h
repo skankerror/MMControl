@@ -26,7 +26,6 @@ public slots:
   void removeOscSend(int vectAt);
   void removeAllOscSend();
   void moveOscSendPrev(int vectAt);
-//  void executeCue();
 
 private:
   QVector<OscSend *> v_listOscSend;

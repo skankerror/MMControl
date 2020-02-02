@@ -174,7 +174,7 @@ QVariant OscCueList::headerData(int section, Qt::Orientation orientation, int ro
       case Champ: return QString("Champ");
       case P_name: return QString("P_name");
       case P_name2: return QString("p_name2");
-      case Uri: return QString("Uri");
+      case Uri: /*QHeaderView::resizeSection(section, 100)*/; return QString("Uri");
       case Color: return QString("Color");
       case P_Id: return QString("P_Id");
       case P_Id2: return QString("P_Id2");
@@ -319,7 +319,7 @@ int OscCueList::getSendCueId(const int row) const // retourne -1 si problème BU
   {
     if (isRowCue(i))
     {
-      qDebug() << "OscCueList::getSendCueId returned" << getCueId(i) << "for row" << row;
+//      qDebug() << "OscCueList::getSendCueId returned" << getCueId(i) << "for row" << row;
       return getCueId(i);
     }
   }

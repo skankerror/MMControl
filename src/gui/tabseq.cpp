@@ -88,6 +88,8 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   tableView->setModel(m_oscCueList);
   m_delegate = new OscCuelistDelegate(this);
   tableView->setItemDelegate(m_delegate);
+  tableView->horizontalHeader()->setMaximumSectionSize(200);
+  tableView->verticalHeader()->setMaximumSectionSize(30);
 
   tableView->show();
   tableView->resizeColumnsToContents();
@@ -157,8 +159,8 @@ void TabSeq::movePrevious() // Bouger cue si c'est une cue, bouger send si c'est
     if (sendId == 1 && cueId > 1) // Si on a bougé de cue
       tableView->setCurrentIndex(m_oscCueList->index(row - 1, 0)); // on le resélectionne
   }
-//  tableView->resizeRowsToContents();
-//  tableView->resizeColumnsToContents();
+  tableView->resizeRowsToContents();
+  tableView->resizeColumnsToContents();
 }
 
 void TabSeq::moveNext() // Bouger cue si c'est une cue, bouger send si c'est un send
@@ -181,8 +183,8 @@ void TabSeq::moveNext() // Bouger cue si c'est une cue, bouger send si c'est un 
   {
     m_oscCueList->moveSendNext(row);
   }
-  //  tableView->resizeRowsToContents();
-  //  tableView->resizeColumnsToContents();
+    tableView->resizeRowsToContents();
+    tableView->resizeColumnsToContents();
 }
 
 void TabSeq::remove() // Bouger cue si c'est une cue, bouger send si c'est un send
@@ -201,8 +203,8 @@ void TabSeq::remove() // Bouger cue si c'est une cue, bouger send si c'est un se
   }
   if (!row) tableView->setCurrentIndex(m_oscCueList->index(0, 0));
   else tableView->setCurrentIndex(m_oscCueList->index(row - 1, 0));
-//  tableView->resizeRowsToContents();
-//  tableView->resizeColumnsToContents();
+  tableView->resizeRowsToContents();
+  tableView->resizeColumnsToContents();
 }
 
 void TabSeq::addCue() // Reste à voir le sélectionné
@@ -221,6 +223,9 @@ void TabSeq::addCue() // Reste à voir le sélectionné
     int sendCueId = m_oscCueList->getSendCueId(tableView->currentIndex().row());
     m_oscCueList->insertCue(newCue, m_oscCueList->getRowCueFromCueId(sendCueId + 1));
   }
+  tableView->resizeRowsToContents();
+  tableView->resizeColumnsToContents();
+
 }
 
 void TabSeq::saveAs()

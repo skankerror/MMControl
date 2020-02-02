@@ -28,6 +28,7 @@
 #include "mymidiin.h"
 #include "mymidiout.h"
 #include "osccuelistdelegate.h"
+#include "MMC.h"
 
 class TabSeq : public QWidget
 {
