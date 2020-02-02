@@ -282,17 +282,21 @@ int OscCueList::getCueId(const int row) const // retourne -1 si problème
   int count = 0;
   for (int i = 0; i < getOscCueCount(); i++)
   {
-    if (row == count) return i + 1;
+    if (row == count)
+    {
+//      qDebug() << "OscCueList::getCueId returned" << i + 1;
+      return i + 1;
+    }
     count += getOscCue(i)->oscSendCount() + 1;
   }
   return -1;
 }
 
-int OscCueList::getSendId(const int row) const // retourne -1 si problème
+int OscCueList::getSendId(const int row) const // retourne -1 si problème BUUUUGGGG SI CUE > 4
 {
   if (isRowCue(row) || row > rowCount() - 1 || row < 0)
   {
-    qDebug() << "OscCueList::getSendId returned -1... problem";
+//    qDebug() << "OscCueList::getSendId returned -1... problem";
     return -1;
   }
   int count = 0;
@@ -300,30 +304,26 @@ int OscCueList::getSendId(const int row) const // retourne -1 si problème
   {
     count += getOscCue(i)->oscSendCount() +1;
   }
-  qDebug() << "OscCueList::getSendId returned" << row - count;
+//  qDebug() << "OscCueList::getSendId returned" << row - count;
   return row - count;
 }
 
-int OscCueList::getSendCueId(const int row) const // retourne -1 si problème
+int OscCueList::getSendCueId(const int row) const // retourne -1 si problème BUUUUGGGG SI CUE > 4
 {
   if (isRowCue(row) || row > rowCount() - 1 || row < 0)
   {
-    qDebug() << "OscCueList::getSendId returned -1... problem";
+    qDebug() << "OscCueList::getSendCueId returned -1... problem";
     return -1;
   }
-  int count = 0;
-  int max = 0;
-  for (int i = 0; i < getOscCueCount(); i++)
+  for (int i = row; i > -1; i--)
   {
-    max += getOscCue(i)->oscSendCount() + i;
-    if (row == count || row < max + 1)
+    if (isRowCue(i))
     {
-      qDebug() << "OscCueList::getSendCueId returned" << i + 1;
-      return i + 1;
+      qDebug() << "OscCueList::getSendCueId returned" << getCueId(i) << "for row" << row;
+      return getCueId(i);
     }
-    count += getOscCue(i)->oscSendCount() + 1;
   }
-  qDebug() << "OscCueList::getSendId returned -1... problem";
+  qDebug() << "OscCueList::getSendCueId returned -1... problem";
   return -1;
 }
 

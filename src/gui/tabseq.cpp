@@ -33,6 +33,29 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   m_midiOut2(midiOut2),
   tableView(aTableView)
 {
+  //tests
+//  OscCue *osccue1 = new OscCue(this);
+////  OscSend *oscsend1 = new OscSend(this, PLAY);
+////  osccue1->addOscSend(oscsend1);
+//  m_oscCueList->addCue(osccue1);
+//  OscCue *osccue2 = new OscCue(this);
+////  OscSend *oscsend2 = new OscSend(this, PAUSE);
+////  osccue2->addOscSend(oscsend2);
+//  m_oscCueList->addCue(osccue2);
+//  OscCue *osccue3 = new OscCue(this);
+////  OscSend *oscsend3 = new OscSend(this, REWIND);
+////  osccue3->addOscSend(oscsend3);
+//  m_oscCueList->addCue(osccue3);
+//  OscCue *osccue4 = new OscCue(this);
+////  OscSend *oscsend4 = new OscSend(this, QUIT);
+////  osccue4->addOscSend(oscsend4);
+//  m_oscCueList->addCue(osccue4);
+//  OscCue *osccue5 = new OscCue(this);
+////  OscSend *oscsend5 = new OscSend(this, PLAY);
+////  osccue5->addOscSend(oscsend5);
+//  m_oscCueList->addCue(osccue5);
+  // fin tests
+
   // On met une cue pour démarrer
   OscCue *firstCue = new OscCue(this);
   m_oscCueList->addCue(firstCue);

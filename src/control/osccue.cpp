@@ -33,7 +33,8 @@ void OscCue::addOscSend(OscSend *oscsend)
 
 void OscCue::insertOscSend(int vectAt, OscSend *oscsend)
 {
-  if (vectAt < 0 || vectAt > oscSendCount() - 1) return;
+//  if (vectAt == 0 && oscSendCount() == 0) v_listOscSend.append(oscsend);
+  if (vectAt < 0 || vectAt > oscSendCount()/* - 1*/) return;
   v_listOscSend.insert(vectAt, oscsend);
   qDebug() << "OscCue::insertOscSend success, new size fur cue :" << oscSendCount();
 }
