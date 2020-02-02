@@ -15,8 +15,8 @@ public:
   explicit OscCue(QObject *parent = nullptr);
   ~OscCue();
 
-  int oscSendCount();
-  OscSend* getOscSend(int vectAt) const;
+  int oscSendCount() const;
+  OscSend* getOscSend(int vectAt);
 
 signals:
 

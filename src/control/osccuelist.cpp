@@ -28,10 +28,10 @@ OscCueList::~OscCueList()
 
 int OscCueList::rowCount(const QModelIndex &index) const
 {
-  int count = v_listCue.size();
+  int count = getOscCueCount();
   if (v_listCue.size())
   {
-    for (int i = 0; i < v_listCue.size(); i++)
+    for (int i = 0; i < getOscCueCount(); i++)
     {
       count += getOscCue(i)->oscSendCount();
     }
@@ -47,7 +47,7 @@ int OscCueList::columnCount(const QModelIndex &index) const
 QVariant OscCueList::data(const QModelIndex &index, int role) const
 {
   if (!index.isValid() || index.row() < 0 || !(index.flags().testFlag(Qt::ItemIsEditable))
-      || index.row() > rowCount() || isRowCue(index.row())) return QVariant(); // revoir pour avoir time total dans la ligne cue
+      || index.row() > rowCount() - 1 || isRowCue(index.row())) return QVariant(); // revoir pour avoir time total dans la ligne cue
   int row = index.row();
   int col = index.column();
   QBrush salmonColor(QColor("#59271E"));
@@ -205,7 +205,7 @@ QVariant OscCueList::headerData(int section, Qt::Orientation orientation, int ro
   return QVariant();
 }
 
-Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const
+Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const // y a un bleme... au-dessus de cueId 5 ça renvoie pas le bon send...
 {
   if (getOscCueCount() && index.isValid() && index.row() > -1 && index.row() < rowCount() && !isRowCue(index.row()))
   {
@@ -251,7 +251,7 @@ Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const
 
 OscCue *OscCueList::getOscCue(const int vectAt) const // row pointer dans v_listCue
 {
-  if (vectAt < 0 || vectAt > v_listCue.size() - 1) // aux méths de vérifier
+  if (vectAt < 0 || vectAt > getOscCueCount() - 1) // aux méths de vérifier
   {
     OscCue *voidCue = new OscCue();
     return voidCue;
@@ -290,26 +290,40 @@ int OscCueList::getCueId(const int row) const // retourne -1 si problème
 
 int OscCueList::getSendId(const int row) const // retourne -1 si problème
 {
-  if (isRowCue(row) || row > rowCount() - 1 || row < 0) return -1;
+  if (isRowCue(row) || row > rowCount() - 1 || row < 0)
+  {
+    qDebug() << "OscCueList::getSendId returned -1... problem";
+    return -1;
+  }
   int count = 0;
   for (int i = 0; i < getSendCueId(row) - 1; i++)
   {
     count += getOscCue(i)->oscSendCount() +1;
   }
+  qDebug() << "OscCueList::getSendId returned" << row - count;
   return row - count;
 }
 
 int OscCueList::getSendCueId(const int row) const // retourne -1 si problème
 {
-  if (isRowCue(row) || row > rowCount() - 1 || row < 0) return -1;
+  if (isRowCue(row) || row > rowCount() - 1 || row < 0)
+  {
+    qDebug() << "OscCueList::getSendId returned -1... problem";
+    return -1;
+  }
   int count = 0;
   int max = 0;
   for (int i = 0; i < getOscCueCount(); i++)
   {
     max += getOscCue(i)->oscSendCount() + i;
-    if (row == count || row < max + 1) {return i + 1;}
+    if (row == count || row < max + 1)
+    {
+      qDebug() << "OscCueList::getSendCueId returned" << i + 1;
+      return i + 1;
+    }
     count += getOscCue(i)->oscSendCount() + 1;
   }
+  qDebug() << "OscCueList::getSendId returned -1... problem";
   return -1;
 }
 
@@ -532,7 +546,7 @@ void OscCueList::addSend(OscSend *oscsend, int rowCue)
   QModelIndex indexTemp = QModelIndex();
   OscCue *tempCue = v_listCue.at(getCueId(rowCue) - 1);
   int row = rowCue + tempCue->oscSendCount();
-  beginInsertRows(indexTemp, row + 1, row + 1);
+  beginInsertRows(indexTemp, row + 1, row  + 1);
 //    beginInsertRows(indexTemp, rowCue, rowCue);
 //  tempCue->insertOscSend(tempCue->oscSendCount(), oscsend);
   tempCue->addOscSend(oscsend);
