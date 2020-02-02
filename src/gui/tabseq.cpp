@@ -89,6 +89,7 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   m_delegate = new OscCuelistDelegate(this);
   tableView->setItemDelegate(m_delegate);
   tableView->horizontalHeader()->setMaximumSectionSize(200);
+  tableView->horizontalHeader()->setStretchLastSection(true);
   tableView->verticalHeader()->setMaximumSectionSize(30);
 
   tableView->show();

@@ -61,7 +61,8 @@ public:
           int m_depth = 0,
           double time = 0,
           bool isfadein = false,
-          double waitTime = 0);
+          double waitTime = 0,
+          QString noteSend = "");
   ~OscSend();
 
 public slots:
@@ -96,6 +97,7 @@ public:
   double getTime() const{ return m_time; };
   bool getIsfadein() const{ return m_isfadein; };
   double getTimewait() const{ return m_timeWait; };
+  QString getNoteSend() const{ return m_noteSend; };
 
   //Setters
   void setChamp(champMM champ){ m_champ = champ; };
@@ -119,6 +121,7 @@ public:
   void setTime(double time){ m_time = time; };
   void setIsfadein(bool isfadein){ m_isfadein = isfadein; };
   void setTimewait(double timewait){ m_timeWait = timewait; };
+  void setNoteSend(QString noteSend){ m_noteSend = noteSend; };
 
 private:
   champMM m_champ;
@@ -145,6 +148,7 @@ private:
   double m_time = 0;
   bool m_isfadein = false; // pour P_FADE
   double m_timeWait = 0; // pour savoir si la cue doit s'enchaîner
+  QString m_noteSend = "";
 };
 
 #endif // OSCSEND_H

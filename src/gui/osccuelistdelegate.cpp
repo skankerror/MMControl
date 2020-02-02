@@ -92,8 +92,8 @@ void OscCuelistDelegate::setEditorData(QWidget *editor, const QModelIndex &index
     QComboBox *comboBox = qobject_cast<QComboBox *>(editor);
     if (comboBox)
     {
-      champMM champ = static_cast<champMM>(index.model()->data(index).toInt());
-      const int value = champ; //revoir
+      champMM champ = static_cast<champMM>(index.model()->data(index).toInt()); // ça marche pas, renvoie NOOP
+      const int value = champ;
       comboBox->setCurrentIndex(value);
     }
   }

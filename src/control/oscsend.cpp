@@ -39,7 +39,8 @@ OscSend::OscSend(QObject *parent,
                  int m_depth,
                  double time,
                  bool isfadein,
-                 double waitTime):
+                 double waitTime,
+                 QString noteSend):
   QObject(parent),
   UdpTransmitSocket(IpEndpointName(ADDRESS, PORT)),
   m_champ(champ),
@@ -62,7 +63,8 @@ OscSend::OscSend(QObject *parent,
   m_m_depth(m_depth),
   m_time(time),
   m_isfadein(isfadein),
-  m_timeWait(waitTime)
+  m_timeWait(waitTime),
+  m_noteSend(noteSend)
 {}
 
 OscSend::~OscSend()

@@ -1,6 +1,9 @@
 #include "osccue.h"
 
-OscCue::OscCue(QObject *parent) : QObject(parent)
+OscCue::OscCue(QObject *parent, double totalTime, QString noteCue) :
+  QObject(parent),
+  m_totalTime(totalTime),
+  m_noteCue(noteCue)
 {}
 
 OscCue::~OscCue()

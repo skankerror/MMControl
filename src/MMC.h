@@ -76,7 +76,7 @@ enum columns
 {
   Champ, P_name, P_name2, Uri, Color, P_Id, P_Id2, Rate, P_opac, Vol,
   M_name, M_name2, M_Id, M_opac, Visible, Solo, Lock, Depth,
-  Fade_In, Time, Wait, Count = Wait + 1
+  Fade_In, Time, Wait, Note, Count = Note + 1
 };
 
 // MyMidiIn

@@ -12,11 +12,17 @@ class OscCue : public QObject
   Q_OBJECT
 
 public:
-  explicit OscCue(QObject *parent = nullptr);
+  explicit OscCue(QObject *parent = nullptr, double totalTime = 0, QString noteCue = "");
   ~OscCue();
 
   int oscSendCount() const;
   OscSend* getOscSend(int vectAt);
+
+  QString getNoteCue()const {return m_noteCue; };
+  double getTotalTime()const {return m_totalTime; };
+
+  void setNoteCue(const QString noteCue) {m_noteCue = noteCue; };
+  void setTotalTime(const double totalTime) {m_totalTime = totalTime; };
 
 signals:
 
@@ -29,6 +35,8 @@ public slots:
 
 private:
   QVector<OscSend *> v_listOscSend;
+  double m_totalTime = 0;
+  QString m_noteCue = "";
 
 };
 

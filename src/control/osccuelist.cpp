@@ -46,80 +46,100 @@ int OscCueList::columnCount(const QModelIndex &index) const
 
 QVariant OscCueList::data(const QModelIndex &index, int role) const
 {
-  if (!index.isValid() || index.row() < 0 || !(index.flags().testFlag(Qt::ItemIsEditable))
-      || index.row() > rowCount() - 1 || isRowCue(index.row())) return QVariant(); // revoir pour avoir time total dans la ligne cue
+  if (!index.isValid() || index.row() < 0/* || !(index.flags().testFlag(Qt::ItemIsEditable))*/
+      || index.row() > rowCount() - 1/* || isRowCue(index.row())*/) return QVariant(); // revoir pour avoir time total dans la ligne cue
   int row = index.row();
   int col = index.column();
   QBrush salmonColor(QColor("#59271E"));
+  QBrush yellowColor(QColor("#B8BF7E"));
 
-  OscSend *tempSend = getOscCue(getSendCueId(row) - 1)->getOscSend(getSendId(row) - 1);
-
-  switch (role)
+  if (isRowCue(row))
   {
-  case Qt::DisplayRole: case Qt::EditRole:
-    switch (col)
+    OscCue *tempCue = getOscCue(getCueId(row) - 1);
+    switch (role)
     {
-    case Champ: return tempSend->getChampToString(); break;
-    case P_name: return tempSend->getP_name(); break;
-    case P_name2: return tempSend->getP_name2(); break;
-    case Uri: return tempSend->getP_uri(); break;
-    case Color: return tempSend->getP_color(); break;
-    case P_Id: return tempSend->getP_ID1(); break;
-    case P_Id2: return tempSend->getP_ID2(); break;
-    case Rate: return tempSend->getP_rate(); break;
-    case P_opac: return tempSend->getP_opacity(); break;
-    case Vol: return tempSend->getP_volume(); break;
-    case M_name: return tempSend->getM_name(); break;
-    case M_name2: return tempSend->getM_name2(); break;
-    case M_Id: return tempSend->getM_ID1(); break;
-    case M_opac: return tempSend->getM_opacity(); break;
-    case Visible: return tempSend->getM_isvisible(); break;
-    case Solo: return tempSend->getM_issolo(); break;
-    case Lock: return tempSend->getM_islocked(); break;
-    case Depth: return tempSend->getM_depth(); break;
-    case Fade_In: return tempSend->getIsfadein(); break;
-    case Time: return tempSend->getTime(); break;
-    case Wait: return tempSend->getTimewait(); break;
+    case Qt::DisplayRole: case Qt::EditRole:
+      if (col == Wait) return tempCue->getTotalTime();
+      if (col == Note) return tempCue->getNoteCue();
+      break;
+    case Qt::BackgroundRole:
+      if (col == Wait || col == Note) return yellowColor;
+        break;
+    case Qt::TextAlignmentRole: return Qt::AlignCenter;
     default: break;
-    } break;
-  case Qt::BackgroundRole:
-    if(col == Champ) return salmonColor;
-    switch(tempSend->getChamp())
+    }
+  }
+  else if (index.flags().testFlag(Qt::ItemIsEditable))
+  {
+    OscSend *tempSend = getOscCue(getSendCueId(row) - 1)->getOscSend(getSendId(row) - 1);
+
+    switch (role)
     {
-    case P_NAME: if(col == P_name || col == P_Id) return salmonColor; break;
-    case P_REWIND: if(col == P_Id) return salmonColor; break;
-    case P_COLOR: if(col == Color || col == P_Id) return salmonColor; break;
-    case P_OPACITY: if(col == P_Id || col == P_opac) return salmonColor; break;
-    case P_VOLUME: if(col == P_Id || col == Vol) return salmonColor; break;
-    case P_RATE: if(col == P_Id || col == Rate) return salmonColor; break;
-    case P_URI: if(col == Uri || col == P_Id) return salmonColor; break;
-    case M_NAME: if(col == M_name || col == M_Id) return salmonColor; break;
-    case M_OPACITY: if(col == M_opac || col == M_Id) return salmonColor; break;
-    case M_VISIBLE: if(col == Visible || col == M_Id) return salmonColor; break;
-    case M_SOLO: if(col == M_Id || col == Solo) return salmonColor; break;
-    case M_LOCK: if(col == M_Id || col == Lock) return salmonColor; break;
-    case M_DEPTH: if(col == M_Id || col == Depth) return salmonColor; break;
-    case P_XFADE: if(col == P_Id || col == P_Id2 || col == Time) return salmonColor; break;
-    case P_FADE: if(col == P_Id || col == Fade_In || col == Time) return salmonColor; break;
-    case R_P_NAME: if(col == P_name || col == P_name2) return salmonColor; break;
-    case R_P_REWIND: if(col == P_name) return salmonColor; break;
-    case R_P_OPACITY: if(col == P_name || col == P_opac) return salmonColor; break;
-    case R_P_VOLUME: if(col == P_name || col == Vol) return salmonColor; break;
-    case R_P_RATE: if(col == P_name || col == Rate) return salmonColor; break;
-    case R_P_URI: if(col == P_name || col == Uri) return salmonColor; break;
-    case R_P_COLOR: if(col == P_name || col == Color) return salmonColor; break;
-    case R_M_NAME: if(col == M_name || col == M_name2) return salmonColor; break;
-    case R_M_OPACITY: if(col == M_name || col == M_opac) return salmonColor; break;
-    case R_M_VISIBLE: if(col == M_name || col == Visible) return salmonColor; break;
-    case R_M_SOLO: if(col == M_name || col == Solo) return salmonColor; break;
-    case R_M_LOCK: if(col == M_name || col == Lock) return salmonColor; break;
-    case R_M_DEPTH: if(col == M_name || col == Depth) return salmonColor; break;
-    case R_P_FADE: if(col == P_name || col == Fade_In || col == Time) return salmonColor; break;
-    case R_P_XFADE: if(col == P_name || col == P_name2 || col == Time) return salmonColor; break;
+    case Qt::DisplayRole: case Qt::EditRole:
+      switch (col)
+      {
+      case Champ: return tempSend->getChampToString(); break;
+      case P_name: return tempSend->getP_name(); break;
+      case P_name2: return tempSend->getP_name2(); break;
+      case Uri: return tempSend->getP_uri(); break;
+      case Color: return tempSend->getP_color(); break;
+      case P_Id: return tempSend->getP_ID1(); break;
+      case P_Id2: return tempSend->getP_ID2(); break;
+      case Rate: return tempSend->getP_rate(); break;
+      case P_opac: return tempSend->getP_opacity(); break;
+      case Vol: return tempSend->getP_volume(); break;
+      case M_name: return tempSend->getM_name(); break;
+      case M_name2: return tempSend->getM_name2(); break;
+      case M_Id: return tempSend->getM_ID1(); break;
+      case M_opac: return tempSend->getM_opacity(); break;
+      case Visible: return tempSend->getM_isvisible(); break;
+      case Solo: return tempSend->getM_issolo(); break;
+      case Lock: return tempSend->getM_islocked(); break;
+      case Depth: return tempSend->getM_depth(); break;
+      case Fade_In: return tempSend->getIsfadein(); break;
+      case Time: return tempSend->getTime(); break;
+      case Wait: return tempSend->getTimewait(); break;
+      default: break;
+      } break;
+    case Qt::BackgroundRole:
+      if(col == Champ) return salmonColor;
+      switch(tempSend->getChamp())
+      {
+      case P_NAME: if(col == P_name || col == P_Id) return salmonColor; break;
+      case P_REWIND: if(col == P_Id) return salmonColor; break;
+      case P_COLOR: if(col == Color || col == P_Id) return salmonColor; break;
+      case P_OPACITY: if(col == P_Id || col == P_opac) return salmonColor; break;
+      case P_VOLUME: if(col == P_Id || col == Vol) return salmonColor; break;
+      case P_RATE: if(col == P_Id || col == Rate) return salmonColor; break;
+      case P_URI: if(col == Uri || col == P_Id) return salmonColor; break;
+      case M_NAME: if(col == M_name || col == M_Id) return salmonColor; break;
+      case M_OPACITY: if(col == M_opac || col == M_Id) return salmonColor; break;
+      case M_VISIBLE: if(col == Visible || col == M_Id) return salmonColor; break;
+      case M_SOLO: if(col == M_Id || col == Solo) return salmonColor; break;
+      case M_LOCK: if(col == M_Id || col == Lock) return salmonColor; break;
+      case M_DEPTH: if(col == M_Id || col == Depth) return salmonColor; break;
+      case P_XFADE: if(col == P_Id || col == P_Id2 || col == Time) return salmonColor; break;
+      case P_FADE: if(col == P_Id || col == Fade_In || col == Time) return salmonColor; break;
+      case R_P_NAME: if(col == P_name || col == P_name2) return salmonColor; break;
+      case R_P_REWIND: if(col == P_name) return salmonColor; break;
+      case R_P_OPACITY: if(col == P_name || col == P_opac) return salmonColor; break;
+      case R_P_VOLUME: if(col == P_name || col == Vol) return salmonColor; break;
+      case R_P_RATE: if(col == P_name || col == Rate) return salmonColor; break;
+      case R_P_URI: if(col == P_name || col == Uri) return salmonColor; break;
+      case R_P_COLOR: if(col == P_name || col == Color) return salmonColor; break;
+      case R_M_NAME: if(col == M_name || col == M_name2) return salmonColor; break;
+      case R_M_OPACITY: if(col == M_name || col == M_opac) return salmonColor; break;
+      case R_M_VISIBLE: if(col == M_name || col == Visible) return salmonColor; break;
+      case R_M_SOLO: if(col == M_name || col == Solo) return salmonColor; break;
+      case R_M_LOCK: if(col == M_name || col == Lock) return salmonColor; break;
+      case R_M_DEPTH: if(col == M_name || col == Depth) return salmonColor; break;
+      case R_P_FADE: if(col == P_name || col == Fade_In || col == Time) return salmonColor; break;
+      case R_P_XFADE: if(col == P_name || col == P_name2 || col == Time) return salmonColor; break;
+      default: break;
+      } break;
+    case Qt::TextAlignmentRole: return Qt::AlignCenter;
     default: break;
-    } break;
-  case Qt::TextAlignmentRole: return Qt::AlignCenter;
-  default: break;
+    }
   }
   return QVariant();
 }
@@ -128,9 +148,15 @@ bool OscCueList::setData(const QModelIndex &index, const QVariant &value, int ro
 {
   Q_UNUSED(role);
   if (!index.isValid() || index.row() < 0 || !(index.flags().testFlag(Qt::ItemIsEditable))
-      || index.row() > rowCount() || isRowCue(index.row())) return false;
+      || index.row() > rowCount()/* || isRowCue(index.row())*/) return false;
   int row = index.row();
   int col = index.column();
+
+  if (isRowCue(row) && col == Note)
+  {
+    getOscCue(getCueId(row) - 1)->setNoteCue(value.toString());
+    return true;
+  }
 
   OscSend *tempSend = getOscCue(getSendCueId(row) - 1)->getOscSend(getSendId(row) - 1);
 
@@ -157,6 +183,7 @@ bool OscCueList::setData(const QModelIndex &index, const QVariant &value, int ro
   case Fade_In: tempSend->setIsfadein(value.toBool()); break;
   case Time: tempSend->setTime(value.toDouble()); break;
   case Wait: tempSend->setTimewait(value.toDouble()); break;
+  case Note: tempSend->setNoteSend(value.toString()); break;
   default: break;
   }
   emit dataChanged(index, index);
@@ -174,7 +201,7 @@ QVariant OscCueList::headerData(int section, Qt::Orientation orientation, int ro
       case Champ: return QString("Champ");
       case P_name: return QString("P_name");
       case P_name2: return QString("p_name2");
-      case Uri: /*QHeaderView::resizeSection(section, 100)*/; return QString("Uri");
+      case Uri: return QString("Uri");
       case Color: return QString("Color");
       case P_Id: return QString("P_Id");
       case P_Id2: return QString("P_Id2");
@@ -192,6 +219,7 @@ QVariant OscCueList::headerData(int section, Qt::Orientation orientation, int ro
       case Fade_In: return QString("Fade_In");
       case Time: return QString("Time");
       case Wait: return QString("Wait");
+      case Note: return QString("Note");
       default: return QVariant(); break;
       }
     }
@@ -205,7 +233,7 @@ QVariant OscCueList::headerData(int section, Qt::Orientation orientation, int ro
   return QVariant();
 }
 
-Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const // y a un bleme... au-dessus de cueId 5 ça renvoie pas le bon send...
+Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const
 {
   if (getOscCueCount() && index.isValid() && index.row() > -1 && index.row() < rowCount() && !isRowCue(index.row()))
   {
@@ -213,7 +241,7 @@ Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const // y a un bleme.
     int col = index.column();
     OscSend *tempSend = getOscCue(getSendCueId(row) - 1)->getOscSend(getSendId(row) - 1);
     champMM champ = tempSend->getChamp();
-    if (col == Champ || col == Wait) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
+    if (col == Champ || col == Wait || col == Note) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
     else if (champ == P_NAME) {if (col == P_name || col == P_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
     else if (champ == P_REWIND) {if (col == P_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
     else if (champ == P_REWIND) {if (col == P_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
@@ -245,6 +273,10 @@ Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const // y a un bleme.
     else if (champ ==  R_M_DEPTH) {if (col ==M_name || col == Depth) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
     else if (champ ==  R_P_FADE) {if (col == P_name || col == Fade_In || col == Time) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
     else if (champ ==  R_P_XFADE) {if (col == P_name || col == P_name2 || col == Time) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  }
+  if (getOscCueCount() && index.isValid() && index.row() > -1 && index.row() < rowCount() && isRowCue(index.row()))
+  {
+    if (index.column() == Note) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
   }
   return QAbstractTableModel::flags(index);
 }
@@ -489,14 +521,12 @@ void OscCueList::insertCue(OscCue *osccue, int rowCue)
   if (rowCue < 0 || rowCue > rowCount() - 1 || !isRowCue(rowCue)) return; // C'est aux meth de vérifier
   QModelIndex indexTemp = QModelIndex();
   int cueId = getCueId(rowCue); // On choppe l'ID de la cue
-  if (cueId == v_listCue.size()) addCue(osccue);
   if (cueId == 1)
   {
     beginInsertRows(indexTemp, 1, 1);
     v_listCue.insert(0, osccue);
     endInsertRows();
     qDebug() << "cue inserted";
-
   }
   else
   {
@@ -547,8 +577,6 @@ void OscCueList::addSend(OscSend *oscsend, int rowCue)
   OscCue *tempCue = v_listCue.at(getCueId(rowCue) - 1);
   int row = rowCue + tempCue->oscSendCount();
   beginInsertRows(indexTemp, row + 1, row  + 1);
-//    beginInsertRows(indexTemp, rowCue, rowCue);
-//  tempCue->insertOscSend(tempCue->oscSendCount(), oscsend);
   tempCue->addOscSend(oscsend);
   endInsertRows();
 }
