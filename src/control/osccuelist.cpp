@@ -59,29 +59,29 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const
   case Qt::DisplayRole: case Qt::EditRole:
     switch (col)
     {
-    case Champ: return tempSend->getChampToString();
-    case P_name: return tempSend->getP_name();
-    case P_name2: return tempSend->getP_name2();
-    case Uri: return tempSend->getP_uri();
-    case Color: return tempSend->getP_color();
-    case P_Id: return tempSend->getP_ID1();
-    case P_Id2: return tempSend->getP_ID2();
-    case Rate: return tempSend->getP_rate();
-    case P_opac: return tempSend->getP_opacity();
-    case Vol: return tempSend->getP_volume();
-    case M_name: return tempSend->getM_name();
-    case M_name2: return tempSend->getM_name2();
-    case M_Id: return tempSend->getM_ID1();
-    case M_opac: return tempSend->getM_opacity();
-    case Visible: return tempSend->getM_isvisible();
-    case Solo: return tempSend->getM_issolo();
-    case Lock: return tempSend->getM_islocked();
-    case Depth: return tempSend->getM_depth();
-    case Fade_In: return tempSend->getIsfadein();
-    case Time: return tempSend->getTime();
-    case Wait: return tempSend->getTimewait();
+    case Champ: return tempSend->getChampToString(); break;
+    case P_name: return tempSend->getP_name(); break;
+    case P_name2: return tempSend->getP_name2(); break;
+    case Uri: return tempSend->getP_uri(); break;
+    case Color: return tempSend->getP_color(); break;
+    case P_Id: return tempSend->getP_ID1(); break;
+    case P_Id2: return tempSend->getP_ID2(); break;
+    case Rate: return tempSend->getP_rate(); break;
+    case P_opac: return tempSend->getP_opacity(); break;
+    case Vol: return tempSend->getP_volume(); break;
+    case M_name: return tempSend->getM_name(); break;
+    case M_name2: return tempSend->getM_name2(); break;
+    case M_Id: return tempSend->getM_ID1(); break;
+    case M_opac: return tempSend->getM_opacity(); break;
+    case Visible: return tempSend->getM_isvisible(); break;
+    case Solo: return tempSend->getM_issolo(); break;
+    case Lock: return tempSend->getM_islocked(); break;
+    case Depth: return tempSend->getM_depth(); break;
+    case Fade_In: return tempSend->getIsfadein(); break;
+    case Time: return tempSend->getTime(); break;
+    case Wait: return tempSend->getTimewait(); break;
     default: break;
-    }
+    } break;
   case Qt::BackgroundRole:
     if(col == Champ) return salmonColor;
     switch(tempSend->getChamp())
@@ -117,7 +117,7 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const
     case R_P_FADE: if(col == P_name || col == Fade_In || col == Time) return salmonColor; break;
     case R_P_XFADE: if(col == P_name || col == P_name2 || col == Time) return salmonColor; break;
     default: break;
-    }
+    } break;
   case Qt::TextAlignmentRole: return Qt::AlignCenter;
   default: break;
   }
@@ -249,14 +249,19 @@ Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const
   return QAbstractTableModel::flags(index);
 }
 
-OscCue *OscCueList::getOscCue(const int row) const // row pointer dans v_listCue
+OscCue *OscCueList::getOscCue(const int vectAt) const // row pointer dans v_listCue
 {
-  if (row < 0 || row > v_listCue.size()) // aux méths de vérifier
+  if (vectAt < 0 || vectAt > v_listCue.size() - 1) // aux méths de vérifier
   {
     OscCue *voidCue = new OscCue();
     return voidCue;
   }
-  return v_listCue.at(row);
+  return v_listCue.at(vectAt);
+}
+
+int OscCueList::getOscCueCount() const
+{
+  return v_listCue.size();
 }
 
 bool OscCueList::isRowCue(const int row) const
@@ -459,29 +464,38 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
 void OscCueList::addCue(OscCue *osccue)
 {
   QModelIndex indexTemp = QModelIndex();
-  beginInsertRows(indexTemp, v_listCue.size(), v_listCue.size());
+  beginInsertRows(indexTemp, rowCount(), rowCount());
   v_listCue.append(osccue);
   endInsertRows();
-
   qDebug() << "cue added";
 }
 
 void OscCueList::insertCue(OscCue *osccue, int rowCue)
 {
-  if (rowCue < 0 || rowCue > rowCount() || !isRowCue(rowCue)) return; // C'est aux meth de vérifier
+  if (rowCue < 0 || rowCue > rowCount() - 1 || !isRowCue(rowCue)) return; // C'est aux meth de vérifier
   QModelIndex indexTemp = QModelIndex();
-  int cueId = getCueId(rowCue);
-  OscCue *tempCue = getOscCue(rowCue);
-  beginInsertRows(indexTemp, rowCue + tempCue->oscSendCount() + 1, rowCue + tempCue->oscSendCount() + 1);
-  v_listCue.insert(cueId - 1, osccue);
-  endInsertRows();
+  int cueId = getCueId(rowCue); // On choppe l'ID de la cue
+  if (cueId == v_listCue.size()) addCue(osccue);
+  if (cueId == 1)
+  {
+    beginInsertRows(indexTemp, 1, 1);
+    v_listCue.insert(0, osccue);
+    endInsertRows();
+    qDebug() << "cue inserted";
 
-  qDebug() << "cue inserted";
+  }
+  else
+  {
+    beginInsertRows(indexTemp, rowCue, rowCue);
+    v_listCue.insert(cueId - 1, osccue);
+    endInsertRows();
+    qDebug() << "cue inserted";
+  }
 }
 
 void OscCueList::moveCuePrev(int rowCue)
 {
-  if (rowCue < 1 || rowCue > rowCount() || !isRowCue(rowCue)) return; // C'est aux meth de vérifier
+  if (rowCue < 1 || rowCue > rowCount() - 1 || !isRowCue(rowCue)) return; // C'est aux meth de vérifier
   QModelIndex indexTemp = QModelIndex();
   int row = getCueId(rowCue) - 1; // row = pointeur dans v_listCue
   beginMoveRows(indexTemp, rowCue, rowCue, indexTemp, rowCue - 1);
@@ -519,6 +533,8 @@ void OscCueList::addSend(OscSend *oscsend, int rowCue)
   OscCue *tempCue = v_listCue.at(getCueId(rowCue) - 1);
   int row = rowCue + tempCue->oscSendCount();
   beginInsertRows(indexTemp, row + 1, row + 1);
+//    beginInsertRows(indexTemp, rowCue, rowCue);
+//  tempCue->insertOscSend(tempCue->oscSendCount(), oscsend);
   tempCue->addOscSend(oscsend);
   endInsertRows();
 }

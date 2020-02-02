@@ -279,6 +279,6 @@ QString OscSend::getChampToString() const
   case R_M_DEPTH: return QString("R_M_DEPTH"); break;
   case R_P_FADE: return QString("R_P_FADE"); break;
   case R_P_XFADE: return QString("R_P_XFADE"); break;
-  default: break;
+  default: return QString(""); break;
   }
 }

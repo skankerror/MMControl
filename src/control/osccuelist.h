@@ -51,8 +51,8 @@ public:
   Qt::ItemFlags flags(const QModelIndex &index) const override;
 // insertRows ?
 
-  OscCue *getOscCue(const int row) const;
-  int getOscCueCount() const { return v_listCue.size(); };
+  OscCue *getOscCue(const int vectAt) const;
+  int getOscCueCount() const;
   bool isRowCue(const int row) const;
   int getCueId(const int row) const;
   int getSendId(const int row) const;
