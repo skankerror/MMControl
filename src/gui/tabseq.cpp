@@ -282,7 +282,7 @@ void TabSeq::loadFile()
     if (file.open(QIODevice::ReadOnly))
     {
       m_oscCueList->removeAllCue();
-//      OscSend *oscsend = new OscSend(this, NOOP);
+      OscSend *oscsend = new OscSend(this, NOOP);
       int lineindex = 0;                     // file line counter
       QTextStream in(&file);                 // read to text stream
       while (!in.atEnd())
@@ -292,14 +292,25 @@ void TabSeq::loadFile()
         QString fileLine = in.readLine();
         // parse the read line into separate pieces(tokens) with "," as the delimiter
         QStringList lineToken = fileLine.split(",", QString::SkipEmptyParts);
-//        oscsend = m_oscCueList->retOscsendFromFileLine(lineToken);
-//        m_oscCueList->addCue(oscsend); // à refaire
+        QString firstVal = lineToken.at(0);
+        firstVal = firstVal.trimmed();
+        if (firstVal == "")
+        {
+//          osccue = m_oscCueList.retOscCueFromFileLine(lineToken);
+          OscCue *osccue = new OscCue(this); // En attendant car il faut récupérer les notes
+          m_oscCueList->addCue(osccue);
+        }
+        else
+        {
+          oscsend = m_oscCueList->retOscsendFromFileLine(lineToken);
+          m_oscCueList->addSend(oscsend, m_oscCueList->getLastCueRow());
+        }
       }
       lineindex++;
     }
     file.close();
-//    tableView->resizeRowsToContents();
-//    tableView->resizeColumnsToContents();
+    tableView->resizeRowsToContents();
+    tableView->resizeColumnsToContents();
   }
 }
 

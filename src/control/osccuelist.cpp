@@ -411,7 +411,7 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
   {
     QString val = lineToken.at(j);
     val = val.trimmed();
-    qDebug() << val << ", ";
+//    qDebug() << val << ", ";
     QVariant value(val);
     switch(j)
     {
@@ -451,7 +451,7 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
       if (val.toStdString() == "R_M_DEPTH") m_champInt = R_M_DEPTH;
       if (val.toStdString() == "R_P_FADE") m_champInt = R_P_FADE;
       if (val.toStdString() == "R_P_XFADE") m_champInt = R_P_XFADE;
-      qDebug() << "bluk " << val << " " << m_champInt << " bluk";
+      qDebug() << "first val in getOscSendFromFile" << val << m_champInt;
       break;
     case 1: m_p_name = value.toString(); break;
     case 2: m_p_name2 = value.toString(); break;
@@ -477,7 +477,7 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
     }
   m_champ = static_cast<champMM>(m_champInt);
   }
-  qDebug() << m_champ << " bluk2";
+  qDebug()<< "champ dans l'oscsend qui retourne" << m_champ;
 
   OscSend *oscsend = new OscSend(
         this,
@@ -566,8 +566,8 @@ void OscCueList::removeAllCue()
     removeCue(0);
   }
   qDebug() << "All cue removed";
-  OscCue *newEmptyCue = new OscCue(this);
-  addCue(newEmptyCue);
+//  OscCue *newEmptyCue = new OscCue(this);
+//  addCue(newEmptyCue);
 }
 
 void OscCueList::addSend(OscSend *oscsend, int rowCue)

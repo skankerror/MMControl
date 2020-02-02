@@ -33,6 +33,8 @@ public slots:
   void removeAllOscSend();
   void moveOscSendPrev(int vectAt);
 
+  // faire slot pour updater m_totalTime à chaque ajout d'un send
+
 private:
   QVector<OscSend *> v_listOscSend;
   double m_totalTime = 0;
