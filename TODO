@@ -6,4 +6,13 @@
 
 -Changer csv en xml
 
-- Cacher les colonnes vides
+- Cacher les colonnes vides dans tabseq
+
+- Hide et Show les connects disconnects dans tabmidi
+
+- Allumer les boutons sur la vue dans tabmidi
+
+-Vérifier le time total ça le prend pas sur l'édition. Rajouter dans le OscCueList::setData
+ et rajouter NOOP
+
+-Quand on ajoute un send le sélectionner.

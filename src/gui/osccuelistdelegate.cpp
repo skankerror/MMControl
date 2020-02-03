@@ -19,7 +19,12 @@
 
 OscCuelistDelegate::OscCuelistDelegate(QObject *parent):
   QStyledItemDelegate(parent)
-{}
+{
+//  QModelIndex index = QModelIndex();
+//  QStyleOptionViewItem option2;
+//  option2.textElideMode = Qt::ElideLeft;
+//  this->initStyleOption(&option2, index); //marche pas...
+}
 
 QWidget *OscCuelistDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
@@ -76,7 +81,7 @@ QWidget *OscCuelistDelegate::createEditor(QWidget *parent, const QStyleOptionVie
   {
     QFileDialog *fileDialog = new QFileDialog(parent);
     fileDialog->setFileMode(QFileDialog::ExistingFile);
-    fileDialog->setNameFilter("Media Files (*.png *.jpg *.gif *.mov *.avi *.mp4)");
+    fileDialog->setNameFilter("Media Files (*.png *.jpg *.gif *.tif *.mov *.avi *.mp4)");
     return fileDialog;
   }
   return QStyledItemDelegate::createEditor(parent, option, index);
@@ -121,6 +126,7 @@ void OscCuelistDelegate::setModelData(QWidget *editor, QAbstractItemModel *model
   else if (index.column() == Color)
   {
     QColorDialog *colorDialog = qobject_cast<QColorDialog *>(editor);
+    QString string;
     if (editor) model->setData(index, colorDialog->selectedColor().name());
   }
 
@@ -144,5 +150,9 @@ void OscCuelistDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptio
 
 void OscCuelistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-  QStyledItemDelegate::paint(painter, option, index);
+  QStyleOptionViewItem option2 = option; // mettre ça pour l'uri donc tout réécrire ??
+  option2.textElideMode = Qt::ElideLeft; // bien essayé mais ça marche pas !
+//  initStyleOption(&option2, index);
+  /*if (index.column() == Uri) QStyledItemDelegate::paint(painter, option2, index);
+  else*/ QStyledItemDelegate::paint(painter, option2, index);
 }

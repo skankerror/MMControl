@@ -49,7 +49,8 @@ void OscCue::addOscSend(OscSend *oscsend)
 {
   v_listOscSend.append(oscsend);
   // update total time de la cue
-  if (oscsend->getChamp() == P_XFADE || oscsend->getChamp() == R_P_XFADE)
+  int champ = oscsend->getChamp();
+  if (champ == P_XFADE || champ == R_P_XFADE || champ == P_FADE || champ == R_P_FADE)
     m_totalTime += oscsend->getTime();
   m_totalTime += oscsend->getTimewait();
   qDebug() << "OscCue::addOscSend success, new size for cue :" << oscSendCount()
@@ -61,7 +62,8 @@ void OscCue::insertOscSend(int vectAt, OscSend *oscsend)
   if (vectAt < 0 || vectAt > oscSendCount()/* - 1*/) return;
   v_listOscSend.insert(vectAt, oscsend);
   // update total time de la cue
-  if (oscsend->getChamp() == P_XFADE || oscsend->getChamp() == R_P_XFADE)
+  int champ = oscsend->getChamp();
+  if (champ == P_XFADE || champ == R_P_XFADE || champ == P_FADE || champ == R_P_FADE)
     m_totalTime += oscsend->getTime();
   m_totalTime += oscsend->getTimewait();
   qDebug() << "OscCue::insertOscSend success, new size fur cue :" << oscSendCount()
@@ -74,7 +76,8 @@ void OscCue::removeOscSend(int vectAt)
   // On choppe l'oscsend avant pour lui enlever son time du total
   OscSend *oscsend = getOscSend(vectAt);
   // update total time de la cue
-    if (oscsend->getChamp() == P_XFADE || oscsend->getChamp() == R_P_XFADE)
+  int champ = oscsend->getChamp();
+  if (champ == P_XFADE || champ == R_P_XFADE || champ == P_FADE || champ == R_P_FADE)
       m_totalTime -= oscsend->getTime();
     m_totalTime -= oscsend->getTimewait();
     v_listOscSend.remove(vectAt);
@@ -85,6 +88,7 @@ void OscCue::removeOscSend(int vectAt)
 void OscCue::removeAllOscSend()
 {
   qDeleteAll(v_listOscSend);
+  m_totalTime = 0;
   qDebug() << "OscCue::removeAllOscSend success, new size fur cue :" << oscSendCount();
 }
 

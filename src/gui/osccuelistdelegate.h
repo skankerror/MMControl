@@ -41,6 +41,7 @@ public:
   void paint ( QPainter * painter, const QStyleOptionViewItem & option,
                                     const QModelIndex & index ) const override;
 
+//  void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
 
 signals:
 

@@ -6,7 +6,7 @@ LIBS += -L/alsa/ -lasound\
 #TARGET +=qtdebug
 #TEMPLATE = app
 #CONFIG += debug
-CONFIG += console debug
+#CONFIG += console debug
 
 INCLUDEPATH += \
     $$PWD/src \

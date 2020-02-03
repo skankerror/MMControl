@@ -62,8 +62,7 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const
       if (col == Note) return tempCue->getNoteCue();
       break;
     case Qt::BackgroundRole:
-      if (col == Wait || col == Note) return yellowColor;
-        break;
+      /*if (col == Wait || col == Note) */return yellowColor; break;
     case Qt::TextAlignmentRole: return Qt::AlignCenter;
     default: break;
     }
@@ -109,7 +108,8 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const
       case P_REWIND: if(col == P_Id) return salmonColor; break;
       case P_COLOR:
         if(col == P_Id) return salmonColor;
-        if(col == Color) return QColor(tempSend->getP_color()); break;
+        if(col == Color) return QColor(tempSend->getP_color());
+        break;
       case P_OPACITY: if(col == P_Id || col == P_opac) return salmonColor; break;
       case P_VOLUME: if(col == P_Id || col == Vol) return salmonColor; break;
       case P_RATE: if(col == P_Id || col == Rate) return salmonColor; break;
@@ -491,11 +491,11 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
     case M_name2: m_m_name2 = value.toString(); break;
     case M_Id: m_m_ID1 = value.toInt(); break;
     case M_opac: m_m_opacity = value.toInt(); break;
-    case Visible: m_m_isvisible = value.toInt(); break;
-    case Solo: m_m_issolo = value.toInt(); break;
-    case Lock: m_m_islocked = value.toInt(); break;
+    case Visible: m_m_isvisible = value.toBool(); break;
+    case Solo: m_m_issolo = value.toBool(); break;
+    case Lock: m_m_islocked = value.toBool(); break;
     case Depth: m_m_depth = value.toInt(); break;
-    case Fade_In: m_isfadein = value.toInt(); break;
+    case Fade_In: m_isfadein = value.toBool(); break;
     case Time: m_time = value.toDouble(); break;
     case Wait: m_timewait = value.toDouble(); break;
     case Note: m_noteSend = value.toString(); break;

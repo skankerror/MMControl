@@ -577,7 +577,7 @@ void MainWindow::setP_UriLine()
 {
   QString fileName = QFileDialog::getOpenFileName(this, "Choose File",
                                                   "/home/ray/boulot",
-                                                  "Media Files (*.png *.jpg *.gif *.mov *.avi *.mp4)");
+                                                  "Media Files (*.png *.jpg *.gif *.tif *.mov *.avi *.mp4)");
   p_uriLine->setText(fileName);
 }
 void MainWindow::setP_ColorLine()
