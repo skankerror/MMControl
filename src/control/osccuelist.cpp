@@ -107,7 +107,9 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const
       {
       case P_NAME: if(col == P_name || col == P_Id) return salmonColor; break;
       case P_REWIND: if(col == P_Id) return salmonColor; break;
-      case P_COLOR: if(col == Color || col == P_Id) return salmonColor; break;
+      case P_COLOR:
+        if(col == P_Id) return salmonColor;
+        if(col == Color) return QColor(tempSend->getP_color()); break;
       case P_OPACITY: if(col == P_Id || col == P_opac) return salmonColor; break;
       case P_VOLUME: if(col == P_Id || col == Vol) return salmonColor; break;
       case P_RATE: if(col == P_Id || col == Rate) return salmonColor; break;

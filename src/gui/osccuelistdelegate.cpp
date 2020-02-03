@@ -63,43 +63,23 @@ QWidget *OscCuelistDelegate::createEditor(QWidget *parent, const QStyleOptionVie
     champComboBox->addItem("R_P_XFADE");
     return champComboBox;
   }
-  return QStyledItemDelegate::createEditor(parent, option, index);
 
-//  else if (col == P_name || col == P_name2 || col == M_name || col == M_name2 || col == Uri || col == Color)
-//  {
-//    QLineEdit *lineEdit = new QLineEdit(parent);
-//    return lineEdit;
-//  }
-//  else if (col == Visible || col == Solo || col == Lock || col == Fade_In)
-//  {
-//    QCheckBox *checkBox = new QCheckBox(parent);
-//    return checkBox;
-//  }
-//  else if (col == Time || col == Wait)
-//  {
-//    QDoubleSpinBox *doubleSpinBox = new QDoubleSpinBox(parent);
-//    return doubleSpinBox;
-//  }
-//  else
-//  {
-//    QSpinBox *spinBox = new QSpinBox(parent);
-//    return spinBox;
-//  }
-//  else if (col == Uri)
-//  {
-//    QLineEdit *lineEdit = new QLineEdit;
-////    lineEdit->setText(QFileDialog::getOpenFileName(parent /* ???  pas sur de mon parent...*/, "Choose File",
-////                                                      "/home/ray/boulot",
-////                                                      "Media Files (*.png, *.jpg, *.tif, *.tiff, *.gif, *.mov, *.avi, *.mp4"));
-//    return lineEdit;
-//  }
-//  else if (col == Color)
-//  {
-//    QLineEdit *lineEdit = new QLineEdit;
-////    lineEdit->setText(QColorDialog::getColor(Qt::green, parent /* ???  pas sur de mon parent...*/, "Select Color",
-////                                             QColorDialog::DontUseNativeDialog).name());
-//    return lineEdit;
-//  }
+  if (index.column() == Color)
+  {
+    QColorDialog *colorDialog = new QColorDialog(parent);
+    colorDialog->setOption(QColorDialog::DontUseNativeDialog, true);
+    /*QColorDialog::getColor(Qt::green, parent, "Select Color", QColorDialog::DontUseNativeDialog);*/
+    return colorDialog;
+  }
+
+  if (index.column() == Uri)
+  {
+    QFileDialog *fileDialog = new QFileDialog(parent);
+    fileDialog->setFileMode(QFileDialog::ExistingFile);
+    fileDialog->setNameFilter("Media Files (*.png *.jpg *.gif *.mov *.avi *.mp4)");
+    return fileDialog;
+  }
+  return QStyledItemDelegate::createEditor(parent, option, index);
 }
 
 void OscCuelistDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
@@ -109,9 +89,19 @@ void OscCuelistDelegate::setEditorData(QWidget *editor, const QModelIndex &index
     QComboBox *comboBox = qobject_cast<QComboBox *>(editor);
     if (comboBox)
     {
-      champMM champ = static_cast<champMM>(index.model()->data(index).toInt()); // ça marche pas, renvoie NOOP
+      int champInt = index.model()->data(index).toInt();
+      champMM champ = static_cast<champMM>(champInt);
       const int value = champ;
       comboBox->setCurrentIndex(value);
+    }
+  }
+  if (index.column() == Color)
+  {
+    QColorDialog *colorDialog = qobject_cast<QColorDialog *>(editor);
+    if (editor)
+    {
+      QColor color = QColor(index.model()->data(index).toString());
+      colorDialog->setCurrentColor(color);
     }
   }
   else
@@ -125,11 +115,21 @@ void OscCuelistDelegate::setModelData(QWidget *editor, QAbstractItemModel *model
   if (index.column() == Champ)
   {
     QComboBox *comboBox = qobject_cast<QComboBox *>(editor);
-    if (editor)
-    {
-      model->setData(index, comboBox->currentIndex());// voir à faire un cast ? il renvoie toujours 0
-    }
+    if (editor) model->setData(index, comboBox->currentIndex());
   }
+
+  else if (index.column() == Color)
+  {
+    QColorDialog *colorDialog = qobject_cast<QColorDialog *>(editor);
+    if (editor) model->setData(index, colorDialog->selectedColor().name());
+  }
+
+  else if (index.column() == Uri)
+  {
+    QFileDialog *fileDialog = qobject_cast<QFileDialog *>(editor);
+    if (editor) model->setData(index, fileDialog->selectedFiles()); // QStringList ??
+  }
+
   else
   {
     QStyledItemDelegate::setModelData(editor, model, index);

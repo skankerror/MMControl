@@ -91,6 +91,8 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   tableView->horizontalHeader()->setMaximumSectionSize(200);
   tableView->horizontalHeader()->setStretchLastSection(true);
   tableView->verticalHeader()->setMaximumSectionSize(30);
+  tableView->setTextElideMode(Qt::ElideLeft);
+
 
   tableView->show();
   tableView->resizeColumnsToContents();
@@ -101,6 +103,8 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   this->setLayout(layoutMain);
 
   setAutoFillBackground(true);
+
+  qDebug() << "text ellide mode : " << tableView->textElideMode();
 
   connect(boutonGo, SIGNAL(clicked(bool)), SLOT(executeGo()));
   connect(boutonPrev, SIGNAL(clicked(bool)), SLOT(movePrevious()));
