@@ -38,9 +38,9 @@ void MyMidiOut::allBoutonVisibleOff()
 {
   if (!RtMidiOut::isPortOpen()) return;
   std::vector<unsigned char> message; // on crée notre message et on l'initialise pour le 1er bouton
-  message.push_back(144);
+  message.push_back(MIDI_BUTTON_PRESSED);
   message.push_back(0);
-  message.push_back(00);
+  message.push_back(LIGHT_OFF);
   RtMidiOut::sendMessage(&message);
   for (int i = 1; i < 8; i++)
   {
@@ -55,9 +55,9 @@ void MyMidiOut::allBoutonVisibleOn()
 {
   if (!RtMidiOut::isPortOpen()) return;
   std::vector<unsigned char> message; // on crée notre message et on l'initialise pour le 1er bouton
-  message.push_back(144);
+  message.push_back(MIDI_BUTTON_PRESSED);
   message.push_back(0);
-  message.push_back(01);
+  message.push_back(LIGHT_ON);
   RtMidiOut::sendMessage(&message);
   for (int i = 1; i < 8; i++)
   {
@@ -72,9 +72,9 @@ void MyMidiOut::allBoutonSoloOff()
 {
   if (!RtMidiOut::isPortOpen()) return;
   std::vector<unsigned char> message; // on crée notre message
-  message.push_back(144);
+  message.push_back(MIDI_BUTTON_PRESSED);
   message.push_back(0);
-  message.push_back(00);
+  message.push_back(LIGHT_OFF);
   for (int i = 16; i < 24; i++)
   {
     message[1] = i;
@@ -88,9 +88,9 @@ void MyMidiOut::allBoutonSoloOn()
 {
   if (!RtMidiOut::isPortOpen()) return;
   std::vector<unsigned char> message; // on crée notre message
-  message.push_back(144);
+  message.push_back(MIDI_BUTTON_PRESSED);
   message.push_back(0);
-  message.push_back(01);
+  message.push_back(LIGHT_ON);
   for (int i = 16; i < 24; i++)
   {
     message[1] = i;
@@ -104,9 +104,9 @@ void MyMidiOut::sendBoutonOn(int id)
 {
   if (!RtMidiOut::isPortOpen()) return;
   std::vector<unsigned char> message;
-  message.push_back(144);
+  message.push_back(MIDI_BUTTON_PRESSED);
   message.push_back(id);
-  message.push_back(01);
+  message.push_back(LIGHT_ON);
   RtMidiOut::sendMessage(&message);
 }
 
@@ -114,8 +114,8 @@ void MyMidiOut::sendBoutonOff(int id)
 {
   if (!RtMidiOut::isPortOpen()) return;
   std::vector<unsigned char> message;
-  message.push_back(144);
+  message.push_back(MIDI_BUTTON_PRESSED);
   message.push_back(id);
-  message.push_back(00);
+  message.push_back(LIGHT_OFF);
   RtMidiOut::sendMessage(&message);
 }

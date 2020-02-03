@@ -49,7 +49,6 @@ public:
   bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
   QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
   Qt::ItemFlags flags(const QModelIndex &index) const override;
-// insertRows ?
 
   OscCue *getOscCue(const int vectAt) const;
   int getOscCueCount() const;
@@ -60,6 +59,7 @@ public:
   int getRowCueFromCueId(int cueId) const;
   int getLastCueRow() const;
 
+  OscCue* retOscCueFromFileLine(QStringList &lineToken); // revoir en xml ?
   OscSend* retOscsendFromFileLine(QStringList &lineToken); // revoir en xml ?
 
 signals:

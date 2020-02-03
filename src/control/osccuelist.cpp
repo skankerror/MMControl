@@ -46,8 +46,7 @@ int OscCueList::columnCount(const QModelIndex &index) const
 
 QVariant OscCueList::data(const QModelIndex &index, int role) const
 {
-  if (!index.isValid() || index.row() < 0/* || !(index.flags().testFlag(Qt::ItemIsEditable))*/
-      || index.row() > rowCount() - 1/* || isRowCue(index.row())*/) return QVariant(); // revoir pour avoir time total dans la ligne cue
+  if (!index.isValid() || index.row() < 0 || index.row() > rowCount() - 1) return QVariant();
   int row = index.row();
   int col = index.column();
   QBrush salmonColor(QColor("#59271E"));
@@ -99,6 +98,7 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const
       case Fade_In: return tempSend->getIsfadein(); break;
       case Time: return tempSend->getTime(); break;
       case Wait: return tempSend->getTimewait(); break;
+      case Note: return tempSend->getNoteSend(); break;
       default: break;
       } break;
     case Qt::BackgroundRole:
@@ -148,13 +148,14 @@ bool OscCueList::setData(const QModelIndex &index, const QVariant &value, int ro
 {
   Q_UNUSED(role);
   if (!index.isValid() || index.row() < 0 || !(index.flags().testFlag(Qt::ItemIsEditable))
-      || index.row() > rowCount()/* || isRowCue(index.row())*/) return false;
+      || index.row() > rowCount() - 1) return false;
   int row = index.row();
   int col = index.column();
 
   if (isRowCue(row) && col == Note)
   {
     getOscCue(getCueId(row) - 1)->setNoteCue(value.toString());
+    emit dataChanged(index, index);
     return true;
   }
 
@@ -277,6 +278,7 @@ Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const
   if (getOscCueCount() && index.isValid() && index.row() > -1 && index.row() < rowCount() && isRowCue(index.row()))
   {
     if (index.column() == Note) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
+    if (index.column() == Wait) return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
   }
   return QAbstractTableModel::flags(index);
 }
@@ -324,11 +326,11 @@ int OscCueList::getCueId(const int row) const // retourne -1 si problème
   return -1;
 }
 
-int OscCueList::getSendId(const int row) const // retourne -1 si problème BUUUUGGGG SI CUE > 4
+int OscCueList::getSendId(const int row) const // retourne -1 si problème
 {
   if (isRowCue(row) || row > rowCount() - 1 || row < 0)
   {
-//    qDebug() << "OscCueList::getSendId returned -1... problem";
+    qDebug() << "OscCueList::getSendId returned -1... problem";
     return -1;
   }
   int count = 0;
@@ -340,7 +342,7 @@ int OscCueList::getSendId(const int row) const // retourne -1 si problème BUUUU
   return row - count;
 }
 
-int OscCueList::getSendCueId(const int row) const // retourne -1 si problème BUUUUGGGG SI CUE > 4
+int OscCueList::getSendCueId(const int row) const // retourne -1 si problème
 {
   if (isRowCue(row) || row > rowCount() - 1 || row < 0)
   {
@@ -381,6 +383,26 @@ int OscCueList::getLastCueRow() const // retourne -1 si problème
   return lastCueRow;
 }
 
+OscCue *OscCueList::retOscCueFromFileLine(QStringList &lineToken)
+{
+  QString m_noteCue = "";
+  // load parsed data to model accordingly
+  for (int j = 0; j < lineToken.size(); j++)
+  {
+    QString val = lineToken.at(j);
+    val = val.trimmed();
+    qDebug() << val << ", ";
+    QVariant value(val);
+    switch(j)
+    {
+    case Note - 1: m_noteCue = value.toString();
+    }
+  }
+  qDebug() << "Salut mec, le m_noteCue renvoie" << m_noteCue;
+  OscCue *osccue = new OscCue(this, 0, m_noteCue);
+  return osccue;
+}
+
 OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
 {
   champMM m_champ = NOOP;
@@ -405,6 +427,7 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
   double m_time = 0;
   bool m_isfadein = false;
   double m_timewait = false;
+  QString m_noteSend = "";
 
   // load parsed data to model accordingly
   for (int j = 0; j < lineToken.size(); j++)
@@ -415,7 +438,7 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
     QVariant value(val);
     switch(j)
     {
-    case 0:
+    case Champ:
       if (val.toStdString() == "NOOP") m_champInt = NOOP;
       if (val.toStdString() == "PLAY") m_champInt = PLAY;
       if (val.toStdString() == "PAUSE") m_champInt = PAUSE;
@@ -453,26 +476,27 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
       if (val.toStdString() == "R_P_XFADE") m_champInt = R_P_XFADE;
       qDebug() << "first val in getOscSendFromFile" << val << m_champInt;
       break;
-    case 1: m_p_name = value.toString(); break;
-    case 2: m_p_name2 = value.toString(); break;
-    case 3: m_p_uri = value.toString(); break;
-    case 4: m_p_color = value.toString(); break;
-    case 5: m_p_ID1 = value.toInt(); break;
-    case 6: m_p_ID2 = value.toInt(); break;
-    case 7: m_p_rate = value.toInt(); break;
-    case 8: m_p_opacity = value.toInt(); break;
-    case 9: m_p_volume = value.toInt(); break;
-    case 10: m_m_name = value.toString(); break;
-    case 11: m_m_name2 = value.toString(); break;
-    case 12: m_m_ID1 = value.toInt(); break;
-    case 13: m_m_opacity = value.toInt(); break;
-    case 14: m_m_isvisible = value.toInt(); break;
-    case 15: m_m_issolo = value.toInt(); break;
-    case 16: m_m_islocked = value.toInt(); break;
-    case 17: m_m_depth = value.toInt(); break;
-    case 18: m_isfadein = value.toInt(); break;
-    case 19: m_time = value.toDouble(); break;
-    case 20: m_timewait = value.toDouble(); break;
+    case P_name: m_p_name = value.toString(); break;
+    case P_name2: m_p_name2 = value.toString(); break;
+    case Uri: m_p_uri = value.toString(); break;
+    case Color: m_p_color = value.toString(); break;
+    case P_Id: m_p_ID1 = value.toInt(); break;
+    case P_Id2: m_p_ID2 = value.toInt(); break;
+    case Rate: m_p_rate = value.toInt(); break;
+    case P_opac: m_p_opacity = value.toInt(); break;
+    case Vol: m_p_volume = value.toInt(); break;
+    case M_name: m_m_name = value.toString(); break;
+    case M_name2: m_m_name2 = value.toString(); break;
+    case M_Id: m_m_ID1 = value.toInt(); break;
+    case M_opac: m_m_opacity = value.toInt(); break;
+    case Visible: m_m_isvisible = value.toInt(); break;
+    case Solo: m_m_issolo = value.toInt(); break;
+    case Lock: m_m_islocked = value.toInt(); break;
+    case Depth: m_m_depth = value.toInt(); break;
+    case Fade_In: m_isfadein = value.toInt(); break;
+    case Time: m_time = value.toDouble(); break;
+    case Wait: m_timewait = value.toDouble(); break;
+    case Note: m_noteSend = value.toString(); break;
     default: break;
     }
   m_champ = static_cast<champMM>(m_champInt);
@@ -501,7 +525,8 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
         m_m_depth,
         m_time,
         m_isfadein,
-        m_timewait
+        m_timewait,
+        m_noteSend
         );
 
   return oscsend;
@@ -566,8 +591,6 @@ void OscCueList::removeAllCue()
     removeCue(0);
   }
   qDebug() << "All cue removed";
-//  OscCue *newEmptyCue = new OscCue(this);
-//  addCue(newEmptyCue);
 }
 
 void OscCueList::addSend(OscSend *oscsend, int rowCue)

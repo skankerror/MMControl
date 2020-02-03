@@ -282,7 +282,6 @@ void TabSeq::loadFile()
     if (file.open(QIODevice::ReadOnly))
     {
       m_oscCueList->removeAllCue();
-      OscSend *oscsend = new OscSend(this, NOOP);
       int lineindex = 0;                     // file line counter
       QTextStream in(&file);                 // read to text stream
       while (!in.atEnd())
@@ -296,13 +295,12 @@ void TabSeq::loadFile()
         firstVal = firstVal.trimmed();
         if (firstVal == "")
         {
-//          osccue = m_oscCueList.retOscCueFromFileLine(lineToken);
-          OscCue *osccue = new OscCue(this); // En attendant car il faut récupérer les notes
+          OscCue *osccue = m_oscCueList->retOscCueFromFileLine(lineToken);
           m_oscCueList->addCue(osccue);
         }
         else
         {
-          oscsend = m_oscCueList->retOscsendFromFileLine(lineToken);
+          OscSend *oscsend = m_oscCueList->retOscsendFromFileLine(lineToken);
           m_oscCueList->addSend(oscsend, m_oscCueList->getLastCueRow());
         }
       }

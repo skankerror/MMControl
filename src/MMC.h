@@ -89,6 +89,8 @@ enum columns
 #define MYPORTNAME_OUT_2 "MMControl Output Port 2"
 #define MIDI_CONTROL 176
 #define MIDI_BUTTON_PRESSED 144
+#define LIGHT_ON 01
+#define LIGHT_OFF 00
 #define QUEUE_SIZE_LIMIT 100
 
 #endif // MMC_H
