@@ -13,6 +13,7 @@ MyMidiOut::~MyMidiOut()
     MyMidiOut::allBoutonSoloOff();
     MyMidiOut::sendBoutonOff(83);
     MyMidiOut::sendBoutonOff(84);
+    MyMidiOut::sendBoutonOff(86);
   }
 }
 

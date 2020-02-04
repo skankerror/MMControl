@@ -2,14 +2,12 @@
 
 -Mettre des tooltips aux widgets
 
--Implémenter le midi pour bouton go
-
 -Changer csv en xml
 
 - Hide et Show les connects disconnects dans tabmidi
 
 - Allumer les boutons sur la vue dans tabmidi
 
--Quand on ajoute un send le sélectionner. Quand on ajoute une cue aussi
+- Quand on ajoute une cue la sélectionner
 
 

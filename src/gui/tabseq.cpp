@@ -100,6 +100,7 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   tableView->horizontalHeader()->setStretchLastSection(true);
   tableView->verticalHeader()->setMaximumSectionSize(25);
   tableView->setTextElideMode(Qt::ElideRight);
+  tableView->setVerticalScrollMode(QAbstractItemView::ScrollPerItem);
 
   tableView->show();
   layout1->addWidget(tableView);
@@ -113,8 +114,6 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   tableView->resizeRowsToContents();
   hideShowColumns();
 
-//  qDebug() << "text ellide mode : " << tableView->textElideMode();
-
   connect(boutonGo, SIGNAL(clicked(bool)), SLOT(executeGo()));
   connect(boutonPrev, SIGNAL(clicked(bool)), SLOT(movePrevious()));
   connect(boutonNext, SIGNAL(clicked(bool)), SLOT(moveNext()));
@@ -123,6 +122,7 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   connect(boutonSaveAs, SIGNAL(clicked(bool)), SLOT(saveAs()));
   connect(boutonLoad, SIGNAL(clicked(bool)), SLOT(loadFile()));
   connect(m_oscCueList, SIGNAL(dataChanged(QModelIndex, QModelIndex)), SLOT(hideShowColumns()));
+  connect(midiIn2, SIGNAL(sigMidiNoteChanged(int)), this, SLOT(receiveMidiNote2(int)));
 }
 
 void TabSeq::executeGo()
@@ -147,8 +147,8 @@ void TabSeq::executeGo()
       tableView->setCurrentIndex(tableView->currentIndex().siblingAtRow(tableView->currentIndex().row() + 1)); // on sélect le row suivant
       if (!m_oscCueList->isRowCue(tableView->currentIndex().row()))// Si c'est un send
       {
-        if (!timeWait) QTimer::singleShot(10, this, SLOT(executeGo())); // Si timeWait 0 on attend 10ms et on éxécute le prochain
-        else QTimer::singleShot(100 * (int)(timeWait*10), this, SLOT(executeGo())); // On attend le timeWait et on éxécute le prochain
+        /*if (!timeWait) QTimer::singleShot(10, this, SLOT(executeGo())); // Si timeWait 0 on attend 10ms et on éxécute le prochain
+        else*/ QTimer::singleShot((100 * (int)(timeWait*10)) + 1, this, SLOT(executeGo())); // On attend le timeWait et on éxécute le prochain
       }
     }
   }
@@ -330,6 +330,13 @@ void TabSeq::loadFile()
     tableView->resizeColumnsToContents();
   }
   hideShowColumns();
+}
+
+void TabSeq::receiveMidiNote2(int note)
+{
+  if (!(note == 86)) return;
+  boutonGo->animateClick();
+  m_midiOut2->sendBoutonOn(86);
 }
 
 void TabSeq::hideShowColumns()

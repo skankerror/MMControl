@@ -52,6 +52,7 @@ public slots:
   void addCue();
   void saveAs();
   void loadFile();
+  void receiveMidiNote2(int note);
 
   void hideShowColumns();
 

@@ -588,8 +588,6 @@ void MainWindow::setP_ColorLine()
 }
 void MainWindow::addToCue()
 {
-  tableView->resizeRowsToContents();
-  tableView->resizeColumnsToContents();
   champMM index = static_cast<champMM>(champComboBox->currentIndex());
   OscSend *oscsend = new OscSend(
         this,
@@ -625,8 +623,17 @@ void MainWindow::addToCue()
 
   if (!(row == -1)) // si l'index est valide
   {
-    if (oscCueList->isRowCue(row)) oscCueList->addSend(oscsend, row); // si c'est une cue on add
-    // Sélectionner le dernier row de la cue
+    if (oscCueList->isRowCue(row))
+    {
+      oscCueList->addSend(oscsend, row); // si c'est une cue on add
+      // Sélectionner le dernier row de la cue
+      int cueId = oscCueList->getCueId(row);
+      int rowCue = oscCueList->getRowCueFromCueId(cueId);
+      OscCue *tempCue = oscCueList->getOscCue(cueId - 1);
+      int lastSendRow = tempCue->oscSendCount() + rowCue;
+//      qDebug() << lastSendRow;
+      tabseq->tableView->setCurrentIndex(tabseq->tableView->currentIndex().siblingAtRow(lastSendRow));
+    }
     else
     {
       oscCueList->insertSend(oscsend, row); // si c'est un send on ajoute
@@ -641,6 +648,7 @@ void MainWindow::addToCue()
       OscCue *newCue = new OscCue(this); // On crée une cue
       oscCueList->addCue(newCue);
       oscCueList->addSend(oscsend, 0);
+      //Sélectionner le row 1...
     }
     else
     {
@@ -649,6 +657,8 @@ void MainWindow::addToCue()
       // Sélectionner lastRow
     }
   }
+  tableView->resizeRowsToContents();
+  tableView->resizeColumnsToContents();
   tabseq->hideShowColumns();
 }
 
