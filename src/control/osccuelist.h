@@ -22,6 +22,7 @@
 #include <QVector>
 #include <QModelIndex>
 #include <QAbstractTableModel>
+#include <QSortFilterProxyModel>
 #include <QVariant>
 #include <QBrush>
 #include <QTextStream>
@@ -82,6 +83,23 @@ public slots:
 
 private:
   QVector<OscCue *> v_listCue;
+
+};
+
+class OscCueListProxy :
+    public QSortFilterProxyModel
+{
+  Q_OBJECT
+
+public:
+
+  explicit OscCueListProxy(OscCueList *osccuelist, QObject *parent = nullptr);
+  ~OscCueListProxy(){}
+
+  QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+
+private:
+  OscCueList * m_oscCueList;
 
 };
 

@@ -91,17 +91,17 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   boutonLayout->addWidget(boutonSaveAs);
   boutonLayout->addWidget(boutonLoad);
 
-  tableView->setModel(m_oscCueList);
+  proxyModel = new OscCueListProxy(m_oscCueList, this);
+  proxyModel->setSourceModel(m_oscCueList);
+  tableView->setModel(proxyModel);
   m_delegate = new OscCuelistDelegate(this);
   tableView->setItemDelegate(m_delegate);
-  tableView->horizontalHeader()->setMaximumSectionSize(200);
+//  tableView->horizontalHeader()->setMaximumSectionSize(200);
   tableView->horizontalHeader()->setStretchLastSection(true);
-  tableView->verticalHeader()->setMaximumSectionSize(30);
-  tableView->setTextElideMode(Qt::ElideLeft);
+  tableView->verticalHeader()->setMaximumSectionSize(25);
+  tableView->setTextElideMode(Qt::ElideRight);
 
   tableView->show();
-  tableView->resizeColumnsToContents();
-  tableView->resizeRowsToContents();
   layout1->addWidget(tableView);
   layoutMain->addLayout(boutonLayout);
   layoutMain->addLayout(layout1);
@@ -109,6 +109,8 @@ TabSeq::TabSeq(OscCueList *oscCueList,
 
   setAutoFillBackground(true);
 
+  tableView->resizeColumnsToContents();
+  tableView->resizeRowsToContents();
   hideShowColumns();
 
 //  qDebug() << "text ellide mode : " << tableView->textElideMode();
@@ -145,7 +147,8 @@ void TabSeq::executeGo()
       tableView->setCurrentIndex(tableView->currentIndex().siblingAtRow(tableView->currentIndex().row() + 1)); // on sélect le row suivant
       if (!m_oscCueList->isRowCue(tableView->currentIndex().row()))// Si c'est un send
       {
-        QTimer::singleShot(100 * (int)(timeWait*10), this, SLOT(executeGo())); // On attend le timeWait et on éxécute le prochain
+        if (!timeWait) QTimer::singleShot(10, this, SLOT(executeGo())); // Si timeWait 0 on attend 10ms et on éxécute le prochain
+        else QTimer::singleShot(100 * (int)(timeWait*10), this, SLOT(executeGo())); // On attend le timeWait et on éxécute le prochain
       }
     }
   }
@@ -247,7 +250,7 @@ void TabSeq::addCue() // Reste à voir le sélectionné // TODO rajouter index =
 
 void TabSeq::saveAs()
 {
-  QString fileName = QFileDialog::getSaveFileName(this, "Choose File", "/home/ray/boulot");
+  QString fileName = QFileDialog::getSaveFileName(this, "Choose File", "", "Csv Files (*.csv *.txt)");
   if (fileName.isEmpty())
     return;
   else
@@ -289,7 +292,7 @@ void TabSeq::loadFile()
   if (msgBox.exec() == QMessageBox::RejectRole) return;
   else
   {
-    QString fileName = QFileDialog::getOpenFileName(this, "Choose File", "/home/ray/boulot");
+    QString fileName = QFileDialog::getOpenFileName(this, "Choose File", "", "Csv Files (*.csv *.txt)");
     QFile file(fileName);
     if (fileName.isEmpty())
     {

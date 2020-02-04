@@ -62,6 +62,7 @@ private:
   MyMidiOut *m_midiOut1;
   MyMidiOut *m_midiOut2;
   OscCuelistDelegate *m_delegate;
+  OscCueListProxy *proxyModel;
 
   QHBoxLayout *layoutMain;
     QHBoxLayout *layout1;

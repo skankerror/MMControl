@@ -684,3 +684,35 @@ void OscCueList::removeAllSend(int cueRow)
   }
 }
 
+OscCueListProxy::OscCueListProxy(OscCueList *osccuelist, QObject *parent):
+  QSortFilterProxyModel(parent),
+  m_oscCueList(osccuelist)
+{}
+
+QVariant OscCueListProxy::data(const QModelIndex &index, int role) const
+{
+  int row = index.row();
+  int col = index.column();
+  QBrush salmonColor(QColor("#59271E"));
+  if (!m_oscCueList->isRowCue(row) && index.flags().testFlag(Qt::ItemIsEditable) && index.isValid() && row > -1
+      && row < m_oscCueList->rowCount() && col == Uri)
+  {
+    OscCue *tempCue = m_oscCueList->getOscCue(m_oscCueList->getSendCueId(row) - 1);
+    OscSend *tempSend = tempCue->getOscSend(m_oscCueList->getSendId(row) - 1);
+    switch (role)
+    {
+    case Qt::DisplayRole:
+      QString tempString = tempSend->getP_uri();
+      for (int i = tempString.size(); i > 0; --i)
+      {
+        if (tempString.at(i) == QChar('/'))
+        {
+          return tempString = tempString.right(tempString.size() - i - 1); break;
+        }
+      }
+      return tempString; // pour voir si ça marche
+      break;
+    }
+  }
+  return QSortFilterProxyModel::data(index, role);
+}

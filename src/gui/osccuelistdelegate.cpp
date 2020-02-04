@@ -127,7 +127,7 @@ void OscCuelistDelegate::setModelData(QWidget *editor, QAbstractItemModel *model
   else if (index.column() == Uri)
   {
     QFileDialog *fileDialog = qobject_cast<QFileDialog *>(editor);
-    if (editor) model->setData(index, fileDialog->selectedFiles()); // QStringList ??
+    if (editor) model->setData(index, fileDialog->selectedFiles());
   }
 
   else
@@ -144,9 +144,10 @@ void OscCuelistDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptio
 
 void OscCuelistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-//  QStyleOptionViewItem option2 = option; // mettre ça pour l'uri donc tout réécrire ??
-//  option2.textElideMode = Qt::ElideLeft; // bien essayé mais ça marche pas !
-//  initStyleOption(&option2, index);
-  /*if (index.column() == Uri) QStyledItemDelegate::paint(painter, option2, index);
-  else*/ QStyledItemDelegate::paint(painter, option, index);
+  QStyledItemDelegate::paint(painter, option, index);
+}
+
+QSize OscCuelistDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+  return QStyledItemDelegate::sizeHint(option, index);
 }

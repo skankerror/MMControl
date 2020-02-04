@@ -208,6 +208,8 @@ void OscSend::ExecuteXFade(int ID1, int ID2, double time)
 
 void OscSend::ExecuteFade(int ID1, double time, bool isfadein)
 {
+//  QThread *thread = nullptr;
+//  this->moveToThread(thread);
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);
 
@@ -222,7 +224,8 @@ void OscSend::ExecuteFade(int ID1, double time, bool isfadein)
       packet << 1 - i;
     packet << osc::EndMessage << osc::EndBundle;
 
-    usleep(10000 * time);
+    usleep(10000 * time); // Pas bon... mettre QTimer...
+//    startTimer(10*time);
     Send(packet.Data(), packet.Size());
 //    qDebug() << ID1 << " " << 1 - i;
     packet.Clear();
