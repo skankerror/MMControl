@@ -59,7 +59,7 @@ void OscCue::addOscSend(OscSend *oscsend)
 
 void OscCue::insertOscSend(int vectAt, OscSend *oscsend)
 {
-  if (vectAt < 0 || vectAt > oscSendCount()/* - 1*/) return;
+  if (vectAt < 0 || vectAt > oscSendCount()/* - 1*/) return; // Il ne faut pas le  - 1
   v_listOscSend.insert(vectAt, oscsend);
   // update total time de la cue
   int champ = oscsend->getChamp();

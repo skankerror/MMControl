@@ -77,6 +77,7 @@ public:
   //Getters
   champMM getChamp() const { return m_champ; };
   QString getChampToString() const;
+  static int getChampFromString(QString value);
   QString getP_uri() const { return m_p_uri; };
   QString getP_name() const { return m_p_name; };
   QString getP_name2() const{ return m_p_name2; };

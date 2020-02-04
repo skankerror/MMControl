@@ -53,6 +53,8 @@ public slots:
   void saveAs();
   void loadFile();
 
+  void hideShowColumns();
+
 private:
   OscCueList *m_oscCueList;
   MyMidiIn *m_midiIn1;

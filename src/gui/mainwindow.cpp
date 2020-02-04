@@ -648,6 +648,7 @@ void MainWindow::addToCue()
       // Sélectionner lastRow
     }
   }
+  tabseq->hideShowColumns();
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)

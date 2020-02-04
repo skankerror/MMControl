@@ -270,7 +270,6 @@ void OscSend::ExecutePFade(QString p_name, double time, bool isfadein)
 
     usleep(10000 * time);// Mettre QTimer
     Send(packet.Data(), packet.Size());
-//    qDebug() << "bluk";
     packet.Clear();
   }
 }
@@ -316,4 +315,45 @@ QString OscSend::getChampToString() const
   case R_P_XFADE: return QString("R_P_XFADE"); break;
   default: return QString(""); break;
   }
+}
+
+int OscSend::getChampFromString(QString value)
+{
+  if (value == "NOOP") return NOOP;
+  if (value == "PLAY") return PLAY;
+  if (value == "PAUSE") return PAUSE;
+  if (value == "REWIND") return REWIND;
+  if (value == "QUIT") return QUIT;
+  if (value == "P_NAME") return P_NAME;
+  if (value == "P_REWIND") return P_REWIND;
+  if (value == "P_OPACITY") return P_OPACITY;
+  if (value == "P_VOLUME") return P_VOLUME;
+  if (value == "P_RATE") return P_RATE;
+  if (value == "P_URI") return P_URI;
+  if (value == "P_COLOR") return P_COLOR;
+  if (value == "M_NAME") return M_NAME;
+  if (value == "M_OPACITY") return M_OPACITY;
+  if (value == "M_VISIBLE") return M_VISIBLE;
+  if (value == "M_SOLO") return M_SOLO;
+  if (value == "M_LOCK") return M_LOCK;
+  if (value == "M_DEPTH") return M_DEPTH;
+  if (value == "P_XFADE") return P_XFADE;
+  if (value == "P_FADE") return P_FADE;
+  if (value == "R_P_NAME") return R_P_NAME;
+  if (value == "R_P_REWIND") return R_P_REWIND;
+  if (value == "R_P_OPACITY") return R_P_OPACITY;
+  if (value == "R_P_VOLUME") return R_P_VOLUME;
+  if (value == "R_P_RATE") return R_P_RATE;
+  if (value == "R_P_URI") return R_P_URI;
+  if (value == "R_P_COLOR") return R_P_COLOR;
+  if (value == "R_M_NAME") return R_M_NAME;
+  if (value == "R_M_OPACITY") return R_M_OPACITY;
+  if (value == "R_M_VISIBLE") return R_M_VISIBLE;
+  if (value == "R_M_SOLO") return R_M_SOLO;
+  if (value == "R_M_LOCK") return R_M_LOCK;
+  if (value == "R_M_DEPTH") return R_M_DEPTH;
+  if (value == "R_P_FADE") return R_P_FADE;
+  if (value == "R_P_XFADE") return R_P_XFADE;
+  qDebug() << "error OscSend::getChampFromString returned -1";
+  return -1;
 }

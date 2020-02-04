@@ -33,29 +33,6 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   m_midiOut2(midiOut2),
   tableView(aTableView)
 {
-  //tests
-//  OscCue *osccue1 = new OscCue(this);
-////  OscSend *oscsend1 = new OscSend(this, PLAY);
-////  osccue1->addOscSend(oscsend1);
-//  m_oscCueList->addCue(osccue1);
-//  OscCue *osccue2 = new OscCue(this);
-////  OscSend *oscsend2 = new OscSend(this, PAUSE);
-////  osccue2->addOscSend(oscsend2);
-//  m_oscCueList->addCue(osccue2);
-//  OscCue *osccue3 = new OscCue(this);
-////  OscSend *oscsend3 = new OscSend(this, REWIND);
-////  osccue3->addOscSend(oscsend3);
-//  m_oscCueList->addCue(osccue3);
-//  OscCue *osccue4 = new OscCue(this);
-////  OscSend *oscsend4 = new OscSend(this, QUIT);
-////  osccue4->addOscSend(oscsend4);
-//  m_oscCueList->addCue(osccue4);
-//  OscCue *osccue5 = new OscCue(this);
-////  OscSend *oscsend5 = new OscSend(this, PLAY);
-////  osccue5->addOscSend(oscsend5);
-//  m_oscCueList->addCue(osccue5);
-  // fin tests
-
   // On met une cue pour démarrer
   OscCue *firstCue = new OscCue(this);
   m_oscCueList->addCue(firstCue);
@@ -122,7 +99,6 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   tableView->verticalHeader()->setMaximumSectionSize(30);
   tableView->setTextElideMode(Qt::ElideLeft);
 
-
   tableView->show();
   tableView->resizeColumnsToContents();
   tableView->resizeRowsToContents();
@@ -133,7 +109,9 @@ TabSeq::TabSeq(OscCueList *oscCueList,
 
   setAutoFillBackground(true);
 
-  qDebug() << "text ellide mode : " << tableView->textElideMode();
+  hideShowColumns();
+
+//  qDebug() << "text ellide mode : " << tableView->textElideMode();
 
   connect(boutonGo, SIGNAL(clicked(bool)), SLOT(executeGo()));
   connect(boutonPrev, SIGNAL(clicked(bool)), SLOT(movePrevious()));
@@ -142,6 +120,7 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   connect(boutonAddCue, SIGNAL(clicked(bool)), SLOT(addCue()));
   connect(boutonSaveAs, SIGNAL(clicked(bool)), SLOT(saveAs()));
   connect(boutonLoad, SIGNAL(clicked(bool)), SLOT(loadFile()));
+  connect(m_oscCueList, SIGNAL(dataChanged(QModelIndex, QModelIndex)), SLOT(hideShowColumns()));
 }
 
 void TabSeq::executeGo()
@@ -217,8 +196,8 @@ void TabSeq::moveNext() // Bouger cue si c'est une cue, bouger send si c'est un 
   {
     m_oscCueList->moveSendNext(row);
   }
-    tableView->resizeRowsToContents();
-    tableView->resizeColumnsToContents();
+  tableView->resizeRowsToContents();
+  tableView->resizeColumnsToContents();
 }
 
 void TabSeq::remove() // Bouger cue si c'est une cue, bouger send si c'est un send
@@ -239,6 +218,7 @@ void TabSeq::remove() // Bouger cue si c'est une cue, bouger send si c'est un se
   else tableView->setCurrentIndex(m_oscCueList->index(row - 1, 0)); // ça c'est plus simple que table view et cie
   tableView->resizeRowsToContents();
   tableView->resizeColumnsToContents();
+  hideShowColumns();
 }
 
 void TabSeq::addCue() // Reste à voir le sélectionné // TODO rajouter index = currentindex et row ça sera plus simple
@@ -262,7 +242,7 @@ void TabSeq::addCue() // Reste à voir le sélectionné // TODO rajouter index =
   }
   tableView->resizeRowsToContents();
   tableView->resizeColumnsToContents();
-
+  hideShowColumns();
 }
 
 void TabSeq::saveAs()
@@ -345,6 +325,22 @@ void TabSeq::loadFile()
     file.close();
     tableView->resizeRowsToContents();
     tableView->resizeColumnsToContents();
+  }
+  hideShowColumns();
+}
+
+void TabSeq::hideShowColumns()
+{
+//  int rows = m_oscCueList->rowCount();
+  for(int i = P_name; i < Wait; i++)
+  {
+    QString textData;
+    for(int j = 0; j < m_oscCueList->rowCount(); j++)
+    {
+      textData += m_oscCueList->data(m_oscCueList->index(j, i)).toString();
+    }
+    if (!textData.size()) tableView->hideColumn(i);
+    else tableView->showColumn(i);
   }
 }
 

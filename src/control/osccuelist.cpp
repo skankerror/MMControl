@@ -161,7 +161,11 @@ bool OscCueList::setData(const QModelIndex &index, const QVariant &value, int ro
     return true;
   }
 
-  OscSend *tempSend = getOscCue(getSendCueId(row) - 1)->getOscSend(getSendId(row) - 1);
+  OscCue *tempCue = getOscCue(getSendCueId(row) - 1);
+  OscSend *tempSend = tempCue->getOscSend(getSendId(row) - 1);
+  int oldTimeWait = tempSend->getTimewait();
+  int oldTime = tempSend->getTime();
+  int oldTotalTime = tempCue->getTotalTime();
 
   switch(col)
   {
@@ -184,8 +188,14 @@ bool OscCueList::setData(const QModelIndex &index, const QVariant &value, int ro
   case Lock: tempSend->setM_islocked(value.toBool()); break;
   case Depth: tempSend->setM_depth(value.toInt()); break;
   case Fade_In: tempSend->setIsfadein(value.toBool()); break;
-  case Time: tempSend->setTime(value.toDouble()); break;
-  case Wait: tempSend->setTimewait(value.toDouble()); break;
+  case Time:
+    tempSend->setTime(value.toDouble());
+    tempCue->setTotalTime(oldTotalTime - oldTime + value.toDouble()); // update temps
+    break;
+  case Wait:
+   tempSend->setTimewait(value.toDouble());
+   tempCue->setTotalTime(oldTotalTime - oldTimeWait + value.toDouble()); //update temps
+   break;
   case Note: tempSend->setNoteSend(value.toString()); break;
   default: break;
   }
@@ -228,7 +238,14 @@ QVariant OscCueList::headerData(int section, Qt::Orientation orientation, int ro
     }
     if (orientation == Qt::Vertical)
     {
-      if (isRowCue(section)) return QString("CUE %1").arg(getCueId(section));
+      if (isRowCue(section))
+      {
+        OscCue *osccue = getOscCue(getCueId(section) - 1);
+        QString value = QString("CUE %1 - ").arg(getCueId(section));
+        value += osccue->getNoteCue();
+//        return QString("CUE %1").arg(getCueId(section));
+        return value;
+      }
       else return QString("send %1").arg(getSendId(section));
       return QVariant();
     }
@@ -238,10 +255,14 @@ QVariant OscCueList::headerData(int section, Qt::Orientation orientation, int ro
 
 Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const
 {
-  if (getOscCueCount() && index.isValid() && index.row() > -1 && index.row() < rowCount() && !isRowCue(index.row()))
+  int cueCount = getOscCueCount();
+  int lineCount = rowCount();
+  int row = index.row();
+  int col = index.column();
+  bool isCue = isRowCue(row);
+
+  if (cueCount && index.isValid() && row > -1 && row < lineCount && !isCue)
   {
-    int row = index.row();
-    int col = index.column();
     OscSend *tempSend = getOscCue(getSendCueId(row) - 1)->getOscSend(getSendId(row) - 1);
     champMM champ = tempSend->getChamp();
     if (col == Champ || col == Wait || col == Note) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
@@ -277,19 +298,20 @@ Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const
     else if (champ ==  R_P_FADE) {if (col == P_name || col == Fade_In || col == Time) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
     else if (champ ==  R_P_XFADE) {if (col == P_name || col == P_name2 || col == Time) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
   }
-  if (getOscCueCount() && index.isValid() && index.row() > -1 && index.row() < rowCount() && isRowCue(index.row()))
+  if (cueCount && index.isValid() && row > -1 && row < lineCount && isCue)
   {
-    if (index.column() == Note) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
-    if (index.column() == Wait) return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+    if (col == Note) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
+    if (col == Wait) return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
   }
   return QAbstractTableModel::flags(index);
 }
 
-OscCue *OscCueList::getOscCue(const int vectAt) const // row pointer dans v_listCue
+OscCue *OscCueList::getOscCue(const int vectAt) const
 {
-  if (vectAt < 0 || vectAt > getOscCueCount() - 1) // aux méths de vérifier
+  if (vectAt < 0 || vectAt > getOscCueCount() - 1)
   {
     OscCue *voidCue = new OscCue();
+    qDebug() << "OscCuelist::getOscCue badly returned... problem";
     return voidCue;
   }
   return v_listCue.at(vectAt);
@@ -302,9 +324,10 @@ int OscCueList::getOscCueCount() const
 
 bool OscCueList::isRowCue(const int row) const
 {
-  if (!getOscCueCount()) return false;
+  int cueCount = getOscCueCount();
+  if (!cueCount) return false;
   int count = 0; // count pour repérer les cue dans la boucle for d'après
-  for (int i = 0; i < getOscCueCount(); i++)
+  for (int i = 0; i < cueCount; i++)
   {
     if (row == count) return true;
     count += getOscCue(i)->oscSendCount() + 1;
@@ -314,9 +337,14 @@ bool OscCueList::isRowCue(const int row) const
 
 int OscCueList::getCueId(const int row) const // retourne -1 si problème
 {
-  if (!isRowCue(row) || !getOscCueCount() || row > rowCount() - 1 || row < 0) return -1;
+  int cueCount = getOscCueCount();
+  if (!isRowCue(row) || !cueCount || row > rowCount() - 1 || row < 0)
+  {
+    qDebug() << "OscCueList::getCueId badly returned... problem";
+    return -1;
+  }
   int count = 0;
-  for (int i = 0; i < getOscCueCount(); i++)
+  for (int i = 0; i < cueCount; i++)
   {
     if (row == count)
     {
@@ -325,6 +353,7 @@ int OscCueList::getCueId(const int row) const // retourne -1 si problème
     }
     count += getOscCue(i)->oscSendCount() + 1;
   }
+  qDebug() << "OscCueList::getCueId badly returned... problem";
   return -1;
 }
 
@@ -382,6 +411,7 @@ int OscCueList::getLastCueRow() const // retourne -1 si problème
   {
     if (isRowCue(i)) lastCueRow = i;
   }
+  if (lastCueRow == -1) qDebug() << "OscCueList::getLasCueRow returned -1";
   return lastCueRow;
 }
 
@@ -440,44 +470,7 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
     QVariant value(val);
     switch(j)
     {
-    case Champ:
-      if (val.toStdString() == "NOOP") m_champInt = NOOP;
-      if (val.toStdString() == "PLAY") m_champInt = PLAY;
-      if (val.toStdString() == "PAUSE") m_champInt = PAUSE;
-      if (val.toStdString() == "REWIND") m_champInt = REWIND;
-      if (val.toStdString() == "QUIT") m_champInt = QUIT;
-      if (val.toStdString() == "P_NAME") m_champInt = P_NAME;
-      if (val.toStdString() == "P_REWIND") m_champInt = P_REWIND;
-      if (val.toStdString() == "P_OPACITY") m_champInt = P_OPACITY;
-      if (val.toStdString() == "P_VOLUME") m_champInt = P_VOLUME;
-      if (val.toStdString() == "P_RATE") m_champInt = P_RATE;
-      if (val.toStdString() == "P_URI") m_champInt = P_URI;
-      if (val.toStdString() == "P_COLOR") m_champInt = P_COLOR;
-      if (val.toStdString() == "M_NAME") m_champInt = M_NAME;
-      if (val.toStdString() == "M_OPACITY") m_champInt = M_OPACITY;
-      if (val.toStdString() == "M_VISIBLE") m_champInt = M_VISIBLE;
-      if (val.toStdString() == "M_SOLO") m_champInt = M_SOLO;
-      if (val.toStdString() == "M_LOCK") m_champInt = M_LOCK;
-      if (val.toStdString() == "M_DEPTH") m_champInt = M_DEPTH;
-      if (val.toStdString() == "P_XFADE") m_champInt = P_XFADE;
-      if (val.toStdString() == "P_FADE") m_champInt = P_FADE;
-      if (val.toStdString() == "R_P_NAME") m_champInt = R_P_NAME;
-      if (val.toStdString() == "R_P_REWIND") m_champInt = R_P_REWIND;
-      if (val.toStdString() == "R_P_OPACITY") m_champInt = R_P_OPACITY;
-      if (val.toStdString() == "R_P_VOLUME") m_champInt = R_P_VOLUME;
-      if (val.toStdString() == "R_P_RATE") m_champInt = R_P_RATE;
-      if (val.toStdString() == "R_P_URI") m_champInt = R_P_URI;
-      if (val.toStdString() == "R_P_COLOR") m_champInt = R_P_COLOR;
-      if (val.toStdString() == "R_M_NAME") m_champInt = R_M_NAME;
-      if (val.toStdString() == "R_M_OPACITY") m_champInt = R_M_OPACITY;
-      if (val.toStdString() == "R_M_VISIBLE") m_champInt = R_M_VISIBLE;
-      if (val.toStdString() == "R_M_SOLO") m_champInt = R_M_SOLO;
-      if (val.toStdString() == "R_M_LOCK") m_champInt = R_M_LOCK;
-      if (val.toStdString() == "R_M_DEPTH") m_champInt = R_M_DEPTH;
-      if (val.toStdString() == "R_P_FADE") m_champInt = R_P_FADE;
-      if (val.toStdString() == "R_P_XFADE") m_champInt = R_P_XFADE;
-//      qDebug() << "first val in getOscSendFromFile" << val << m_champInt;
-      break;
+    case Champ: m_champInt = OscSend::getChampFromString(val); break;
     case P_name: m_p_name = value.toString(); break;
     case P_name2: m_p_name2 = value.toString(); break;
     case Uri: m_p_uri = value.toString(); break;
