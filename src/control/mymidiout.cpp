@@ -20,7 +20,7 @@ void MyMidiOut::connectMidiOut(int portNumber, int ID)
 {
   if (ID == 1) RtMidiOut::openPort(portNumber, MYPORTNAME_OUT_1);
   else RtMidiOut::openPort(portNumber, MYPORTNAME_OUT_2);
-  if (RtMidiOut::isPortOpen()) qDebug() << "Midi Out " << ID << "opened on port #" << portNumber;
+  if (RtMidiOut::isPortOpen()) /*qDebug() << "Midi Out " << ID << "opened on port #" << portNumber*/;
   else qDebug() << "Midi Out " << ID << " not opened";
 }
 
@@ -29,7 +29,7 @@ void MyMidiOut::disconnectMidiOut()
   if (RtMidiOut::isPortOpen())
   {
     RtMidiOut::closePort();
-    qDebug() << "Port out closed";
+//    qDebug() << "Port out closed";
   }
   else qDebug() << "Port out was not opened...";
 }

@@ -60,7 +60,7 @@ void MainWindow::createToolBar()
 {
   myToolBar = addToolBar("MessageToolBar");
   QWidget *myToolBarWidget = new QWidget(this);
-  QHBoxLayout *layout = new QHBoxLayout(this);
+  QHBoxLayout *layout = new QHBoxLayout();
   // tout le temps
   champLabel = new QLabel("champ", this);
   champComboBox = new QComboBox(this);
@@ -620,11 +620,12 @@ void MainWindow::addToCue()
   default: break;
   }
   int row = tabseq->tableView->currentIndex().row();
-  qDebug() << "row selected : " << row;
+//  qDebug() << "row selected : " << row;
 
   if (!(row == -1)) // si l'index est valide
   {
     if (oscCueList->isRowCue(row)) oscCueList->addSend(oscsend, row); // si c'est une cue on add
+    // Sélectionner le dernier row de la cue
     else
     {
       oscCueList->insertSend(oscsend, row); // si c'est un send on ajoute
@@ -644,6 +645,7 @@ void MainWindow::addToCue()
     {
       int lastCueRow = oscCueList->getLastCueRow(); // On prend le row de la dernière cue
       oscCueList->addSend(oscsend, lastCueRow); // On ajoute le send
+      // Sélectionner lastRow
     }
   }
 }

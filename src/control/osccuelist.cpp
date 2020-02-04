@@ -393,14 +393,14 @@ OscCue *OscCueList::retOscCueFromFileLine(QStringList &lineToken)
   {
     QString val = lineToken.at(j);
     val = val.trimmed();
-    qDebug() << val << ", ";
+//    qDebug() << val << ", ";
     QVariant value(val);
     switch(j)
     {
     case Note - 1: m_noteCue = value.toString();
     }
   }
-  qDebug() << "Salut mec, le m_noteCue renvoie" << m_noteCue;
+//  qDebug() << "Salut mec, le m_noteCue renvoie" << m_noteCue;
   OscCue *osccue = new OscCue(this, 0, m_noteCue);
   return osccue;
 }
@@ -476,7 +476,7 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
       if (val.toStdString() == "R_M_DEPTH") m_champInt = R_M_DEPTH;
       if (val.toStdString() == "R_P_FADE") m_champInt = R_P_FADE;
       if (val.toStdString() == "R_P_XFADE") m_champInt = R_P_XFADE;
-      qDebug() << "first val in getOscSendFromFile" << val << m_champInt;
+//      qDebug() << "first val in getOscSendFromFile" << val << m_champInt;
       break;
     case P_name: m_p_name = value.toString(); break;
     case P_name2: m_p_name2 = value.toString(); break;
@@ -503,7 +503,7 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
     }
   m_champ = static_cast<champMM>(m_champInt);
   }
-  qDebug()<< "champ dans l'oscsend qui retourne" << m_champ;
+//  qDebug()<< "champ dans l'oscsend qui retourne" << m_champ;
 
   OscSend *oscsend = new OscSend(
         this,
@@ -540,7 +540,7 @@ void OscCueList::addCue(OscCue *osccue)
   beginInsertRows(indexTemp, rowCount(), rowCount());
   v_listCue.append(osccue);
   endInsertRows();
-  qDebug() << "cue added";
+//  qDebug() << "cue added";
 }
 
 void OscCueList::insertCue(OscCue *osccue, int rowCue)
@@ -553,14 +553,14 @@ void OscCueList::insertCue(OscCue *osccue, int rowCue)
     beginInsertRows(indexTemp, 1, 1);
     v_listCue.insert(0, osccue);
     endInsertRows();
-    qDebug() << "cue inserted";
+//    qDebug() << "cue inserted";
   }
   else
   {
     beginInsertRows(indexTemp, rowCue, rowCue);
     v_listCue.insert(cueId - 1, osccue);
     endInsertRows();
-    qDebug() << "cue inserted";
+//    qDebug() << "cue inserted";
   }
 }
 
@@ -592,7 +592,7 @@ void OscCueList::removeAllCue()
   {
     removeCue(0);
   }
-  qDebug() << "All cue removed";
+//  qDebug() << "All cue removed";
 }
 
 void OscCueList::addSend(OscSend *oscsend, int rowCue)

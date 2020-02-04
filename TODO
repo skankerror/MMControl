@@ -15,4 +15,8 @@
 -Vérifier le time total ça le prend pas sur l'édition. Rajouter dans le OscCueList::setData
  et rajouter NOOP
 
--Quand on ajoute un send le sélectionner.
+-Quand on ajoute un send le sélectionner. Quand on ajoute une cue aussi
+
+-Réussir à textelidemode sur la gauche pour la col uri
+
+-Trouver des icônes pour certains boutons

@@ -19,12 +19,7 @@
 
 OscCuelistDelegate::OscCuelistDelegate(QObject *parent):
   QStyledItemDelegate(parent)
-{
-//  QModelIndex index = QModelIndex();
-//  QStyleOptionViewItem option2;
-//  option2.textElideMode = Qt::ElideLeft;
-//  this->initStyleOption(&option2, index); //marche pas...
-}
+{}
 
 QWidget *OscCuelistDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
@@ -73,7 +68,6 @@ QWidget *OscCuelistDelegate::createEditor(QWidget *parent, const QStyleOptionVie
   {
     QColorDialog *colorDialog = new QColorDialog(parent);
     colorDialog->setOption(QColorDialog::DontUseNativeDialog, true);
-    /*QColorDialog::getColor(Qt::green, parent, "Select Color", QColorDialog::DontUseNativeDialog);*/
     return colorDialog;
   }
 
@@ -150,9 +144,9 @@ void OscCuelistDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptio
 
 void OscCuelistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-  QStyleOptionViewItem option2 = option; // mettre ça pour l'uri donc tout réécrire ??
-  option2.textElideMode = Qt::ElideLeft; // bien essayé mais ça marche pas !
+//  QStyleOptionViewItem option2 = option; // mettre ça pour l'uri donc tout réécrire ??
+//  option2.textElideMode = Qt::ElideLeft; // bien essayé mais ça marche pas !
 //  initStyleOption(&option2, index);
   /*if (index.column() == Uri) QStyledItemDelegate::paint(painter, option2, index);
-  else*/ QStyledItemDelegate::paint(painter, option2, index);
+  else*/ QStyledItemDelegate::paint(painter, option, index);
 }

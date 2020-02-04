@@ -53,8 +53,8 @@ void OscCue::addOscSend(OscSend *oscsend)
   if (champ == P_XFADE || champ == R_P_XFADE || champ == P_FADE || champ == R_P_FADE)
     m_totalTime += oscsend->getTime();
   m_totalTime += oscsend->getTimewait();
-  qDebug() << "OscCue::addOscSend success, new size for cue :" << oscSendCount()
-           << "totalTime =" << m_totalTime;
+//  qDebug() << "OscCue::addOscSend success, new size for cue :" << oscSendCount()
+//           << "totalTime =" << m_totalTime;
 }
 
 void OscCue::insertOscSend(int vectAt, OscSend *oscsend)
@@ -66,8 +66,8 @@ void OscCue::insertOscSend(int vectAt, OscSend *oscsend)
   if (champ == P_XFADE || champ == R_P_XFADE || champ == P_FADE || champ == R_P_FADE)
     m_totalTime += oscsend->getTime();
   m_totalTime += oscsend->getTimewait();
-  qDebug() << "OscCue::insertOscSend success, new size fur cue :" << oscSendCount()
-           << "totalTime =" << m_totalTime;
+//  qDebug() << "OscCue::insertOscSend success, new size fur cue :" << oscSendCount()
+//           << "totalTime =" << m_totalTime;
 }
 
 void OscCue::removeOscSend(int vectAt)
@@ -81,21 +81,21 @@ void OscCue::removeOscSend(int vectAt)
       m_totalTime -= oscsend->getTime();
     m_totalTime -= oscsend->getTimewait();
     v_listOscSend.remove(vectAt);
-  qDebug() << "OscCue::removeOscSend success at" << vectAt << "new size fur cue :" << oscSendCount()
-           << "totalTime =" << m_totalTime;
+//  qDebug() << "OscCue::removeOscSend success at" << vectAt << "new size fur cue :" << oscSendCount()
+//           << "totalTime =" << m_totalTime;
 }
 
 void OscCue::removeAllOscSend()
 {
   qDeleteAll(v_listOscSend);
   m_totalTime = 0;
-  qDebug() << "OscCue::removeAllOscSend success, new size fur cue :" << oscSendCount();
+//  qDebug() << "OscCue::removeAllOscSend success, new size fur cue :" << oscSendCount();
 }
 
 void OscCue::moveOscSendPrev(int vectAt) // row pointeur dans v_listOscSend
 { // vérifier ?
   if (vectAt < 1 || vectAt > oscSendCount() - 1) return;
   v_listOscSend.swapItemsAt(vectAt -1, vectAt);
-  qDebug() << "OscCue::moveOscSendPrev success, swap :" << vectAt - 1 << vectAt;
+//  qDebug() << "OscCue::moveOscSendPrev success, swap :" << vectAt - 1 << vectAt;
 }
 

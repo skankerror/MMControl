@@ -60,23 +60,52 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   OscCue *firstCue = new OscCue(this);
   m_oscCueList->addCue(firstCue);
 
-  layoutMain = new QHBoxLayout(this);
-  layout1 = new QHBoxLayout(this);
-  boutonLayout = new QVBoxLayout(this);
+  layoutMain = new QHBoxLayout();
+  layout1 = new QHBoxLayout();
+  boutonLayout = new QVBoxLayout();
+
   boutonPrev = new QPushButton(this);
-  boutonPrev->setText("<");
+  QIcon upIcon = QIcon(":/graphics/UpArrow");
+  boutonPrev->setIcon(upIcon);
+  boutonPrev->setFixedSize(80, 40);
+  boutonPrev->setIconSize(QSize(70, 30));
+
   boutonNext = new QPushButton(this);
-  boutonNext->setText(">");
+  QIcon downIcon = QIcon(":/graphics/DownArrow");
+  boutonNext->setIcon(downIcon);
+  boutonNext->setFixedSize(80, 40);
+  boutonNext->setIconSize(QSize(70, 30));
+
   boutonRemove = new QPushButton(this);
-  boutonRemove->setText("-");
+  QIcon binIcon = QIcon(":/graphics/Bin");
+  boutonRemove->setIcon(binIcon);
+  boutonRemove->setFixedSize(80, 40);
+  boutonRemove->setIconSize(QSize(70, 30));
+
   boutonAddCue = new QPushButton(this);
-  boutonAddCue->setText("Add Cue");
+  QIcon plusIcon = QIcon(":/graphics/Plus");
+  boutonAddCue->setIcon(plusIcon);
+  boutonAddCue->setFixedSize(80, 40);
+  boutonAddCue->setIconSize(QSize(70, 30));
+
   boutonGo = new QPushButton(this);
-  boutonGo->setText("GO !");
+  QIcon playIcon = QIcon(":/graphics/Play");
+  boutonGo->setIcon(playIcon);
+  boutonGo->setFixedSize(80, 40);
+  boutonGo->setIconSize(QSize(70, 30));
+
   boutonSaveAs = new QPushButton(this);
-  boutonSaveAs->setText("Save As");
+  QIcon saveIcon = QIcon(":/graphics/Save");
+  boutonSaveAs->setIcon(saveIcon);
+  boutonSaveAs->setFixedSize(80, 40);
+  boutonSaveAs->setIconSize(QSize(70, 30));
+
   boutonLoad = new QPushButton(this);
-  boutonLoad->setText("Load");
+  QIcon loadIcon = QIcon(":/graphics/Load");
+  boutonLoad->setIcon(loadIcon);
+  boutonLoad->setFixedSize(80, 40);
+  boutonLoad->setIconSize(QSize(70, 30));
+
   boutonLayout->addWidget(boutonPrev);
   boutonLayout->addWidget(boutonNext);
   boutonLayout->addWidget(boutonRemove);
@@ -172,7 +201,7 @@ void TabSeq::moveNext() // Bouger cue si c'est une cue, bouger send si c'est un 
 {
   QModelIndex index = tableView->currentIndex();
   int row = index.row();
-  qDebug() << "row selected" << row;
+//  qDebug() << "row selected" << row;
   if (!index.isValid() || row > m_oscCueList->rowCount() - 2) return; // Si c'est le dernier row on fait rien...
   if (m_oscCueList->isRowCue(row)) // Si c'est une cue
   {
@@ -196,7 +225,7 @@ void TabSeq::remove() // Bouger cue si c'est une cue, bouger send si c'est un se
 {
   QModelIndex index = tableView->currentIndex();
   int row = index.row();
-  qDebug() << "row selected" << row;
+//  qDebug() << "row selected" << row;
   if (!index.isValid() || row > m_oscCueList->rowCount() - 1) return;
   if (m_oscCueList->isRowCue(row))
   {
@@ -207,26 +236,29 @@ void TabSeq::remove() // Bouger cue si c'est une cue, bouger send si c'est un se
     m_oscCueList->removeSend(row);
   }
   if (!row) tableView->setCurrentIndex(m_oscCueList->index(0, 0));
-  else tableView->setCurrentIndex(m_oscCueList->index(row - 1, 0));
+  else tableView->setCurrentIndex(m_oscCueList->index(row - 1, 0)); // ça c'est plus simple que table view et cie
   tableView->resizeRowsToContents();
   tableView->resizeColumnsToContents();
 }
 
-void TabSeq::addCue() // Reste à voir le sélectionné
+void TabSeq::addCue() // Reste à voir le sélectionné // TODO rajouter index = currentindex et row ça sera plus simple
 {
   OscCue *newCue = new OscCue(this);
   if (!tableView->currentIndex().isValid() || tableView->currentIndex().row() == m_oscCueList->rowCount() - 1)
   {
     m_oscCueList->addCue(newCue);
+    tableView->setCurrentIndex(tableView->currentIndex().siblingAtRow(m_oscCueList->rowCount() - 1));
   }
   else if (m_oscCueList->isRowCue(tableView->currentIndex().row()))
   {
     m_oscCueList->insertCue(newCue, tableView->currentIndex().row());
+    tableView->setCurrentIndex(tableView->currentIndex().siblingAtRow(m_oscCueList->getRowCueFromCueId(m_oscCueList->getCueId(tableView->currentIndex().row()) - 1)));
   }
   else // send sélectionné
   {
     int sendCueId = m_oscCueList->getSendCueId(tableView->currentIndex().row());
     m_oscCueList->insertCue(newCue, m_oscCueList->getRowCueFromCueId(sendCueId + 1));
+    tableView->setCurrentIndex(tableView->currentIndex().siblingAtRow(tableView->currentIndex().row() + 1)); // pas bon
   }
   tableView->resizeRowsToContents();
   tableView->resizeColumnsToContents();

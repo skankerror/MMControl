@@ -32,7 +32,7 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   oscSendS = new OscSend(this, P_OPACITY); // Oscsend Slider
   oscSendB = new OscSend(this); // OscSend Buttons
 
-  layoutTotal = new QGridLayout(this);
+  layoutTotal = new QGridLayout();
 
   labelb9 = new QLabel("Source Rewind", this); labelb8 = new QLabel("Source Rate 200%", this); labelb7 = new QLabel("Source Rate 100%", this);
   labelb6 = new QLabel("Source Rate 50%", this); labelb5 = new QLabel("Source Rate -100%", this); labelb4 = new QLabel("Layer Solo", this);
@@ -297,13 +297,13 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   layoutTotal->setAlignment(S18, Qt::AlignHCenter);
 
   // Connect/Disconnect Midi
-  connectLayout1 = new QHBoxLayout(this);
+  connectLayout1 = new QHBoxLayout();
   connectMidi1 = new QPushButton(this);
   connectMidi1->setText("Connect");
   disconnectMidi1 = new QPushButton(this);
   disconnectMidi1->setText("Disconnect");
   midiPorts1 = new QComboBox(this);
-  connectLayout2 = new QHBoxLayout(this);
+  connectLayout2 = new QHBoxLayout();
   connectMidi2 = new QPushButton(this);
   connectMidi2->setText("Connect");
   disconnectMidi2 = new QPushButton(this);
@@ -470,12 +470,12 @@ void TabMidi::getPortNames()
   midiPorts2->clear();
   int nPorts = m_midiIn1->getPortCount();
 
-  qDebug() << "Api # : " << m_midiIn1->getCurrentApi();
-  qDebug() << "Nombre de ports : " << nPorts;
+//  qDebug() << "Api # : " << m_midiIn1->getCurrentApi();
+//  qDebug() << "Nombre de ports : " << nPorts;
 
   for (int i = 0; i < nPorts; i++)
   {
-    qDebug() << "Port #" << i << " : " << m_midiIn1->getPortName(i).c_str();
+//    qDebug() << "Port #" << i << " : " << m_midiIn1->getPortName(i).c_str();
     midiPorts1->addItem(m_midiIn1->getPortName(i).c_str());
     midiPorts2->addItem(m_midiIn2->getPortName(i).c_str());
   }

@@ -2,6 +2,13 @@
     <qresource prefix="/graphics">
         <file alias="Icon">MMControl.png</file>
         <file alias="Refresh">icons8-refresh-100.png</file>
+        <file alias="UpArrow">up-arrow.png</file>
+        <file alias="DownArrow">down-arrow.png</file>
+        <file alias="Bin">bin.png</file>
+        <file alias="Plus">plus.png</file>
+        <file alias="Play">play.png</file>
+        <file alias="Save">save.png</file>
+        <file alias="Load">load.png</file>
     </qresource>
     <qresource prefix="/"/>
     <qresource prefix="/qss">
