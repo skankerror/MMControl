@@ -70,12 +70,14 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   boutonGo->setIcon(playIcon);
   boutonGo->setFixedSize(80, 40);
   boutonGo->setIconSize(QSize(70, 30));
+  boutonGo->setShortcut(QKeySequence(Qt::Key_Space));
 
   boutonSaveAs = new QPushButton(this);
   QIcon saveIcon = QIcon(":/graphics/Save");
   boutonSaveAs->setIcon(saveIcon);
   boutonSaveAs->setFixedSize(80, 40);
   boutonSaveAs->setIconSize(QSize(70, 30));
+  boutonSaveAs->setShortcut(QKeySequence("Ctrl+S"));
 
   boutonLoad = new QPushButton(this);
   QIcon loadIcon = QIcon(":/graphics/Load");

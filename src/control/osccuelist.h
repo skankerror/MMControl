@@ -82,9 +82,11 @@ public slots:
   void removeAllSend(int cueRow);
 
 private:
-  QVector<OscCue *> v_listCue;
+  QList<OscCue *> v_listCue;
 
 };
+
+//*****************************************************************************
 
 class OscCueListProxy :
     public QSortFilterProxyModel

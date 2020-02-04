@@ -10,4 +10,9 @@
 
 - Quand on ajoute une cue la sélectionner
 
+-Quand on move cue la sélection n'est pas bonne
+Quand on descend ça sélectionne l'ancienne cue et quand on monte ça prend un send ??
+
+- tester la QList au lieu du QVector. Est-ce mieux ??
+
 

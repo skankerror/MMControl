@@ -48,12 +48,12 @@ QHeaderView {
   background: #414D59;
 }
 
-QHeaderView::section {
+/*QHeaderView::section {
     background: #55616f;
     color: white;
     border: 1px;
     padding: 3px;
-}
+}*/
 
 QGroupBox, QCheckBox {
     color: #E6E6E6; 

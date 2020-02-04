@@ -80,7 +80,7 @@ void OscCue::removeOscSend(int vectAt)
   if (champ == P_XFADE || champ == R_P_XFADE || champ == P_FADE || champ == R_P_FADE)
       m_totalTime -= oscsend->getTime();
     m_totalTime -= oscsend->getTimewait();
-    v_listOscSend.remove(vectAt);
+    v_listOscSend.removeAt(vectAt);
 //  qDebug() << "OscCue::removeOscSend success at" << vectAt << "new size fur cue :" << oscSendCount()
 //           << "totalTime =" << m_totalTime;
 }

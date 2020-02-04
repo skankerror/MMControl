@@ -51,7 +51,7 @@ public slots:
   void moveOscSendPrev(int vectAt);
 
 private:
-  QVector<OscSend *> v_listOscSend;
+  QList<OscSend *> v_listOscSend;
   double m_totalTime = 0;
   QString m_noteCue = "";
 

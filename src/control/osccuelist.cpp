@@ -246,10 +246,19 @@ QVariant OscCueList::headerData(int section, Qt::Orientation orientation, int ro
 //        return QString("CUE %1").arg(getCueId(section));
         return value;
       }
-      else return QString("send %1").arg(getSendId(section));
+      else return QString("send %1 -> ").arg(getSendId(section));
       return QVariant();
     }
   }
+  if (role == Qt::BackgroundRole)
+  {
+    if (orientation == Qt::Vertical && isRowCue(section))
+    {
+      QBrush yellowColor(QColor("#B8BF7E"));
+      return yellowColor;
+    }
+  }
+  if (role == Qt::TextAlignmentRole && orientation == Qt::Vertical && !isRowCue(section)) return Qt::AlignRight;
   return QVariant();
 }
 
@@ -573,7 +582,7 @@ void OscCueList::removeCue(int rowCue)
   QModelIndex indexTemp = QModelIndex();
   OscCue *tempCue = getOscCue(getCueId(rowCue) - 1); // On extrait la cue pour connaitre sa taille
   beginRemoveRows(indexTemp, rowCue, rowCue + tempCue->oscSendCount());
-  v_listCue.remove(getCueId(rowCue) - 1);
+  v_listCue.removeAt(getCueId(rowCue) - 1);
   endRemoveRows();
 }
 
@@ -683,6 +692,8 @@ void OscCueList::removeAllSend(int cueRow)
     removeSend(cueRow + 1);
   }
 }
+
+//***************************************************************************
 
 OscCueListProxy::OscCueListProxy(OscCueList *osccuelist, QObject *parent):
   QSortFilterProxyModel(parent),
