@@ -232,7 +232,7 @@ void OscSend::ExecuteFade(int ID1, double time, bool isfadein)
   }
 }
 
-void OscSend::ExecutePXFade(QString p_name, QString p_name2, double time)
+void OscSend::ExecutePXFade(const QString &p_name, const QString &p_name2, double time)
 {
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);
@@ -255,7 +255,7 @@ void OscSend::ExecutePXFade(QString p_name, QString p_name2, double time)
   }
 }
 
-void OscSend::ExecutePFade(QString p_name, double time, bool isfadein)
+void OscSend::ExecutePFade(const QString &p_name, double time, bool isfadein)
 {
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);
@@ -320,7 +320,7 @@ QString OscSend::getChampToString() const
   }
 }
 
-int OscSend::getChampFromString(QString value)
+int OscSend::getChampFromString(const QString &value)
 {
   if (value == "NOOP") return NOOP;
   if (value == "PLAY") return PLAY;

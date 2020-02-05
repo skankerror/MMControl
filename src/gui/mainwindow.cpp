@@ -59,8 +59,8 @@ void MainWindow::createCentralWidget()
 void MainWindow::createToolBar()
 {
   myToolBar = addToolBar("MessageToolBar");
-  QWidget *myToolBarWidget = new QWidget(this);
-  QHBoxLayout *layout = new QHBoxLayout();
+  auto *myToolBarWidget = new QWidget(this);
+  auto *layout = new QHBoxLayout();
   // tout le temps
   champLabel = new QLabel("champ", this);
   champComboBox = new QComboBox(this);
@@ -541,7 +541,7 @@ void MainWindow::showWidgets(int index)
 void MainWindow::sendFromToolBar()
 {
   champMM index = static_cast<champMM>(champComboBox->currentIndex());
-  OscSend *oscsend = new OscSend(
+  auto *oscsend = new OscSend(
         this,
         index,
         p_uriLine->text(),
@@ -589,7 +589,7 @@ void MainWindow::setP_ColorLine()
 void MainWindow::addToCue()
 {
   champMM index = static_cast<champMM>(champComboBox->currentIndex());
-  OscSend *oscsend = new OscSend(
+  auto *oscsend = new OscSend(
         this,
         index,
         p_uriLine->text(),
@@ -645,7 +645,7 @@ void MainWindow::addToCue()
   {
     if (!oscCueList->rowCount()) //S'il n'y a pas de row
     {
-      OscCue *newCue = new OscCue(this); // On crée une cue
+      auto *newCue = new OscCue(this); // On crée une cue
       oscCueList->addCue(newCue);
       oscCueList->addSend(oscsend, 0);
       //Sélectionner le row 1...

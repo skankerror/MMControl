@@ -38,7 +38,7 @@ OscSend* OscCue::getOscSend(int vectAt)
 {
   if (vectAt < 0 || vectAt > oscSendCount() - 1)
   {
-    OscSend *emptySend = new OscSend(this, NOOP);
+    auto *emptySend = new OscSend(this, NOOP);
     qDebug() << "getOscSend badly returned";
     return emptySend;
   }
@@ -80,7 +80,7 @@ void OscCue::removeOscSend(int vectAt)
   if (champ == P_XFADE || champ == R_P_XFADE || champ == P_FADE || champ == R_P_FADE)
       m_totalTime -= oscsend->getTime();
     m_totalTime -= oscsend->getTimewait();
-    v_listOscSend.removeAt(vectAt);
+    v_listOscSend.remove(vectAt);
 //  qDebug() << "OscCue::removeOscSend success at" << vectAt << "new size fur cue :" << oscSendCount()
 //           << "totalTime =" << m_totalTime;
 }

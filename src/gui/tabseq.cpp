@@ -255,36 +255,30 @@ void TabSeq::addCue() // Reste à voir le sélectionné // TODO rajouter index =
 void TabSeq::saveAs()
 {
   QString fileName = QFileDialog::getSaveFileName(this, "Choose File", "", "Csv Files (*.csv *.txt)");
-  if (fileName.isEmpty())
-    return;
-  else
-  {
+  if (fileName.isEmpty()) return;
     QFile file(fileName);
     if (!file.open(QIODevice::WriteOnly))
     {
       QMessageBox::information(this, "Unable to open file", file.errorString());
       return;
     }
-    else
-    {
-      QString textData;
-      int rows = m_oscCueList->rowCount();
-      int columns = m_oscCueList->columnCount();
+    QString textData;
+    int rows = m_oscCueList->rowCount();
+    int columns = m_oscCueList->columnCount();
 
-      for (int i = 0; i < rows; i++)
+    for (int i = 0; i < rows; i++)
+    {
+      for (int j = 0; j < columns; j++)
       {
-        for (int j = 0; j < columns; j++)
-        {
-            textData += m_oscCueList->data(m_oscCueList->index(i,j)).toString();
-            textData += ", ";
-        }
-        textData += "\n";
+        textData += m_oscCueList->data(m_oscCueList->index(i,j)).toString();
+        textData += ", ";
       }
+      textData += "\n";
       QTextStream out(&file);
       out << textData;
       file.close();
     }
-  }
+  
 }
 
 void TabSeq::loadFile()
@@ -294,45 +288,41 @@ void TabSeq::loadFile()
   msgBox.addButton(tr("OK"), QMessageBox::AcceptRole);
   msgBox.addButton(tr("CANCEL"), QMessageBox::RejectRole);
   if (msgBox.exec() == QMessageBox::RejectRole) return;
-  else
-  {
-    QString fileName = QFileDialog::getOpenFileName(this, "Choose File", "", "Csv Files (*.csv *.txt)");
-    QFile file(fileName);
-    if (fileName.isEmpty())
-    {
-      return;
-    }
-    if (file.open(QIODevice::ReadOnly))
-    {
-      m_oscCueList->removeAllCue();
-      int lineindex = 0;                     // file line counter
-      QTextStream in(&file);                 // read to text stream
-      while (!in.atEnd())
-      {
 
-        // read one line from textstream(separated by "\n")
-        QString fileLine = in.readLine();
-        // parse the read line into separate pieces(tokens) with "," as the delimiter
-        QStringList lineToken = fileLine.split(",", QString::SkipEmptyParts);
-        QString firstVal = lineToken.at(0);
-        firstVal = firstVal.trimmed();
-        if (firstVal == "")
-        {
-          OscCue *osccue = m_oscCueList->retOscCueFromFileLine(lineToken);
-          m_oscCueList->addCue(osccue);
-        }
-        else
-        {
-          OscSend *oscsend = m_oscCueList->retOscsendFromFileLine(lineToken);
-          m_oscCueList->addSend(oscsend, m_oscCueList->getLastCueRow());
-        }
+  QString fileName = QFileDialog::getOpenFileName(this, "Choose File", "", "Csv Files (*.csv *.txt)");
+  QFile file(fileName);
+  if (fileName.isEmpty()) return;
+
+  if (file.open(QIODevice::ReadOnly))
+  {
+    m_oscCueList->removeAllCue();
+    int lineindex = 0;                     // file line counter
+    QTextStream in(&file);                 // read to text stream
+    while (!in.atEnd())
+    {
+
+      // read one line from textstream(separated by "\n")
+      QString fileLine = in.readLine();
+      // parse the read line into separate pieces(tokens) with "," as the delimiter
+      QStringList lineToken = fileLine.split(",", QString::SkipEmptyParts);
+      QString firstVal = lineToken.at(0);
+      firstVal = firstVal.trimmed();
+      if (firstVal == "")
+      {
+        OscCue *osccue = m_oscCueList->retOscCueFromFileLine(lineToken);
+        m_oscCueList->addCue(osccue);
       }
-      lineindex++;
+      else
+      {
+        OscSend *oscsend = m_oscCueList->retOscsendFromFileLine(lineToken);
+        m_oscCueList->addSend(oscsend, m_oscCueList->getLastCueRow());
+      }
     }
-    file.close();
-    tableView->resizeRowsToContents();
-    tableView->resizeColumnsToContents();
+    lineindex++;
   }
+  file.close();
+  tableView->resizeRowsToContents();
+  tableView->resizeColumnsToContents();
   hideShowColumns();
 }
 

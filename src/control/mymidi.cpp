@@ -41,7 +41,7 @@ void MyMidiIn::sendMidiToOsc(double deltatime,
 {
   Q_UNUSED(deltatime)
   // On caste le void* pour pouvoir le déréférencer.
-  MyMidiIn *unMidiIn = static_cast<MyMidiIn*>(userData);
+  auto *unMidiIn = static_cast<MyMidiIn*>(userData);
 
   if ((int)unMessage->at(0) == MIDI_CONTROL)
   {

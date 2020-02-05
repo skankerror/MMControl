@@ -70,14 +70,14 @@ public slots:
   void ExecuteSend();
   void ExecuteXFade(int ID1, int ID2, double time);
   void ExecuteFade(int ID1, double time, bool isfadein);
-  void ExecutePXFade(QString p_name1, QString p_name2, double time);
-  void ExecutePFade(QString p_name, double time, bool isfadein);
+  void ExecutePXFade(const QString &p_name1, const QString &p_name2, double time);
+  void ExecutePFade(const QString &p_name, double time, bool isfadein);
 
 public:
   //Getters
   champMM getChamp() const { return m_champ; };
   QString getChampToString() const;
-  static int getChampFromString(QString value);
+  static int getChampFromString(const QString &value);
   QString getP_uri() const { return m_p_uri; };
   QString getP_name() const { return m_p_name; };
   QString getP_name2() const{ return m_p_name2; };

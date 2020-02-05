@@ -1,4 +1,4 @@
-/*
+﻿/*
  * (c) 2020 Michaël Creusy -- creusy(.)michael(@)gmail(.)com
  *
  * This program is free software: you can redistribute it and/or modify

@@ -29,7 +29,7 @@ OscCueList::~OscCueList()
 int OscCueList::rowCount(const QModelIndex &index) const
 {
   int count = getOscCueCount();
-  if (v_listCue.size())
+  if (!v_listCue.empty())
   {
     for (int i = 0; i < getOscCueCount(); i++)
     {
@@ -163,9 +163,9 @@ bool OscCueList::setData(const QModelIndex &index, const QVariant &value, int ro
 
   OscCue *tempCue = getOscCue(getSendCueId(row) - 1);
   OscSend *tempSend = tempCue->getOscSend(getSendId(row) - 1);
-  int oldTimeWait = tempSend->getTimewait();
-  int oldTime = tempSend->getTime();
-  int oldTotalTime = tempCue->getTotalTime();
+  double oldTimeWait = tempSend->getTimewait();
+  double oldTime = tempSend->getTime();
+  double oldTotalTime = tempCue->getTotalTime();
 
   switch(col)
   {
@@ -246,9 +246,9 @@ QVariant OscCueList::headerData(int section, Qt::Orientation orientation, int ro
 //        return QString("CUE %1").arg(getCueId(section));
         return value;
       }
-      else return QString("send %1 -> ").arg(getSendId(section));
-      return QVariant();
+      return QString("send %1 -> ").arg(getSendId(section));
     }
+//    return QVariant();
   }
   if (role == Qt::BackgroundRole)
   {
@@ -275,37 +275,37 @@ Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const
     OscSend *tempSend = getOscCue(getSendCueId(row) - 1)->getOscSend(getSendId(row) - 1);
     champMM champ = tempSend->getChamp();
     if (col == Champ || col == Wait || col == Note) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
-    else if (champ == P_NAME) {if (col == P_name || col == P_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ == P_REWIND) {if (col == P_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ == P_REWIND) {if (col == P_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ == P_COLOR) {if (col == Color || col == P_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ == P_OPACITY) {if (col == P_Id || col == P_opac) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ == P_VOLUME) {if (col == P_Id || col == Vol) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ == P_RATE) {if (col == P_Id || col == Rate) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ == P_URI) {if (col == Uri || col == P_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ == M_NAME) {if (col == M_name || col == M_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ == M_OPACITY) {if (col == M_Id || col == M_opac) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ == M_VISIBLE) {if (col == M_Id || col == Visible) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ == M_SOLO) {if (col == M_Id || col == Solo) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ == M_LOCK) {if (col == M_Id || col == Lock) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ == M_DEPTH) {if (col == M_Id || col == Depth) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ == P_XFADE) {if (col == P_Id || col == P_Id2 || col == Time) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ == P_FADE) {if (col == P_Id || col == Fade_In || col == Time) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ == R_P_NAME) {if (col == P_name || col == P_name2)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ == R_P_REWIND) {if (col == P_name) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ ==  R_P_OPACITY) {if (col == P_name || col == P_opac) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ ==  R_P_VOLUME) {if (col == P_name || col == Vol) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ ==  R_P_RATE) {if (col == P_name || col == Rate) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ ==  R_P_URI) {if (col == P_name || col == Uri) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ ==  R_P_COLOR) {if (col == P_name || col == Color) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ ==  R_M_NAME) {if (col == M_name || col == M_name2) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ ==  R_M_OPACITY) {if (col == M_name || col == M_opac) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ ==  R_M_VISIBLE) {if (col == M_name || col == Visible) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ ==  R_M_SOLO) {if (col == M_name || col == Solo) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ ==  R_M_LOCK) {if (col == M_name || col == Lock) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ ==  R_M_DEPTH) {if (col ==M_name || col == Depth) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ ==  R_P_FADE) {if (col == P_name || col == Fade_In || col == Time) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    else if (champ ==  R_P_XFADE) {if (col == P_name || col == P_name2 || col == Time) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ == P_NAME) {if (col == P_name || col == P_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ == P_REWIND) {if (col == P_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+//    if (champ == P_REWIND) {if (col == P_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ == P_COLOR) {if (col == Color || col == P_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ == P_OPACITY) {if (col == P_Id || col == P_opac) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ == P_VOLUME) {if (col == P_Id || col == Vol) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ == P_RATE) {if (col == P_Id || col == Rate) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ == P_URI) {if (col == Uri || col == P_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ == M_NAME) {if (col == M_name || col == M_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ == M_OPACITY) {if (col == M_Id || col == M_opac) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ == M_VISIBLE) {if (col == M_Id || col == Visible) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ == M_SOLO) {if (col == M_Id || col == Solo) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ == M_LOCK) {if (col == M_Id || col == Lock) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ == M_DEPTH) {if (col == M_Id || col == Depth) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ == P_XFADE) {if (col == P_Id || col == P_Id2 || col == Time) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ == P_FADE) {if (col == P_Id || col == Fade_In || col == Time) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ == R_P_NAME) {if (col == P_name || col == P_name2)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ == R_P_REWIND) {if (col == P_name) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ ==  R_P_OPACITY) {if (col == P_name || col == P_opac) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ ==  R_P_VOLUME) {if (col == P_name || col == Vol) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ ==  R_P_RATE) {if (col == P_name || col == Rate) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ ==  R_P_URI) {if (col == P_name || col == Uri) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ ==  R_P_COLOR) {if (col == P_name || col == Color) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ ==  R_M_NAME) {if (col == M_name || col == M_name2) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ ==  R_M_OPACITY) {if (col == M_name || col == M_opac) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ ==  R_M_VISIBLE) {if (col == M_name || col == Visible) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ ==  R_M_SOLO) {if (col == M_name || col == Solo) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ ==  R_M_LOCK) {if (col == M_name || col == Lock) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ ==  R_M_DEPTH) {if (col ==M_name || col == Depth) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ ==  R_P_FADE) {if (col == P_name || col == Fade_In || col == Time) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+    if (champ ==  R_P_XFADE) {if (col == P_name || col == P_name2 || col == Time) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
   }
   if (cueCount && index.isValid() && row > -1 && row < lineCount && isCue)
   {
@@ -319,7 +319,7 @@ OscCue *OscCueList::getOscCue(const int vectAt) const
 {
   if (vectAt < 0 || vectAt > getOscCueCount() - 1)
   {
-    OscCue *voidCue = new OscCue();
+    auto *voidCue = new OscCue();
     qDebug() << "OscCuelist::getOscCue badly returned... problem";
     return voidCue;
   }
@@ -507,7 +507,7 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
   }
 //  qDebug()<< "champ dans l'oscsend qui retourne" << m_champ;
 
-  OscSend *oscsend = new OscSend(
+  auto *oscsend = new OscSend(
         this,
         m_champ,
         m_p_uri,
@@ -582,7 +582,7 @@ void OscCueList::removeCue(int rowCue)
   QModelIndex indexTemp = QModelIndex();
   OscCue *tempCue = getOscCue(getCueId(rowCue) - 1); // On extrait la cue pour connaitre sa taille
   beginRemoveRows(indexTemp, rowCue, rowCue + tempCue->oscSendCount());
-  v_listCue.removeAt(getCueId(rowCue) - 1);
+  v_listCue.remove(getCueId(rowCue) - 1);
   endRemoveRows();
 }
 
@@ -704,7 +704,7 @@ QVariant OscCueListProxy::data(const QModelIndex &index, int role) const
 {
   int row = index.row();
   int col = index.column();
-  QBrush salmonColor(QColor("#59271E"));
+//  QBrush salmonColor(QColor("#59271E"));
   if (!m_oscCueList->isRowCue(row) && index.flags().testFlag(Qt::ItemIsEditable) && index.isValid() && row > -1
       && row < m_oscCueList->rowCount() && col == Uri)
   {
@@ -714,7 +714,7 @@ QVariant OscCueListProxy::data(const QModelIndex &index, int role) const
     {
     case Qt::DisplayRole:
       QString tempString = tempSend->getP_uri();
-      for (int i = tempString.size(); i > 0; --i)
+      for (int i = tempString.size() - 1; i > 0; --i)
       {
         if (tempString.at(i) == QChar('/'))
         {

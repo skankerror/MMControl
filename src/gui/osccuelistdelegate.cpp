@@ -25,7 +25,7 @@ QWidget *OscCuelistDelegate::createEditor(QWidget *parent, const QStyleOptionVie
 {
   if (index.column() == Champ)
   {
-    QComboBox *champComboBox = new QComboBox(parent);
+    auto *champComboBox = new QComboBox(parent);
     champComboBox->addItem("NOOP");
     champComboBox->addItem("PLAY");
     champComboBox->addItem("PAUSE");
@@ -66,14 +66,14 @@ QWidget *OscCuelistDelegate::createEditor(QWidget *parent, const QStyleOptionVie
 
   if (index.column() == Color)
   {
-    QColorDialog *colorDialog = new QColorDialog(parent);
+    auto *colorDialog = new QColorDialog(parent);
     colorDialog->setOption(QColorDialog::DontUseNativeDialog, true);
     return colorDialog;
   }
 
   if (index.column() == Uri)
   {
-    QFileDialog *fileDialog = new QFileDialog(parent);
+    auto *fileDialog = new QFileDialog(parent);
     fileDialog->setFileMode(QFileDialog::ExistingFile);
     fileDialog->setNameFilter("Media Files (*.png *.jpg *.gif *.tif *.mov *.avi *.mp4)");
     return fileDialog;
@@ -85,7 +85,7 @@ void OscCuelistDelegate::setEditorData(QWidget *editor, const QModelIndex &index
 {
   if (index.column() == Champ)
   {
-    QComboBox *comboBox = qobject_cast<QComboBox *>(editor);
+    auto *comboBox = qobject_cast<QComboBox *>(editor);
     if (comboBox)
     {
       int champInt = index.model()->data(index).toInt();
@@ -96,7 +96,7 @@ void OscCuelistDelegate::setEditorData(QWidget *editor, const QModelIndex &index
   }
   if (index.column() == Color)
   {
-    QColorDialog *colorDialog = qobject_cast<QColorDialog *>(editor);
+    auto *colorDialog = qobject_cast<QColorDialog *>(editor);
     if (editor)
     {
       QColor color = QColor(index.model()->data(index).toString());
@@ -113,20 +113,20 @@ void OscCuelistDelegate::setModelData(QWidget *editor, QAbstractItemModel *model
 {
   if (index.column() == Champ)
   {
-    QComboBox *comboBox = qobject_cast<QComboBox *>(editor);
+    auto *comboBox = qobject_cast<QComboBox *>(editor);
     if (editor) model->setData(index, comboBox->currentIndex());
   }
 
   else if (index.column() == Color)
   {
-    QColorDialog *colorDialog = qobject_cast<QColorDialog *>(editor);
-    QString string;
+    auto *colorDialog = qobject_cast<QColorDialog *>(editor);
+//    QString string;
     if (editor) model->setData(index, colorDialog->selectedColor().name());
   }
 
   else if (index.column() == Uri)
   {
-    QFileDialog *fileDialog = qobject_cast<QFileDialog *>(editor);
+    auto *fileDialog = qobject_cast<QFileDialog *>(editor);
     if (editor) model->setData(index, fileDialog->selectedFiles());
   }
 
