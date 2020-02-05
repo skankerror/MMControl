@@ -303,14 +303,12 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   // Connect/Disconnect Midi
   connectLayout1 = new QHBoxLayout();
   connectMidi1 = new QPushButton(this);
-//  connectMidi1->setText("Connect");
   QIcon connectIcon = QIcon(":/graphics/Connect");
   connectMidi1->setIcon(connectIcon);
   connectMidi1->setFixedSize(80, 40);
   connectMidi1->setIconSize(QSize(70, 30));
 
   disconnectMidi1 = new QPushButton(this);
-//  disconnectMidi1->setText("Disconnect");
   QIcon disconnectIcon = QIcon(":/graphics/Disconnect");
   disconnectMidi1->setIcon(disconnectIcon);
   disconnectMidi1->setFixedSize(80, 40);
@@ -319,13 +317,11 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   midiPorts1 = new QComboBox(this);
   connectLayout2 = new QHBoxLayout();
   connectMidi2 = new QPushButton(this);
-//  connectMidi2->setText("Connect");
   connectMidi2->setIcon(connectIcon);
   connectMidi2->setFixedSize(80, 40);
   connectMidi2->setIconSize(QSize(70, 30));
 
   disconnectMidi2 = new QPushButton(this);
-//  disconnectMidi2->setText("Disconnect");
   disconnectMidi2->setIcon(disconnectIcon);
   disconnectMidi2->setFixedSize(80, 40);
   disconnectMidi2->setIconSize(QSize(70, 30));
@@ -496,12 +492,8 @@ void TabMidi::getPortNames()
   midiPorts2->clear();
   int nPorts = m_midiIn1->getPortCount();
 
-//  qDebug() << "Api # : " << m_midiIn1->getCurrentApi();
-//  qDebug() << "Nombre de ports : " << nPorts;
-
   for (int i = 0; i < nPorts; i++)
   {
-//    qDebug() << "Port #" << i << " : " << m_midiIn1->getPortName(i).c_str();
     midiPorts1->addItem(m_midiIn1->getPortName(i).c_str());
     midiPorts2->addItem(m_midiIn2->getPortName(i).c_str());
   }
@@ -961,6 +953,7 @@ void TabMidi::slotDisconnectMidi2()
   m_midiOut2->allBoutonVisibleOff();
   m_midiOut2->sendBoutonOff(83);
   m_midiOut2->sendBoutonOff(84);
+  m_midiOut2->sendBoutonOff(86);
   m_midiIn2->disconnectMidiIn();
   m_midiOut2->disconnectMidiOut();
 }

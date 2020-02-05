@@ -19,8 +19,7 @@
 #define TABMIDI_H
 
 #include <QtWidgets>
-#include "mymidiin.h"
-#include "mymidiout.h"
+#include "mymidi.h"
 #include "oscsend.h"
 
 class TabMidi : public QWidget

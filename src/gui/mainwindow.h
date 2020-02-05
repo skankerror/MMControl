@@ -20,8 +20,7 @@
 
 #include <QtWidgets>
 #include "mmstate.h"
-#include "mymidiin.h"
-#include "mymidiout.h"
+#include "mymidi.h"
 #include "tableview.h"
 #include "tabmidi.h"
 #include "tabseq.h"

@@ -16,6 +16,7 @@ INCLUDEPATH += \
     $$PWD/contrib/oscpack/ip
 
 SOURCES += \
+    src/control/mymidi.cpp \
     src/control/osccue.cpp \
     src/gui/osccuelistdelegate.cpp \
     src/main.cpp \
@@ -25,8 +26,6 @@ SOURCES += \
     contrib/oscpack/ip/NetworkingUtils.cpp \
     contrib/oscpack/ip/IpEndpointName.cpp \
     src/gui/mainwindow.cpp \
-    src/control/mymidiin.cpp \
-    src/control/mymidiout.cpp \
     src/gui/tableview.cpp \
     src/gui/tabmidi.cpp \
     src/gui/tabseq.cpp \
@@ -37,10 +36,9 @@ SOURCES += \
 
 HEADERS += \
     src/MMC.h \
+    src/control/mymidi.h \
     src/control/osccue.h \
     src/gui/mainwindow.h \
-    src/control/mymidiin.h \
-    src/control/mymidiout.h \
     src/gui/osccuelistdelegate.h \
     src/gui/tableview.h \
     src/gui/tabmidi.h \

@@ -25,8 +25,7 @@
 #include <unistd.h>
 #include "osccuelist.h"
 #include "tableview.h"
-#include "mymidiin.h"
-#include "mymidiout.h"
+#include "mymidi.h"
 #include "osccuelistdelegate.h"
 #include "MMC.h"
 

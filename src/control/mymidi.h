@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MYMIDIIN_H
-#define MYMIDIIN_H
+#ifndef MYMIDI_H
+#define MYMIDI_H
 
 #include <QObject>
 #include <rtmidi/RtMidi.h>
@@ -53,4 +53,27 @@ private slots:
   void midiNoteChanged(int unBouton);
 };
 
-#endif // MYMIDIIN_H
+//****************************************************
+
+class MyMidiOut : public QObject, public RtMidiOut
+{
+  Q_OBJECT
+public:
+  MyMidiOut(QObject *parent = nullptr,
+            RtMidi::Api api = LINUX_ALSA,
+            const std::string &clientName = "MMControl Output Client");
+  ~MyMidiOut();
+
+public slots:
+  void connectMidiOut(int portNumber, int ID);
+  void disconnectMidiOut();
+  void allBoutonVisibleOff();
+  void allBoutonVisibleOn();
+  void allBoutonSoloOff();
+  void allBoutonSoloOn();
+  void sendBoutonOn(int id);
+  void sendBoutonOff(int id);
+
+};
+
+#endif // MYMIDI_H
