@@ -278,12 +278,16 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   labelAllVisibleOn = new QLabel("All Visible On", this);
   labelAllSoloOff = new QLabel("All Solo Off", this);
   labelAllSoloOn = new QLabel("All Solo On", this);
+  labelGoBack = new QLabel("", this);
+  labelGo = new QLabel("GO !", this);
   labelPause = new QLabel("Pause", this);
   labelPlay = new QLabel("Play", this);
   labelRewind = new QLabel("Rewind", this);
   layoutTotal->addWidget(labelRewind, 0, 20);
   layoutTotal->addWidget(labelPlay, 1, 20);
   layoutTotal->addWidget(labelPause, 2, 20);
+  layoutTotal->addWidget(labelGoBack, 3, 20);
+  layoutTotal->addWidget(labelGo, 4, 20);
   layoutTotal->addWidget(labelAllSoloOn, 5, 20);
   layoutTotal->addWidget(labelAllSoloOff, 6, 20);
   layoutTotal->addWidget(labelAllVisibleOn, 7, 20);
@@ -299,19 +303,41 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   // Connect/Disconnect Midi
   connectLayout1 = new QHBoxLayout();
   connectMidi1 = new QPushButton(this);
-  connectMidi1->setText("Connect");
+//  connectMidi1->setText("Connect");
+  QIcon connectIcon = QIcon(":/graphics/Connect");
+  connectMidi1->setIcon(connectIcon);
+  connectMidi1->setFixedSize(80, 40);
+  connectMidi1->setIconSize(QSize(70, 30));
+
   disconnectMidi1 = new QPushButton(this);
-  disconnectMidi1->setText("Disconnect");
+//  disconnectMidi1->setText("Disconnect");
+  QIcon disconnectIcon = QIcon(":/graphics/Disconnect");
+  disconnectMidi1->setIcon(disconnectIcon);
+  disconnectMidi1->setFixedSize(80, 40);
+  disconnectMidi1->setIconSize(QSize(70, 30));
+
   midiPorts1 = new QComboBox(this);
   connectLayout2 = new QHBoxLayout();
   connectMidi2 = new QPushButton(this);
-  connectMidi2->setText("Connect");
+//  connectMidi2->setText("Connect");
+  connectMidi2->setIcon(connectIcon);
+  connectMidi2->setFixedSize(80, 40);
+  connectMidi2->setIconSize(QSize(70, 30));
+
   disconnectMidi2 = new QPushButton(this);
-  disconnectMidi2->setText("Disconnect");
+//  disconnectMidi2->setText("Disconnect");
+  disconnectMidi2->setIcon(disconnectIcon);
+  disconnectMidi2->setFixedSize(80, 40);
+  disconnectMidi2->setIconSize(QSize(70, 30));
+
+
   midiPorts2 = new QComboBox(this);
   refreshPorts = new QPushButton(this);
   QIcon icon = QIcon(":/graphics/Refresh");
   refreshPorts->setIcon(icon);
+  refreshPorts->setFixedSize(60, 40);
+  refreshPorts->setIconSize(QSize(50, 30));
+
   getPortNames();
   connectLayout1->addWidget(connectMidi1);
   connectLayout1->addWidget(midiPorts1);

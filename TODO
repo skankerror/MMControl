@@ -12,6 +12,7 @@
 
 -Quand on move cue la sélection n'est pas bonne
 Quand on descend ça sélectionne l'ancienne cue et quand on monte ça prend un send ??
+Quand on monte un send dans une autre cue ça sélectionne un au dessus
 
 - tester la QList au lieu du QVector. Est-ce mieux ??
 

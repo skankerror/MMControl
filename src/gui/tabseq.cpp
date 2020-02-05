@@ -84,6 +84,8 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   boutonLoad->setIcon(loadIcon);
   boutonLoad->setFixedSize(80, 40);
   boutonLoad->setIconSize(QSize(70, 30));
+  boutonLoad->setShortcut(QKeySequence("Ctrl+O"));
+
 
   boutonLayout->addWidget(boutonPrev);
   boutonLayout->addWidget(boutonNext);

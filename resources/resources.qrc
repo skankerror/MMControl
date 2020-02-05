@@ -9,6 +9,8 @@
         <file alias="Play">play.png</file>
         <file alias="Save">save.png</file>
         <file alias="Load">load.png</file>
+        <file alias="Connect">midi_connect.png</file>
+        <file alias="Disconnect">midi_disconnect.png</file>
     </qresource>
     <qresource prefix="/"/>
     <qresource prefix="/qss">

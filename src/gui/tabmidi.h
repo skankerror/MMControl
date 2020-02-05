@@ -156,7 +156,7 @@ private:
   QPushButton *B98_2; QPushButton *B89_2; QPushButton *B88_2; QPushButton *B87_2; QPushButton *B86_2; QPushButton *B85_2; QPushButton *B84_2; QPushButton *B83_2; QPushButton *B82_2;
 
   // Labels dernière colonne
-  QLabel *labelRewind; QLabel *labelPlay; QLabel *labelPause;
+  QLabel *labelRewind; QLabel *labelPlay; QLabel *labelPause; QLabel *labelGoBack; QLabel *labelGo;
   QLabel *labelAllSoloOn; QLabel *labelAllSoloOff; QLabel *labelAllVisibleOn; QLabel *labelAllVisibleOff;
 
   // Connect-Disconnect Midi
