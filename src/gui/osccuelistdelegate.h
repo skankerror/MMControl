@@ -19,7 +19,7 @@
 #define OSCCUELISTDELEGATE_H
 
 #include <QtWidgets>
-#include <QStyledItemDelegate>
+#include "oscsend.h"
 #include "MMC.h"
 
 class OscCuelistDelegate : public QStyledItemDelegate

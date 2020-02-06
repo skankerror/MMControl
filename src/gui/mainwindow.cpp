@@ -65,99 +65,66 @@ void MainWindow::createToolBar()
   // tout le temps
   champLabel = new QLabel("champ", this);
   champComboBox = new QComboBox(this);
-  champComboBox->addItem("NOOP");//0
-  champComboBox->addItem("PLAY");//1
-  champComboBox->addItem("PAUSE");//2
-  champComboBox->addItem("REWIND");//3
-  champComboBox->addItem("QUIT");//4
-  champComboBox->addItem("P_NAME");//5
-  champComboBox->addItem("P_REWIND");//6
-  champComboBox->addItem("P_OPACITY");//7
-  champComboBox->addItem("P_VOLUME");//8
-  champComboBox->addItem("P_RATE");//9
-  champComboBox->addItem("P_URI");//10
-  champComboBox->addItem("P_COLOR");//11
-  champComboBox->addItem("M_NAME");//12
-  champComboBox->addItem("M_OPACITY");//13
-  champComboBox->addItem("M_VISIBLE");//14
-  champComboBox->addItem("M_SOLO");//15
-  champComboBox->addItem("M_LOCK");//16
-  champComboBox->addItem("M_DEPTH");//17
-  champComboBox->addItem("P_XFADE");//18
-  champComboBox->addItem("P_FADE");//19
-  champComboBox->addItem("R_P_NAME");//20
-  champComboBox->addItem("R_P_REWIND");//21
-  champComboBox->addItem("R_P_OPACITY");//22
-  champComboBox->addItem("R_P_VOLUME");//23
-  champComboBox->addItem("R_P_RATE");//24
-  champComboBox->addItem("R_P_URI");//25
-  champComboBox->addItem("R_P_COLOR");//26
-  champComboBox->addItem("R_M_NAME");//27
-  champComboBox->addItem("R_M_OPACITY");//28
-  champComboBox->addItem("R_M_VISIBLE");//29
-  champComboBox->addItem("R_M_SOLO");//30
-  champComboBox->addItem("R_M_LOCK");//31
-  champComboBox->addItem("R_M_DEPTH");//32
-  champComboBox->addItem("R_P_FADE");//33
-  champComboBox->addItem("R_P_XFADE");//34
+  for (int i = 0; i < Count_champMM; i++) champComboBox->addItem(OscSend::getChampToString(i));
   champComboBox->setCurrentIndex(NOOP);
-  // 5 P_NAME, 20 R_P_NAME, 21 R_P_REWIND, 22 R_P_OPACITY, 23 R_P_VOLUME, 24 R_P_RATE, 25 R_P_URI, 26 R_P_COLOR, 33 R_P_FADE, 34 R_P_XFADE
+
+  // P_NAME, R_P_NAME, R_P_REWIND, R_P_OPACITY, R_P_VOLUME, R_P_RATE, R_P_URI, R_P_COLOR, R_P_FADE, R_P_XFADE
   p_nameLineEdit = new QLineEdit("Name", this);
-  // 20 R_P_NAME, 34 R_P_XFADE
+  // R_P_NAME, R_P_XFADE
   p_nameLineEdit2 = new QLineEdit("Name2", this);
-  // 10 P_URI, 25 R_P_URI
+  // P_URI, R_P_URI
   p_uriLine = new QLineEdit("Choose->", this);
   p_uriPushButton = new QPushButton("File", this);
-  // 11 P_COLOR
+  // P_COLOR
   p_colorLine = new QLineEdit("Choose->", this);
   p_colorPushButton = new QPushButton("Color", this);
-  // 5 P_NAME, 6 P_REWIND, 7 P_OPACITY, 8 P_VOLUME, 9 P_RATE, 10 P_URI, 11 P_COLOR, 18 P_XFADE, 19 P_FADE
+  // P_NAME, P_REWIND, P_OPACITY, P_VOLUME, P_RATE, P_URI, P_COLOR, P_XFADE, P_FADE
   p_ID1Label = new QLabel("ID", this);
   p_ID1SpinBox = new QSpinBox(this);
   p_ID1SpinBox->setMaximum(100);
   p_ID1SpinBox->setMinimum(1);
-  // 18 P_XFADE
+  // P_XFADE
   p_ID2Label = new QLabel("ID2", this);
   p_ID2SpinBox = new QSpinBox(this);
   p_ID2SpinBox->setMaximum(100);
   p_ID2SpinBox->setMinimum(1);
   p_ID2SpinBox->setValue(2);
-  // 9 P_RATE, 24 R_P_RATE
+  // P_RATE, R_P_RATE
   p_rateLabel = new QLabel("rate %", this);
   p_rateSpinBox = new QSpinBox(this);
   p_rateSpinBox->setMaximum(1000);
   p_rateSpinBox->setMinimum(-1000);
-  // 7 P_OPACITY, 22 R_P_OPACITY
+  // P_OPACITY, R_P_OPACITY
   p_opacityLabel = new QLabel("opacity %", this);
   p_opacitySpinBox = new QSpinBox(this);
   p_opacitySpinBox->setMaximum(100);
   p_opacitySpinBox->setMinimum(0);
-  // 8 P_VOLUME, 23 R_P_VOLUME
+  // P_VOLUME, R_P_VOLUME
   p_volumeLabel = new QLabel("volume %", this);
   p_volumeSpinBox = new QSpinBox(this);
   p_volumeSpinBox->setMaximum(100);
   p_volumeSpinBox->setMinimum(0);
-  // 12 M_NAME, 27 R_M_NAME, 28 R_M_OPACITY, 29 R_M_VISIBLE, 30 R_M_SOLO, 31 R_M_LOCK, 32 R_M_DEPTH,
+  // M_NAME, R_M_NAME, R_M_OPACITY, R_M_VISIBLE, R_M_SOLO, R_M_LOCK, R_M_DEPTH,
   m_nameLineEdit = new QLineEdit("Name", this);
-  // 27 R_M_NAME
+  // R_M_NAME
   m_nameLineEdit2 = new QLineEdit("Name2", this);
-  // 12 M_NAME, 13 M_OPACITY, 14 M_VISIBLE, 15 M_SOLO, 16 M_LOCK, 17 M_DEPTH
+  // M_NAME, M_OPACITY, M_VISIBLE, M_SOLO, M_LOCK, M_DEPTH
   m_IDLabel = new QLabel("ID", this);
   m_IDSpinBox = new QSpinBox(this);
   m_IDSpinBox->setMaximum(100);
   m_IDSpinBox->setMinimum(1);
-  // 13 M_OPACITY, 28 R_M_OPACITY
+  // M_OPACITY, R_M_OPACITY
   m_opacityLabel = new QLabel("opacity %", this);
   m_opacitySpinBox = new QSpinBox(this);
   m_opacitySpinBox->setMaximum(100);
   m_opacitySpinBox->setMinimum(0);
-  // 14 M_VISIBLE, 29 R_M_VISIBLE
+  // M_VISIBLE, R_M_VISIBLE
   m_visibleCheckBox = new QCheckBox("Visible", this);
-  // 15 M_SOLO, 30 R_M_SOLO
+  // M_SOLO, R_M_SOLO
   m_soloCheckBox = new QCheckBox("Solo", this);
-  // 16 M_LOCK, 31 R_M_LOCK
+  // M_LOCK, R_M_LOCK
   m_lockCheckBox = new QCheckBox("Lock", this);
-  // 17 M_DEPTH, 32 R_M_DEPTH
+  // M_DEPTH, R_M_DEPTH
   m_depthLabel = new QLabel("depth", this);
   m_depthSpinBox = new QSpinBox(this);
   // tout le temps ??
@@ -167,7 +134,7 @@ void MainWindow::createToolBar()
   timeSpinBox->setMinimum(0);
   timeSpinBox->setDecimals(1);
   timeSpinBox->setValue(2);
-  // 19 P_FADE, 33 R_P_FADE
+  // P_FADE, R_P_FADE
   fadeCheckBox = new QCheckBox("fade in", this);
   // tout le temps
   waitTimeLabel = new QLabel("waitTime in s", this);
@@ -180,43 +147,20 @@ void MainWindow::createToolBar()
   sendPushButton = new QPushButton("Send !", this);
   addToCuePushButton = new QPushButton("Add to Cue !", this);
 
-  layout->addWidget(champLabel);
-  layout->addWidget(champComboBox);
-  layout->addWidget(p_nameLineEdit);//5 P_NAME
-  layout->addWidget(p_nameLineEdit2);
-  layout->addWidget(p_uriLine);//10 P_URI
-  layout->addWidget(p_uriPushButton);//10 P_URI
-  layout->addWidget(p_colorLine);//11 P_COLOR
-  layout->addWidget(p_colorPushButton);//11 P_COLOR
-  layout->addWidget(p_ID1Label);//5,6,7,8,9,10,11,18,19 P_* M_*
-  layout->addWidget(p_ID1SpinBox);//5,6,7,8,9,10,11,18,19 P_* M_*
-  layout->addWidget(p_ID2Label);//18 P_XFADE
-  layout->addWidget(p_ID2SpinBox);//18 P_XFADE
-  layout->addWidget(p_rateLabel);//9 P_RATE
-  layout->addWidget(p_rateSpinBox);//9 P_RATE
-  layout->addWidget(p_opacityLabel);//7 P_OPACITY
-  layout->addWidget(p_opacitySpinBox);//7 P_OPACITY
-  layout->addWidget(p_volumeLabel);//8 P_VOLUME
-  layout->addWidget(p_volumeSpinBox);//8 P_VOLUME
-  layout->addWidget(m_nameLineEdit);//12 M_NAME
-  layout->addWidget(m_nameLineEdit2);
-  layout->addWidget(m_IDLabel);//12,13,14,15,16,17 M_*
-  layout->addWidget(m_IDSpinBox);//12,13,14,15,16,17 M_*
-  layout->addWidget(m_opacityLabel);//13 M_OPACITY
-  layout->addWidget(m_opacitySpinBox);//13 M_OPACITY
-  layout->addWidget(m_visibleCheckBox);//14 M_VISIBLE
-  layout->addWidget(m_soloCheckBox);//15 M_SOLO
-  layout->addWidget(m_lockCheckBox);//16 M_LOCK
-  layout->addWidget(m_depthLabel);//17 M_DEPTH
-  layout->addWidget(m_depthSpinBox);//17 M_DEPTH
-  layout->addWidget(fadeCheckBox);//19 P_FADE
-  layout->addWidget(timeLabel);// TOUS ??
-  layout->addWidget(timeSpinBox);// TOUS ??
-  layout->addWidget(waitTimeLabel);// TOUS
-  layout->addWidget(waitTimeSpinBox);// TOUS
+  layout->addWidget(champLabel); layout->addWidget(champComboBox); layout->addWidget(p_nameLineEdit);
+  layout->addWidget(p_nameLineEdit2); layout->addWidget(p_uriLine); layout->addWidget(p_uriPushButton);
+  layout->addWidget(p_colorLine); layout->addWidget(p_colorPushButton); layout->addWidget(p_ID1Label);
+  layout->addWidget(p_ID1SpinBox); layout->addWidget(p_ID2Label); layout->addWidget(p_ID2SpinBox);
+  layout->addWidget(p_rateLabel); layout->addWidget(p_rateSpinBox); layout->addWidget(p_opacityLabel);
+  layout->addWidget(p_opacitySpinBox); layout->addWidget(p_volumeLabel); layout->addWidget(p_volumeSpinBox);
+  layout->addWidget(m_nameLineEdit); layout->addWidget(m_nameLineEdit2); layout->addWidget(m_IDLabel);
+  layout->addWidget(m_IDSpinBox); layout->addWidget(m_opacityLabel); layout->addWidget(m_opacitySpinBox);
+  layout->addWidget(m_visibleCheckBox); layout->addWidget(m_soloCheckBox); layout->addWidget(m_lockCheckBox);
+  layout->addWidget(m_depthLabel); layout->addWidget(m_depthSpinBox); layout->addWidget(fadeCheckBox);
+  layout->addWidget(timeLabel); layout->addWidget(timeSpinBox); layout->addWidget(waitTimeLabel);
+  layout->addWidget(waitTimeSpinBox);
   layout->addStretch();
-  layout->addWidget(sendPushButton);
-  layout->addWidget(addToCuePushButton);
+  layout->addWidget(sendPushButton); layout->addWidget(addToCuePushButton);
 
   myToolBarWidget->setLayout(layout);
 

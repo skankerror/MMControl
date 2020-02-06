@@ -16,7 +16,6 @@
  */
 
 #include "tabmidi.h"
-//#include <cstdlib>
 
 TabMidi::TabMidi(MyMidiIn *midiIn1,
                  MyMidiIn *midiIn2,

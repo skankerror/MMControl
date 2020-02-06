@@ -26,41 +26,7 @@ QWidget *OscCuelistDelegate::createEditor(QWidget *parent, const QStyleOptionVie
   if (index.column() == Champ)
   {
     auto *champComboBox = new QComboBox(parent);
-    champComboBox->addItem("NOOP");
-    champComboBox->addItem("PLAY");
-    champComboBox->addItem("PAUSE");
-    champComboBox->addItem("REWIND");
-    champComboBox->addItem("QUIT");
-    champComboBox->addItem("P_NAME");
-    champComboBox->addItem("P_REWIND");
-    champComboBox->addItem("P_OPACITY");
-    champComboBox->addItem("P_VOLUME");
-    champComboBox->addItem("P_RATE");
-    champComboBox->addItem("P_URI");
-    champComboBox->addItem("P_COLOR");
-    champComboBox->addItem("M_NAME");
-    champComboBox->addItem("M_OPACITY");
-    champComboBox->addItem("M_VISIBLE");
-    champComboBox->addItem("M_SOLO");
-    champComboBox->addItem("M_LOCK");
-    champComboBox->addItem("M_DEPTH");
-    champComboBox->addItem("P_XFADE");
-    champComboBox->addItem("P_FADE");
-    champComboBox->addItem("R_P_NAME");
-    champComboBox->addItem("R_P_REWIND");
-    champComboBox->addItem("R_P_OPACITY");
-    champComboBox->addItem("R_P_VOLUME");
-    champComboBox->addItem("R_P_RATE");
-    champComboBox->addItem("R_P_URI");
-    champComboBox->addItem("R_P_COLOR");
-    champComboBox->addItem("R_M_NAME");
-    champComboBox->addItem("R_M_OPACITY");
-    champComboBox->addItem("R_M_VISIBLE");
-    champComboBox->addItem("R_M_SOLO");
-    champComboBox->addItem("R_M_LOCK");
-    champComboBox->addItem("R_M_DEPTH");
-    champComboBox->addItem("R_P_FADE");
-    champComboBox->addItem("R_P_XFADE");
+    for (int i = 0; i < Count_champMM; i++) champComboBox->addItem(OscSend::getChampToString(i));
     return champComboBox;
   }
 

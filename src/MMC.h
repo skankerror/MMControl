@@ -18,8 +18,6 @@
 #ifndef MMC_H
 #define MMC_H
 
-#include <QObject>
-
 // MainWindow
 #define WINDOW_TITLE "Mapmap Controller"
 #define X_WINDOW_OFFSET 200
@@ -34,41 +32,11 @@
 
 enum champMM
 {
-  NOOP = 0,
-  PLAY = 1,
-  PAUSE = 2,
-  REWIND = 3,
-  QUIT = 4,
-  P_NAME = 5,
-  P_REWIND = 6,
-  P_OPACITY = 7,
-  P_VOLUME = 8,
-  P_RATE = 9,
-  P_URI = 10,
-  P_COLOR = 11,
-  M_NAME = 12,
-  M_OPACITY = 13,
-  M_VISIBLE = 14,
-  M_SOLO = 15,
-  M_LOCK = 16,
-  M_DEPTH = 17,
-  P_XFADE = 18,
-  P_FADE = 19,
-  R_P_NAME = 20,
-  R_P_REWIND = 21,
-  R_P_OPACITY = 22,
-  R_P_VOLUME = 23,
-  R_P_RATE = 24,
-  R_P_URI = 25,
-  R_P_COLOR = 26,
-  R_M_NAME = 27,
-  R_M_OPACITY = 28,
-  R_M_VISIBLE = 29,
-  R_M_SOLO = 30,
-  R_M_LOCK = 31,
-  R_M_DEPTH = 32,
-  R_P_FADE = 33,
-  R_P_XFADE = 34
+  NOOP, PLAY, PAUSE, REWIND, QUIT, P_NAME, P_REWIND, P_OPACITY, P_VOLUME,
+  P_RATE, P_URI, P_COLOR, M_NAME, M_OPACITY, M_VISIBLE, M_SOLO, M_LOCK,
+  M_DEPTH, P_XFADE, P_FADE, R_P_NAME, R_P_REWIND, R_P_OPACITY, R_P_VOLUME,
+  R_P_RATE, R_P_URI, R_P_COLOR, R_M_NAME, R_M_OPACITY, R_M_VISIBLE, R_M_SOLO,
+  R_M_LOCK, R_M_DEPTH, R_P_FADE, R_P_XFADE, Count_champMM = R_P_XFADE + 1
 };
 
 // OscCueList

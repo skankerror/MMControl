@@ -76,7 +76,7 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const
     case Qt::DisplayRole: case Qt::EditRole:
       switch (col)
       {
-      case Champ: return tempSend->getChampToString(); break;
+      case Champ: return OscSend::getChampToString(tempSend->getChamp()); break;
       case P_name: return tempSend->getP_name(); break;
       case P_name2: return tempSend->getP_name2(); break;
       case Uri: return tempSend->getP_uri(); break;
@@ -318,9 +318,9 @@ OscCue *OscCueList::getOscCue(const int vectAt) const
 {
   if (vectAt < 0 || vectAt > getOscCueCount() - 1)
   {
-    auto *voidCue = new OscCue();
+//    auto *voidCue = new OscCue();
     qDebug() << "OscCuelist::getOscCue badly returned... problem";
-    return voidCue;
+    return nullptr;
   }
   return v_listCue.at(vectAt);
 }

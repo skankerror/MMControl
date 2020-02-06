@@ -276,9 +276,9 @@ void OscSend::ExecutePFade(const QString &p_name, double time, bool isfadein)
   }
 }
 
-QString OscSend::getChampToString() const
+QString OscSend::getChampToString(int champ)
 {
-  switch(m_champ)
+  switch(champ)
   {
   case NOOP: return QString("NOOP"); break;
   case PLAY: return QString("PLAY"); break;

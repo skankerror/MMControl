@@ -75,7 +75,7 @@ public slots:
 public:
   //Getters
   champMM getChamp() const { return m_champ; };
-  QString getChampToString() const;
+  static QString getChampToString(int champ);
   static int getChampFromString(const QString &value);
   QString getP_uri() const { return m_p_uri; };
   QString getP_name() const { return m_p_name; };
