@@ -720,7 +720,7 @@ QVariant OscCueListProxy::data(const QModelIndex &index, int role) const
           return tempString = tempString.right(tempString.size() - i - 1); break;
         }
       }
-      return tempString; // pour voir si ça marche
+      return tempString;
       break;
     }
   }

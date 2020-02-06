@@ -127,6 +127,7 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   connect(boutonLoad, SIGNAL(clicked(bool)), SLOT(loadFile()));
   connect(m_oscCueList, SIGNAL(dataChanged(QModelIndex, QModelIndex)), SLOT(hideShowColumns()));
   connect(midiIn2, SIGNAL(sigMidiNoteChanged(int)), this, SLOT(receiveMidiNote2(int)));
+//  connect(m_oscCueList, SIGNAL(dataChanged(QModelIndex, QMode)))
 }
 
 void TabSeq::executeGo()
@@ -255,31 +256,38 @@ void TabSeq::addCue() // Reste à voir le sélectionné // TODO rajouter index =
 void TabSeq::saveAs()
 {
   QString fileName = QFileDialog::getSaveFileName(this, "Choose File", "", "Csv Files (*.csv *.txt)");
-  if (fileName.isEmpty()) return;
+  if (fileName.isEmpty())
+    return;
+  else
+  {
     QFile file(fileName);
     if (!file.open(QIODevice::WriteOnly))
     {
       QMessageBox::information(this, "Unable to open file", file.errorString());
       return;
     }
-    QString textData;
-    int rows = m_oscCueList->rowCount();
-    int columns = m_oscCueList->columnCount();
-
-    for (int i = 0; i < rows; i++)
+    else
     {
-      for (int j = 0; j < columns; j++)
+      QString textData;
+      int rows = m_oscCueList->rowCount();
+      int columns = m_oscCueList->columnCount();
+
+      for (int i = 0; i < rows; i++)
       {
-        textData += m_oscCueList->data(m_oscCueList->index(i,j)).toString();
-        textData += ", ";
+        for (int j = 0; j < columns; j++)
+        {
+            textData += m_oscCueList->data(m_oscCueList->index(i,j)).toString();
+            textData += ", ";
+        }
+        textData += "\n";
       }
-      textData += "\n";
       QTextStream out(&file);
       out << textData;
       file.close();
     }
-  
+  }
 }
+
 
 void TabSeq::loadFile()
 {
@@ -346,5 +354,6 @@ void TabSeq::hideShowColumns()
     if (!textData.size()) tableView->hideColumn(i);
     else tableView->showColumn(i);
   }
+  tableView->resizeColumnsToContents();
 }
 
