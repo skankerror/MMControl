@@ -16,7 +16,6 @@
  */
 
 #include "oscsend.h"
-#include <QTimer>
 
 OscSend::OscSend(QObject *parent,
                  champMM champ,

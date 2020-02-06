@@ -19,8 +19,7 @@
 #define OSCCUE_H
 
 #include <QObject>
-#include <QThread>
-#include <QVariant>
+//#include <QThread> // A voir ?
 #include "oscsend.h"
 #include "MMC.h"
 

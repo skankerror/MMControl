@@ -21,7 +21,6 @@
 #include <QtWidgets>
 #include "mmstate.h"
 #include "mymidi.h"
-#include "tableview.h"
 #include "tabmidi.h"
 #include "tabseq.h"
 #include "tabmmstate.h"
@@ -38,6 +37,7 @@ public:
 
   void createCentralWidget();
   void createToolBar();
+  void createStatusBar();
 
 protected:
   void closeEvent(QCloseEvent *event) override;
@@ -58,7 +58,7 @@ private:
   MyMidiIn *midiIn2;
   MyMidiOut *midiOut1;
   MyMidiOut *midiOut2;
-  TableView *tableView;
+  QTableView *tableView;
 
   QIcon icon;
 
@@ -72,10 +72,8 @@ private:
     QComboBox *champComboBox;
     QLineEdit *p_nameLineEdit;
     QLineEdit *p_nameLineEdit2;
-//    QLabel *p_uriLabel;
     QLineEdit *p_uriLine;
     QPushButton *p_uriPushButton;
-//    QLabel *p_colorLabel;
     QLineEdit *p_colorLine;
     QPushButton *p_colorPushButton;
     QLabel *p_ID1Label;
@@ -107,6 +105,9 @@ private:
 
     QPushButton *sendPushButton;
     QPushButton *addToCuePushButton;
+
+    QStatusBar *statusBar;
+    QProgressBar *progressBar;
 
 };
 

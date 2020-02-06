@@ -19,7 +19,6 @@
 #define OSCSEND_H
 
 #include <QObject>
-#include <QString>
 #include <QFile>
 #include <QColor>
 #include <QDebug>

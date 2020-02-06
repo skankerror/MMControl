@@ -26,7 +26,6 @@ SOURCES += \
     contrib/oscpack/ip/NetworkingUtils.cpp \
     contrib/oscpack/ip/IpEndpointName.cpp \
     src/gui/mainwindow.cpp \
-    src/gui/tableview.cpp \
     src/gui/tabmidi.cpp \
     src/gui/tabseq.cpp \
     src/control/oscsend.cpp \
@@ -40,7 +39,6 @@ HEADERS += \
     src/control/osccue.h \
     src/gui/mainwindow.h \
     src/gui/osccuelistdelegate.h \
-    src/gui/tableview.h \
     src/gui/tabmidi.h \
     src/gui/tabseq.h \
     src/control/oscsend.h \

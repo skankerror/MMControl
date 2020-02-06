@@ -32,9 +32,10 @@ MainWindow::MainWindow() :
   midiIn2 = new MyMidiIn(this);
   midiOut1 = new MyMidiOut(this);
   midiOut2 = new MyMidiOut(this);
-  tableView = new TableView(this);
+  tableView = new QTableView(this);
   createToolBar();
   createCentralWidget();
+  createStatusBar();
 
   connect(champComboBox, SIGNAL(currentIndexChanged(int)), SLOT(showWidgets(int))); // Pour afficher les widgets
   connect(sendPushButton, SIGNAL(clicked()), SLOT(sendFromToolBar()));
@@ -232,6 +233,18 @@ void MainWindow::createToolBar()
   timeLabel->hide(); timeSpinBox->hide();
 
 }
+
+void MainWindow::createStatusBar()
+{
+  auto statusBar = new QStatusBar(this);
+  auto progressBar = new QProgressBar(this);
+  statusBar->addPermanentWidget(progressBar);
+  setStatusBar(statusBar);
+  progressBar->setRange(0, 100);
+  progressBar->setValue(80);
+//  statusBar->show();
+}
+
 void MainWindow::showWidgets(int index)
 {
   switch (index)

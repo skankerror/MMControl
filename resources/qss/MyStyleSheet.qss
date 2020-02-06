@@ -182,7 +182,7 @@ QDoubleSpinBox {
   color: white;
 }
 
-TableView  {
+QTableView  {
   background: #414D59;
 }
 
@@ -190,6 +190,6 @@ TabSeq {
   background: #414D59;
 }
 
-TableView QTableCornerButton::section {
+QTableView QTableCornerButton::section {
   background-color: #414D59;
 }

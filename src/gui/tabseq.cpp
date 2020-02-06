@@ -18,7 +18,7 @@
 #include "tabseq.h"
 
 TabSeq::TabSeq(OscCueList *oscCueList,
-               TableView *aTableView,
+               QTableView *aTableView,
                MyMidiIn *midiIn1,
                MyMidiIn *midiIn2,
                MyMidiOut *midiOut1,

@@ -19,7 +19,6 @@
 #define OSCCUELISTDELEGATE_H
 
 #include <QtWidgets>
-#include <QObject>
 #include <QStyledItemDelegate>
 #include "MMC.h"
 

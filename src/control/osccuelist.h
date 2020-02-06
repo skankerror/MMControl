@@ -19,14 +19,8 @@
 #define OSCCUELIST_H
 
 #include <QObject>
-#include <QVector>
-#include <QModelIndex>
 #include <QAbstractTableModel>
 #include <QSortFilterProxyModel>
-#include <QVariant>
-#include <QBrush>
-#include <QTextStream>
-#include <QStringList>
 #include "oscsend.h"
 #include "osccue.h"
 #include "osccuelistdelegate.h"

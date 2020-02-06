@@ -18,13 +18,8 @@
 #ifndef TABSEQ_H
 #define TABSEQ_H
 
-#include <QWidget>
 #include <QtWidgets>
-#include <QBoxLayout>
-#include <QTimer>
-#include <unistd.h>
 #include "osccuelist.h"
-#include "tableview.h"
 #include "mymidi.h"
 #include "osccuelistdelegate.h"
 #include "MMC.h"
@@ -34,7 +29,7 @@ class TabSeq : public QWidget
   Q_OBJECT
 public:
   TabSeq(OscCueList *oscCueList,
-         TableView *aTableView,
+         QTableView *aTableView,
          MyMidiIn *midiIn1,
          MyMidiIn *midiIn2,
          MyMidiOut *midiOut1,
@@ -76,7 +71,7 @@ private:
         QPushButton *boutonLoad;
 
 public:
-  TableView *tableView;
+  QTableView *tableView;
 
 };
 

@@ -19,9 +19,8 @@
 #define MYMIDI_H
 
 #include <QObject>
-#include <rtmidi/RtMidi.h>
-#include <QString>
 #include <QDebug>
+#include <rtmidi/RtMidi.h>
 #include "MMC.h"
 
 class MyMidiIn : public QObject, public RtMidiIn
