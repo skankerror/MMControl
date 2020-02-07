@@ -64,7 +64,11 @@ OscSend::OscSend(QObject *parent,
   m_isfadein(isfadein),
   m_timeWait(waitTime),
   m_noteSend(noteSend)
-{}
+{
+  timer = new QTimer();
+  counter = 0;
+  connect(timer, SIGNAL(timeout()), this, SLOT(fadeStep()));
+}
 
 OscSend::~OscSend()
 {}
@@ -183,97 +187,100 @@ void OscSend::ExecuteSend()
 
 void OscSend::ExecuteXFade(int ID1, int ID2, double time)
 {
+  if (counter == 101) return;
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);
+  double i = (double)(counter) / 100;
+  packet << osc::BeginBundleImmediate
+         << osc::BeginMessage("/mapmap/paint/opacity")
+         << ID1 << 1 - i << osc::EndMessage << osc::EndBundle;
+  Send(packet.Data(), packet.Size());
+  packet.Clear();
 
-  for (double i = 0; i < 1.01; i += 0.01)
-  {
-    packet << osc::BeginBundleImmediate
-           << osc::BeginMessage("/mapmap/paint/opacity")
-           << ID1 << 1 - i << osc::EndMessage << osc::EndBundle;
-    Send(packet.Data(), packet.Size());
-    packet.Clear();
-
-    packet << osc::BeginBundleImmediate
-           << osc::BeginMessage("/mapmap/paint/opacity")
-           << ID2 << i << osc::EndMessage << osc::EndBundle;
-    Send(packet.Data(), packet.Size());
-    packet.Clear();
-
-    usleep(10000 * time);// TODO changer ça en QTimer
-//    qDebug() << ID1 << " " << 1 - i << " *** " << ID2 << " " << i;
-  }
+  packet << osc::BeginBundleImmediate
+         << osc::BeginMessage("/mapmap/paint/opacity")
+         << ID2 << i << osc::EndMessage << osc::EndBundle;
+  Send(packet.Data(), packet.Size());
+  packet.Clear();
+  timer->start(time * 10);
 }
 
 void OscSend::ExecuteFade(int ID1, double time, bool isfadein)
 {
-//  QThread *thread = nullptr;
-//  this->moveToThread(thread);
+  if (counter == 101) return;
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);
-
-  for (double i = 0; i < 1.01; i += 0.01)
-  {
-
-    packet << osc::BeginBundleImmediate
-           << osc::BeginMessage("/mapmap/paint/opacity") << ID1;
-    if (isfadein)
-      packet << i;
-    else
-      packet << 1 - i;
+  double i = (double)(counter) / 100;
+  packet << osc::BeginBundleImmediate
+         << osc::BeginMessage("/mapmap/paint/opacity") << ID1;
+  if (isfadein) packet << i;
+    else packet << 1 - i;
     packet << osc::EndMessage << osc::EndBundle;
-
-    usleep(10000 * time); // Pas bon... mettre QTimer...
-//    startTimer(10*time);
     Send(packet.Data(), packet.Size());
-//    qDebug() << ID1 << " " << 1 - i;
     packet.Clear();
-  }
+    timer->start(time * 10);
+
 }
 
 void OscSend::ExecutePXFade(const QString &p_name, const QString &p_name2, double time)
 {
+  if (counter == 101) return;
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);
+  double i = (double)(counter) / 100;
+  packet << osc::BeginBundleImmediate
+         << osc::BeginMessage("/mapmap/paint/opacity")
+         << p_name.toStdString().c_str() << 1 - i << osc::EndMessage << osc::EndBundle;
+  Send(packet.Data(), packet.Size());
+  packet.Clear();
 
-  for (double i = 0; i < 1.01; i += 0.01)
-  {
-    packet << osc::BeginBundleImmediate
-           << osc::BeginMessage("/mapmap/paint/opacity")
-           << p_name.toStdString().c_str() << 1 - i << osc::EndMessage << osc::EndBundle;
-    Send(packet.Data(), packet.Size());
-    packet.Clear();
-
-    packet << osc::BeginBundleImmediate
-           << osc::BeginMessage("/mapmap/paint/opacity")
-           << p_name2.toStdString().c_str() << i << osc::EndMessage << osc::EndBundle;
-    Send(packet.Data(), packet.Size());
-    packet.Clear();
-
-    usleep(10000 * time);// Mettre QTimer
-  }
+  packet << osc::BeginBundleImmediate
+         << osc::BeginMessage("/mapmap/paint/opacity")
+         << p_name2.toStdString().c_str() << i << osc::EndMessage << osc::EndBundle;
+  Send(packet.Data(), packet.Size());
+  packet.Clear();
+  timer->start(time * 10);
 }
 
 void OscSend::ExecutePFade(const QString &p_name, double time, bool isfadein)
 {
+  if (counter == 101) return;
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);
+  double i = (double)(counter) / 100;
 
-  for (double i = 0; i < 1.01; i += 0.01)
+  packet << osc::BeginBundleImmediate
+         << osc::BeginMessage("/mapmap/paint/opacity") << p_name.toStdString().c_str();
+  if (isfadein)
+    packet << i;
+  else
+    packet << 1 - i;
+  packet << osc::EndMessage << osc::EndBundle;
+  Send(packet.Data(), packet.Size());
+  packet.Clear();
+  timer->start(time * 10);
+}
+
+void OscSend::fadeStep()
+{
+  if (counter == 101)
   {
-
-    packet << osc::BeginBundleImmediate
-           << osc::BeginMessage("/mapmap/paint/opacity") << p_name.toStdString().c_str();
-    if (isfadein)
-      packet << i;
-    else
-      packet << 1 - i;
-    packet << osc::EndMessage << osc::EndBundle;
-
-    usleep(10000 * time);// Mettre QTimer
-    Send(packet.Data(), packet.Size());
-    packet.Clear();
+    fadeFinish();
+    return;
   }
+  counter++;
+  ExecuteSend();
+}
+
+void OscSend::fadeFinish()
+{
+  if (timer->isActive())
+  {
+    timer->stop();
+    counter = 0;
+    return;
+  }
+  counter = 0;
 }
 
 QString OscSend::getChampToString(int champ)
@@ -315,7 +322,9 @@ QString OscSend::getChampToString(int champ)
   case R_M_DEPTH: return QString("R_M_DEPTH"); break;
   case R_P_FADE: return QString("R_P_FADE"); break;
   case R_P_XFADE: return QString("R_P_XFADE"); break;
-  default: return QString(""); break;
+  default:
+    qDebug() << "error OscSend::getChampToString(arg)" << champ << "badly returned";
+    return QString(""); break;
   }
 }
 

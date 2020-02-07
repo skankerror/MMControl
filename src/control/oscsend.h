@@ -22,7 +22,8 @@
 #include <QFile>
 #include <QColor>
 #include <QDebug>
-#include <unistd.h>
+#include <QTimer>
+//#include <unistd.h>
 #include "contrib/oscpack/osc/OscOutboundPacketStream.h"
 #include "contrib/oscpack/ip/UdpSocket.h"
 #include "contrib/oscpack/ip/NetworkingUtils.h"
@@ -64,6 +65,8 @@ public:
           QString noteSend = "");
   ~OscSend();
 
+  int counter = 0;
+
 public slots:
 
   void ExecuteSend();
@@ -71,6 +74,8 @@ public slots:
   void ExecuteFade(int ID1, double time, bool isfadein);
   void ExecutePXFade(const QString &p_name1, const QString &p_name2, double time);
   void ExecutePFade(const QString &p_name, double time, bool isfadein);
+  void fadeStep();
+  void fadeFinish();
 
 public:
   //Getters
@@ -149,6 +154,8 @@ private:
   bool m_isfadein = false; // pour P_FADE
   double m_timeWait = 0; // pour savoir si la cue doit s'enchaîner
   QString m_noteSend = "";
+
+  QTimer *timer;
 };
 
 #endif // OSCSEND_H

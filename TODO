@@ -14,6 +14,9 @@
 Quand on descend ça sélectionne l'ancienne cue et quand on monte ça prend un send ??
 Quand on monte un send dans une autre cue ça sélectionne un au dessus
 
--mettre un updateTimer pour rajouter des steps à la prrogressBar
+- connecter le send à l'osccue pour le select, et pour attendre de jouer celui d'après
+
+- Apprendre à utiliser les iterator !
+
 
 

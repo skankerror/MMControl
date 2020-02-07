@@ -37,9 +37,13 @@ public:
          QWidget *parent = nullptr);
 
 signals:
+  void updateProgressTime(int value);
+  void progressTimeFinished();
 
 public slots:
   void executeGo();
+  void executeCue(OscCue *osccue);
+  void executeSend(OscSend *oscsend);
   void movePrevious();
   void moveNext();
   void remove();
@@ -47,6 +51,9 @@ public slots:
   void saveAs();
   void loadFile();
   void receiveMidiNote2(int note);
+  void timeProgressFinished();
+  void timeProgressSteped();
+  void selectNextRow();
 
   void hideShowColumns();
 
@@ -70,8 +77,13 @@ private:
         QPushButton *boutonSaveAs;
         QPushButton *boutonLoad;
 
+  OscCue *tempCue;
+  OscSend *tempSend;
+
 public:
   QTableView *tableView;
+  int counter = 0;
+  double totalTime = 0;
 
 };
 

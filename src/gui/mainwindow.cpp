@@ -37,17 +37,23 @@ MainWindow::MainWindow() :
   createCentralWidget();
   createStatusBar();
 
+  progressBar->setValue(0);
+
   connect(champComboBox, SIGNAL(currentIndexChanged(int)), SLOT(showWidgets(int))); // Pour afficher les widgets
   connect(sendPushButton, SIGNAL(clicked()), SLOT(sendFromToolBar()));
   connect(p_uriPushButton, SIGNAL(clicked()), SLOT(setP_UriLine()));
   connect(p_colorPushButton, SIGNAL(clicked()), SLOT(setP_ColorLine()));
   connect(addToCuePushButton, SIGNAL(clicked()), SLOT(addToCue()));
+
+  connect(tabseq, SIGNAL(updateProgressTime(int)), this, SLOT(timeProgressed(int)));
+  connect(tabseq, SIGNAL(progressTimeFinished()), this, SLOT(timeFinished()));
+
 }
 
 void MainWindow::createCentralWidget()
 {
   tabmidi = new TabMidi(midiIn1, midiIn2, midiOut1, midiOut2, this);
-  tabseq = new TabSeq(oscCueList, tableView, midiIn1, midiIn2, midiOut1, midiOut2, this);
+  tabseq = new TabSeq(oscCueList, tableView, midiIn1, midiIn2, midiOut1, midiOut2, /*progressBar, */this);
   tabmmstate = new TabMMState(state, this);
   tabwidget = new QTabWidget(this);
 
@@ -180,13 +186,12 @@ void MainWindow::createToolBar()
 
 void MainWindow::createStatusBar()
 {
-  auto statusBar = new QStatusBar(this);
-  auto progressBar = new QProgressBar(this);
+  statusBar = new QStatusBar(this);
+  progressBar = new QProgressBar(this);
   statusBar->addPermanentWidget(progressBar);
   setStatusBar(statusBar);
   progressBar->setRange(0, 100);
   progressBar->setValue(80);
-//  statusBar->show();
 }
 
 void MainWindow::showWidgets(int index)
@@ -614,9 +619,20 @@ void MainWindow::addToCue()
       // Sélectionner lastRow
     }
   }
-  tableView->resizeRowsToContents();
-  tableView->resizeColumnsToContents();
+  tabseq->tableView->resizeRowsToContents();
+  tabseq->tableView->resizeColumnsToContents();
   tabseq->hideShowColumns();
+}
+
+void MainWindow::timeProgressed(int value)
+{
+  if (value >= 0 && value <= 100) progressBar->setValue(value);
+  return;
+}
+
+void MainWindow::timeFinished()
+{
+  progressBar->setValue(0);
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)

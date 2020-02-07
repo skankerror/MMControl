@@ -21,7 +21,11 @@ OscCue::OscCue(QObject *parent, double totalTime, QString noteCue) :
   QObject(parent),
   m_totalTime(totalTime),
   m_noteCue(noteCue)
-{}
+{
+//  timer = new QTimer(this);
+//  counter = 0;
+//  connect(timer, SIGNAL(timeout()), this, SLOT(timeProgressFinished()));
+}
 
 OscCue::~OscCue()
 {
@@ -96,6 +100,43 @@ void OscCue::moveOscSendPrev(int vectAt) // row pointeur dans v_listOscSend
 { // vérifier ?
   if (vectAt < 1 || vectAt > oscSendCount() - 1) return;
   v_listOscSend.swapItemsAt(vectAt -1, vectAt);
-//  qDebug() << "OscCue::moveOscSendPrev success, swap :" << vectAt - 1 << vectAt;
+  //  qDebug() << "OscCue::moveOscSendPrev success, swap :" << vectAt - 1 << vectAt;
+}
+
+void OscCue::executeCue()
+{
+  if (counter > oscSendCount() - 1)
+  {
+    counter = 0;
+//    timer->stop();
+    return;
+  }
+//  tempSend = getOscSend(counter);
+//  tempSend->ExecuteSend();
+  v_listOscSend.at(counter)->ExecuteSend();
+  double timeWait = v_listOscSend.at(counter)->getTimewait();
+//  timer->setSingleShot(true);
+//  timer->start((int)((timeWait * 1000) + 1));
+  QTimer::singleShot((int)((timeWait * 1000) + 1), this, SLOT(timeProgressFinished()));
+}
+
+void OscCue::timeProgressFinished()
+{
+  counter++;
+  emit selectNextSend();
+  if (counter > oscSendCount() - 1)
+  {
+    counter = 0;
+//    timer->stop();
+    return;
+  }
+
+  executeCue();
+
+}
+
+void OscCue::timeProgressSteped()
+{
+
 }
 

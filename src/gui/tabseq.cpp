@@ -100,7 +100,6 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   tableView->setModel(proxyModel);
   m_delegate = new OscCuelistDelegate(this);
   tableView->setItemDelegate(m_delegate);
-//  tableView->horizontalHeader()->setMaximumSectionSize(200);
   tableView->horizontalHeader()->setStretchLastSection(true);
   tableView->verticalHeader()->setMaximumSectionSize(25);
   tableView->setTextElideMode(Qt::ElideRight);
@@ -127,36 +126,48 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   connect(boutonLoad, SIGNAL(clicked(bool)), SLOT(loadFile()));
   connect(m_oscCueList, SIGNAL(dataChanged(QModelIndex, QModelIndex)), SLOT(hideShowColumns()));
   connect(midiIn2, SIGNAL(sigMidiNoteChanged(int)), this, SLOT(receiveMidiNote2(int)));
-//  connect(m_oscCueList, SIGNAL(dataChanged(QModelIndex, QMode)))
 }
 
 void TabSeq::executeGo()
 {
-  int row = tableView->currentIndex().row();
   if (tableView->currentIndex().isValid())
   {
+    int row = tableView->currentIndex().row();
     if (m_oscCueList->isRowCue(row))  // Si c'est une cue sélectionnée...
     {
-      if (m_oscCueList->getOscCue(m_oscCueList->getCueId(row) - 1)->oscSendCount()) // On vérifie que la cue a des sends
+      tempCue = m_oscCueList->getOscCue(m_oscCueList->getCueId(row) - 1);
+      if (tempCue->oscSendCount()) // On vérifie que la cue a des sends
       {
-        tableView->setCurrentIndex(tableView->currentIndex().siblingAtRow(row + 1)); // On sélectionne le 1er send
-        executeGo(); // Et on l'éxécute (pourquoi tant de haine ?)
+        totalTime = tempCue->getTotalTime();
+        if (totalTime)
+        {
+          counter = 0;
+          QTimer::singleShot(totalTime, this, SLOT(timeProgressSteped()));
+        }
+        tableView->setCurrentIndex(tableView->currentIndex().siblingAtRow(tableView->currentIndex().row() + 1)); // on sélect le row suivant
+        connect(tempCue, SIGNAL(selectNextSend()), this, SLOT(selectNextRow()), Qt::UniqueConnection);
+        executeCue(tempCue);
+        qDebug() << "rowcount dans executeGo tabseq" << m_oscCueList->rowCount();
       }
     }
-    else // C'est un send
+    else // c'est un send
     {
-      OscCue *tempCue = m_oscCueList->getOscCue(m_oscCueList->getSendCueId(row) - 1); // On choppe la cue parente
-      OscSend *tempSend = tempCue->getOscSend(m_oscCueList->getSendId(row) - 1); // On choppe le bon send...
-      tempSend->ExecuteSend(); // On éxécute
-      double timeWait = tempSend->getTimewait(); // on choppe le temps d'attente
+      tempCue = m_oscCueList->getOscCue(m_oscCueList->getSendCueId(row) - 1); // On choppe la cue
+      tempSend = tempCue->getOscSend(m_oscCueList->getSendId(row) - 1); // On choppe le send
+      executeSend(tempSend); // on l'execute
       tableView->setCurrentIndex(tableView->currentIndex().siblingAtRow(tableView->currentIndex().row() + 1)); // on sélect le row suivant
-      if (!m_oscCueList->isRowCue(tableView->currentIndex().row()))// Si c'est un send
-      {
-        /*if (!timeWait) QTimer::singleShot(10, this, SLOT(executeGo())); // Si timeWait 0 on attend 10ms et on éxécute le prochain
-        else*/ QTimer::singleShot((100 * (int)(timeWait*10)) + 1, this, SLOT(executeGo())); // On attend le timeWait et on éxécute le prochain
-      }
     }
   }
+}
+
+void TabSeq::executeCue(OscCue *osccue)
+{
+  osccue->executeCue();
+}
+
+void TabSeq::executeSend(OscSend *oscsend)
+{
+  oscsend->ExecuteSend();
 }
 
 void TabSeq::movePrevious() // Bouger cue si c'est une cue, bouger send si c'est un send
@@ -231,6 +242,8 @@ void TabSeq::remove() // Bouger cue si c'est une cue, bouger send si c'est un se
 
 void TabSeq::addCue() // Reste à voir le sélectionné // TODO rajouter index = currentindex et row ça sera plus simple
 {
+  qDebug() << "rowcount dans addCue tabseq" << m_oscCueList->rowCount();
+
   OscCue *newCue = new OscCue(this);
   if (!tableView->currentIndex().isValid() || tableView->currentIndex().row() == m_oscCueList->rowCount() - 1)
   {
@@ -288,7 +301,6 @@ void TabSeq::saveAs()
   }
 }
 
-
 void TabSeq::loadFile()
 {
   QMessageBox msgBox(QMessageBox::Warning, "Load file warning",
@@ -341,9 +353,41 @@ void TabSeq::receiveMidiNote2(int note)
   m_midiOut2->sendBoutonOn(86);
 }
 
+void TabSeq::timeProgressFinished()
+{
+  emit progressTimeFinished();
+  counter = 0;
+  totalTime = 0;
+}
+
+void TabSeq::timeProgressSteped()
+{
+  if (counter == 101)
+  {
+    timeProgressFinished();
+    return;
+  }
+  counter++;
+  emit updateProgressTime(counter);
+  QTimer::singleShot(totalTime * 10, this, SLOT(timeProgressSteped()));
+}
+
+void TabSeq::selectNextRow()
+{
+  if (!tableView->currentIndex().isValid())
+  {
+    return;
+  }
+  if (!(tableView->currentIndex().row() == m_oscCueList->rowCount() - 1))
+  {
+    tableView->setCurrentIndex(tableView->currentIndex().siblingAtRow(tableView->currentIndex().row() + 1)); // on sélect le row suivant
+  }
+  else tableView->setCurrentIndex(tableView->currentIndex().siblingAtRow(0)); // on sélect le 1er row
+}
+
+
 void TabSeq::hideShowColumns()
 {
-//  int rows = m_oscCueList->rowCount();
   for(int i = P_name; i < Wait; i++)
   {
     QString textData;

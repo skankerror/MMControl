@@ -40,7 +40,10 @@ public:
   void setNoteCue(const QString noteCue) {m_noteCue = noteCue; };
   void setTotalTime(const double totalTime) {m_totalTime = totalTime; };
 
+  int counter = 0;
+
 signals:
+  void selectNextSend();
 
 public slots:
   void addOscSend(OscSend *oscsend);
@@ -48,11 +51,19 @@ public slots:
   void removeOscSend(int vectAt);
   void removeAllOscSend();
   void moveOscSendPrev(int vectAt);
+  void executeCue();
+  void timeProgressFinished();
+  void timeProgressSteped();
+
 
 private:
   QVector<OscSend *> v_listOscSend;
   double m_totalTime = 0;
   QString m_noteCue = "";
+
+//  QTimer *timer;
+
+  OscSend *tempSend;
 
 };
 
