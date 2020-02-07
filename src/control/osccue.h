@@ -19,7 +19,6 @@
 #define OSCCUE_H
 
 #include <QObject>
-//#include <QThread> // A voir ?
 #include "oscsend.h"
 #include "MMC.h"
 
@@ -53,7 +52,8 @@ public slots:
   void moveOscSendPrev(int vectAt);
   void executeCue();
   void timeProgressFinished();
-  void timeProgressSteped();
+//  void timeProgressSteped();
+  void executeSendFinished();
 
 
 private:

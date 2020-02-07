@@ -67,6 +67,9 @@ public:
 
   int counter = 0;
 
+signals:
+  void executeSendFinished();
+
 public slots:
 
   void ExecuteSend();
@@ -76,6 +79,7 @@ public slots:
   void ExecutePFade(const QString &p_name, double time, bool isfadein);
   void fadeStep();
   void fadeFinish();
+
 
 public:
   //Getters
