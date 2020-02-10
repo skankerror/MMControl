@@ -23,7 +23,6 @@
 #include <QColor>
 #include <QDebug>
 #include <QTimer>
-//#include <unistd.h>
 #include "contrib/oscpack/osc/OscOutboundPacketStream.h"
 #include "contrib/oscpack/ip/UdpSocket.h"
 #include "contrib/oscpack/ip/NetworkingUtils.h"
@@ -41,7 +40,8 @@ public:
   Q_ENUM(champMM)
 
   OscSend(QObject *parent = nullptr,
-          champMM champ = NOOP,
+          champMM champ = CUE,
+          OscSend *parentSend = nullptr,
           QString p_uri = "",
           QString p_name = "",
           QString p_name2 = "",
@@ -65,7 +65,7 @@ public:
           QString noteSend = "");
   ~OscSend();
 
-  int counter = 0;
+  int counter = 0; // pour fonctionner avec le time
 
 signals:
   void executeSendFinished();
@@ -131,9 +131,22 @@ public:
   void setIsfadein(bool isfadein){ m_isfadein = isfadein; };
   void setTimewait(double timewait){ m_timeWait = timewait; };
   void setNoteSend(QString noteSend){ m_noteSend = noteSend; };
+  void setParentSend(OscSend *osccue);
+
+  // Pour le modèle, si c'est une cue (parentSend = rootSend)...
+  OscSend *child(int vectorAt);
+  int sendCount() const; // v_listSend.size()
+  int columnCount() const; // return Count si c'est un child sinon ?
+  // Pour data on a les getters
+  bool insertSend(OscSend *oscsend, int position); // v_listSend.insert(vectorAt);
+  // pas de insert column
+  OscSend *parentSend();
+  bool removeSends(int position, int count = 1); // v_listSend.remove(vectorAt);
+  int sendId() const; // donne l'id d'un enfant
+  // setData on a les setters
 
 private:
-  champMM m_champ;
+  champMM m_champ = CUE;
   // paint var
   QString m_p_uri = "";
   QString m_p_name = "";
@@ -160,6 +173,9 @@ private:
   QString m_noteSend = "";
 
   QTimer *timer;
+
+  QVector<OscSend *> v_listSend; // Si c'est une cue
+  OscSend *m_parentSend; // rootItem si c'est une cue
 };
 
 #endif // OSCSEND_H

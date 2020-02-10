@@ -29,7 +29,7 @@ class TabSeq : public QWidget
   Q_OBJECT
 public:
   TabSeq(OscCueList *oscCueList,
-         QTableView *aTableView,
+         QTreeView *atreeView,
          MyMidiIn *midiIn1,
          MyMidiIn *midiIn2,
          MyMidiOut *midiOut1,
@@ -42,7 +42,7 @@ signals:
 
 public slots:
   void executeGo();
-  void executeCue(OscCue *osccue);
+//  void executeCue(OscCue *osccue);
   void executeSend(OscSend *oscsend);
   void movePrevious();
   void moveNext();
@@ -77,11 +77,11 @@ private:
         QPushButton *boutonSaveAs;
         QPushButton *boutonLoad;
 
-  OscCue *tempCue;
+//  OscCue *tempCue;
   OscSend *tempSend;
 
 public:
-  QTableView *tableView;
+  QTreeView *treeView;
   int counter = 0;
   double totalTime = 0;
 

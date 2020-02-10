@@ -60,7 +60,7 @@ private:
   MyMidiIn *midiIn2;
   MyMidiOut *midiOut1;
   MyMidiOut *midiOut2;
-  QTableView *tableView;
+  QTreeView *treeView;
 
   QIcon icon;
 

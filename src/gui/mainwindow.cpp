@@ -32,7 +32,7 @@ MainWindow::MainWindow() :
   midiIn2 = new MyMidiIn(this);
   midiOut1 = new MyMidiOut(this);
   midiOut2 = new MyMidiOut(this);
-  tableView = new QTableView(this);
+  treeView = new QTreeView(this);
   createToolBar();
   createCentralWidget();
   createStatusBar();
@@ -53,7 +53,7 @@ MainWindow::MainWindow() :
 void MainWindow::createCentralWidget()
 {
   tabmidi = new TabMidi(midiIn1, midiIn2, midiOut1, midiOut2, this);
-  tabseq = new TabSeq(oscCueList, tableView, midiIn1, midiIn2, midiOut1, midiOut2, /*progressBar, */this);
+  tabseq = new TabSeq(oscCueList, treeView, midiIn1, midiIn2, midiOut1, midiOut2, /*progressBar, */this);
   tabmmstate = new TabMMState(state, this);
   tabwidget = new QTabWidget(this);
 
@@ -72,7 +72,7 @@ void MainWindow::createToolBar()
   champLabel = new QLabel("champ", this);
   champComboBox = new QComboBox(this);
   for (int i = 0; i < Count_champMM; i++) champComboBox->addItem(OscSend::getChampToString(i));
-  champComboBox->setCurrentIndex(NOOP);
+  champComboBox->setCurrentIndex(CUE);
 
   // P_NAME, R_P_NAME, R_P_REWIND, R_P_OPACITY, R_P_VOLUME, R_P_RATE, R_P_URI, R_P_COLOR, R_P_FADE, R_P_XFADE
   p_nameLineEdit = new QLineEdit("Name", this);
@@ -198,7 +198,7 @@ void MainWindow::showWidgets(int index)
 {
   switch (index)
   {
-  case NOOP:
+  case CUE:
     p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->hide();
     p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
     p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
@@ -206,7 +206,7 @@ void MainWindow::showWidgets(int index)
     m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
     m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
     m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide();timeSpinBox->hide(); waitTimeSpinBox->setValue(2); break;
+    timeLabel->hide();timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
   case PLAY: case PAUSE: case REWIND: case QUIT:
     p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->hide();
     p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
@@ -506,6 +506,7 @@ void MainWindow::sendFromToolBar()
   auto *oscsend = new OscSend(
         this,
         index,
+        nullptr,
         p_uriLine->text(),
         p_nameLineEdit->text(),
         p_nameLineEdit2->text(),
@@ -552,76 +553,76 @@ void MainWindow::addToCue()
 {
   champMM index = static_cast<champMM>(champComboBox->currentIndex());
   auto *oscsend = new OscSend(
-        this,
-        index,
-        p_uriLine->text(),
-        p_nameLineEdit->text(),
-        p_nameLineEdit2->text(),
-        p_colorLine->text(),
-        p_ID1SpinBox->value(),
-        p_ID2SpinBox->value(),
-        p_rateSpinBox->value(),
-        p_opacitySpinBox->value(),
-        p_volumeSpinBox->value(),
-        m_nameLineEdit->text(),
-        m_nameLineEdit2->text(),
-        m_IDSpinBox->value(),
-        m_opacitySpinBox->value(),
-        m_visibleCheckBox->isChecked(),
-        m_soloCheckBox->isChecked(),
-        m_lockCheckBox->isChecked(),
-        m_depthSpinBox->value(),
-        timeSpinBox->value(),
-        fadeCheckBox->isChecked(),
-        waitTimeSpinBox->value()
+//        this,
+//        index,
+//        p_uriLine->text(),
+//        p_nameLineEdit->text(),
+//        p_nameLineEdit2->text(),
+//        p_colorLine->text(),
+//        p_ID1SpinBox->value(),
+//        p_ID2SpinBox->value(),
+//        p_rateSpinBox->value(),
+//        p_opacitySpinBox->value(),
+//        p_volumeSpinBox->value(),
+//        m_nameLineEdit->text(),
+//        m_nameLineEdit2->text(),
+//        m_IDSpinBox->value(),
+//        m_opacitySpinBox->value(),
+//        m_visibleCheckBox->isChecked(),
+//        m_soloCheckBox->isChecked(),
+//        m_lockCheckBox->isChecked(),
+//        m_depthSpinBox->value(),
+//        timeSpinBox->value(),
+//        fadeCheckBox->isChecked(),
+//        waitTimeSpinBox->value()
         );
   switch(index){
   case P_URI: case R_P_URI: while (p_uriLine->text() == "Choose->") setP_UriLine(); oscsend->setP_uri(p_uriLine->text()); break;
   case P_COLOR: case R_P_COLOR: while (p_colorLine->text() == "Choose->") setP_ColorLine(); oscsend->setP_color(p_colorLine->text()); break;
   default: break;
   }
-  int row = tabseq->tableView->currentIndex().row();
+  int row = tabseq->treeView->currentIndex().row();
 //  qDebug() << "row selected : " << row;
 
-  if (!(row == -1)) // si l'index est valide
-  {
-    if (oscCueList->isRowCue(row))
-    {
-      oscCueList->addSend(oscsend, row); // si c'est une cue on add
-      // Sélectionner le dernier row de la cue
-      int cueId = oscCueList->getCueId(row);
-      int rowCue = oscCueList->getRowCueFromCueId(cueId);
-      OscCue *tempCue = oscCueList->getOscCue(cueId - 1);
-      int lastSendRow = tempCue->oscSendCount() + rowCue;
-//      qDebug() << lastSendRow;
-      tabseq->tableView->setCurrentIndex(tabseq->tableView->currentIndex().siblingAtRow(lastSendRow));
-    }
-    else
-    {
-      oscCueList->insertSend(oscsend, row); // si c'est un send on ajoute
-      // Et on sélectionne le cue inséré pour continuer l'insertion
-      tabseq->tableView->setCurrentIndex(tabseq->tableView->currentIndex().siblingAtRow(row + 1));
-    }
-  }
-  else // si l'index est pas valide
-  {
-    if (!oscCueList->rowCount()) //S'il n'y a pas de row
-    {
-      auto *newCue = new OscCue(this); // On crée une cue
-      oscCueList->addCue(newCue);
-      oscCueList->addSend(oscsend, 0);
-      //Sélectionner le row 1...
-    }
-    else
-    {
-      int lastCueRow = oscCueList->getLastCueRow(); // On prend le row de la dernière cue
-      oscCueList->addSend(oscsend, lastCueRow); // On ajoute le send
-      // Sélectionner lastRow
-    }
-  }
-  tabseq->tableView->resizeRowsToContents();
-  tabseq->tableView->resizeColumnsToContents();
-  tabseq->hideShowColumns();
+//  if (!(row == -1)) // si l'index est valide
+//  {
+//    if (oscCueList->isRowCue(row))
+//    {
+//      oscCueList->addSend(oscsend, row); // si c'est une cue on add
+//      // Sélectionner le dernier row de la cue
+//      int cueId = oscCueList->getCueId(row);
+//      int rowCue = oscCueList->getRowCueFromCueId(cueId);
+//      OscCue *tempCue = oscCueList->getOscCue(cueId - 1);
+//      int lastSendRow = tempCue->oscSendCount() + rowCue;
+////      qDebug() << lastSendRow;
+//      tabseq->treeView->setCurrentIndex(tabseq->treeView->currentIndex().siblingAtRow(lastSendRow));
+//    }
+//    else
+//    {
+//      oscCueList->insertSend(oscsend, row); // si c'est un send on ajoute
+//      // Et on sélectionne le cue inséré pour continuer l'insertion
+//      tabseq->treeView->setCurrentIndex(tabseq->treeView->currentIndex().siblingAtRow(row + 1));
+//    }
+//  }
+//  else // si l'index est pas valide
+//  {
+//    if (!oscCueList->rowCount()) //S'il n'y a pas de row
+//    {
+//      auto *newCue = new OscCue(this); // On crée une cue
+//      oscCueList->addCue(newCue);
+//      oscCueList->addSend(oscsend, 0);
+//      //Sélectionner le row 1...
+//    }
+//    else
+//    {
+//      int lastCueRow = oscCueList->getLastCueRow(); // On prend le row de la dernière cue
+//      oscCueList->addSend(oscsend, lastCueRow); // On ajoute le send
+//      // Sélectionner lastRow
+//    }
+//  }
+//  tabseq->treeView->resizeRowsToContents();
+//  tabseq->treeView->resizeColumnsToContents();
+//  tabseq->hideShowColumns();
 }
 
 void MainWindow::timeProgressed(int value)

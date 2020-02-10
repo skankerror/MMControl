@@ -38,7 +38,7 @@ OscSend* OscCue::getOscSend(int vectAt)
 {
   if (vectAt < 0 || vectAt > oscSendCount() - 1)
   {
-//    auto *emptySend = new OscSend(this, NOOP);
+//    auto *emptySend = new OscSend(this, CUE);
     qDebug() << "getOscSend badly returned";
     return nullptr;
   }

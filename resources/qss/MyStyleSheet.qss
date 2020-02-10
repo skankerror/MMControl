@@ -182,7 +182,7 @@ QDoubleSpinBox {
   color: white;
 }
 
-QTableView  {
+QTreeView  {
   background: #414D59;
 }
 
@@ -190,6 +190,14 @@ TabSeq {
   background: #414D59;
 }
 
-QTableView QTableCornerButton::section {
+QTreeView QTreeCornerButton::section {
   background-color: #414D59;
 }
+
+/* QTreeView
+Supports the box model. When alternating row colors is enabled, the alternating colors can be styled using the alternate-background-color property.
+The color and background of the selected item is styled using selection-color and selection-background-color respectively.
+The selection behavior is controlled by the show-decoration-selected property.
+The branches of the tree view can be styled using the ::branch subcontrol. The ::branch Sub-control supports the :open, :closed, :has-sibling and :has-children pseudo states.
+Use the ::item subcontrol for more fine grained control over the items in the QTreeView.
+See QAbsractScrollArea to style scrollable backgrounds.*/

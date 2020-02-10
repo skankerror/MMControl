@@ -18,16 +18,16 @@
 #ifndef OSCCUELIST_H
 #define OSCCUELIST_H
 
-#include <QObject>
-#include <QAbstractTableModel>
+//#include <QObject>
+#include <QAbstractItemModel>
 #include <QSortFilterProxyModel>
 #include "oscsend.h"
-#include "osccue.h"
+//#include "osccue.h"
 #include "osccuelistdelegate.h"
 #include "MMC.h"
 
 class OscCueList :
-    public QAbstractTableModel
+    public QAbstractItemModel
 {
   Q_OBJECT
   Q_ENUM(columns)
@@ -38,45 +38,40 @@ public:
   ~OscCueList();
 
 // Tous les override
-  int rowCount(const QModelIndex &index = QModelIndex()) const override;
-  int columnCount(const QModelIndex &index = QModelIndex()) const override;
+  int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+  int columnCount(const QModelIndex &parent = QModelIndex()) const override;
   QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
   bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
   QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
   Qt::ItemFlags flags(const QModelIndex &index) const override;
+  // new overrides pour tree
+  QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
+  QModelIndex parent(const QModelIndex &index) const override;
+//  bool insertRows(int position, int rows, const QModelIndex &parent = QModelIndex()) override;
+//  bool removeRows(int position, int rows, const QModelIndex &parent = QModelIndex()) override;
 
-  OscCue *getOscCue(const int vectAt) const;
-  int getOscCueCount() const;
-  bool isRowCue(const int row) const;
-  int getCueId(const int row) const;
-  int getSendId(const int row) const;
-  int getSendCueId(const int row) const;
-  int getRowCueFromCueId(int cueId) const;
-  int getLastCueRow() const;
-
-  OscCue* retOscCueFromFileLine(QStringList &lineToken); // revoir en xml ?
   OscSend* retOscsendFromFileLine(QStringList &lineToken); // revoir en xml ?
+
+  OscSend* getRootSend(){ return rootSend; }; // pour tester
 
 signals:
 
-public slots:
-  // cue
-  void addCue(OscCue *osccue);
-  void insertCue(OscCue *osccue, int row);
-  void moveCuePrev(int rowCue);
-  void removeCue(int rowCue);
-  void removeAllCue();
-
+public /*slots*/:
   //send
-  void addSend(OscSend *oscsend, int rowCue);
-  void insertSend(OscSend *oscsend, int rowSend);
-  void moveSendPrev(int rowSend);
-  void moveSendNext(int rowSend);
-  void removeSend(int rowSend);
-  void removeAllSend(int cueRow);
+//  bool addSend(OscSend *oscsend, int position, const QModelIndex &parent);
+  void addCue();
+  void addSend(OscSend *oscsend, int cueId);
+//  void insertSend(OscSend *oscsend, int rowSend);
+//  void moveSendPrev(int rowSend);
+//  void moveSendNext(int rowSend);
+//  void removeSend(int rowSend);
+//  void removeAllSend(int cueRow);
 
 private:
-  QVector<OscCue *> v_listCue;
+//  QVector<OscCue *> v_listCue;
+  OscSend *getSend(const QModelIndex &index) const;
+
+  OscSend *rootSend;
 
 };
 

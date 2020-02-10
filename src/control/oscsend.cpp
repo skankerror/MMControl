@@ -19,6 +19,7 @@
 
 OscSend::OscSend(QObject *parent,
                  champMM champ,
+                 OscSend *parentSend,
                  QString p_uri,
                  QString p_name,
                  QString p_name2,
@@ -63,7 +64,9 @@ OscSend::OscSend(QObject *parent,
   m_time(time),
   m_isfadein(isfadein),
   m_timeWait(waitTime),
-  m_noteSend(noteSend)
+  m_noteSend(noteSend),
+  m_parentSend(parentSend)
+
 {
   timer = new QTimer();
   counter = 0;
@@ -71,7 +74,9 @@ OscSend::OscSend(QObject *parent,
 }
 
 OscSend::~OscSend()
-{}
+{
+  qDeleteAll(v_listSend);
+}
 
 void OscSend::ExecuteSend()
 {
@@ -80,8 +85,8 @@ void OscSend::ExecuteSend()
   packet << osc::BeginBundleImmediate;
   switch (m_champ)
   {
-  case NOOP:
-//    qDebug() << "Noop... wait " << m_time ;
+  case CUE:
+    // on éxécute ses fils ?
     break;
   case PLAY: packet << osc::BeginMessage("/mapmap/play") << osc::EndMessage;
 //    qDebug() << "/mapmap/play";
@@ -318,7 +323,7 @@ QString OscSend::getChampToString(int champ)
 {
   switch(champ)
   {
-  case NOOP: return QString("NOOP"); break;
+  case CUE: return QString("CUE"); break;
   case PLAY: return QString("PLAY"); break;
   case PAUSE: return QString("PAUSE"); break;
   case REWIND: return QString("REWIND"); break;
@@ -361,7 +366,7 @@ QString OscSend::getChampToString(int champ)
 
 int OscSend::getChampFromString(const QString &value)
 {
-  if (value == "NOOP") return NOOP;
+  if (value == "CUE") return CUE;
   if (value == "PLAY") return PLAY;
   if (value == "PAUSE") return PAUSE;
   if (value == "REWIND") return REWIND;
@@ -399,3 +404,56 @@ int OscSend::getChampFromString(const QString &value)
   qDebug() << "error OscSend::getChampFromString returned -1";
   return -1;
 }
+
+void OscSend::setParentSend(OscSend *osccue)
+{
+  m_parentSend = osccue; // Pas suffisant, à quelle place est-il chez le parent ?
+}
+
+OscSend *OscSend::child(int vectorAt)
+{
+  if (vectorAt < 0 || vectorAt >= v_listSend.size())
+    return nullptr;
+  return v_listSend.at(vectorAt);
+}
+
+int OscSend::sendCount() const
+{
+  return v_listSend.count(); // pourquoi pas size ??
+}
+
+int OscSend::columnCount() const
+{
+  return Count; // ? peut être ça dépend ?
+}
+
+bool OscSend::insertSend(OscSend *oscsend, int position)
+{
+  if (position < 0 || position > v_listSend.size()) return false;
+  v_listSend.insert(position, oscsend);
+  return true;
+}
+
+OscSend *OscSend::parentSend()
+{
+  return m_parentSend;
+}
+
+bool OscSend::removeSends(int vectorAt, int count)
+{
+  if (vectorAt < 0 || vectorAt * count > v_listSend.size())
+    return false;
+
+  for (int row = 0; row < count; row++)
+    delete v_listSend.takeAt(vectorAt);
+
+  return true;
+}
+
+int OscSend::sendId() const
+{
+  if (m_parentSend) // Si c'est pas une cue (CUE)
+    return m_parentSend->v_listSend.indexOf(const_cast<OscSend *>(this));
+  return 0;
+}
+
