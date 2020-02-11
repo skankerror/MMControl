@@ -44,11 +44,8 @@ public:
   bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
   QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
   Qt::ItemFlags flags(const QModelIndex &index) const override;
-  // new overrides pour tree
   QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
   QModelIndex parent(const QModelIndex &index) const override;
-//  bool insertRows(int position, int rows, const QModelIndex &parent = QModelIndex()) override;
-//  bool removeRows(int position, int rows, const QModelIndex &parent = QModelIndex()) override;
 
   OscSend* retOscsendFromFileLine(QStringList &lineToken); // revoir en xml ?
 
@@ -57,18 +54,22 @@ public:
 signals:
 
 public /*slots*/:
-  //send
-//  bool addSend(OscSend *oscsend, int position, const QModelIndex &parent);
   void addCue();
   void addSend(OscSend *oscsend, int cueId);
-//  void insertSend(OscSend *oscsend, int rowSend);
-//  void moveSendPrev(int rowSend);
-//  void moveSendNext(int rowSend);
-//  void removeSend(int rowSend);
-//  void removeAllSend(int cueRow);
+  void insertSend(OscSend *oscsend, int cueId, int rowSend);
+  void moveSendPrev(int cueId, int rowSend);
+  void moveSendNext(int cueId, int rowSend);
+  void removeSend(int cueId, int rowSend);
+  void removeAllSend(int cueId);
+  void insertCue(int rowCue);
+  void moveCuePrev(int cueId);
+  void moveCueNext(int cueId);
+  void removeCue(int cueId);
+  void removeAllCue();
+
+  bool isCue(const QModelIndex &index) const;
 
 private:
-//  QVector<OscCue *> v_listCue;
   OscSend *getSend(const QModelIndex &index) const;
 
   OscSend *rootSend;

@@ -138,12 +138,12 @@ public:
   int sendCount() const; // v_listSend.size()
   int columnCount() const; // return Count si c'est un child sinon ?
   // Pour data on a les getters
-  bool insertSend(OscSend *oscsend, int position); // v_listSend.insert(vectorAt);
+  void insertSend(OscSend *oscsend, int position); // v_listSend.insert(vectorAt);
   // pas de insert column
   OscSend *parentSend();
-  bool removeSends(int position, int count = 1); // v_listSend.remove(vectorAt);
+  void removeSends(int position, int count = 1); // v_listSend.remove(vectorAt);
   int sendId() const; // donne l'id d'un enfant
-  // setData on a les setters
+  // faire movesendprev movesendnext pour le modèle
 
 private:
   champMM m_champ = CUE;
@@ -169,7 +169,7 @@ private:
   // general var
   double m_time = 0;
   bool m_isfadein = false; // pour P_FADE
-  double m_timeWait = 0; // pour savoir si la cue doit s'enchaîner
+  double m_timeWait = 0;
   QString m_noteSend = "";
 
   QTimer *timer;

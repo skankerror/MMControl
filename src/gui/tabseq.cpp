@@ -116,7 +116,7 @@ TabSeq::TabSeq(OscCueList *oscCueList,
 
 //  treeView->resizeColumnsToContents();
 //  treeView->resizeRowsToContents();
-  hideShowColumns();
+//  hideShowColumns();
 
   connect(boutonGo, SIGNAL(clicked(bool)), SLOT(executeGo()));
   connect(boutonPrev, SIGNAL(clicked(bool)), SLOT(movePrevious()));
@@ -387,7 +387,7 @@ void TabSeq::selectNextRow()
 }
 
 
-void TabSeq::hideShowColumns()
+void TabSeq::hideShowColumns() // revoir ça ne prend en compte que les cues
 {
   for(int i = P_name; i < Wait; i++)
   {

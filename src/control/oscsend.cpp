@@ -407,7 +407,7 @@ int OscSend::getChampFromString(const QString &value)
 
 void OscSend::setParentSend(OscSend *osccue)
 {
-  m_parentSend = osccue; // Pas suffisant, à quelle place est-il chez le parent ?
+  m_parentSend = osccue;
 }
 
 OscSend *OscSend::child(int vectorAt)
@@ -419,19 +419,18 @@ OscSend *OscSend::child(int vectorAt)
 
 int OscSend::sendCount() const
 {
-  return v_listSend.count(); // pourquoi pas size ??
+  return v_listSend.count();
 }
 
-int OscSend::columnCount() const
+int OscSend::columnCount() const // inutile
 {
-  return Count; // ? peut être ça dépend ?
+  return Count;
 }
 
-bool OscSend::insertSend(OscSend *oscsend, int position)
+void OscSend::insertSend(OscSend *oscsend, int position)
 {
-  if (position < 0 || position > v_listSend.size()) return false;
+  if (position < 0 || position > v_listSend.size()) return;
   v_listSend.insert(position, oscsend);
-  return true;
 }
 
 OscSend *OscSend::parentSend()
@@ -439,21 +438,18 @@ OscSend *OscSend::parentSend()
   return m_parentSend;
 }
 
-bool OscSend::removeSends(int vectorAt, int count)
+void OscSend::removeSends(int vectorAt, int count)
 {
   if (vectorAt < 0 || vectorAt * count > v_listSend.size())
-    return false;
+    return;
 
   for (int row = 0; row < count; row++)
     delete v_listSend.takeAt(vectorAt);
-
-  return true;
 }
 
 int OscSend::sendId() const
 {
-  if (m_parentSend) // Si c'est pas une cue (CUE)
-    return m_parentSend->v_listSend.indexOf(const_cast<OscSend *>(this));
+  if (m_parentSend) return m_parentSend->v_listSend.indexOf(const_cast<OscSend *>(this));
   return 0;
 }
 

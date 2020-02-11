@@ -86,7 +86,6 @@ void OscCuelistDelegate::setModelData(QWidget *editor, QAbstractItemModel *model
   else if (index.column() == Color)
   {
     auto *colorDialog = qobject_cast<QColorDialog *>(editor);
-//    QString string;
     if (editor) model->setData(index, colorDialog->selectedColor().name());
   }
 
@@ -108,12 +107,12 @@ void OscCuelistDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptio
   editor->setGeometry(option.rect);
 }
 
-void OscCuelistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
-{
-  QStyledItemDelegate::paint(painter, option, index);
-}
+//void OscCuelistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+//{
+//  QStyledItemDelegate::paint(painter, option, index);
+//}
 
-QSize OscCuelistDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
-{
-  return QStyledItemDelegate::sizeHint(option, index);
-}
+//QSize OscCuelistDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+//{
+//  return QStyledItemDelegate::sizeHint(option, index);
+//}

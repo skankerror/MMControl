@@ -17,7 +17,6 @@ INCLUDEPATH += \
 
 SOURCES += \
     src/control/mymidi.cpp \
-    src/control/osccue.cpp \
     src/gui/osccuelistdelegate.cpp \
     src/main.cpp \
     contrib/oscpack/osc/OscTypes.cpp \
@@ -36,7 +35,6 @@ SOURCES += \
 HEADERS += \
     src/MMC.h \
     src/control/mymidi.h \
-    src/control/osccue.h \
     src/gui/mainwindow.h \
     src/gui/osccuelistdelegate.h \
     src/gui/tabmidi.h \

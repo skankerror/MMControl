@@ -23,29 +23,21 @@ OscCueList::OscCueList(QObject *parent):
   rootSend = new OscSend(this, CUE, nullptr); // on crée le rootItem
 
   //test
-//  OscSend *oscsend1 = new OscSend(this, CUE, rootSend);
-//  OscSend *oscsend3 = new OscSend(this, PAUSE, oscsend1);
-//  OscSend *oscsend4 = new OscSend(this, CUE, rootSend);
-//  OscSend *oscsend2 = new OscSend(this, PLAY, oscsend4);
-
-//  OscSend *oscsend5 = new OscSend(this, CUE, rootSend);
-//  OscSend *oscsend6 = new OscSend(this, QUIT, oscsend4);
-
-//  bool success1 = addSend(oscsend1, 0, createIndex(0, 0));
-//  success1 = addSend(oscsend4, 1, QModelIndex());
-//  success1 = addSend(oscsend2, 0, index(1, 0, QModelIndex()));
-//  success1 = addSend(oscsend2, 0, index(0, 0, createIndex(0, 0)));
-//  success1 = addSend(oscsend3, 1, index(0, 0, createIndex(0, 0)));
-//  success1 = addSend(oscsend4, 0, createIndex(0, 0));
-//  success1 = addSend(oscsend5, 0, index(1, 0, createIndex(1, 0)));
 addCue();
 auto oscsend1 = new OscSend(this, PLAY);
-addSend(oscsend1, 0);
+  addSend(oscsend1, 0);
 addCue();
 auto oscsend2 = new OscSend(this, PAUSE);
-addSend(oscsend2, 1);
-auto oscsend3 = new OscSend(this, REWIND);
-addSend(oscsend3, 1);
+  addSend(oscsend2, 1);
+auto oscsend3 = new OscSend(this, P_COLOR);
+  oscsend3->setP_ID1(1);
+  oscsend3->setP_color("#ffffff");
+  addSend(oscsend3, 1);
+auto oscsend4 = new OscSend(this, P_NAME);
+  insertSend(oscsend4, 1, 1);
+  removeSend(1, 2);
+  //removeAllCue();
+  //removeCue(1);
 }
 
 OscCueList::~OscCueList()
@@ -77,7 +69,7 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const
   QBrush salmonColor(QColor("#59271E"));
   QBrush yellowColor(QColor("#B8BF7E"));
 
-  if (index.flags().testFlag(Qt::ItemIsEditable)) // le wait n'est pas jaune dans la cue à cause de ça
+  if (index.flags().testFlag(Qt::ItemIsEditable))
   {
     switch (role)
     {
@@ -85,7 +77,7 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const
       switch (col)
       {
       case Champ: return OscSend::getChampToString(tempSend->getChamp());
-        qDebug() << OscSend::getChampToString(tempSend->getChamp());
+//        qDebug() << OscSend::getChampToString(tempSend->getChamp());
         break;
       case P_name: return tempSend->getP_name(); break;
       case P_name2: return tempSend->getP_name2(); break;
@@ -154,7 +146,7 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const
     default: break;
     }
   }
-  else if (col == Wait && role == Qt::BackgroundRole && tempSend->getChamp() == CUE) return yellowColor;
+  else if (role == Qt::BackgroundRole && tempSend->getChamp() == CUE) return yellowColor; // pour afficher les lignes de cue en jaune
   return QVariant();
 }
 
@@ -278,50 +270,46 @@ QVariant OscCueList::headerData(int section, Qt::Orientation orientation, int ro
 Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const
 {
   if (!index.isValid()) return Qt::NoItemFlags;
-//  int cueCount = getOscCueCount();
-//  int lineCount = rowCount();
-//  int row = index.row();
-//  int col = index.column();
-
-    OscSend *tempSend = getSend(index);
-    champMM champ = tempSend->getChamp();
-    int col = index.column();
-    if (col == Champ || col == Note) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
-    if (champ == P_NAME) {if (col == P_name || col == P_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ == P_REWIND) {if (col == P_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ == P_COLOR) {if (col == Color || col == P_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ == P_OPACITY) {if (col == P_Id || col == P_opac) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ == P_VOLUME) {if (col == P_Id || col == Vol) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ == P_RATE) {if (col == P_Id || col == Rate) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ == P_URI) {if (col == Uri || col == P_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ == M_NAME) {if (col == M_name || col == M_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ == M_OPACITY) {if (col == M_Id || col == M_opac) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ == M_VISIBLE) {if (col == M_Id || col == Visible) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ == M_SOLO) {if (col == M_Id || col == Solo) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ == M_LOCK) {if (col == M_Id || col == Lock) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ == M_DEPTH) {if (col == M_Id || col == Depth) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ == P_XFADE) {if (col == P_Id || col == P_Id2 || col == Time) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ == P_FADE) {if (col == P_Id || col == Fade_In || col == Time) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ == R_P_NAME) {if (col == P_name || col == P_name2)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ == R_P_REWIND) {if (col == P_name) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ ==  R_P_OPACITY) {if (col == P_name || col == P_opac) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ ==  R_P_VOLUME) {if (col == P_name || col == Vol) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ ==  R_P_RATE) {if (col == P_name || col == Rate) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ ==  R_P_URI) {if (col == P_name || col == Uri) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ ==  R_P_COLOR) {if (col == P_name || col == Color) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ ==  R_M_NAME) {if (col == M_name || col == M_name2) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ ==  R_M_OPACITY) {if (col == M_name || col == M_opac) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ ==  R_M_VISIBLE) {if (col == M_name || col == Visible) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ ==  R_M_SOLO) {if (col == M_name || col == Solo) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ ==  R_M_LOCK) {if (col == M_name || col == Lock) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ ==  R_M_DEPTH) {if (col ==M_name || col == Depth) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ ==  R_P_FADE) {if (col == P_name || col == Fade_In || col == Time) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-    if (champ ==  R_P_XFADE) {if (col == P_name || col == P_name2 || col == Time) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
-//  if (cueCount && index.isValid() && row > -1 && row < lineCount && isCue)
-//  {
-//    if (col == Note) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
-//    if (col == Wait) return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
-//  }
+  // Il faut aussi afficher wait sauf sur les cue
+  OscSend *tempSend = getSend(index);
+  champMM champ = tempSend->getChamp();
+  int col = index.column();
+  if (col == Champ || col == Note) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable; // Empécher d'éditer si cue
+  if (champ == P_NAME) {if (col == P_name || col == P_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ == P_REWIND) {if (col == P_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ == P_COLOR) {if (col == Color || col == P_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ == P_OPACITY) {if (col == P_Id || col == P_opac) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ == P_VOLUME) {if (col == P_Id || col == Vol) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ == P_RATE) {if (col == P_Id || col == Rate) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ == P_URI) {if (col == Uri || col == P_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ == M_NAME) {if (col == M_name || col == M_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ == M_OPACITY) {if (col == M_Id || col == M_opac) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ == M_VISIBLE) {if (col == M_Id || col == Visible) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ == M_SOLO) {if (col == M_Id || col == Solo) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ == M_LOCK) {if (col == M_Id || col == Lock) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ == M_DEPTH) {if (col == M_Id || col == Depth) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ == P_XFADE) {if (col == P_Id || col == P_Id2 || col == Time) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ == P_FADE) {if (col == P_Id || col == Fade_In || col == Time) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ == R_P_NAME) {if (col == P_name || col == P_name2)  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ == R_P_REWIND) {if (col == P_name) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ ==  R_P_OPACITY) {if (col == P_name || col == P_opac) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ ==  R_P_VOLUME) {if (col == P_name || col == Vol) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ ==  R_P_RATE) {if (col == P_name || col == Rate) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ ==  R_P_URI) {if (col == P_name || col == Uri) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ ==  R_P_COLOR) {if (col == P_name || col == Color) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ ==  R_M_NAME) {if (col == M_name || col == M_name2) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ ==  R_M_OPACITY) {if (col == M_name || col == M_opac) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ ==  R_M_VISIBLE) {if (col == M_name || col == Visible) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ ==  R_M_SOLO) {if (col == M_name || col == Solo) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ ==  R_M_LOCK) {if (col == M_name || col == Lock) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ ==  R_M_DEPTH) {if (col ==M_name || col == Depth) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ ==  R_P_FADE) {if (col == P_name || col == Fade_In || col == Time) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  if (champ ==  R_P_XFADE) {if (col == P_name || col == P_name2 || col == Time) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;}
+  //  if (cueCount && index.isValid() && row > -1 && row < lineCount && isCue)
+  //  {
+  //    if (col == Note) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
+  //    if (col == Wait) return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+  //  }
   return QAbstractItemModel::flags(index);
 }
 
@@ -380,7 +368,7 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
   {
     QString val = lineToken.at(j);
     val = val.trimmed();
-//    qDebug() << val << ", ";
+    //    qDebug() << val << ", ";
     QVariant value(val);
     switch(j)
     {
@@ -408,9 +396,9 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
     case Note: m_noteSend = value.toString(); break;
     default: break;
     }
-  m_champ = static_cast<champMM>(m_champInt);
+    m_champ = static_cast<champMM>(m_champInt);
   }
-//  qDebug()<< "champ dans l'oscsend qui retourne" << m_champ;
+  //  qDebug()<< "champ dans l'oscsend qui retourne" << m_champ;
 
   auto *oscsend = new OscSend(
         this,
@@ -446,7 +434,7 @@ void OscCueList::addCue()
 {
   OscSend *osccue = new OscSend(this, CUE, rootSend); // On crée une cue
   beginInsertRows(QModelIndex(), rootSend->sendCount(), 0);
-  const bool success = rootSend->insertSend(osccue, rootSend->sendCount());
+  rootSend->insertSend(osccue, rootSend->sendCount());
   endInsertRows();
 }
 
@@ -455,97 +443,93 @@ void OscCueList::addSend(OscSend *oscsend, int cueId)
   if (cueId < 0 || cueId >= rootSend->sendCount()) return;
   OscSend *osccue = rootSend->child(cueId);
   oscsend->setParentSend(osccue);
-//  if (!(parentSend->parentSend() == rootSend)) return; // si le parent n'est pas une cue on return;
-//  int position = osccue->sendId();
   beginInsertRows(index(cueId, 0, QModelIndex()), osccue->sendCount(), 0);
-  const bool success = osccue->insertSend(oscsend, osccue->sendCount());
+  osccue->insertSend(oscsend, osccue->sendCount());
   endInsertRows();
 }
 
-//void OscCueList::insertSend(OscSend *oscsend, int rowSend)
-//{
-////  if (rowSend < 0 || rowSend > rowCount() || isRowCue(rowSend)) return; // C'est aux meth de vérifier
-////  QModelIndex indexTemp = QModelIndex();
-////  int cue = getSendCueId(rowSend) - 1;
-////  OscCue *tempCue = v_listCue.at(cue);
-////  beginInsertRows(indexTemp, rowSend + 1, rowSend +1);
-////  tempCue->insertOscSend(getSendId(rowSend), oscsend);
-////  endInsertRows();
-//}
+void OscCueList::insertSend(OscSend *oscsend, int cueId, int rowSend)
+{
+  if (cueId < 0 || cueId >= rootSend->sendCount()) return;
+  OscSend *osccue = rootSend->child(cueId);
+  if (rowSend < 0 || rowSend >= osccue->sendCount()) return;
+  oscsend->setParentSend(osccue);
+  beginInsertRows(index(cueId, 0, QModelIndex()), rowSend, rowSend);
+  osccue->insertSend(oscsend, rowSend);
+  endInsertRows();
+}
 
-//void OscCueList::moveSendPrev(int rowSend)
-//{
-////  if (rowSend < 2 || rowSend > rowCount() || isRowCue(rowSend)) return; // C'est aux meth de vérifier
-////  QModelIndex indexTemp = QModelIndex();
-////  int cue = getSendCueId(rowSend) - 1; // pointeur dans v_listCue
-////  if (getSendId(rowSend) == 1) // Si c'est le 1er send on le met à la fin de la cue d'avant
-////  {
-////    if (cue == 0) return; // Si y a pas de cue avant on fait rien
-////    OscCue *tempCue = getOscCue(cue); // On pointe la cue actuelle
-////    OscSend *tempSend = tempCue->getOscSend(0); // on prend le 1er
-////    OscCue *tempCuePrev = getOscCue(cue -1); // On pointe la cue d'avant
-////    beginMoveRows(indexTemp, rowSend, rowSend, indexTemp, rowSend - 2);
-////    tempCuePrev->addOscSend(tempSend); // On met le send à la fin
-////    tempCue->removeOscSend(0); // on l'efface dans l'ancienne cue
-////    endMoveRows();
-////  }
-////  else
-////  {
-////    OscCue *tempCue = getOscCue(cue);
-////    beginMoveRows(indexTemp, rowSend, rowSend, indexTemp, rowSend - 1);
-////    tempCue->moveOscSendPrev(getSendId(rowSend) - 1);
-////    endMoveRows();
-////  }
-//}
+void OscCueList::moveSendPrev(int cueId, int rowSend)
+{
 
-//void OscCueList::moveSendNext(int rowSend)
-//{
-////  if (rowSend > rowCount() - 2 || isRowCue(rowSend) || rowSend < 1) return; // C'est aux meth de vérifier
-////  QModelIndex indexTemp = QModelIndex();
-////  int cue = getSendCueId(rowSend) - 1; // pointeur dans v_listCue
-////  int send = getSendId(rowSend) - 1; // pointeur dans v_listOscSend
-////  if (isRowCue(rowSend + 1)) // Si le row d'après est une cue
-////  {
-////    OscCue *tempCue = getOscCue(cue); // On pointe la cue actuelle
-////    OscSend *tempSend = tempCue->getOscSend(send);
-////    OscCue *tempCueNext = getOscCue(cue + 1);
-////    beginMoveRows(indexTemp, rowSend, rowSend, indexTemp, rowSend + 2);
-////    tempCueNext->insertOscSend(0, tempSend);
-////    tempCue->removeOscSend(tempCue->oscSendCount() - 1);
-////    endMoveRows();
-////  }
-////  else // le row d'après est un send
-////  {
-////    rowSend++;
-////    OscCue *tempCue = getOscCue(cue);
-////    beginMoveRows(indexTemp, rowSend, rowSend, indexTemp, rowSend - 1);
-////    tempCue->moveOscSendPrev(getSendId(rowSend) - 1);
-////    endMoveRows();
-////  }
-//}
+}
 
-//void OscCueList::removeSend(int rowSend)
-//{
-////  if (rowSend < 0 || rowSend > rowCount() || isRowCue(rowSend)) return; // C'est aux meth de vérifier
-////  QModelIndex indexTemp = QModelIndex();
-////  int cue = getSendCueId(rowSend) - 1;
-////  OscCue *tempCue = v_listCue.at(cue);
-////  beginRemoveRows(indexTemp, rowSend, rowSend);
-////  tempCue->removeOscSend(getSendId(rowSend) - 1);
-////  endRemoveRows();
-//}
+void OscCueList::moveSendNext(int cueId, int rowSend)
+{
 
-//void OscCueList::removeAllSend(int cueRow)
-//{
-////  if (cueRow < 0 || cueRow > rowCount() || !isRowCue(cueRow)) return; // C'est aux meth de vérifier
-////  int cue = getCueId(cueRow) - 1;
-////  OscCue *tempCue = v_listCue.at(cue);
-////  int rows = tempCue->oscSendCount();
-////  for (int i = 0; i < rows; i++)
-////  {
-////    removeSend(cueRow + 1);
-////  }
-//}
+}
+
+void OscCueList::removeSend(int cueId, int rowSend)
+{
+  if (cueId < 0 || cueId >= rootSend->sendCount()) return;
+  OscSend *osccue = rootSend->child(cueId);
+  if (rowSend < 0 || rowSend >= osccue->sendCount()) return;
+  beginRemoveRows(index(cueId, 0, QModelIndex()), rowSend, rowSend);
+  osccue->removeSends(rowSend);
+  endRemoveRows();
+}
+
+void OscCueList::removeAllSend(int cueId)
+{
+  if (cueId < 0 || cueId >= rootSend->sendCount()) return;
+  OscSend *osccue = rootSend->child(cueId);
+  int sendCount = osccue->sendCount();
+  if (!sendCount) return;
+  beginRemoveRows(index(cueId, 0, QModelIndex()), 0, sendCount);
+  osccue->removeSends(0, sendCount);
+  endMoveRows();
+}
+
+void OscCueList::insertCue(int cueId) // A vérifier...
+{
+  if (cueId < 0 || cueId >= rootSend->sendCount()) return;
+  OscSend *osccue = new OscSend(this, CUE, rootSend); // On crée une cue
+  beginInsertRows(QModelIndex(), cueId, cueId);
+  rootSend->insertSend(osccue, cueId);
+  endInsertRows();
+}
+
+void OscCueList::moveCuePrev(int cueId)
+{
+  if (cueId < 1 || cueId >= rootSend->sendCount()) return;
+  beginMoveRows(QModelIndex(), cueId, cueId, QModelIndex(), cueId - 1);
+// faire fonction dans oscsend pour movesendprev
+  endMoveRows();
+}
+
+void OscCueList::moveCueNext(int cueId)
+{
+
+}
+
+void OscCueList::removeCue(int cueId)
+{
+  if (cueId >=0 && cueId < rootSend->sendCount()) rootSend->removeSends(cueId);
+}
+
+void OscCueList::removeAllCue()
+{
+  int cueCount = rootSend->sendCount();
+  if (cueCount) rootSend->removeSends(0, cueCount);
+}
+
+bool OscCueList::isCue(const QModelIndex &index) const
+{
+  OscSend *tempSend = getSend(index);
+  if (tempSend->getChamp() == CUE) return true;
+  return false;
+}
+
 
 OscSend *OscCueList::getSend(const QModelIndex &index) const
 {
