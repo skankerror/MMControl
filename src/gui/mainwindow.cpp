@@ -71,8 +71,8 @@ void MainWindow::createToolBar()
   // tout le temps
   champLabel = new QLabel("champ", this);
   champComboBox = new QComboBox(this);
-  for (int i = 0; i < Count_champMM; i++) champComboBox->addItem(OscSend::getChampToString(i));
-  champComboBox->setCurrentIndex(CUE);
+  for (int i = 0; i < CUE; i++) champComboBox->addItem(OscSend::getChampToString(i));
+  champComboBox->setCurrentIndex(PLAY);
 
   // P_NAME, R_P_NAME, R_P_REWIND, R_P_OPACITY, R_P_VOLUME, R_P_RATE, R_P_URI, R_P_COLOR, R_P_FADE, R_P_XFADE
   p_nameLineEdit = new QLineEdit("Name", this);
@@ -148,7 +148,7 @@ void MainWindow::createToolBar()
   waitTimeSpinBox->setMaximum(1000);
   waitTimeSpinBox->setMinimum(0);
   waitTimeSpinBox->setDecimals(1);
-  waitTimeSpinBox->setValue(2);
+  waitTimeSpinBox->setValue(0);
 
   sendPushButton = new QPushButton("Send !", this);
   addToCuePushButton = new QPushButton("Add to Cue !", this);
@@ -198,15 +198,15 @@ void MainWindow::showWidgets(int index)
 {
   switch (index)
   {
-  case CUE:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
-    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide();timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
+//  case CUE:
+//    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->hide();
+//    p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
+//    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
+//    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
+//    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
+//    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
+//    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
+//    timeLabel->hide();timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
   case PLAY: case PAUSE: case REWIND: case QUIT:
     p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->hide();
     p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();

@@ -46,10 +46,8 @@ public:
   OscSend* retOscsendFromFileLine(QStringList &lineToken); // revoir en xml ?
 
   OscSend* getRootSend(){ return rootSend; }; // pour tester
+  OscSend *getSend(const QModelIndex &index) const;
 
-signals:
-
-public /*slots*/:
   void addCue();
   void addSend(OscSend *oscsend, int cueId);
   void insertSend(OscSend *oscsend, int cueId, int sendId);
@@ -66,7 +64,6 @@ public /*slots*/:
   bool isCue(const QModelIndex &index) const;
 
 private:
-  OscSend *getSend(const QModelIndex &index) const;
 
   OscSend *rootSend;
 

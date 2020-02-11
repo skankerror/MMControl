@@ -94,7 +94,7 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   boutonLayout->addWidget(boutonSaveAs);
   boutonLayout->addWidget(boutonLoad);
 
-//  proxyModel = new OscCueListProxy(m_oscCueList, this);
+//  proxyModel = new OscCueListProxy(m_oscCueList, m_oscCueList);
 //  proxyModel->setSourceModel(m_oscCueList);
 //  treeView->setModel(proxyModel);
   treeView->setModel(m_oscCueList);
@@ -104,6 +104,7 @@ TabSeq::TabSeq(OscCueList *oscCueList,
 //  treeView->verticalHeader()->setMaximumSectionSize(25);
   treeView->setTextElideMode(Qt::ElideRight);
   treeView->setVerticalScrollMode(QAbstractItemView::ScrollPerItem);
+//  treeView->setSortingEnabled(true);
 
   treeView->show();
   layout1->addWidget(treeView);
@@ -124,7 +125,7 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   connect(boutonAddCue, SIGNAL(clicked(bool)), SLOT(addCue()));
   connect(boutonSaveAs, SIGNAL(clicked(bool)), SLOT(saveAs()));
   connect(boutonLoad, SIGNAL(clicked(bool)), SLOT(loadFile()));
-  connect(m_oscCueList, SIGNAL(dataChanged(QModelIndex, QModelIndex)), SLOT(hideShowColumns()));
+//  connect(m_oscCueList, SIGNAL(dataChanged(QModelIndex, QModelIndex)), SLOT(hideShowColumns()));
   connect(midiIn2, SIGNAL(sigMidiNoteChanged(int)), this, SLOT(receiveMidiNote2(int)));
 }
 
