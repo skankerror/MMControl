@@ -21,7 +21,6 @@
 #include <QtWidgets>
 #include "osccuelist.h"
 #include "mymidi.h"
-#include "osccuelistdelegate.h"
 #include "MMC.h"
 
 class TabSeq : public QWidget
@@ -42,7 +41,6 @@ signals:
 
 public slots:
   void executeGo();
-//  void executeCue(OscCue *osccue);
   void executeSend(OscSend *oscsend);
   void movePrevious();
   void moveNext();
@@ -77,7 +75,6 @@ private:
         QPushButton *boutonSaveAs;
         QPushButton *boutonLoad;
 
-//  OscCue *tempCue;
   OscSend *tempSend;
 
 public:

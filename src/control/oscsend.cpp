@@ -73,6 +73,41 @@ OscSend::OscSend(QObject *parent,
   connect(timer, SIGNAL(timeout()), this, SLOT(fadeStep()));
 }
 
+OscSend::OscSend(OscSend *oscsend):
+  QObject(nullptr),
+  UdpTransmitSocket(IpEndpointName(ADDRESS, PORT)),
+  m_champ(oscsend->getChamp()),
+  m_p_uri(oscsend->getP_uri()),
+  m_p_name(oscsend->getP_name()),
+  m_p_name2(oscsend->getP_name2()),
+  m_p_color(oscsend->getP_color()),
+  m_p_ID1(oscsend->getP_ID1()),
+  m_p_ID2(oscsend->getP_ID2()),
+  m_p_rate(oscsend->getP_rate()),
+  m_p_opacity(oscsend->getP_opacity()),
+  m_p_volume(oscsend->getP_volume()),
+  m_m_name(oscsend->getM_name()),
+  m_m_name2(oscsend->getM_name2()),
+  m_m_ID1(oscsend->getM_ID1()),
+  m_m_opacity(oscsend->getM_opacity()),
+  m_m_isvisible(oscsend->getM_isvisible()),
+  m_m_issolo(oscsend->getM_issolo()),
+  m_m_islocked(oscsend->getM_islocked()),
+  m_m_depth(oscsend->getM_depth()),
+  m_time(oscsend->getTime()),
+  m_isfadein(oscsend->getIsfadein()),
+  m_timeWait(oscsend->getTimewait()),
+  m_noteSend(oscsend->getNoteSend()),
+  m_parentSend(nullptr)
+
+{
+  timer = new QTimer();
+  counter = 0;
+  connect(timer, SIGNAL(timeout()), this, SLOT(fadeStep()));
+//  qDebug() << m_champ;
+}
+
+
 OscSend::~OscSend()
 {
   qDeleteAll(v_listSend);
@@ -407,22 +442,22 @@ int OscSend::getChampFromString(const QString &value)
 
 void OscSend::setParentSend(OscSend *osccue)
 {
-  m_parentSend = osccue;
+  m_parentSend = osccue; // Gère-t-on le timewait ??
 }
 
-OscSend *OscSend::child(int vectorAt)
+OscSend *OscSend::getChild(int position)
 {
-  if (vectorAt < 0 || vectorAt >= v_listSend.size())
+  if (position < 0 || position >= v_listSend.size())
     return nullptr;
-  return v_listSend.at(vectorAt);
+  return v_listSend.at(position);
 }
 
-int OscSend::sendCount() const
+int OscSend::getSendCount() const
 {
   return v_listSend.count();
 }
 
-int OscSend::columnCount() const // inutile
+int OscSend::getColumnCount() const // inutile
 {
   return Count;
 }
@@ -430,26 +465,52 @@ int OscSend::columnCount() const // inutile
 void OscSend::insertSend(OscSend *oscsend, int position)
 {
   if (position < 0 || position > v_listSend.size()) return;
+  oscsend->setParentSend(this);
   v_listSend.insert(position, oscsend);
+  m_timeWait += oscsend->getTimewait(); // on ajoute le timewait de la send que l'on vient d'insérer
+  int champ = oscsend->getChamp();
+  // Si c'est un fade on ajoute aussi le time
+  if (champ == P_FADE || champ == P_XFADE || champ == R_P_FADE || champ == R_P_XFADE) m_timeWait += oscsend->getTime();
 }
 
-OscSend *OscSend::parentSend()
+OscSend *OscSend::getParentSend()
 {
   return m_parentSend;
 }
 
-void OscSend::removeSends(int vectorAt, int count)
+void OscSend::removeSends(int position, int count/*, bool destroy*/)
 {
-  if (vectorAt < 0 || vectorAt * count > v_listSend.size())
+  if (position < 0 || position * count > v_listSend.size())
     return;
-
   for (int row = 0; row < count; row++)
-    delete v_listSend.takeAt(vectorAt);
+  {
+    // prendre la send et enlever le time
+    OscSend *oscsend = getChild(row);
+    m_timeWait -= oscsend->getTimewait();
+    int champ = oscsend->getChamp();
+    // Si c'est un fade on retranche aussi le time
+    if (champ == P_FADE || champ == P_XFADE || champ == R_P_FADE || champ == R_P_XFADE) m_timeWait -= oscsend->getTime();
+    {
+      /*if (destroy) */delete v_listSend.takeAt(position);
+//      else v_listSend.remove(row);
+    }
+  }
 }
 
-int OscSend::sendId() const
+int OscSend::getSendId() const
 {
   if (m_parentSend) return m_parentSend->v_listSend.indexOf(const_cast<OscSend *>(this));
   return 0;
+}
+
+void OscSend::moveChildPrev(int position)
+{
+  if (position < 1 || position >= getSendCount()) return;
+  v_listSend.swapItemsAt(position -1, position);
+}
+
+void OscSend::moveChildNext(int position) // inutile ?
+{
+  moveChildPrev(position + 1); // La vérif se fait dans la fn appelée
 }
 

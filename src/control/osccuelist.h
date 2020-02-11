@@ -18,19 +18,15 @@
 #ifndef OSCCUELIST_H
 #define OSCCUELIST_H
 
-//#include <QObject>
-#include <QAbstractItemModel>
-#include <QSortFilterProxyModel>
+#include <QtWidgets>
 #include "oscsend.h"
-//#include "osccue.h"
-#include "osccuelistdelegate.h"
 #include "MMC.h"
 
 class OscCueList :
     public QAbstractItemModel
 {
   Q_OBJECT
-  Q_ENUM(columns)
+//  Q_ENUM(columns)
 
 public:
 
@@ -56,12 +52,12 @@ signals:
 public /*slots*/:
   void addCue();
   void addSend(OscSend *oscsend, int cueId);
-  void insertSend(OscSend *oscsend, int cueId, int rowSend);
-  void moveSendPrev(int cueId, int rowSend);
-  void moveSendNext(int cueId, int rowSend);
-  void removeSend(int cueId, int rowSend);
+  void insertSend(OscSend *oscsend, int cueId, int sendId);
+  void moveSendPrev(int cueId, int sendId);
+  void moveSendNext(int cueId, int sendId);
+  void removeSend(int cueId, int sendId/*, bool destroy = false*/);
   void removeAllSend(int cueId);
-  void insertCue(int rowCue);
+  void insertCue(int cueId);
   void moveCuePrev(int cueId);
   void moveCueNext(int cueId);
   void removeCue(int cueId);
@@ -73,6 +69,26 @@ private:
   OscSend *getSend(const QModelIndex &index) const;
 
   OscSend *rootSend;
+
+};
+
+//*****************************************************************************
+
+class OscCuelistDelegate : public QStyledItemDelegate
+{
+  Q_OBJECT
+public:
+  explicit OscCuelistDelegate(QObject *parent = nullptr);
+  ~OscCuelistDelegate(){}
+
+  QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+  void setEditorData(QWidget *editor, const QModelIndex &index) const override;
+  void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
+  void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+//  void paint ( QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const override;
+//  QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+
+signals:
 
 };
 

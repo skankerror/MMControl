@@ -17,7 +17,6 @@ INCLUDEPATH += \
 
 SOURCES += \
     src/control/mymidi.cpp \
-    src/gui/osccuelistdelegate.cpp \
     src/main.cpp \
     contrib/oscpack/osc/OscTypes.cpp \
     contrib/oscpack/osc/OscOutboundPacketStream.cpp \
@@ -36,7 +35,6 @@ HEADERS += \
     src/MMC.h \
     src/control/mymidi.h \
     src/gui/mainwindow.h \
-    src/gui/osccuelistdelegate.h \
     src/gui/tabmidi.h \
     src/gui/tabseq.h \
     src/control/oscsend.h \

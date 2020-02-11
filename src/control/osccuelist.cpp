@@ -35,7 +35,12 @@ auto oscsend3 = new OscSend(this, P_COLOR);
   addSend(oscsend3, 1);
 auto oscsend4 = new OscSend(this, P_NAME);
   insertSend(oscsend4, 1, 1);
-  removeSend(1, 2);
+//  removeSend(1, 2);
+//  moveCueNext(0);
+//  moveSendPrev(0, 1);
+//  moveSendPrev(1, 0);
+//  moveSendNext(0, 2);
+//  moveCuePrev(1);
   //removeAllCue();
   //removeCue(1);
 }
@@ -48,7 +53,7 @@ OscCueList::~OscCueList()
 int OscCueList::rowCount(const QModelIndex &parent) const
 {
   const OscSend *parentSend = getSend(parent);
-  return parentSend ? parentSend->sendCount() : 0;
+  return parentSend ? parentSend->getSendCount() : 0;
 }
 
 int OscCueList::columnCount(const QModelIndex &parent) const
@@ -319,7 +324,7 @@ QModelIndex OscCueList::index(int row, int column, const QModelIndex &parent) co
 
   OscSend *parentSend = getSend(parent);
   if (!parentSend) return QModelIndex();
-  OscSend *childSend = parentSend->child(row);
+  OscSend *childSend = parentSend->getChild(row);
   if (childSend) return createIndex(row, column, childSend);
 
   return QModelIndex();
@@ -330,11 +335,11 @@ QModelIndex OscCueList::parent(const QModelIndex &index) const
   if (!index.isValid()) return QModelIndex();
 
   OscSend *childSend = getSend(index);
-  OscSend *parentSend = childSend ? childSend->parentSend() : nullptr;
+  OscSend *parentSend = childSend ? childSend->getParentSend() : nullptr;
 
   if (parentSend == rootSend || !parentSend) return QModelIndex();
 
-  return createIndex(parentSend->sendId(), 0, parentSend);
+  return createIndex(parentSend->getSendId(), 0, parentSend);
 }
 
 OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
@@ -433,57 +438,95 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
 void OscCueList::addCue()
 {
   OscSend *osccue = new OscSend(this, CUE, rootSend); // On crée une cue
-  beginInsertRows(QModelIndex(), rootSend->sendCount(), 0);
-  rootSend->insertSend(osccue, rootSend->sendCount());
+  beginInsertRows(QModelIndex(), rootSend->getSendCount(), 0);
+  rootSend->insertSend(osccue, rootSend->getSendCount());
   endInsertRows();
 }
 
 void OscCueList::addSend(OscSend *oscsend, int cueId)
 {
-  if (cueId < 0 || cueId >= rootSend->sendCount()) return;
-  OscSend *osccue = rootSend->child(cueId);
+  if (cueId < 0 || cueId >= rootSend->getSendCount()) return;
+  OscSend *osccue = rootSend->getChild(cueId);
   oscsend->setParentSend(osccue);
-  beginInsertRows(index(cueId, 0, QModelIndex()), osccue->sendCount(), 0);
-  osccue->insertSend(oscsend, osccue->sendCount());
+  beginInsertRows(index(cueId, 0, QModelIndex()), osccue->getSendCount(), 0);
+  osccue->insertSend(oscsend, osccue->getSendCount());
   endInsertRows();
 }
 
-void OscCueList::insertSend(OscSend *oscsend, int cueId, int rowSend)
+void OscCueList::insertSend(OscSend *oscsend, int cueId, int sendId)
 {
-  if (cueId < 0 || cueId >= rootSend->sendCount()) return;
-  OscSend *osccue = rootSend->child(cueId);
-  if (rowSend < 0 || rowSend >= osccue->sendCount()) return;
+  if (cueId < 0 || cueId >= rootSend->getSendCount()) return;
+  OscSend *osccue = rootSend->getChild(cueId);
+  if (sendId < 0 || sendId >= osccue->getSendCount()) return;
   oscsend->setParentSend(osccue);
-  beginInsertRows(index(cueId, 0, QModelIndex()), rowSend, rowSend);
-  osccue->insertSend(oscsend, rowSend);
+  beginInsertRows(index(cueId, 0, QModelIndex()), sendId, sendId);
+  osccue->insertSend(oscsend, sendId);
   endInsertRows();
 }
 
-void OscCueList::moveSendPrev(int cueId, int rowSend)
+void OscCueList::moveSendPrev(int cueId, int sendId)
 {
-
+  if (cueId < 0 || cueId >= rootSend->getSendCount()) return;
+  OscSend *osccue = rootSend->getChild(cueId);
+  if (sendId < 0 || sendId >= osccue->getSendCount()) return;
+  if (sendId) // Si c'est pas le 1er send de la cue
+  {
+    beginMoveRows(index(cueId, 0, QModelIndex()), sendId, sendId, index(cueId, 0, QModelIndex()), sendId - 1);
+    osccue->moveChildPrev(sendId);
+    endMoveRows();
+    return;
+  }
+  // C'est le 1er send
+  if (cueId == 0) return; // y a pas de cue avant on return;
+  OscSend *cuePrev = rootSend->getChild(cueId - 1); // On choppe la cue d'avant
+  beginMoveRows(index(cueId, 0, QModelIndex()), sendId, sendId, index(cueId - 1, 0, QModelIndex()), cuePrev->getSendCount() - 1);
+  OscSend *oscsend = osccue->getChild(sendId); // On choppe le send
+  OscSend *oscsend2 = new OscSend(oscsend); // On le copie
+  oscsend2->setParent(this); // On met le bon parent QObject sinon ça plante
+  oscsend2->setParentSend(cuePrev); // On met la nouvelle cue comme parentsend
+  addSend(oscsend2, cueId - 1); // On ajoute la copie à la bonne cue
+  removeSend(cueId, sendId); // on peut le détruire de l'ancienne cue
+  endMoveRows();
 }
 
-void OscCueList::moveSendNext(int cueId, int rowSend)
+void OscCueList::moveSendNext(int cueId, int sendId)
 {
-
+  if (cueId < 0 || cueId >= rootSend->getSendCount()) return;
+  OscSend *osccue = rootSend->getChild(cueId);
+  if (sendId < 0 || sendId >= osccue->getSendCount()) return;
+  // Si c'est pas le dernier send
+  if (sendId != osccue->getSendCount() - 1) moveSendPrev(cueId, sendId + 1);
+  // C'est le dernier send
+  else
+  {
+    if (cueId == rootSend->getSendCount() - 1) return; // C'est la dernière cue on return
+    OscSend *cueNext = rootSend->getChild(cueId + 1); // On choppe la cue d'avant
+    beginMoveRows(index(cueId, 0, QModelIndex()), sendId, sendId, index(cueId + 1, 0, QModelIndex()), 0);
+    OscSend *oscsend = osccue->getChild(sendId); // On choppe le send
+    OscSend *oscsend2 = new OscSend(oscsend); // On le copie
+    oscsend2->setParent(this); // On met le bon parent QObject sinon ça plante
+    oscsend2->setParentSend(cueNext); // On met la nouvelle cue comme parentsend
+    insertSend(oscsend2, cueId + 1, 0); // On ajoute la copie à la bonne cue
+    removeSend(cueId, sendId); // on peut le détruire de l'ancienne cue
+    endMoveRows();
+  }
 }
 
-void OscCueList::removeSend(int cueId, int rowSend)
+void OscCueList::removeSend(int cueId, int sendId/*, bool destroy*/)
 {
-  if (cueId < 0 || cueId >= rootSend->sendCount()) return;
-  OscSend *osccue = rootSend->child(cueId);
-  if (rowSend < 0 || rowSend >= osccue->sendCount()) return;
-  beginRemoveRows(index(cueId, 0, QModelIndex()), rowSend, rowSend);
-  osccue->removeSends(rowSend);
+  if (cueId < 0 || cueId >= rootSend->getSendCount()) return;
+  OscSend *osccue = rootSend->getChild(cueId);
+  if (sendId < 0 || sendId >= osccue->getSendCount()) return;
+  beginRemoveRows(index(cueId, 0, QModelIndex()), sendId, sendId);
+  osccue->removeSends(sendId);
   endRemoveRows();
 }
 
 void OscCueList::removeAllSend(int cueId)
 {
-  if (cueId < 0 || cueId >= rootSend->sendCount()) return;
-  OscSend *osccue = rootSend->child(cueId);
-  int sendCount = osccue->sendCount();
+  if (cueId < 0 || cueId >= rootSend->getSendCount()) return;
+  OscSend *osccue = rootSend->getChild(cueId);
+  int sendCount = osccue->getSendCount();
   if (!sendCount) return;
   beginRemoveRows(index(cueId, 0, QModelIndex()), 0, sendCount);
   osccue->removeSends(0, sendCount);
@@ -492,7 +535,11 @@ void OscCueList::removeAllSend(int cueId)
 
 void OscCueList::insertCue(int cueId) // A vérifier...
 {
-  if (cueId < 0 || cueId >= rootSend->sendCount()) return;
+  if (cueId < 0 || cueId >= rootSend->getSendCount())
+  {
+    addCue(); // On add quand même...
+    return;
+  }
   OscSend *osccue = new OscSend(this, CUE, rootSend); // On crée une cue
   beginInsertRows(QModelIndex(), cueId, cueId);
   rootSend->insertSend(osccue, cueId);
@@ -501,25 +548,31 @@ void OscCueList::insertCue(int cueId) // A vérifier...
 
 void OscCueList::moveCuePrev(int cueId)
 {
-  if (cueId < 1 || cueId >= rootSend->sendCount()) return;
+  if (cueId < 1 || cueId >= rootSend->getSendCount()) return;
   beginMoveRows(QModelIndex(), cueId, cueId, QModelIndex(), cueId - 1);
-// faire fonction dans oscsend pour movesendprev
+  rootSend->moveChildPrev(cueId);
   endMoveRows();
 }
 
 void OscCueList::moveCueNext(int cueId)
 {
-
+  if (cueId < 0 || cueId >= rootSend->getSendCount() - 1) return;
+  moveCuePrev(cueId + 1);
 }
 
 void OscCueList::removeCue(int cueId)
 {
-  if (cueId >=0 && cueId < rootSend->sendCount()) rootSend->removeSends(cueId);
+  if (cueId >=0 && cueId < rootSend->getSendCount())
+  {
+    beginRemoveRows(QModelIndex(), cueId, cueId);
+    rootSend->removeSends(cueId);
+    endRemoveRows();
+  }
 }
 
 void OscCueList::removeAllCue()
 {
-  int cueCount = rootSend->sendCount();
+  int cueCount = rootSend->getSendCount(); // Attention pas de begin removeRows !
   if (cueCount) rootSend->removeSends(0, cueCount);
 }
 
@@ -540,6 +593,109 @@ OscSend *OscCueList::getSend(const QModelIndex &index) const
   }
   return rootSend;
 }
+
+//*************************************************************************************
+
+OscCuelistDelegate::OscCuelistDelegate(QObject *parent):
+  QStyledItemDelegate(parent)
+{}
+
+QWidget *OscCuelistDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+  if (index.column() == Champ)
+  {
+    auto *champComboBox = new QComboBox(parent);
+    for (int i = 0; i < Count_champMM; i++) champComboBox->addItem(OscSend::getChampToString(i));
+    return champComboBox;
+  }
+
+  if (index.column() == Color)
+  {
+    auto *colorDialog = new QColorDialog(parent);
+    colorDialog->setOption(QColorDialog::DontUseNativeDialog, true);
+    return colorDialog;
+  }
+
+  if (index.column() == Uri)
+  {
+    auto *fileDialog = new QFileDialog(parent);
+    fileDialog->setFileMode(QFileDialog::ExistingFile);
+    fileDialog->setNameFilter("Media Files (*.png *.jpg *.gif *.tif *.mov *.avi *.mp4)");
+    return fileDialog;
+  }
+  return QStyledItemDelegate::createEditor(parent, option, index);
+}
+
+void OscCuelistDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
+{
+  if (index.column() == Champ)
+  {
+    auto *comboBox = qobject_cast<QComboBox *>(editor);
+    if (comboBox)
+    {
+      int champInt = index.model()->data(index).toInt();
+      champMM champ = static_cast<champMM>(champInt);
+      const int value = champ;
+      comboBox->setCurrentIndex(value);
+    }
+  }
+  if (index.column() == Color)
+  {
+    auto *colorDialog = qobject_cast<QColorDialog *>(editor);
+    if (editor)
+    {
+      QColor color = QColor(index.model()->data(index).toString());
+      colorDialog->setCurrentColor(color);
+    }
+  }
+  else
+  {
+    QStyledItemDelegate::setEditorData(editor, index);
+  }
+}
+
+void OscCuelistDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
+{
+  if (index.column() == Champ)
+  {
+    auto *comboBox = qobject_cast<QComboBox *>(editor);
+    if (editor) model->setData(index, comboBox->currentIndex());
+  }
+
+  else if (index.column() == Color)
+  {
+    auto *colorDialog = qobject_cast<QColorDialog *>(editor);
+    if (editor) model->setData(index, colorDialog->selectedColor().name());
+  }
+
+  else if (index.column() == Uri)
+  {
+    auto *fileDialog = qobject_cast<QFileDialog *>(editor);
+    if (editor) model->setData(index, fileDialog->selectedFiles());
+  }
+
+  else
+  {
+    QStyledItemDelegate::setModelData(editor, model, index);
+  }
+}
+
+void OscCuelistDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+  Q_UNUSED(index);
+  editor->setGeometry(option.rect);
+}
+
+//void OscCuelistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+//{
+//  QStyledItemDelegate::paint(painter, option, index);
+//}
+
+//QSize OscCuelistDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+//{
+//  return QStyledItemDelegate::sizeHint(option, index);
+//}
+
 
 //***************************************************************************
 

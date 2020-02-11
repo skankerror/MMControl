@@ -34,8 +34,7 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   treeView(atreeView)
 {
   // On met une cue pour démarrer
-//  OscCue *firstCue = new OscCue(this);
-//  m_oscCueList->addCue(firstCue);
+//  m_oscCueList->addCue();
 
   layoutMain = new QHBoxLayout();
   layout1 = new QHBoxLayout();
@@ -173,95 +172,72 @@ void TabSeq::executeSend(OscSend *oscsend)
 
 void TabSeq::movePrevious() // Bouger cue si c'est une cue, bouger send si c'est un send
 {
-//  QModelIndex index = treeView->currentIndex();
-//  int row = index.row();
-//  qDebug() << "row selected" << row;
-//  if (!index.isValid() || row < 1 /* Si c'est 0 on peut pas remonter */ || row > m_oscCueList->rowCount()) return;
-//  if (m_oscCueList->isRowCue(row)) // Si c'est une cue
+  QModelIndex index = treeView->currentIndex();
+  if (!index.isValid()) return;
+  int row = index.row();
+  if (m_oscCueList->isCue(index)) // Si c'est une cue
+  {
+    m_oscCueList->moveCuePrev(row);
+    return;
+  }
+  // c'est un send
+  m_oscCueList->moveSendPrev(index.parent().row(), row); // Seul blème l'index disparaît si on change de cue
+//  if (row == 0)
 //  {
-//    int cueId = m_oscCueList->getCueId(row); // on garde en mémoire l'id de la cue pour la sélectionner après
-//    m_oscCueList->moveCuePrev(row);
-//    int rowCueNewId = m_oscCueList->getRowCueFromCueId(cueId - 1); // on récupère son nouveau row
-//    treeView->setCurrentIndex(m_oscCueList->index(rowCueNewId, 0)); // on le sélectionne
+    // faire index de la nouvelle cue parente et trouver le dernier row pour en créer un index...
+//    treeView->setCurrentIndex(m_oscCueList.index()
 //  }
-//  else // c'est un send
-//  {
-//    int sendId = m_oscCueList->getSendId(row);
-//    int cueId = m_oscCueList->getSendCueId(row);
-//    m_oscCueList->moveSendPrev(row);
-//    if (sendId == 1 && cueId > 1) // Si on a bougé de cue
-//      treeView->setCurrentIndex(m_oscCueList->index(row - 1, 0)); // on le resélectionne
-//  }
-//  treeView->resizeRowsToContents();
+  //  treeView->resizeRowsToContents();
 //  treeView->resizeColumnsToContents();
 }
 
 void TabSeq::moveNext() // Bouger cue si c'est une cue, bouger send si c'est un send
 {
-//  QModelIndex index = treeView->currentIndex();
-//  int row = index.row();
-////  qDebug() << "row selected" << row;
-//  if (!index.isValid() || row > m_oscCueList->rowCount() - 2) return; // Si c'est le dernier row on fait rien...
-//  if (m_oscCueList->isRowCue(row)) // Si c'est une cue
-//  {
-//    int cueId = m_oscCueList->getCueId(row);
-//    int cueCount = m_oscCueList->getOscCueCount();
-//    if (cueId >= cueCount) return; // on pourra pas faire next
-//    int rowNextCue = m_oscCueList->getRowCueFromCueId(cueId + 1); // On récupère le row de la next cue
-//    m_oscCueList->moveCuePrev(rowNextCue);
-//    rowNextCue = m_oscCueList->getRowCueFromCueId(cueId + 1); // On reprend le row de notre cue boougée
-//    treeView->setCurrentIndex(m_oscCueList->index(rowNextCue, 0)); // On le sélectionne
-//  }
-//  else // c'est un send
-//  {
-//    m_oscCueList->moveSendNext(row);
-//  }
+  QModelIndex index = treeView->currentIndex();
+  if (!index.isValid()) return;
+  int row = index.row();
+  if (m_oscCueList->isCue(index)) // Si c'est une cue
+  {
+    m_oscCueList->moveCueNext(row);
+    return;
+  }
+  // c'est un send
+  m_oscCueList->moveSendNext(index.parent().row(), row); // Seul blème l'index disparaît si on change de cue
 //  treeView->resizeRowsToContents();
 //  treeView->resizeColumnsToContents();
 }
 
-void TabSeq::remove() // Bouger cue si c'est une cue, bouger send si c'est un send
+void TabSeq::remove()
 {
-//  QModelIndex index = treeView->currentIndex();
-//  int row = index.row();
-////  qDebug() << "row selected" << row;
-//  if (!index.isValid() || row > m_oscCueList->rowCount() - 1) return;
-//  if (m_oscCueList->isRowCue(row))
-//  {
-//    m_oscCueList->removeCue(row);
-//  }
-//  else
-//  {
-//    m_oscCueList->removeSend(row);
-//  }
-//  if (!row) treeView->setCurrentIndex(m_oscCueList->index(0, 0));
-//  else treeView->setCurrentIndex(m_oscCueList->index(row - 1, 0)); // ça c'est plus simple que table view et cie
+  QModelIndex index = treeView->currentIndex();
+  if (!index.isValid()) return;
+  int row = index.row();
+  if (m_oscCueList->isCue(index)) // Si c'est une cue
+  {
+    m_oscCueList->removeCue(row);
+    return;
+  }
+  // c'est un send
+  m_oscCueList->removeSend(index.parent().row(), row);
 //  treeView->resizeRowsToContents();
 //  treeView->resizeColumnsToContents();
 //  hideShowColumns();
 }
 
-void TabSeq::addCue() // Reste à voir le sélectionné // TODO rajouter index = currentindex et row ça sera plus simple
+void TabSeq::addCue() // Reste à voir le sélectionné
 {
-//  qDebug() << "rowcount dans addCue tabseq" << m_oscCueList->rowCount();
-
-//  OscCue *newCue = new OscCue(this);
-//  if (!treeView->currentIndex().isValid() || treeView->currentIndex().row() == m_oscCueList->rowCount() - 1)
-//  {
-//    m_oscCueList->addCue(newCue);
-//    treeView->setCurrentIndex(treeView->currentIndex().siblingAtRow(m_oscCueList->rowCount() - 1));
-//  }
-//  else if (m_oscCueList->isRowCue(treeView->currentIndex().row()))
-//  {
-//    m_oscCueList->insertCue(newCue, treeView->currentIndex().row());
-//    treeView->setCurrentIndex(treeView->currentIndex().siblingAtRow(m_oscCueList->getRowCueFromCueId(m_oscCueList->getCueId(treeView->currentIndex().row()) - 1)));
-//  }
-//  else // send sélectionné
-//  {
-//    int sendCueId = m_oscCueList->getSendCueId(treeView->currentIndex().row());
-//    m_oscCueList->insertCue(newCue, m_oscCueList->getRowCueFromCueId(sendCueId + 1));
-//    treeView->setCurrentIndex(treeView->currentIndex().siblingAtRow(treeView->currentIndex().row() + 1)); // pas bon
-//  }
+  QModelIndex index = treeView->currentIndex();
+  if (!index.isValid())
+  {
+    m_oscCueList->addCue();
+    return;
+  }
+  if (m_oscCueList->isCue(index))
+  {
+    m_oscCueList->insertCue(index.row());
+    return;
+  }
+  m_oscCueList->insertCue(index.parent().row() + 1);
 //  treeView->resizeRowsToContents();
 //  treeView->resizeColumnsToContents();
 //  hideShowColumns();

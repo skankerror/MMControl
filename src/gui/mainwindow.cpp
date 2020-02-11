@@ -533,13 +533,11 @@ void MainWindow::sendFromToolBar()
   case P_COLOR: case R_P_COLOR: while (p_colorLine->text() == "Choose->") setP_ColorLine(); oscsend->setP_color(p_colorLine->text()); break;
   default: break;
   }
-
   oscsend->ExecuteSend();
 }
 void MainWindow::setP_UriLine()
 {
   QString fileName = QFileDialog::getOpenFileName(this, "Choose File",
-//                                                  "/home/ray/boulot",
                                                   "",
                                                   "Media Files (*.png *.jpg *.gif *.tif *.mov *.avi *.mp4)");
   p_uriLine->setText(fileName);
@@ -551,75 +549,57 @@ void MainWindow::setP_ColorLine()
 }
 void MainWindow::addToCue()
 {
-  champMM index = static_cast<champMM>(champComboBox->currentIndex());
+  champMM champ = static_cast<champMM>(champComboBox->currentIndex());
   auto *oscsend = new OscSend(
-//        this,
-//        index,
-//        p_uriLine->text(),
-//        p_nameLineEdit->text(),
-//        p_nameLineEdit2->text(),
-//        p_colorLine->text(),
-//        p_ID1SpinBox->value(),
-//        p_ID2SpinBox->value(),
-//        p_rateSpinBox->value(),
-//        p_opacitySpinBox->value(),
-//        p_volumeSpinBox->value(),
-//        m_nameLineEdit->text(),
-//        m_nameLineEdit2->text(),
-//        m_IDSpinBox->value(),
-//        m_opacitySpinBox->value(),
-//        m_visibleCheckBox->isChecked(),
-//        m_soloCheckBox->isChecked(),
-//        m_lockCheckBox->isChecked(),
-//        m_depthSpinBox->value(),
-//        timeSpinBox->value(),
-//        fadeCheckBox->isChecked(),
-//        waitTimeSpinBox->value()
+        this,
+        champ,
+        nullptr,
+        p_uriLine->text(),
+        p_nameLineEdit->text(),
+        p_nameLineEdit2->text(),
+        p_colorLine->text(),
+        p_ID1SpinBox->value(),
+        p_ID2SpinBox->value(),
+        p_rateSpinBox->value(),
+        p_opacitySpinBox->value(),
+        p_volumeSpinBox->value(),
+        m_nameLineEdit->text(),
+        m_nameLineEdit2->text(),
+        m_IDSpinBox->value(),
+        m_opacitySpinBox->value(),
+        m_visibleCheckBox->isChecked(),
+        m_soloCheckBox->isChecked(),
+        m_lockCheckBox->isChecked(),
+        m_depthSpinBox->value(),
+        timeSpinBox->value(),
+        fadeCheckBox->isChecked(),
+        waitTimeSpinBox->value()
         );
-  switch(index){
+  switch(champ){
   case P_URI: case R_P_URI: while (p_uriLine->text() == "Choose->") setP_UriLine(); oscsend->setP_uri(p_uriLine->text()); break;
   case P_COLOR: case R_P_COLOR: while (p_colorLine->text() == "Choose->") setP_ColorLine(); oscsend->setP_color(p_colorLine->text()); break;
   default: break;
   }
+  QModelIndex index = tabseq->treeView->currentIndex();
+  if (!index.isValid())
+  {
+    if (!oscCueList->rowCount()) // Si y a pas de cue on en crée une
+    {
+      oscCueList->addCue(); // On en crée une
+      oscCueList->addSend(oscsend, 0); // on y ajoute le send
+      return;
+    }
+    oscCueList->addSend(oscsend, oscCueList->rowCount() - 1);
+  }
+  // l'index est valide
   int row = tabseq->treeView->currentIndex().row();
-//  qDebug() << "row selected : " << row;
-
-//  if (!(row == -1)) // si l'index est valide
-//  {
-//    if (oscCueList->isRowCue(row))
-//    {
-//      oscCueList->addSend(oscsend, row); // si c'est une cue on add
-//      // Sélectionner le dernier row de la cue
-//      int cueId = oscCueList->getCueId(row);
-//      int rowCue = oscCueList->getRowCueFromCueId(cueId);
-//      OscCue *tempCue = oscCueList->getOscCue(cueId - 1);
-//      int lastSendRow = tempCue->oscSendCount() + rowCue;
-////      qDebug() << lastSendRow;
-//      tabseq->treeView->setCurrentIndex(tabseq->treeView->currentIndex().siblingAtRow(lastSendRow));
-//    }
-//    else
-//    {
-//      oscCueList->insertSend(oscsend, row); // si c'est un send on ajoute
-//      // Et on sélectionne le cue inséré pour continuer l'insertion
-//      tabseq->treeView->setCurrentIndex(tabseq->treeView->currentIndex().siblingAtRow(row + 1));
-//    }
-//  }
-//  else // si l'index est pas valide
-//  {
-//    if (!oscCueList->rowCount()) //S'il n'y a pas de row
-//    {
-//      auto *newCue = new OscCue(this); // On crée une cue
-//      oscCueList->addCue(newCue);
-//      oscCueList->addSend(oscsend, 0);
-//      //Sélectionner le row 1...
-//    }
-//    else
-//    {
-//      int lastCueRow = oscCueList->getLastCueRow(); // On prend le row de la dernière cue
-//      oscCueList->addSend(oscsend, lastCueRow); // On ajoute le send
-//      // Sélectionner lastRow
-//    }
-//  }
+  if (oscCueList->isCue(index)) // C'est une cue
+  {
+    oscCueList->addSend(oscsend, row);
+    return;
+  }
+  // c'est un send
+  oscCueList->insertSend(oscsend, index.parent().row(), row); // Il ajoute avant le send...
 //  tabseq->treeView->resizeRowsToContents();
 //  tabseq->treeView->resizeColumnsToContents();
 //  tabseq->hideShowColumns();

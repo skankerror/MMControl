@@ -30,14 +30,13 @@
 #include "MMC.h"
 
 
-class OscSend : public QObject,
+class OscSend :
+    public QObject,
     public UdpTransmitSocket
 {
   Q_OBJECT
 
 public:
-
-  Q_ENUM(champMM)
 
   OscSend(QObject *parent = nullptr,
           champMM champ = CUE,
@@ -63,6 +62,7 @@ public:
           bool isfadein = false,
           double waitTime = 0,
           QString noteSend = "");
+  OscSend(OscSend *oscsend); // cstr de copie
   ~OscSend();
 
   int counter = 0; // pour fonctionner avec le time
@@ -133,17 +133,15 @@ public:
   void setNoteSend(QString noteSend){ m_noteSend = noteSend; };
   void setParentSend(OscSend *osccue);
 
-  // Pour le modèle, si c'est une cue (parentSend = rootSend)...
-  OscSend *child(int vectorAt);
-  int sendCount() const; // v_listSend.size()
-  int columnCount() const; // return Count si c'est un child sinon ?
-  // Pour data on a les getters
-  void insertSend(OscSend *oscsend, int position); // v_listSend.insert(vectorAt);
-  // pas de insert column
-  OscSend *parentSend();
-  void removeSends(int position, int count = 1); // v_listSend.remove(vectorAt);
-  int sendId() const; // donne l'id d'un enfant
-  // faire movesendprev movesendnext pour le modèle
+  OscSend *getChild(int position);
+  int getSendCount() const;
+  int getColumnCount() const; // inutile ?
+  void insertSend(OscSend *oscsend, int position);
+  OscSend *getParentSend();
+  void removeSends(int position, int count = 1/*, bool destroy = true*/);
+  int getSendId() const; // donne l'id d'un enfant
+  void moveChildPrev(int position);
+  void moveChildNext(int position); // inutile ?
 
 private:
   champMM m_champ = CUE;
