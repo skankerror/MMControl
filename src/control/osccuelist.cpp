@@ -560,6 +560,8 @@ bool OscCueList::hideShowColumn(int col) const
     for (int j = 0; j < getSend(index(i, 0))->getSendCount(); j++)
     {
       if ((index(j, col, index(i, 0))).flags().testFlag(Qt::ItemIsEditable)) return true;
+//      if ((index(j, col, index(i, 0))).flags().testFlag(Qt::ItemIsEnabled)) return true;
+
     }
   }
   return false;

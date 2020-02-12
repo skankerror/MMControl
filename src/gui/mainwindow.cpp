@@ -599,11 +599,13 @@ void MainWindow::addToCue()
   if (oscCueList->isCue(index)) // C'est une cue
   {
     oscCueList->addSend(oscsend, row);
+    tabseq->hideShowColumns();
     return;
   }
   // c'est un send
   oscCueList->insertSend(oscsend, index.parent().row(), row); // Il ajoute avant le send...
   tabseq->hideShowColumns();
+
 }
 
 void MainWindow::timeProgressed(int value)

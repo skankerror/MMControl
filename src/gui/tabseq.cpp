@@ -365,7 +365,7 @@ void TabSeq::selectRow()
 void TabSeq::hideShowColumns()
 {
   treeView->resizeColumnToContents(0);
-  for (int i = P_name; i < Note; i++)
+  for (int i = P_name; i < Wait; i++)
   {
     if (!m_oscCueList->hideShowColumn(i)) treeView->hideColumn(i);
     else treeView->showColumn(i);
