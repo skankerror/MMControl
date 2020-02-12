@@ -120,9 +120,7 @@ void OscSend::ExecuteSend()
   packet << osc::BeginBundleImmediate;
   switch (m_champ)
   {
-  case CUE:
-    // on éxécute ses fils ?
-    break;
+  case CUE: break; // ça doit pas arriver
   case PLAY: packet << osc::BeginMessage("/mapmap/play") << osc::EndMessage;
 //    qDebug() << "/mapmap/play";
     emit executeSendFinished();
