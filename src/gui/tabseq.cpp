@@ -152,33 +152,17 @@ void TabSeq::executeGo()
   // C'est un send;
   OscSend *tempSend = m_oscCueList->getSend(index);
   executeSend(tempSend);
-//  if (tempSend->getSendId() == tempSend->getParentSend()->getSendCount() - 1) // Si c'est le dernier send
-//  {
-//    // On prend l'index de la cue d'après
-//    QModelIndex newIndex = index.parent().siblingAtRow(index.parent().row() + 1);
-//    // S'il est pas valide on sélectionne la 1ère cue
-//    if (!newIndex.isValid()) treeView->setCurrentIndex(index.parent().siblingAtRow(0));
-//    else treeView->setCurrentIndex(newIndex);
-//  }
-//  else // C'est pas le dernier send
-//  {
-    double timeWait = tempSend->getTimewait(); // on choppe le temps d'attente
-    int champ = tempSend->getChamp();
-    // Si c'est un fade on rajoute le time
-    if (champ == P_FADE || champ == P_XFADE || champ == R_P_FADE || champ == R_P_XFADE) timeWait += tempSend->getTime();
-    QTimer::singleShot((100 * (int)(timeWait*10)) + 1, this, SLOT(selectRow()));
-//  }
+  double timeWait = tempSend->getTimewait(); // on choppe le temps d'attente
+  int champ = tempSend->getChamp();
+  // Si c'est un fade on rajoute le time
+  if (champ == P_FADE || champ == P_XFADE || champ == R_P_FADE || champ == R_P_XFADE) timeWait += tempSend->getTime();
+  QTimer::singleShot((100 * (int)(timeWait*10)) + 1, this, SLOT(selectRow()));
   return;
 }
 
 void TabSeq::executeSend(OscSend *oscsend)
 {
   oscsend->ExecuteSend();
-}
-
-void TabSeq::executeCue(OscSend *osccue)
-{
-
 }
 
 void TabSeq::movePrevious() // Bouger cue si c'est une cue, bouger send si c'est un send
@@ -193,11 +177,6 @@ void TabSeq::movePrevious() // Bouger cue si c'est une cue, bouger send si c'est
   }
   // c'est un send
   m_oscCueList->moveSendPrev(index.parent().row(), row); // Seul blème l'index disparaît si on change de cue
-//  if (row == 0)
-//  {
-    // faire index de la nouvelle cue parente et trouver le dernier row pour en créer un index...
-//    treeView->setCurrentIndex(m_oscCueList.index()
-//  }
 }
 
 void TabSeq::moveNext() // Bouger cue si c'est une cue, bouger send si c'est un send
@@ -273,6 +252,17 @@ void TabSeq::saveAs()
             textData += ", ";
         }
         textData += "\n";
+        // boucle pour les fils
+        int rowsChild = m_oscCueList->rowCount(m_oscCueList->index(i, 0));
+        for (int k = 0; k < rowsChild; k++)
+        {
+          for (int l = 0; l < columns; l++)
+          {
+            textData += m_oscCueList->data(m_oscCueList->index(k, l, m_oscCueList->index(i, 0))).toString();
+            textData += ", ";
+          }
+          textData += "\n";
+        }
       }
       QTextStream out(&file);
       out << textData;
@@ -295,7 +285,7 @@ void TabSeq::loadFile()
 
   if (file.open(QIODevice::ReadOnly))
   {
-//    m_oscCueList->removeAllCue();
+    m_oscCueList->removeAllCue();
     int lineindex = 0;                     // file line counter
     QTextStream in(&file);                 // read to text stream
     while (!in.atEnd())
@@ -307,22 +297,22 @@ void TabSeq::loadFile()
       QStringList lineToken = fileLine.split(",", QString::SkipEmptyParts);
       QString firstVal = lineToken.at(0);
       firstVal = firstVal.trimmed();
-      if (firstVal == "")
+      firstVal.resize(3);
+
+      if (firstVal == "CUE") // c'est une CUE
       {
-//        OscCue *osccue = m_oscCueList->retOscCueFromFileLine(lineToken);
-//        m_oscCueList->addCue(osccue);
+        m_oscCueList->addCueFromFileLine(lineToken);
       }
       else
       {
         OscSend *oscsend = m_oscCueList->retOscsendFromFileLine(lineToken);
-//        m_oscCueList->addSend(oscsend, m_oscCueList->getLastCueRow());
+        int lastCue = m_oscCueList->rowCount() - 1;
+        m_oscCueList->addSend(oscsend, lastCue);
       }
     }
     lineindex++;
   }
   file.close();
-//  treeView->resizeRowsToContents();
-//  treeView->resizeColumnsToContents();
   hideShowColumns();
 }
 
@@ -370,20 +360,6 @@ void TabSeq::selectRow()
     else treeView->setCurrentIndex(newIndex); // Sinon on la sélectionne
   }
 }
-
-void TabSeq::selectNextRow()
-{
-  if (!treeView->currentIndex().isValid())
-  {
-    return;
-  }
-  if (!(treeView->currentIndex().row() == m_oscCueList->rowCount() - 1))
-  {
-    treeView->setCurrentIndex(treeView->currentIndex().siblingAtRow(treeView->currentIndex().row() + 1)); // on sélect le row suivant
-  }
-  else treeView->setCurrentIndex(treeView->currentIndex().siblingAtRow(0)); // on sélect le 1er row
-}
-
 
 void TabSeq::hideShowColumns()
 {

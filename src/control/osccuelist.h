@@ -43,6 +43,7 @@ public:
   QModelIndex parent(const QModelIndex &index) const override;
 
   OscSend* retOscsendFromFileLine(QStringList &lineToken); // revoir en xml ?
+  void addCueFromFileLine(QStringList &lineToken);
 
   OscSend* getRootSend(){ return rootSend; }; // pour tester
   OscSend *getSend(const QModelIndex &index) const;

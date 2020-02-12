@@ -42,7 +42,6 @@ signals:
 public slots:
   void executeGo();
   void executeSend(OscSend *oscsend);
-  void executeCue(OscSend *osccue);
   void movePrevious();
   void moveNext();
   void remove();
@@ -52,7 +51,7 @@ public slots:
   void receiveMidiNote2(int note);
   void timeProgressFinished();
   void timeProgressSteped();
-  void selectNextRow();
+//  void selectNextRow();
   void selectRow();
 
   void hideShowColumns();

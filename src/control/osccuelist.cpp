@@ -418,6 +418,15 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
   return oscsend;
 }
 
+void OscCueList::addCueFromFileLine(QStringList &lineToken)
+{
+  QString val = lineToken.at(21);
+  val = val.trimmed();
+  addCue();
+  OscSend *lastCue = getSend(index(rowCount() - 1, 0, QModelIndex()));
+  lastCue->setNoteSend(val);
+}
+
 void OscCueList::addCue()
 {
   OscSend *osccue = new OscSend(this, CUE, rootSend); // On crée une cue
@@ -553,9 +562,8 @@ void OscCueList::removeCue(int cueId)
 void OscCueList::removeAllCue()
 {
   int cueCount = rootSend->getSendCount();
-  beginRemoveRows(QModelIndex(), 0, cueCount); // A checker
-  if (cueCount) rootSend->removeSends(0, cueCount);
-  endRemoveRows();
+  for (int cueId = 0; cueId < cueCount; cueId++)
+    removeCue(0);
 }
 
 bool OscCueList::isCue(const QModelIndex &index) const

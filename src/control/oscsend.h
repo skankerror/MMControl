@@ -135,13 +135,11 @@ public:
 
   OscSend *getChild(int position);
   int getSendCount() const;
-  int getColumnCount() const; // inutile ?
   void insertSend(OscSend *oscsend, int position);
   OscSend *getParentSend();
   void removeSends(int position, int count = 1/*, bool destroy = true*/);
   int getSendId() const; // donne l'id d'un enfant
   void moveChildPrev(int position);
-  void moveChildNext(int position); // inutile ?
 
 private:
   champMM m_champ = CUE;

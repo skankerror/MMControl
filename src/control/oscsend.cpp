@@ -457,11 +457,6 @@ int OscSend::getSendCount() const
   return v_listSend.count();
 }
 
-int OscSend::getColumnCount() const // inutile
-{
-  return Count;
-}
-
 void OscSend::insertSend(OscSend *oscsend, int position)
 {
   if (position < 0 || position > v_listSend.size()) return;
@@ -478,7 +473,7 @@ OscSend *OscSend::getParentSend()
   return m_parentSend;
 }
 
-void OscSend::removeSends(int position, int count/*, bool destroy*/)
+void OscSend::removeSends(int position, int count)
 {
   if (position < 0 || position + count > v_listSend.size())
     return;
@@ -488,13 +483,9 @@ void OscSend::removeSends(int position, int count/*, bool destroy*/)
     OscSend *oscsend = getChild(row);
     int champ = oscsend->getChamp();
     m_timeWait -= oscsend->getTimewait();
-//    int champ = oscsend->getChamp();
     // Si c'est un fade on retranche aussi le time
     if (champ == P_FADE || champ == P_XFADE || champ == R_P_FADE || champ == R_P_XFADE) m_timeWait -= oscsend->getTime();
-    {
-      /*if (destroy) */delete v_listSend.takeAt(position);
-//      else v_listSend.remove(row);
-    }
+    delete v_listSend.takeAt(position);
   }
 }
 
@@ -508,10 +499,5 @@ void OscSend::moveChildPrev(int position)
 {
   if (position < 1 || position >= getSendCount()) return;
   v_listSend.swapItemsAt(position -1, position);
-}
-
-void OscSend::moveChildNext(int position) // inutile ?
-{
-  moveChildPrev(position + 1); // La vérif se fait dans la fn appelée
 }
 
