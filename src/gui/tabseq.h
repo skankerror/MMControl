@@ -42,6 +42,7 @@ signals:
 public slots:
   void executeGo();
   void executeSend(OscSend *oscsend);
+  void executeCue(OscSend *osccue);
   void movePrevious();
   void moveNext();
   void remove();
@@ -52,6 +53,7 @@ public slots:
   void timeProgressFinished();
   void timeProgressSteped();
   void selectNextRow();
+  void selectRow();
 
   void hideShowColumns();
 
@@ -62,7 +64,6 @@ private:
   MyMidiOut *m_midiOut1;
   MyMidiOut *m_midiOut2;
   OscCuelistDelegate *m_delegate;
-//  OscCueListProxy *proxyModel;
 
   QHBoxLayout *layoutMain;
     QHBoxLayout *layout1;
@@ -75,7 +76,7 @@ private:
         QPushButton *boutonSaveAs;
         QPushButton *boutonLoad;
 
-  OscSend *tempSend;
+//  OscSend *tempSend;
 
 public:
   QTreeView *treeView;

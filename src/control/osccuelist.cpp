@@ -21,20 +21,6 @@ OscCueList::OscCueList(QObject *parent):
   QAbstractItemModel(parent)
 {
   rootSend = new OscSend(this, CUE, nullptr); // on crée le rootItem
-
-  //test
-addCue();
-auto oscsend1 = new OscSend(this, PLAY);
-  addSend(oscsend1, 0);
-addCue();
-auto oscsend2 = new OscSend(this, PAUSE);
-  addSend(oscsend2, 1);
-auto oscsend3 = new OscSend(this, P_COLOR);
-  oscsend3->setP_ID1(1);
-  oscsend3->setP_color("#ffffff");
-  addSend(oscsend3, 1);
-auto oscsend4 = new OscSend(this, P_NAME);
-  insertSend(oscsend4, 1, 1);
 }
 
 OscCueList::~OscCueList()
@@ -160,7 +146,6 @@ bool OscCueList::setData(const QModelIndex &index, const QVariant &value, int ro
 {
   Q_UNUSED(role);
   if (!index.isValid() || !(index.flags().testFlag(Qt::ItemIsEditable))) return false;
-//  int row = index.row();
   int col = index.column();
   if (isCue(index) && col == Note)
   {
@@ -208,7 +193,6 @@ bool OscCueList::setData(const QModelIndex &index, const QVariant &value, int ro
   }
   emit dataChanged(index, index);
   return true;
-  return false; // en attendant de l'implémenter...
 }
 
 QVariant OscCueList::headerData(int section, Qt::Orientation orientation, int role) const
@@ -697,45 +681,3 @@ void OscCuelistDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptio
   editor->setGeometry(option.rect);
 }
 
-//void OscCuelistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
-//{
-//  QStyledItemDelegate::paint(painter, option, index);
-//}
-
-//QSize OscCuelistDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
-//{
-//  return QStyledItemDelegate::sizeHint(option, index);
-//}
-
-
-//***************************************************************************
-
-//OscCueListProxy::OscCueListProxy(OscCueList *osccuelist, QObject *parent):
-//  QSortFilterProxyModel(parent),
-//  m_oscCueList(osccuelist)
-//{}
-
-//QVariant OscCueListProxy::data(const QModelIndex &index, int role) const
-//{
-//  if (index.isValid() && index.column() == Uri)
-//  {
-//    OscSend *tempSend = m_oscCueList->getSend(index);
-////    if (tempSend->getChamp() != P_URI && tempSend->getChamp() != R_P_URI) return QSortFilterProxyModel::data(index, role);
-//    if (role == Qt::DisplayRole)
-//    {
-//      QString tempString = tempSend->getP_uri();
-//      if (tempSend->getChamp() != P_URI && tempSend->getChamp() != R_P_URI)
-//        return QString("");
-
-//      else for (int i = tempString.size() - 1; i > 0; --i)
-//      {
-//        if (tempString.at(i) == QChar('/'))
-//        {
-//          return tempString = tempString.right(tempString.size() - i - 1); break;
-//        }
-//      }
-////      return tempString;
-//    }
-//  }
-//  return QSortFilterProxyModel::data(index, role);
-//}

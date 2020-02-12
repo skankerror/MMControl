@@ -587,9 +587,12 @@ void MainWindow::addToCue()
     {
       oscCueList->addCue(); // On en crée une
       oscCueList->addSend(oscsend, 0); // on y ajoute le send
+      tabseq->hideShowColumns();
       return;
     }
     oscCueList->addSend(oscsend, oscCueList->rowCount() - 1);
+    tabseq->hideShowColumns();
+    return;
   }
   // l'index est valide
   int row = tabseq->treeView->currentIndex().row();
@@ -600,9 +603,7 @@ void MainWindow::addToCue()
   }
   // c'est un send
   oscCueList->insertSend(oscsend, index.parent().row(), row); // Il ajoute avant le send...
-//  tabseq->treeView->resizeRowsToContents();
-//  tabseq->treeView->resizeColumnsToContents();
-//  tabseq->hideShowColumns();
+  tabseq->hideShowColumns();
 }
 
 void MainWindow::timeProgressed(int value)

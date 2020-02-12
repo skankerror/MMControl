@@ -480,14 +480,15 @@ OscSend *OscSend::getParentSend()
 
 void OscSend::removeSends(int position, int count/*, bool destroy*/)
 {
-  if (position < 0 || position * count > v_listSend.size())
+  if (position < 0 || position + count > v_listSend.size())
     return;
-  for (int row = 0; row < count; row++)
+  for (int row = position; row < position + count; row++)
   {
     // prendre la send et enlever le time
     OscSend *oscsend = getChild(row);
-    m_timeWait -= oscsend->getTimewait();
     int champ = oscsend->getChamp();
+    m_timeWait -= oscsend->getTimewait();
+//    int champ = oscsend->getChamp();
     // Si c'est un fade on retranche aussi le time
     if (champ == P_FADE || champ == P_XFADE || champ == R_P_FADE || champ == R_P_XFADE) m_timeWait -= oscsend->getTime();
     {

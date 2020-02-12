@@ -26,7 +26,6 @@ class OscCueList :
     public QAbstractItemModel
 {
   Q_OBJECT
-//  Q_ENUM(columns)
 
 public:
 
@@ -53,7 +52,7 @@ public:
   void insertSend(OscSend *oscsend, int cueId, int sendId);
   void moveSendPrev(int cueId, int sendId);
   void moveSendNext(int cueId, int sendId);
-  void removeSend(int cueId, int sendId/*, bool destroy = false*/);
+  void removeSend(int cueId, int sendId);
   void removeAllSend(int cueId);
   void insertCue(int cueId);
   void moveCuePrev(int cueId);
@@ -82,30 +81,7 @@ public:
   void setEditorData(QWidget *editor, const QModelIndex &index) const override;
   void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
   void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
-//  void paint ( QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const override;
-//  QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
-
-signals:
 
 };
-
-//*****************************************************************************
-
-//class OscCueListProxy :
-//    public QSortFilterProxyModel
-//{
-//  Q_OBJECT
-
-//public:
-
-//  explicit OscCueListProxy(OscCueList *osccuelist, QObject *parent = nullptr);
-//  ~OscCueListProxy(){}
-
-//  QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-
-//private:
-//  OscCueList * m_oscCueList;
-
-//};
 
 #endif // OSCCUELIST_H

@@ -34,7 +34,7 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   treeView(atreeView)
 {
   // On met une cue pour démarrer
-//  m_oscCueList->addCue();
+  m_oscCueList->addCue();
 
   layoutMain = new QHBoxLayout();
   layout1 = new QHBoxLayout();
@@ -110,8 +110,6 @@ TabSeq::TabSeq(OscCueList *oscCueList,
 
   setAutoFillBackground(true);
 
-//  treeView->resizeColumnsToContents();
-//  treeView->resizeRowsToContents();
   hideShowColumns();
 
   connect(boutonGo, SIGNAL(clicked(bool)), SLOT(executeGo()));
@@ -127,44 +125,60 @@ TabSeq::TabSeq(OscCueList *oscCueList,
 
 void TabSeq::executeGo()
 {
-//  if (treeView->currentIndex().isValid())
+  QModelIndex index = treeView->currentIndex();
+  if (!index.isValid()) return;
+  if (m_oscCueList->isCue(index)) // Si c'est une cue
+  {
+    OscSend *tempCue = m_oscCueList->getSend(index); // On la choppe
+    if (!tempCue->getSendCount()) // Si elle est vide
+    {
+      // On sélectionne la cue d'après
+      QModelIndex newIndex = index.siblingAtRow(index.row() + 1);
+      // Si pas valide on sélect la 1ère cue
+      if (!newIndex.isValid()) treeView->setCurrentIndex(index.siblingAtRow(0));
+      else treeView->setCurrentIndex(newIndex); // On sélect la suivante
+      return; // on quitte
+    }
+    totalTime = tempCue->getTimewait();
+    if (totalTime)
+    {
+      counter = 0;
+      QTimer::singleShot(totalTime, this, SLOT(timeProgressSteped()));
+    }
+    treeView->setCurrentIndex(m_oscCueList->index(0, 0, index));
+    executeGo();
+    return;
+  }
+  // C'est un send;
+  OscSend *tempSend = m_oscCueList->getSend(index);
+  executeSend(tempSend);
+//  if (tempSend->getSendId() == tempSend->getParentSend()->getSendCount() - 1) // Si c'est le dernier send
 //  {
-//    int row = treeView->currentIndex().row();
-//    if (m_oscCueList->isRowCue(row))  // Si c'est une cue sélectionnée...
-//    {
-//      tempCue = m_oscCueList->getOscCue(m_oscCueList->getCueId(row) - 1);
-//      if (tempCue->oscSendCount()) // On vérifie que la cue a des sends
-//      {
-//        totalTime = tempCue->getTotalTime();
-//        if (totalTime)
-//        {
-//          counter = 0;
-//          QTimer::singleShot(totalTime, this, SLOT(timeProgressSteped()));
-//        }
-//        treeView->setCurrentIndex(treeView->currentIndex().siblingAtRow(treeView->currentIndex().row() + 1)); // on sélect le row suivant
-//        connect(tempCue, SIGNAL(selectNextSend()), this, SLOT(selectNextRow()), Qt::UniqueConnection);
-//        executeCue(tempCue);
-//        qDebug() << "rowcount dans executeGo tabseq" << m_oscCueList->rowCount();
-//      }
-//    }
-//    else // c'est un send
-//    {
-//      tempCue = m_oscCueList->getOscCue(m_oscCueList->getSendCueId(row) - 1); // On choppe la cue
-//      tempSend = tempCue->getOscSend(m_oscCueList->getSendId(row) - 1); // On choppe le send
-//      executeSend(tempSend); // on l'execute
-//      treeView->setCurrentIndex(treeView->currentIndex().siblingAtRow(treeView->currentIndex().row() + 1)); // on sélect le row suivant
-//    }
+//    // On prend l'index de la cue d'après
+//    QModelIndex newIndex = index.parent().siblingAtRow(index.parent().row() + 1);
+//    // S'il est pas valide on sélectionne la 1ère cue
+//    if (!newIndex.isValid()) treeView->setCurrentIndex(index.parent().siblingAtRow(0));
+//    else treeView->setCurrentIndex(newIndex);
 //  }
+//  else // C'est pas le dernier send
+//  {
+    double timeWait = tempSend->getTimewait(); // on choppe le temps d'attente
+    int champ = tempSend->getChamp();
+    // Si c'est un fade on rajoute le time
+    if (champ == P_FADE || champ == P_XFADE || champ == R_P_FADE || champ == R_P_XFADE) timeWait += tempSend->getTime();
+    QTimer::singleShot((100 * (int)(timeWait*10)) + 1, this, SLOT(selectRow()));
+//  }
+  return;
 }
-
-//void TabSeq::executeCue(OscCue *osccue)
-//{
-//  osccue->executeCue();
-//}
 
 void TabSeq::executeSend(OscSend *oscsend)
 {
   oscsend->ExecuteSend();
+}
+
+void TabSeq::executeCue(OscSend *osccue)
+{
+
 }
 
 void TabSeq::movePrevious() // Bouger cue si c'est une cue, bouger send si c'est un send
@@ -184,8 +198,6 @@ void TabSeq::movePrevious() // Bouger cue si c'est une cue, bouger send si c'est
     // faire index de la nouvelle cue parente et trouver le dernier row pour en créer un index...
 //    treeView->setCurrentIndex(m_oscCueList.index()
 //  }
-  //  treeView->resizeRowsToContents();
-//  treeView->resizeColumnsToContents();
 }
 
 void TabSeq::moveNext() // Bouger cue si c'est une cue, bouger send si c'est un send
@@ -200,7 +212,6 @@ void TabSeq::moveNext() // Bouger cue si c'est une cue, bouger send si c'est un 
   }
   // c'est un send
   m_oscCueList->moveSendNext(index.parent().row(), row); // Seul blème l'index disparaît si on change de cue
-//  treeView->resizeColumnsToContents();
 }
 
 void TabSeq::remove()
@@ -339,6 +350,25 @@ void TabSeq::timeProgressSteped()
   counter++;
   emit updateProgressTime(counter);
   QTimer::singleShot(totalTime * 10, this, SLOT(timeProgressSteped()));
+}
+
+void TabSeq::selectRow()
+{
+  QModelIndex index = treeView->currentIndex(); // On choppe l'index courant
+  QModelIndex newIndex = index.siblingAtRow(index.row() + 1); // On choppe le send suivant
+  if (newIndex.isValid()) // S'il existe
+  {
+    treeView->setCurrentIndex(index.siblingAtRow(index.row() + 1));
+    executeGo();
+    return;
+  }
+  else //Sinon c'est une cue
+  {
+    newIndex = index.parent().siblingAtRow(index.parent().row() + 1); // On la sélectionne
+    //Si elle existe pas on prend la 1ère
+    if (!newIndex.isValid()) treeView->setCurrentIndex(index.parent().siblingAtRow(0));
+    else treeView->setCurrentIndex(newIndex); // Sinon on la sélectionne
+  }
 }
 
 void TabSeq::selectNextRow()
