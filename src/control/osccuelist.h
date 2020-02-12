@@ -60,8 +60,8 @@ public:
   void moveCueNext(int cueId);
   void removeCue(int cueId);
   void removeAllCue();
-
   bool isCue(const QModelIndex &index) const;
+  bool hideShowColumn(int col) const;
 
 private:
 
@@ -91,21 +91,21 @@ signals:
 
 //*****************************************************************************
 
-class OscCueListProxy :
-    public QSortFilterProxyModel
-{
-  Q_OBJECT
+//class OscCueListProxy :
+//    public QSortFilterProxyModel
+//{
+//  Q_OBJECT
 
-public:
+//public:
 
-  explicit OscCueListProxy(OscCueList *osccuelist, QObject *parent = nullptr);
-  ~OscCueListProxy(){}
+//  explicit OscCueListProxy(OscCueList *osccuelist, QObject *parent = nullptr);
+//  ~OscCueListProxy(){}
 
-  QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+//  QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-private:
-  OscCueList * m_oscCueList;
+//private:
+//  OscCueList * m_oscCueList;
 
-};
+//};
 
 #endif // OSCCUELIST_H

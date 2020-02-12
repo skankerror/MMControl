@@ -568,14 +568,29 @@ void OscCueList::removeCue(int cueId)
 
 void OscCueList::removeAllCue()
 {
-  int cueCount = rootSend->getSendCount(); // Pas de begin removes ?? A vérifier !
+  int cueCount = rootSend->getSendCount();
+  beginRemoveRows(QModelIndex(), 0, cueCount); // A checker
   if (cueCount) rootSend->removeSends(0, cueCount);
+  endRemoveRows();
 }
 
 bool OscCueList::isCue(const QModelIndex &index) const
 {
   OscSend *tempSend = getSend(index);
   if (tempSend->getChamp() == CUE) return true;
+  return false;
+}
+
+bool OscCueList::hideShowColumn(int col) const
+{
+
+  for(int i = 0; i < rowCount(); i++)
+  {
+    for (int j = 0; j < getSend(index(i, 0))->getSendCount(); j++)
+    {
+      if ((index(j, col, index(i, 0))).flags().testFlag(Qt::ItemIsEditable)) return true;
+    }
+  }
   return false;
 }
 
@@ -695,34 +710,32 @@ void OscCuelistDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptio
 
 //***************************************************************************
 
-OscCueListProxy::OscCueListProxy(OscCueList *osccuelist, QObject *parent):
-  QSortFilterProxyModel(parent),
-  m_oscCueList(osccuelist)
-{}
+//OscCueListProxy::OscCueListProxy(OscCueList *osccuelist, QObject *parent):
+//  QSortFilterProxyModel(parent),
+//  m_oscCueList(osccuelist)
+//{}
 
-QVariant OscCueListProxy::data(const QModelIndex &index, int role) const
-{
-  if (!m_oscCueList->isCue(index) && index.flags().testFlag(Qt::ItemIsEditable) && index.isValid() && index.column() == Uri)
-  {
-    OscSend *tempSend = m_oscCueList->getSend(index);
-    if (tempSend->getChamp() != P_URI && tempSend->getChamp() != R_P_URI) return QSortFilterProxyModel::data(index, role);
-    switch (role)
-    {
-    case Qt::DisplayRole:
-      QString tempString = tempSend->getP_uri();
-      for (int i = tempString.size() - 1; i > 0; --i)
-      {
-        if (tempString.at(i) == QChar('/'))
-        {
-          return tempString = tempString.right(tempString.size() - i - 1); break;
-        }
-      }
-      return tempString;
-      break;
-//    default: break;
+//QVariant OscCueListProxy::data(const QModelIndex &index, int role) const
+//{
+//  if (index.isValid() && index.column() == Uri)
+//  {
+//    OscSend *tempSend = m_oscCueList->getSend(index);
+////    if (tempSend->getChamp() != P_URI && tempSend->getChamp() != R_P_URI) return QSortFilterProxyModel::data(index, role);
+//    if (role == Qt::DisplayRole)
+//    {
+//      QString tempString = tempSend->getP_uri();
+//      if (tempSend->getChamp() != P_URI && tempSend->getChamp() != R_P_URI)
+//        return QString("");
 
-    }
-  }
-  return QSortFilterProxyModel::data(index, role);
-//  return m_oscCueList->data(index, role);
-}
+//      else for (int i = tempString.size() - 1; i > 0; --i)
+//      {
+//        if (tempString.at(i) == QChar('/'))
+//        {
+//          return tempString = tempString.right(tempString.size() - i - 1); break;
+//        }
+//      }
+////      return tempString;
+//    }
+//  }
+//  return QSortFilterProxyModel::data(index, role);
+//}

@@ -94,17 +94,13 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   boutonLayout->addWidget(boutonSaveAs);
   boutonLayout->addWidget(boutonLoad);
 
-//  proxyModel = new OscCueListProxy(m_oscCueList, m_oscCueList);
-//  proxyModel->setSourceModel(m_oscCueList);
-//  treeView->setModel(proxyModel);
   treeView->setModel(m_oscCueList);
-//  m_delegate = new OscCuelistDelegate(this);
-//  treeView->setItemDelegate(m_delegate);
+  m_delegate = new OscCuelistDelegate(this);
+  treeView->setItemDelegate(m_delegate);
 //  treeView->horizontalHeader()->setStretchLastSection(true);
-//  treeView->verticalHeader()->setMaximumSectionSize(25);
-  treeView->setTextElideMode(Qt::ElideRight);
+//  treeView->verticalHeader()->setMaximumSectionSize(50);
+  treeView->setTextElideMode(Qt::ElideLeft);
   treeView->setVerticalScrollMode(QAbstractItemView::ScrollPerItem);
-//  treeView->setSortingEnabled(true);
 
   treeView->show();
   layout1->addWidget(treeView);
@@ -116,7 +112,7 @@ TabSeq::TabSeq(OscCueList *oscCueList,
 
 //  treeView->resizeColumnsToContents();
 //  treeView->resizeRowsToContents();
-//  hideShowColumns();
+  hideShowColumns();
 
   connect(boutonGo, SIGNAL(clicked(bool)), SLOT(executeGo()));
   connect(boutonPrev, SIGNAL(clicked(bool)), SLOT(movePrevious()));
@@ -125,7 +121,7 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   connect(boutonAddCue, SIGNAL(clicked(bool)), SLOT(addCue()));
   connect(boutonSaveAs, SIGNAL(clicked(bool)), SLOT(saveAs()));
   connect(boutonLoad, SIGNAL(clicked(bool)), SLOT(loadFile()));
-//  connect(m_oscCueList, SIGNAL(dataChanged(QModelIndex, QModelIndex)), SLOT(hideShowColumns()));
+  connect(m_oscCueList, SIGNAL(dataChanged(QModelIndex, QModelIndex)), SLOT(hideShowColumns()));
   connect(midiIn2, SIGNAL(sigMidiNoteChanged(int)), this, SLOT(receiveMidiNote2(int)));
 }
 
@@ -204,7 +200,6 @@ void TabSeq::moveNext() // Bouger cue si c'est une cue, bouger send si c'est un 
   }
   // c'est un send
   m_oscCueList->moveSendNext(index.parent().row(), row); // Seul blème l'index disparaît si on change de cue
-//  treeView->resizeRowsToContents();
 //  treeView->resizeColumnsToContents();
 }
 
@@ -220,9 +215,7 @@ void TabSeq::remove()
   }
   // c'est un send
   m_oscCueList->removeSend(index.parent().row(), row);
-//  treeView->resizeRowsToContents();
-//  treeView->resizeColumnsToContents();
-//  hideShowColumns();
+  hideShowColumns();
 }
 
 void TabSeq::addCue() // Reste à voir le sélectionné
@@ -239,9 +232,7 @@ void TabSeq::addCue() // Reste à voir le sélectionné
     return;
   }
   m_oscCueList->insertCue(index.parent().row() + 1);
-//  treeView->resizeRowsToContents();
-//  treeView->resizeColumnsToContents();
-//  hideShowColumns();
+  hideShowColumns();
 }
 
 void TabSeq::saveAs()
@@ -364,18 +355,14 @@ void TabSeq::selectNextRow()
 }
 
 
-void TabSeq::hideShowColumns() // revoir ça ne prend en compte que les cues
+void TabSeq::hideShowColumns()
 {
-  for(int i = P_name; i < Wait; i++)
+  treeView->resizeColumnToContents(0);
+  for (int i = P_name; i < Note; i++)
   {
-    QString textData;
-    for(int j = 0; j < m_oscCueList->rowCount(); j++)
-    {
-      textData += m_oscCueList->data(m_oscCueList->index(j, i)).toString();
-      treeView->resizeColumnToContents(j);
-    }
-    if (!textData.size()) treeView->hideColumn(i);
+    if (!m_oscCueList->hideShowColumn(i)) treeView->hideColumn(i);
     else treeView->showColumn(i);
+    treeView->resizeColumnToContents(i);
   }
 }
 
