@@ -300,6 +300,7 @@ void TabSeq::loadFile()
       firstVal.resize(3);
 
       if (firstVal == "CUE") // c'est une CUE
+//      if (firstVal == "") // c'est une CUE
       {
         m_oscCueList->addCueFromFileLine(lineToken);
       }

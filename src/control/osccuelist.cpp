@@ -228,27 +228,6 @@ QVariant OscCueList::headerData(int section, Qt::Orientation orientation, int ro
       default: return QVariant(); break;
       }
     }
-//    if (orientation == Qt::Vertical)
-//    {
-//      if (isRowCue(section))
-//      {
-//        OscCue *osccue = getOscCue(getCueId(section) - 1);
-//        QString value = QString("CUE %1 - ").arg(getCueId(section));
-//        value += osccue->getNoteCue();
-////        return QString("CUE %1").arg(getCueId(section));
-//        return value;
-//      }
-//      return QString("send %1 -> ").arg(getSendId(section));
-//    }
-////    return QVariant();
-//  }
-//  if (role == Qt::BackgroundRole)
-//  {
-//    if (orientation == Qt::Vertical && isRowCue(section))
-//    {
-//      QBrush yellowColor(QColor("#B8BF7E"));
-//      return yellowColor;
-//    }
   }
   if (role == Qt::TextAlignmentRole && orientation == Qt::Horizontal) return Qt::AlignCenter;
   return QVariant();
@@ -266,7 +245,7 @@ Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const
   {
   case CUE: if (col == Champ || col == Wait) return Qt::ItemIsEnabled | Qt::ItemIsSelectable; break;
   case P_NAME: if (col == P_name || col == P_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;break;
-  case REWIND: if (col == P_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
+  case P_REWIND: if (col == P_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
   case P_COLOR: if (col == Color || col == P_Id) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
   case P_OPACITY: if (col == P_Id || col == P_opac) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
   case P_VOLUME: if (col == P_Id || col == Vol) return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable; break;
