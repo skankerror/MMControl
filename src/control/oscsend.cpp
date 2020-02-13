@@ -199,7 +199,7 @@ void OscSend::ExecuteSend()
     emit executeSendFinished();
     emit sendStringToOutputLabel(QString("/mapmap/paint/rewind ").append(m_p_name));
     break;
-  case R_P_OPACITY: packet << osc::BeginMessage("/mapmap/paint/opacity ") << m_p_name.toStdString().c_str() << ((float)m_p_opacity)/100 << osc::EndMessage;
+  case R_P_OPACITY: packet << osc::BeginMessage("/mapmap/paint/opacity") << m_p_name.toStdString().c_str() << ((float)m_p_opacity)/100 << osc::EndMessage;
     emit executeSendFinished();
     emit sendStringToOutputLabel(QString("/mapmap/paint/opacity ").append(m_p_name).append(" %1").arg(m_p_opacity));
     break;
