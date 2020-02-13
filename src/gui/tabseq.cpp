@@ -97,10 +97,9 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   treeView->setModel(m_oscCueList);
   m_delegate = new OscCuelistDelegate(this);
   treeView->setItemDelegate(m_delegate);
-//  treeView->horizontalHeader()->setStretchLastSection(true);
-//  treeView->verticalHeader()->setMaximumSectionSize(50);
   treeView->setTextElideMode(Qt::ElideLeft);
   treeView->setVerticalScrollMode(QAbstractItemView::ScrollPerItem);
+//  treeView->setAutoFillBackground(true);
 
   treeView->show();
   layout1->addWidget(treeView);
@@ -120,7 +119,9 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   connect(boutonSaveAs, SIGNAL(clicked(bool)), SLOT(saveAs()));
   connect(boutonLoad, SIGNAL(clicked(bool)), SLOT(loadFile()));
   connect(m_oscCueList, SIGNAL(dataChanged(QModelIndex, QModelIndex)), SLOT(hideShowColumns()));
+  connect(treeView, SIGNAL(expanded(QModelIndex)), this, SLOT(hideShowColumns()));
   connect(midiIn2, SIGNAL(sigMidiNoteChanged(int)), this, SLOT(receiveMidiNote2(int)));
+//  connect(tempSend, SIGNAL(sendStringToOutPutLabel(QString)), this, SLOT(receiveStringFromSend(QString)));
 }
 
 void TabSeq::executeGo()
@@ -150,7 +151,8 @@ void TabSeq::executeGo()
     return;
   }
   // C'est un send;
-  OscSend *tempSend = m_oscCueList->getSend(index);
+  /*OscSend **/tempSend = m_oscCueList->getSend(index);
+  connect(tempSend, SIGNAL(sendStringToOutputLabel(QString)), this, SLOT(receiveStringFromSend(QString)), Qt::UniqueConnection);
   executeSend(tempSend);
   double timeWait = tempSend->getTimewait(); // on choppe le temps d'attente
   int champ = tempSend->getChamp();
@@ -362,9 +364,15 @@ void TabSeq::selectRow()
   }
 }
 
+void TabSeq::receiveStringFromSend(QString tempString)
+{
+  emit sendStringToOutputLabel(tempString);
+}
+
 void TabSeq::hideShowColumns()
 {
-  treeView->resizeColumnToContents(0);
+  treeView->resizeColumnToContents(Champ);
+  treeView->resizeColumnToContents(Wait);
   for (int i = P_name; i < Wait; i++)
   {
     if (!m_oscCueList->hideShowColumn(i)) treeView->hideColumn(i);

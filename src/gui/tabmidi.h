@@ -33,6 +33,7 @@ public:
                    QWidget *parent = nullptr);
 
 signals:
+  void sendStringToOutputLabel(QString);
 
 public slots:
   // APCMINI 1
@@ -108,6 +109,10 @@ public slots:
   // slots connexions midi
   void getPortNames();void slotConnectMidi1(); void slotConnectMidi2();
   void slotDisconnectMidi1(); void slotDisconnectMidi2();
+
+  // slots pour outputLabel
+  void receiveStringFromSend(QString tempString);
+
 
 private:
   OscSend *oscSendS; // Pour les sliders

@@ -120,128 +120,128 @@ void OscSend::ExecuteSend()
   packet << osc::BeginBundleImmediate;
   switch (m_champ)
   {
-  case CUE: break; // ça doit pas arriver
+//  case CUE: break; // ça doit pas arriver
   case PLAY: packet << osc::BeginMessage("/mapmap/play") << osc::EndMessage;
-//    qDebug() << "/mapmap/play";
     emit executeSendFinished();
+    emit sendStringToOutputLabel("/mapmap/play");
     break;
   case PAUSE: packet << osc::BeginMessage("/mapmap/pause") << osc::EndMessage;
-//    qDebug() << "/mapmap/pause";
     emit executeSendFinished();
+    emit sendStringToOutputLabel("/mapmap/pause");
     break;
   case REWIND: packet << osc::BeginMessage("/mapmap/rewind") << osc::EndMessage;
-//    qDebug() << "/mapmap/rewind";
     emit executeSendFinished();
+    emit sendStringToOutputLabel("/mapmap/rewind");
     break;
   case QUIT: packet << osc::BeginMessage("/mapmap/quit") << osc::EndMessage;
-//    qDebug() << "/mapmap/quit";
     emit executeSendFinished();
+    emit sendStringToOutputLabel("/mapmap/quit");
     break;
   case P_NAME: packet << osc::BeginMessage("/mapmap/paint/name") << m_p_ID1 << m_p_name.toStdString().c_str() << osc::EndMessage;
-//    qDebug() << "/mapmap/paint/name is " << m_p_ID1 << " " << m_p_name.toStdString().c_str();
     emit executeSendFinished();
+    emit sendStringToOutputLabel(QString("mapmap/paint/name %1 ").arg(m_p_ID1).append(m_p_name));
     break;
   case P_REWIND: packet << osc::BeginMessage("/mapmap/paint/rewind") << m_p_ID1 << osc::EndMessage;
-//    qDebug() << "/mapmap/paint/rewind " << m_p_ID1 << " ";
     emit executeSendFinished();
+    emit sendStringToOutputLabel(QString("/mapmap/paint/rewind %1").arg(m_p_ID1));
     break;
   case P_OPACITY: packet << osc::BeginMessage("/mapmap/paint/opacity") << m_p_ID1 << ((float)m_p_opacity)/100 << osc::EndMessage;
-//    qDebug() << "/mapmap/paint/opacity if " << m_p_ID1 << " " << ((float)m_p_opacity)/100;
     emit executeSendFinished();
+    emit sendStringToOutputLabel(QString("/mapmap/paint/opacity %1 %2").arg(m_p_ID1).arg(m_p_opacity));
     break;
   case P_VOLUME: packet << osc::BeginMessage("/mapmap/paint/volume") << m_p_ID1 << ((float)m_p_volume)/100 << osc::EndMessage;
-//    qDebug() << "/mapmap/paint/volume if " << m_p_ID1 << " " << ((float)m_p_volume)/100;
     emit executeSendFinished();
+    emit sendStringToOutputLabel(QString("/mapmap/paint/volume %1 %2").arg(m_p_ID1).arg(m_p_volume));
     break;
   case P_RATE: packet << osc::BeginMessage("/mapmap/paint/rate") << m_p_ID1 << ((float)m_p_rate)/100 << osc::EndMessage;
-//    qDebug() << "/mapmap/paint/rate if " << m_p_ID1 << " " << ((float)m_p_rate)/100;
     emit executeSendFinished();
+    emit sendStringToOutputLabel(QString("/mapmap/paint/rate %1 %2").arg(m_p_ID1).arg(m_p_volume));
     break;
   case P_URI: packet << osc::BeginMessage("/mapmap/paint/uri") << m_p_ID1 << m_p_uri.toStdString().c_str() << osc::EndMessage;
-//    qDebug() << "/mapmap/paint/uri is " << m_p_ID1 << " " << m_p_uri.toStdString().c_str();
     emit executeSendFinished();
+    emit sendStringToOutputLabel(QString("/mapmap/paint/uri %1 ").arg(m_p_ID1).append(m_p_uri));
     break;
   case P_COLOR: packet << osc::BeginMessage("/mapmap/paint/color") << m_p_ID1 << m_p_color.toStdString().c_str() << osc::EndMessage;
-//    qDebug() << "/mapmap/paint/color is " << m_p_ID1 << m_p_color.toStdString().c_str();
     emit executeSendFinished();
+    emit sendStringToOutputLabel(QString("/mapmap/paint/color %1 ").arg(m_p_ID1).append(m_p_color));
     break;
   case M_NAME: packet << osc::BeginMessage("/mapmap/mapping/name") << m_m_ID1 << m_m_name.toStdString().c_str() << osc::EndMessage;
-//    qDebug() << "/mapmap/mapping/name is " << m_m_ID1 << " " << m_m_name.toStdString().c_str();
     emit executeSendFinished();
+    emit sendStringToOutputLabel(QString("/mapmap/mapping/name %1 ").arg(m_m_ID1).append(m_m_name));
     break;
   case M_OPACITY: packet << osc::BeginMessage("/mapmap/mapping/opacity") << m_m_ID1 << ((float)m_m_opacity)/100 << osc::EndMessage;
-//    qDebug() << "/mapmap/mapping/opacity if " << m_m_ID1 << " " << ((float)m_m_opacity)/100;
     emit executeSendFinished();
+    emit sendStringToOutputLabel(QString("/mapmap/mapping/opacity %1 %2").arg(m_m_ID1).arg(m_m_opacity));
     break;
   case M_VISIBLE: packet << osc::BeginMessage("/mapmap/mapping/visible") << m_m_ID1 << m_m_isvisible << osc::EndMessage;
-//    qDebug() << "/mapmap/mapping/visible ii " << m_m_ID1 << m_m_isvisible;
     emit executeSendFinished();
+    emit sendStringToOutputLabel(QString("/mapmap/mapping/visible %1 %2").arg(m_m_ID1).arg(m_m_isvisible));
     break;
   case M_SOLO: packet << osc::BeginMessage("/mapmap/mapping/solo") << m_m_ID1 << m_m_issolo << osc::EndMessage;
-//      qDebug() << "/mapmap/mapping/solo ii " << m_m_ID1 << " " << m_m_issolo;
     emit executeSendFinished();
+    emit sendStringToOutputLabel(QString("/mapmap/mapping/solo %1 %2").arg(m_m_ID1).arg(m_m_issolo));
     break;
   case M_LOCK: packet << osc::BeginMessage("/mapmap/mapping/locked") << m_m_ID1 << m_m_islocked << osc::EndMessage;
-//      qDebug() << "/mapmap/mapping/locked ii " << m_m_ID1 << " " << m_m_islocked;
     emit executeSendFinished();
+    emit sendStringToOutputLabel(QString("/mapmap/mapping/locked %1 %2").arg(m_m_ID1).arg(m_m_islocked));
     break;
   case M_DEPTH: packet << osc::BeginMessage("/mapmap/mapping/depth") << m_m_ID1 << m_m_depth << osc::EndMessage;
-//    qDebug() << "/mapmap/mapping/depth ii " << m_m_ID1 << " " << m_m_depth;
     emit executeSendFinished();
+    emit sendStringToOutputLabel(QString("/mapmap/mapping/depth %1 %2").arg(m_m_ID1).arg(m_m_depth));
     break;
   case P_XFADE: ExecuteXFade(m_p_ID1, m_p_ID2, m_time); break;
   case P_FADE: ExecuteFade(m_p_ID1, m_time, m_isfadein); break;
   case R_P_NAME: packet << osc::BeginMessage("/mapmap/paint/name") << m_p_name.toStdString().c_str() << m_p_name2.toStdString().c_str() << osc::EndMessage;
-//    qDebug() << "/mapmap/paint/name ss " << m_p_name.toStdString().c_str() << " " << m_p_name2.toStdString().c_str();
     emit executeSendFinished();
+    emit sendStringToOutputLabel(QString("/mapmap/paint/name ").append(m_p_name).append(" ").append(m_p_name2));
     break;
   case R_P_REWIND: packet << osc::BeginMessage("/mapmap/paint/rewind") << m_p_name.toStdString().c_str() << osc::EndMessage;
-//    qDebug() << "/mapmap/paint/rewind s " << m_p_name.toStdString().c_str();
     emit executeSendFinished();
+    emit sendStringToOutputLabel(QString("/mapmap/paint/rewind ").append(m_p_name));
     break;
-  case R_P_OPACITY: packet << osc::BeginMessage("/mapmap/paint/opacity") << m_p_name.toStdString().c_str() << ((float)m_p_opacity)/100 << osc::EndMessage;
-//    qDebug() << "/mapmap/paint/opacity sf " << m_p_name.toStdString().c_str() << " " << ((float)m_p_opacity)/100;
+  case R_P_OPACITY: packet << osc::BeginMessage("/mapmap/paint/opacity ") << m_p_name.toStdString().c_str() << ((float)m_p_opacity)/100 << osc::EndMessage;
     emit executeSendFinished();
+    emit sendStringToOutputLabel(QString("/mapmap/paint/opacity ").append(m_p_name).append(" %1").arg(m_p_opacity));
     break;
   case R_P_VOLUME: packet << osc::BeginMessage("/mapmap/paint/volume") << m_p_name.toStdString().c_str() << ((float)m_p_volume)/100 << osc::EndMessage;
-//    qDebug() << "/mapmap/paint/volume sf " << m_p_name.toStdString().c_str() << " " << ((float)m_p_volume)/100;
     emit executeSendFinished();
+    emit sendStringToOutputLabel(QString("/mapmap/paint/volume ").append(m_p_name).append(" %1").arg(m_p_volume));
     break;
   case R_P_RATE: packet << osc::BeginMessage("/mapmap/paint/rate") << m_p_name.toStdString().c_str() << ((float)m_p_rate)/100 << osc::EndMessage;
-//    qDebug() << "/mapmap/paint/rate sf " << m_p_name.toStdString().c_str() << " " << ((float)m_p_rate)/100;
     emit executeSendFinished();
+    emit sendStringToOutputLabel(QString("/mapmap/paint/rate ").append(m_p_name).append(" %1").arg(m_p_rate));
     break;
   case R_P_URI: packet << osc::BeginMessage("/mapmap/paint/uri") << m_p_name.toStdString().c_str() << m_p_uri.toStdString().c_str() << osc::EndMessage;
-//    qDebug() << "/mapmap/paint/uri ss " << m_p_name.toStdString().c_str() << " " << m_p_uri.toStdString().c_str() ;
     emit executeSendFinished();
+    emit sendStringToOutputLabel(QString("/mapmap/paint/uri ").append(m_p_name).append(" ").append(m_p_uri));
     break;
   case R_P_COLOR: packet << osc::BeginMessage("/mapmap/paint/color") << m_p_name.toStdString().c_str() << m_p_color.toStdString().c_str() << osc::EndMessage;
-//    qDebug() << "/mapmap/paint/color ss " << m_p_name.toStdString().c_str() << " " << m_p_color.toStdString().c_str() ;
     emit executeSendFinished();
+    emit sendStringToOutputLabel(QString("/mapmap/paint/color ").append(m_p_name).append(" ").append(m_p_color));
     break;
   case R_M_NAME: packet << osc::BeginMessage("/mapmap/mapping/name") << m_m_name.toStdString().c_str() << m_m_name2.toStdString().c_str() << osc::EndMessage;
-//    qDebug() << "/mapmap/mapping/name ss " << m_m_name.toStdString().c_str() << " " << m_m_name2.toStdString().c_str() ;
     emit executeSendFinished();
+    emit sendStringToOutputLabel(QString("/mapmap/mapping/name ").append(m_m_name).append(" ").append(m_m_name2));
     break;
   case R_M_OPACITY: packet << osc::BeginMessage("/mapmap/mapping/opacity") << m_m_name.toStdString().c_str() << ((float)m_m_opacity)/100 << osc::EndMessage;
-//    qDebug() << "/mapmap/mapping/opacity sf " << m_m_name.toStdString().c_str() << " " << ((float)m_m_opacity)/100;
     emit executeSendFinished();
+    emit sendStringToOutputLabel(QString("/mapmap/mapping/opacity ").append(m_m_name).append(" %1").arg(m_m_opacity));
     break;
   case R_M_VISIBLE: packet << osc::BeginMessage("/mapmap/mapping/visible") << m_m_name.toStdString().c_str() << m_m_isvisible << osc::EndMessage;
-//    qDebug() << "/mapmap/mapping/visible si " << m_m_name.toStdString().c_str() << m_m_isvisible;
     emit executeSendFinished();
+    emit sendStringToOutputLabel(QString("/mapmap/mapping/visible ").append(m_m_name).append(" %1").arg(m_m_isvisible));
     break;
   case R_M_SOLO: packet << osc::BeginMessage("/mapmap/mapping/solo") << m_m_name.toStdString().c_str() << m_m_issolo << osc::EndMessage;
-//    qDebug() << "/mapmap/mapping/solo si " << m_m_name.toStdString().c_str() << " " << m_m_issolo;
     emit executeSendFinished();
+    emit sendStringToOutputLabel(QString("/mapmap/mapping/solo ").append(m_m_name).append(" %1").arg(m_m_issolo));
     break;
   case R_M_LOCK: packet << osc::BeginMessage("/mapmap/mapping/locked") << m_m_name.toStdString().c_str() << m_m_islocked << osc::EndMessage;
-//    qDebug() << "/mapmap/mapping/locked si " << m_m_name.toStdString().c_str() << " " << m_m_islocked;
     emit executeSendFinished();
+    emit sendStringToOutputLabel(QString("/mapmap/mapping/locked ").append(m_m_name).append(" %1").arg(m_m_islocked));
     break;
   case R_M_DEPTH: packet << osc::BeginMessage("/mapmap/mapping/depth") << m_m_name.toStdString().c_str() << m_m_depth << osc::EndMessage;
-//    qDebug() << "/mapmap/mapping/depth si " << m_m_name.toStdString().c_str() << " " << m_m_depth;
     emit executeSendFinished();
+    emit sendStringToOutputLabel(QString("/mapmap/mapping/depth ").append(m_m_name).append(" %1").arg(m_m_depth));
     break;
   case R_P_FADE: ExecutePFade(m_p_name, m_time, m_isfadein); break;
   case R_P_XFADE: ExecutePXFade(m_p_name, m_p_name2, m_time); break;
@@ -270,6 +270,7 @@ void OscSend::ExecuteXFade(int ID1, int ID2, double time)
          << ID2 << i << osc::EndMessage << osc::EndBundle;
   Send(packet.Data(), packet.Size());
   packet.Clear();
+  emit sendStringToOutputLabel(QString("paint ID%1 -> %2\%   ***   paint ID%3 -> %4\%").arg(ID1).arg(100 - counter).arg(ID2).arg(counter));
   timer->start(time * 10);
 }
 
@@ -281,9 +282,17 @@ void OscSend::ExecuteFade(int ID1, double time, bool isfadein)
   double i = (double)(counter) / 100;
   packet << osc::BeginBundleImmediate
          << osc::BeginMessage("/mapmap/paint/opacity") << ID1;
-  if (isfadein) packet << i;
-    else packet << 1 - i;
-    packet << osc::EndMessage << osc::EndBundle;
+  if (isfadein)
+  {
+    packet << i;
+    emit sendStringToOutputLabel(QString("paint ID%1 -> %2\%").arg(ID1).arg(counter));
+  }
+  else
+  {
+    packet << 1 - i;
+    emit sendStringToOutputLabel(QString("paint ID%1 -> %2\%").arg(ID1).arg(100 - counter));
+  }
+  packet << osc::EndMessage << osc::EndBundle;
     Send(packet.Data(), packet.Size());
     packet.Clear();
     timer->start(time * 10);
@@ -306,6 +315,9 @@ void OscSend::ExecutePXFade(const QString &p_name, const QString &p_name2, doubl
          << p_name2.toStdString().c_str() << i << osc::EndMessage << osc::EndBundle;
   Send(packet.Data(), packet.Size());
   packet.Clear();
+  emit sendStringToOutputLabel(QString(p_name).append(" -> %1\%   ******   ").arg(100 - counter)
+                               .append(p_name2).append(" -> %1\%").arg(counter));
+
   timer->start(time * 10);
 }
 
@@ -319,9 +331,15 @@ void OscSend::ExecutePFade(const QString &p_name, double time, bool isfadein)
   packet << osc::BeginBundleImmediate
          << osc::BeginMessage("/mapmap/paint/opacity") << p_name.toStdString().c_str();
   if (isfadein)
+  {
     packet << i;
+    emit sendStringToOutputLabel(QString(p_name).append(" -> %1\%").arg(counter));
+  }
   else
+  {
     packet << 1 - i;
+    emit sendStringToOutputLabel(QString(p_name).append(" -> %1\%").arg(100 - counter));
+  }
   packet << osc::EndMessage << osc::EndBundle;
   Send(packet.Data(), packet.Size());
   packet.Clear();

@@ -31,6 +31,10 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   oscSendS = new OscSend(this, P_OPACITY); // Oscsend Slider
   oscSendB = new OscSend(this); // OscSend Buttons
 
+  connect(oscSendB, SIGNAL(sendStringToOutputLabel(QString)), this, SLOT(receiveStringFromSend(QString)));
+  connect(oscSendS, SIGNAL(sendStringToOutputLabel(QString)), this, SLOT(receiveStringFromSend(QString)));
+
+
   layoutTotal = new QGridLayout();
 
   labelb9 = new QLabel("Source Rewind", this); labelb8 = new QLabel("Source Rate 200%", this); labelb7 = new QLabel("Source Rate 100%", this);
@@ -955,4 +959,9 @@ void TabMidi::slotDisconnectMidi2()
   m_midiOut2->sendBoutonOff(86);
   m_midiIn2->disconnectMidiIn();
   m_midiOut2->disconnectMidiOut();
+}
+
+void TabMidi::receiveStringFromSend(QString tempString)
+{
+  emit sendStringToOutputLabel(tempString);
 }

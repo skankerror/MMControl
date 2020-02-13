@@ -201,3 +201,18 @@ The selection behavior is controlled by the show-decoration-selected property.
 The branches of the tree view can be styled using the ::branch subcontrol. The ::branch Sub-control supports the :open, :closed, :has-sibling and :has-children pseudo states.
 Use the ::item subcontrol for more fine grained control over the items in the QTreeView.
 See QAbsractScrollArea to style scrollable backgrounds.*/
+
+/*QTreeView::item {
+     border: 1px solid #2B3947;
+}*/
+
+QProgressBar {
+  text-align: left;
+  background-color: #778390
+}
+
+QProgressBar::chunk {
+    background-color: #960710;
+    width: 20px;
+}
+

@@ -48,8 +48,8 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const
   }
   OscSend *tempSend = getSend(index);
   int col = index.column();
-  QBrush salmonColor(QColor("#59271E"));
-  QBrush yellowColor(QColor("#B8BF7E"));
+  QBrush salmonColor(QColor(SALMONCOLOR));
+  QBrush yellowColor(QColor(YELLOWCOLOR));
 
   if (index.flags().testFlag(Qt::ItemIsEditable))
   {

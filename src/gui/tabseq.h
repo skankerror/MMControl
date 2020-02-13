@@ -38,6 +38,7 @@ public:
 signals:
   void updateProgressTime(int value);
   void progressTimeFinished();
+  void sendStringToOutputLabel(QString);
 
 public slots:
   void executeGo();
@@ -53,6 +54,7 @@ public slots:
   void timeProgressSteped();
 //  void selectNextRow();
   void selectRow();
+  void receiveStringFromSend(QString tempString);
 
   void hideShowColumns();
 
@@ -75,7 +77,7 @@ private:
         QPushButton *boutonSaveAs;
         QPushButton *boutonLoad;
 
-//  OscSend *tempSend;
+  OscSend *tempSend;
 
 public:
   QTreeView *treeView;

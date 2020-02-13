@@ -69,6 +69,7 @@ public:
 
 signals:
   void executeSendFinished();
+  void sendStringToOutputLabel(QString);
 
 public slots:
 

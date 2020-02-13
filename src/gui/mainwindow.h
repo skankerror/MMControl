@@ -109,8 +109,8 @@ private:
     QPushButton *addToCuePushButton;
 
     QStatusBar *statusBar;
-//public: // pour tester
     QProgressBar *progressBar;
+    QLabel *outputLabel;
 
 };
 

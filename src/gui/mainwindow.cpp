@@ -47,6 +47,9 @@ MainWindow::MainWindow() :
 
   connect(tabseq, SIGNAL(updateProgressTime(int)), this, SLOT(timeProgressed(int)));
   connect(tabseq, SIGNAL(progressTimeFinished()), this, SLOT(timeFinished()));
+  connect(tabseq, SIGNAL(sendStringToOutputLabel(QString)), outputLabel, SLOT(setText(QString)));
+  connect(tabmidi, SIGNAL(sendStringToOutputLabel(QString)), outputLabel, SLOT(setText(QString)));
+
 
 }
 
@@ -188,7 +191,9 @@ void MainWindow::createStatusBar()
 {
   statusBar = new QStatusBar(this);
   progressBar = new QProgressBar(this);
-  statusBar->addPermanentWidget(progressBar);
+  outputLabel = new QLabel(this);
+  statusBar->insertPermanentWidget(0, progressBar, 1);
+  statusBar->insertPermanentWidget(1, outputLabel, 1);
   setStatusBar(statusBar);
   progressBar->setRange(0, 100);
   progressBar->setValue(80);
@@ -533,6 +538,7 @@ void MainWindow::sendFromToolBar()
   case P_COLOR: case R_P_COLOR: while (p_colorLine->text() == "Choose->") setP_ColorLine(); oscsend->setP_color(p_colorLine->text()); break;
   default: break;
   }
+  connect(oscsend, SIGNAL(sendStringToOutputLabel(QString)), outputLabel, SLOT(setText(QString)));
   oscsend->ExecuteSend();
 }
 void MainWindow::setP_UriLine()

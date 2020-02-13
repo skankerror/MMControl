@@ -18,6 +18,8 @@
 #ifndef MMC_H
 #define MMC_H
 
+#include <QBrush>
+
 // MainWindow
 #define WINDOW_TITLE "Mapmap Controller"
 #define X_WINDOW_OFFSET 200
@@ -46,6 +48,15 @@ enum columns
   M_name, M_name2, M_Id, M_opac, Visible, Solo, Lock, Depth,
   Fade_In, Time, Wait, Note, Count = Note + 1
 };
+
+//QBrush salmonColor(QColor("#59271E"));
+//QBrush salmonColor(QColor("#725651"));
+#define SALMONCOLOR "#725651"
+//QBrush yellowColor(QColor("#B8BF7E"));
+//QBrush yellowColor(QColor("#818658"));
+#define YELLOWCOLOR "#818658"
+
+
 
 // MyMidiIn
 #define __LINUX_ALSA // define API for RtMidi needed by MyMidiIn class
