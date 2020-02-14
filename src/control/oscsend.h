@@ -65,8 +65,6 @@ public:
   OscSend(OscSend *oscsend); // cstr de copie
   ~OscSend();
 
-  int counter = 0; // pour fonctionner avec le time
-
 signals:
   void executeSendFinished();
   void sendStringToOutputLabel(QString);
@@ -170,6 +168,8 @@ private:
   QString m_noteSend = "";
 
   QTimer *timer;
+  int counter = 0; // pour fonctionner avec le time
+  int timeRes = 100;
 
   QVector<OscSend *> v_listSend; // Si c'est une cue
   OscSend *m_parentSend; // rootItem si c'est une cue

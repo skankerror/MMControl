@@ -252,12 +252,13 @@ void OscSend::ExecuteSend()
   Send(packet.Data(), packet.Size());
 }
 
-void OscSend::ExecuteXFade(int ID1, int ID2, double time)
+void OscSend::ExecuteXFade(int ID1, int ID2, double time) // A voir de près pour le timeRes
 {
-  if (counter == 101) return;
+  timeRes = (int)(100 * time); // on adapte la résolution suivant le temps
+  if (counter == timeRes + 1) return;
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);
-  double i = (double)(counter) / 100;
+  double i = (double)(counter) / timeRes;
   packet << osc::BeginBundleImmediate
          << osc::BeginMessage("/mapmap/paint/opacity")
          << ID1 << 1 - i << osc::EndMessage << osc::EndBundle;
@@ -269,40 +270,45 @@ void OscSend::ExecuteXFade(int ID1, int ID2, double time)
          << ID2 << i << osc::EndMessage << osc::EndBundle;
   Send(packet.Data(), packet.Size());
   packet.Clear();
-  emit sendStringToOutputLabel(QString("paint ID%1 -> %2\%   ***   paint ID%3 -> %4\%").arg(ID1).arg(100 - counter).arg(ID2).arg(counter));
-  timer->start(time * 10);
+  emit sendStringToOutputLabel(QString("paint ID%1 -> %2\%   ***   paint ID%3 -> %4\%").
+                               arg(ID1).arg((int)((1 - i) * 100)).arg(ID2).arg((int)(i * 100)));
+  timer->start(10); // la résolution est fixe à 10ms
 }
 
 void OscSend::ExecuteFade(int ID1, double time, bool isfadein)
 {
-  if (counter == 101) return;
+//  if (counter == 101) return;
+  timeRes = (int)(100 * time); // on adapte la résolution suivant le temps
+  if (counter == timeRes + 1) return;
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);
-  double i = (double)(counter) / 100;
+//  double i = (double)(counter) / 100;
+  double i = (double)(counter) / timeRes;
   packet << osc::BeginBundleImmediate
          << osc::BeginMessage("/mapmap/paint/opacity") << ID1;
   if (isfadein)
   {
     packet << i;
-    emit sendStringToOutputLabel(QString("paint ID%1 -> %2\%").arg(ID1).arg(counter));
+    emit sendStringToOutputLabel(QString("paint ID%1 -> %2\%").arg(ID1).arg((int)(i * 100)));
   }
   else
   {
     packet << 1 - i;
-    emit sendStringToOutputLabel(QString("paint ID%1 -> %2\%").arg(ID1).arg(100 - counter));
+    emit sendStringToOutputLabel(QString("paint ID%1 -> %2\%").arg(ID1).arg((int)((1 - i) * 100)));
   }
   packet << osc::EndMessage << osc::EndBundle;
     Send(packet.Data(), packet.Size());
     packet.Clear();
-    timer->start(time * 10);
+    timer->start(10);
 }
 
 void OscSend::ExecutePXFade(const QString &p_name, const QString &p_name2, double time)
 {
-  if (counter == 101) return;
+  timeRes = (int)(100 * time); // on adapte la résolution suivant le temps
+  if (counter == timeRes + 1) return;
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);
-  double i = (double)(counter) / 100;
+  double i = (double)(counter) / timeRes;
   packet << osc::BeginBundleImmediate
          << osc::BeginMessage("/mapmap/paint/opacity")
          << p_name.toStdString().c_str() << 1 - i << osc::EndMessage << osc::EndBundle;
@@ -314,40 +320,41 @@ void OscSend::ExecutePXFade(const QString &p_name, const QString &p_name2, doubl
          << p_name2.toStdString().c_str() << i << osc::EndMessage << osc::EndBundle;
   Send(packet.Data(), packet.Size());
   packet.Clear();
-  emit sendStringToOutputLabel(QString(p_name).append(" -> %1\%   ******   ").arg(100 - counter)
-                               .append(p_name2).append(" -> %1\%").arg(counter));
-
-  timer->start(time * 10);
+  emit sendStringToOutputLabel(QString(p_name).append(" -> %1\%   ******   ").arg((int)((1 - i) * 100))
+                               .append(p_name2).append(" -> %1\%").arg((int)(i * 100)));
+  timer->start(10); // la résolution est fixe à 10ms
 }
 
 void OscSend::ExecutePFade(const QString &p_name, double time, bool isfadein)
 {
-  if (counter == 101) return;
+//  if (counter == 101) return;
+  timeRes = (int)(100 * time); // on adapte la résolution suivant le temps
+  if (counter == timeRes + 1) return;
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);
-  double i = (double)(counter) / 100;
-
+//  double i = (double)(counter) / 100;
+  double i = (double)(counter) / timeRes;
   packet << osc::BeginBundleImmediate
          << osc::BeginMessage("/mapmap/paint/opacity") << p_name.toStdString().c_str();
   if (isfadein)
   {
     packet << i;
-    emit sendStringToOutputLabel(QString(p_name).append(" -> %1\%").arg(counter));
+    emit sendStringToOutputLabel(QString(p_name).append(" -> %1\%").arg((int)(i * 100)));
   }
   else
   {
     packet << 1 - i;
-    emit sendStringToOutputLabel(QString(p_name).append(" -> %1\%").arg(100 - counter));
+    emit sendStringToOutputLabel(QString(p_name).append(" -> %1\%").arg((int)((1 - i) * 100)));
   }
   packet << osc::EndMessage << osc::EndBundle;
   Send(packet.Data(), packet.Size());
   packet.Clear();
-  timer->start(time * 10);
+  timer->start(10);
 }
 
 void OscSend::fadeStep()
 {
-  if (counter == 101)
+  if (counter == timeRes + 1)
   {
     fadeFinish();
     return;

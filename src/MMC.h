@@ -48,11 +48,8 @@ enum columns
   M_name, M_name2, M_Id, M_opac, Visible, Solo, Lock, Depth,
   Fade_In, Time, Wait, Note, Count = Note + 1
 };
-
 #define SALMONCOLOR "#725651"
 #define YELLOWCOLOR "#818658"
-
-
 
 // MyMidiIn
 #define __LINUX_ALSA // define API for RtMidi needed by MyMidiIn class
