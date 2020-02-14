@@ -15,5 +15,6 @@
     <qresource prefix="/"/>
     <qresource prefix="/qss">
         <file alias="MyStyleSheet">qss/MyStyleSheet.qss</file>
+        <file alias="BarSend">qss/progressBarSend.qss</file>
     </qresource>
 </RCC>

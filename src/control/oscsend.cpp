@@ -104,7 +104,6 @@ OscSend::OscSend(OscSend *oscsend):
   timer = new QTimer();
   counter = 0;
   connect(timer, SIGNAL(timeout()), this, SLOT(fadeStep()));
-//  qDebug() << m_champ;
 }
 
 

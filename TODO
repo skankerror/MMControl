@@ -6,9 +6,13 @@
 
 - Allumer les boutons sur la vue dans tabmidi
 
-_ Revoir la sélection quand on déplace un send dans une autre cue
-
 - Vérifier... Si on édite ça fout le bordel dans les go ?
 
-- les potards midi n'envoient qu'à 99%s
+- les potards midi n'envoient qu'à 99%
 
+- Mettre un RESOLUTION_TIME dans MMC.h pour pouvoir varier le nombre de pas
+Pourquoi pas en mettre plusieurs... if fade > 2s passer à 200 if fade > 10s passer à 500
+
+- disconnect le boutonGo quand une cue est lancée, le reconnecter ensuite
+
+- les true false ne sont pas jolis, mettre des 0 1 dans data puis des checkbox dans le delegate

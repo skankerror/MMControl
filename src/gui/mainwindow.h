@@ -50,8 +50,10 @@ public slots:
   void setP_UriLine();
   void setP_ColorLine();
   void addToCue();
-  void timeProgressed(int value);
-  void timeFinished();
+  void timeProgressedCue(int value);
+  void timeFinishedCue();
+  void timeProgressedSend(int value);
+  void timeFinishedSend();
 
 private:
   OscCueList *oscCueList;
@@ -108,9 +110,10 @@ private:
     QPushButton *sendPushButton;
     QPushButton *addToCuePushButton;
 
-    QStatusBar *statusBar;
-    QProgressBar *progressBar;
+  QStatusBar *statusBar;
+    QProgressBar *progressBarCue;
     QLabel *outputLabel;
+    QProgressBar *progressBarSend;
 
 };
 

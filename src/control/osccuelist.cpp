@@ -435,20 +435,20 @@ void OscCueList::insertSend(OscSend *oscsend, int cueId, int sendId)
   endInsertRows();
 }
 
-void OscCueList::moveSendPrev(int cueId, int sendId)
+bool OscCueList::moveSendPrev(int cueId, int sendId)
 {
-  if (cueId < 0 || cueId >= rootSend->getSendCount()) return;
+  if (cueId < 0 || cueId >= rootSend->getSendCount()) return false;
   OscSend *osccue = rootSend->getChild(cueId);
-  if (sendId < 0 || sendId >= osccue->getSendCount()) return;
+  if (sendId < 0 || sendId >= osccue->getSendCount()) return false;
   if (sendId) // Si c'est pas le 1er send de la cue
   {
     beginMoveRows(index(cueId, 0, QModelIndex()), sendId, sendId, index(cueId, 0, QModelIndex()), sendId - 1);
     osccue->moveChildPrev(sendId);
     endMoveRows();
-    return;
+    return false;
   }
   // C'est le 1er send
-  if (cueId == 0) return; // y a pas de cue avant on return;
+  if (cueId == 0) return false; // y a pas de cue avant on return;
   OscSend *cuePrev = rootSend->getChild(cueId - 1); // On choppe la cue d'avant
   OscSend *oscsend = osccue->getChild(sendId); // On choppe le send
   OscSend *oscsend2 = new OscSend(oscsend); // On le copie
@@ -456,19 +456,20 @@ void OscCueList::moveSendPrev(int cueId, int sendId)
   oscsend2->setParentSend(cuePrev); // On met la nouvelle cue comme parentsend
   removeSend(cueId, sendId); // on peut le détruire de l'ancienne cue
   addSend(oscsend2, cueId - 1); // On ajoute la copie à la bonne cue
+  return true; //Pour dire à tabseq qu'on a changé de cue
 }
 
-void OscCueList::moveSendNext(int cueId, int sendId)
+bool OscCueList::moveSendNext(int cueId, int sendId)
 {
-  if (cueId < 0 || cueId >= rootSend->getSendCount()) return;
+  if (cueId < 0 || cueId >= rootSend->getSendCount()) return false;
   OscSend *osccue = rootSend->getChild(cueId);
-  if (sendId < 0 || sendId >= osccue->getSendCount()) return;
+  if (sendId < 0 || sendId >= osccue->getSendCount()) return false;
   // Si c'est pas le dernier send
   if (sendId != osccue->getSendCount() - 1) moveSendPrev(cueId, sendId + 1);
   // C'est le dernier send
   else
   {
-    if (cueId == rootSend->getSendCount() - 1) return; // C'est la dernière cue on return
+    if (cueId == rootSend->getSendCount() - 1) return false; // C'est la dernière cue on return
     OscSend *cueNext = rootSend->getChild(cueId + 1); // On choppe la cue d'avant
     OscSend *oscsend = osccue->getChild(sendId); // On choppe le send
     OscSend *oscsend2 = new OscSend(oscsend); // On le copie
@@ -477,7 +478,9 @@ void OscCueList::moveSendNext(int cueId, int sendId)
     if (cueNext->getSendCount()) insertSend(oscsend2, cueId + 1, 0); // On ajoute la copie à la bonne cue
     else addSend(oscsend2, cueId + 1); // Si la cue a pas encore de send
     removeSend(cueId, sendId); // on peut le détruire de l'ancienne cue
+    return true; //Pour dire à tabSeq qu'on a changé de cue
   }
+  return false;
 }
 
 void OscCueList::removeSend(int cueId, int sendId/*, bool destroy*/)
@@ -560,8 +563,6 @@ bool OscCueList::hideShowColumn(int col) const
     for (int j = 0; j < getSend(index(i, 0))->getSendCount(); j++)
     {
       if ((index(j, col, index(i, 0))).flags().testFlag(Qt::ItemIsEditable)) return true;
-//      if ((index(j, col, index(i, 0))).flags().testFlag(Qt::ItemIsEnabled)) return true;
-
     }
   }
   return false;

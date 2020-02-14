@@ -208,7 +208,7 @@ See QAbsractScrollArea to style scrollable backgrounds.*/
 
 QProgressBar {
   text-align: left;
-  background-color: #778390
+  background-color: #778390;
 }
 
 QProgressBar::chunk {
@@ -216,3 +216,7 @@ QProgressBar::chunk {
     width: 20px;
 }
 
+QProgressBar#progressBarSend::chunk {
+    background-color: #000000;
+    width: 20px;
+}

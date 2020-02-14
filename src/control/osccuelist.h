@@ -51,8 +51,8 @@ public:
   void addCue();
   void addSend(OscSend *oscsend, int cueId);
   void insertSend(OscSend *oscsend, int cueId, int sendId);
-  void moveSendPrev(int cueId, int sendId);
-  void moveSendNext(int cueId, int sendId);
+  bool moveSendPrev(int cueId, int sendId);
+  bool moveSendNext(int cueId, int sendId);
   void removeSend(int cueId, int sendId);
   void removeAllSend(int cueId);
   void insertCue(int cueId);

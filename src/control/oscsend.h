@@ -138,7 +138,7 @@ public:
   int getSendCount() const;
   void insertSend(OscSend *oscsend, int position);
   OscSend *getParentSend();
-  void removeSends(int position, int count = 1/*, bool destroy = true*/);
+  void removeSends(int position, int count = 1);
   int getSendId() const; // donne l'id d'un enfant
   void moveChildPrev(int position);
 

@@ -49,11 +49,7 @@ enum columns
   Fade_In, Time, Wait, Note, Count = Note + 1
 };
 
-//QBrush salmonColor(QColor("#59271E"));
-//QBrush salmonColor(QColor("#725651"));
 #define SALMONCOLOR "#725651"
-//QBrush yellowColor(QColor("#B8BF7E"));
-//QBrush yellowColor(QColor("#818658"));
 #define YELLOWCOLOR "#818658"
 
 

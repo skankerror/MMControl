@@ -36,8 +36,12 @@ public:
          QWidget *parent = nullptr);
 
 signals:
-  void updateProgressTime(int value);
-  void progressTimeFinished();
+  void updateProgressTimeCue(int value);
+  void progressTimeFinishedCue();
+  void updateProgressTimeSend(int value);
+  void progressTimeFinishedSend();
+  void updateProgressTimeWaitSend(int value);
+  void progressTimeWaitFinishedSend();
   void sendStringToOutputLabel(QString);
 
 public slots:
@@ -50,11 +54,16 @@ public slots:
   void saveAs();
   void loadFile();
   void receiveMidiNote2(int note);
-  void timeProgressFinished();
-  void timeProgressSteped();
-//  void selectNextRow();
+  void timeProgressFinishedCue();
+  void timeProgressStepedCue();
+  void timeProgressFinishedSend();
+  void timeProgressStepedSend();
+  void timeWaitProgressFinishedSend();
+  void timeWaitProgressStepedSend();
   void selectRow();
   void receiveStringFromSend(QString tempString);
+  void sendWaitToOutputLabel();
+  void resetOutputLabel();
 
   void hideShowColumns();
 
@@ -77,12 +86,19 @@ private:
         QPushButton *boutonSaveAs;
         QPushButton *boutonLoad;
 
+  // pour executeGo
   OscSend *tempSend;
+  int counterCue = 0;
+  double totalTime = 0;
+  int counterSend = 0;
+  int counterSendWait = 0;
+  double totalTimeSend = 0;
+  double fadeTimeSend = 0;
+  double waitTimeSend = 0;
+  QTimer *timerWait;
 
 public:
   QTreeView *treeView;
-  int counter = 0;
-  double totalTime = 0;
 
 };
 

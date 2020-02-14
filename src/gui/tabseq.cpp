@@ -111,6 +111,8 @@ TabSeq::TabSeq(OscCueList *oscCueList,
 
   hideShowColumns();
 
+  timerWait = new QTimer(this);
+
   connect(boutonGo, SIGNAL(clicked(bool)), SLOT(executeGo()));
   connect(boutonPrev, SIGNAL(clicked(bool)), SLOT(movePrevious()));
   connect(boutonNext, SIGNAL(clicked(bool)), SLOT(moveNext()));
@@ -121,7 +123,7 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   connect(m_oscCueList, SIGNAL(dataChanged(QModelIndex, QModelIndex)), SLOT(hideShowColumns()));
   connect(treeView, SIGNAL(expanded(QModelIndex)), this, SLOT(hideShowColumns()));
   connect(midiIn2, SIGNAL(sigMidiNoteChanged(int)), this, SLOT(receiveMidiNote2(int)));
-//  connect(tempSend, SIGNAL(sendStringToOutPutLabel(QString)), this, SLOT(receiveStringFromSend(QString)));
+  connect(timerWait, SIGNAL(timeout()), this, SLOT(timeWaitProgressStepedSend()));
 }
 
 void TabSeq::executeGo()
@@ -143,22 +145,40 @@ void TabSeq::executeGo()
     totalTime = tempCue->getTimewait();
     if (totalTime)
     {
-      counter = 0;
-      QTimer::singleShot(totalTime, this, SLOT(timeProgressSteped()));
+      counterCue = 0;
+      QTimer::singleShot(totalTime, this, SLOT(timeProgressStepedCue()));
     }
     treeView->setCurrentIndex(m_oscCueList->index(0, 0, index));
     executeGo();
     return;
   }
   // C'est un send;
-  /*OscSend **/tempSend = m_oscCueList->getSend(index);
+  tempSend = m_oscCueList->getSend(index);
   connect(tempSend, SIGNAL(sendStringToOutputLabel(QString)), this, SLOT(receiveStringFromSend(QString)), Qt::UniqueConnection);
   executeSend(tempSend);
-  double timeWait = tempSend->getTimewait(); // on choppe le temps d'attente
+  // On gère le time
   int champ = tempSend->getChamp();
-  // Si c'est un fade on rajoute le time
-  if (champ == P_FADE || champ == P_XFADE || champ == R_P_FADE || champ == R_P_XFADE) timeWait += tempSend->getTime();
-  QTimer::singleShot((100 * (int)(timeWait*10)) + 1, this, SLOT(selectRow()));
+  waitTimeSend = tempSend->getTimewait();
+  if (champ == P_FADE || champ == P_XFADE || champ == R_P_FADE || champ == R_P_XFADE)
+  {
+    fadeTimeSend = tempSend->getTime();
+  }
+  else fadeTimeSend = 0;
+  totalTimeSend = waitTimeSend + fadeTimeSend;
+  if (fadeTimeSend)
+  {
+    // on lance le timer du fade et lui-même lancera le timer du wait si besoin
+    counterSend = 0;
+    QTimer::singleShot(totalTimeSend, this, SLOT(timeProgressStepedSend()));
+  }
+  else if (waitTimeSend) // Sinon on lance le timerwait si besoin
+  {
+    counterSendWait = 0;
+    sendWaitToOutputLabel();
+    timerWait->start(waitTimeSend * 10);
+  }
+  // Puis timer total pour passer au row suivant
+  QTimer::singleShot((100 * (int)(totalTimeSend*10)) + 1, this, SLOT(selectRow()));
   return;
 }
 
@@ -178,7 +198,13 @@ void TabSeq::movePrevious() // Bouger cue si c'est une cue, bouger send si c'est
     return;
   }
   // c'est un send
-  m_oscCueList->moveSendPrev(index.parent().row(), row); // Seul blème l'index disparaît si on change de cue
+  if (m_oscCueList->moveSendPrev(index.parent().row(), row)) // Si true on a changé de cue
+  {
+    // Sélectionner le nouveau row
+    QModelIndex indexNewCue = index.parent().siblingAtRow(index.parent().row() - 1);
+    int newRow = m_oscCueList->getSend(indexNewCue)->getSendCount() - 1;
+    treeView->setCurrentIndex(m_oscCueList->index(newRow, 0, indexNewCue));
+  }
 }
 
 void TabSeq::moveNext() // Bouger cue si c'est une cue, bouger send si c'est un send
@@ -192,7 +218,12 @@ void TabSeq::moveNext() // Bouger cue si c'est une cue, bouger send si c'est un 
     return;
   }
   // c'est un send
-  m_oscCueList->moveSendNext(index.parent().row(), row); // Seul blème l'index disparaît si on change de cue
+  if (m_oscCueList->moveSendNext(index.parent().row(), row)) // si true on a changé de cue
+  {
+    // Sélectionner le nouveau row
+    QModelIndex indexNewCue = index.parent().siblingAtRow(index.parent().row() + 1);
+    treeView->setCurrentIndex(m_oscCueList->index(0, 0, indexNewCue));
+  }
 }
 
 void TabSeq::remove()
@@ -292,7 +323,7 @@ void TabSeq::loadFile()
     QTextStream in(&file);                 // read to text stream
     while (!in.atEnd())
     {
-
+      // Attention on ne vérifie rien sur le contenu du fichier
       // read one line from textstream(separated by "\n")
       QString fileLine = in.readLine();
       // parse the read line into separate pieces(tokens) with "," as the delimiter
@@ -302,7 +333,6 @@ void TabSeq::loadFile()
       firstVal.resize(3);
 
       if (firstVal == "CUE") // c'est une CUE
-//      if (firstVal == "") // c'est une CUE
       {
         m_oscCueList->addCueFromFileLine(lineToken);
       }
@@ -326,23 +356,68 @@ void TabSeq::receiveMidiNote2(int note)
   m_midiOut2->sendBoutonOn(86);
 }
 
-void TabSeq::timeProgressFinished()
+void TabSeq::timeProgressFinishedCue()
 {
-  emit progressTimeFinished();
-  counter = 0;
+  emit progressTimeFinishedCue();
+  counterCue = 0;
   totalTime = 0;
 }
 
-void TabSeq::timeProgressSteped()
+void TabSeq::timeProgressStepedCue()
 {
-  if (counter == 101)
+  if (counterCue == 101)
   {
-    timeProgressFinished();
+    timeProgressFinishedCue();
     return;
   }
-  counter++;
-  emit updateProgressTime(counter);
-  QTimer::singleShot(totalTime * 10, this, SLOT(timeProgressSteped()));
+  counterCue++;
+  emit updateProgressTimeCue(counterCue);
+  QTimer::singleShot(totalTime * 10, this, SLOT(timeProgressStepedCue()));
+}
+
+void TabSeq::timeProgressFinishedSend()
+{
+  emit progressTimeFinishedSend();
+  counterSend = 0;
+  fadeTimeSend = 0;
+  if (waitTimeSend)
+  {
+    counterSendWait = 0;
+    sendWaitToOutputLabel();
+    timerWait->start(waitTimeSend * 10);
+  }
+}
+
+void TabSeq::timeProgressStepedSend()
+{
+  if (counterSend == 101)
+  {
+    timeProgressFinishedSend();
+    return;
+  }
+  counterSend++;
+  emit updateProgressTimeSend(counterSend);
+  QTimer::singleShot(fadeTimeSend * 10, this, SLOT(timeProgressStepedSend()));
+}
+
+void TabSeq::timeWaitProgressFinishedSend()
+{
+  emit progressTimeWaitFinishedSend();
+  counterSendWait = 0;
+  waitTimeSend = 0;
+  if (timerWait->isActive()) timerWait->stop();
+}
+
+void TabSeq::timeWaitProgressStepedSend()
+{
+  if (counterSendWait == 101)
+  {
+    timeWaitProgressFinishedSend();
+    return;
+  }
+  counterSendWait++;
+  sendWaitToOutputLabel();
+  emit updateProgressTimeWaitSend(counterSendWait);
 }
 
 void TabSeq::selectRow()
@@ -351,6 +426,13 @@ void TabSeq::selectRow()
   QModelIndex newIndex = index.siblingAtRow(index.row() + 1); // On choppe le send suivant
   if (newIndex.isValid()) // S'il existe
   {
+    emit progressTimeWaitFinishedSend(); // On coupe le timer
+    counterSendWait = 0;
+    waitTimeSend = 0;
+    if (timerWait->isActive()) timerWait->stop();
+    emit progressTimeFinishedSend(); // on coupe le timer
+    counterSend = 0;
+    fadeTimeSend = 0;
     treeView->setCurrentIndex(index.siblingAtRow(index.row() + 1));
     executeGo();
     return;
@@ -361,12 +443,27 @@ void TabSeq::selectRow()
     //Si elle existe pas on prend la 1ère
     if (!newIndex.isValid()) treeView->setCurrentIndex(index.parent().siblingAtRow(0));
     else treeView->setCurrentIndex(newIndex); // Sinon on la sélectionne
+    emit progressTimeFinishedCue(); // on coupe le timer de la cue
+    counterCue = 0;
+    totalTime = 0;
+    resetOutputLabel();
   }
 }
 
 void TabSeq::receiveStringFromSend(QString tempString)
 {
   emit sendStringToOutputLabel(tempString);
+}
+
+void TabSeq::sendWaitToOutputLabel()
+{
+  emit sendStringToOutputLabel(QString("Wait -->"));
+  //  qDebug() << "Wait";
+}
+
+void TabSeq::resetOutputLabel()
+{
+  emit sendStringToOutputLabel(QString(""));
 }
 
 void TabSeq::hideShowColumns()

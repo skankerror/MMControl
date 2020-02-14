@@ -37,7 +37,8 @@ MainWindow::MainWindow() :
   createCentralWidget();
   createStatusBar();
 
-  progressBar->setValue(0);
+  progressBarCue->reset();
+  progressBarSend->reset();
 
   connect(champComboBox, SIGNAL(currentIndexChanged(int)), SLOT(showWidgets(int))); // Pour afficher les widgets
   connect(sendPushButton, SIGNAL(clicked()), SLOT(sendFromToolBar()));
@@ -45,18 +46,21 @@ MainWindow::MainWindow() :
   connect(p_colorPushButton, SIGNAL(clicked()), SLOT(setP_ColorLine()));
   connect(addToCuePushButton, SIGNAL(clicked()), SLOT(addToCue()));
 
-  connect(tabseq, SIGNAL(updateProgressTime(int)), this, SLOT(timeProgressed(int)));
-  connect(tabseq, SIGNAL(progressTimeFinished()), this, SLOT(timeFinished()));
+  connect(tabseq, SIGNAL(updateProgressTimeCue(int)), this, SLOT(timeProgressedCue(int)));
+  connect(tabseq, SIGNAL(progressTimeFinishedCue()), this, SLOT(timeFinishedCue()));
+  connect(tabseq, SIGNAL(updateProgressTimeSend(int)), this, SLOT(timeProgressedSend(int)));
+  connect(tabseq, SIGNAL(progressTimeFinishedSend()), this, SLOT(timeFinishedSend()));
+  connect(tabseq, SIGNAL(updateProgressTimeWaitSend(int)), this, SLOT(timeProgressedSend(int)));
+  connect(tabseq, SIGNAL(progressTimeWaitFinishedSend()), this, SLOT(timeFinishedSend()));
   connect(tabseq, SIGNAL(sendStringToOutputLabel(QString)), outputLabel, SLOT(setText(QString)));
   connect(tabmidi, SIGNAL(sendStringToOutputLabel(QString)), outputLabel, SLOT(setText(QString)));
-
 
 }
 
 void MainWindow::createCentralWidget()
 {
   tabmidi = new TabMidi(midiIn1, midiIn2, midiOut1, midiOut2, this);
-  tabseq = new TabSeq(oscCueList, treeView, midiIn1, midiIn2, midiOut1, midiOut2, /*progressBar, */this);
+  tabseq = new TabSeq(oscCueList, treeView, midiIn1, midiIn2, midiOut1, midiOut2, /*progressBarCue, */this);
   tabmmstate = new TabMMState(state, this);
   tabwidget = new QTabWidget(this);
 
@@ -190,28 +194,26 @@ void MainWindow::createToolBar()
 void MainWindow::createStatusBar()
 {
   statusBar = new QStatusBar(this);
-  progressBar = new QProgressBar(this);
+  progressBarCue = new QProgressBar(this);
   outputLabel = new QLabel(this);
-  statusBar->insertPermanentWidget(0, progressBar, 1);
+  outputLabel->setAlignment(Qt::AlignRight);
+  progressBarSend = new QProgressBar(this);
+  QFile file(":/qss/BarSend");
+      file.open(QFile::ReadOnly);
+      QString styleSheet = QString::fromLatin1(file.readAll());
+      progressBarSend->setStyleSheet(styleSheet);
+
+  statusBar->insertPermanentWidget(0, progressBarCue, 1);
   statusBar->insertPermanentWidget(1, outputLabel, 1);
+  statusBar->insertPermanentWidget(2, progressBarSend, 1);
   setStatusBar(statusBar);
-  progressBar->setRange(0, 100);
-  progressBar->setValue(80);
+  progressBarCue->setRange(0, 100);
 }
 
 void MainWindow::showWidgets(int index)
 {
   switch (index)
   {
-//  case CUE:
-//    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->hide();
-//    p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
-//    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-//    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
-//    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-//    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-//    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-//    timeLabel->hide();timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
   case PLAY: case PAUSE: case REWIND: case QUIT:
     p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->hide();
     p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
@@ -611,18 +613,28 @@ void MainWindow::addToCue()
   // c'est un send
   oscCueList->insertSend(oscsend, index.parent().row(), row); // Il ajoute avant le send...
   tabseq->hideShowColumns();
-
 }
 
-void MainWindow::timeProgressed(int value)
+void MainWindow::timeProgressedCue(int value)
 {
-  if (value >= 0 && value <= 100) progressBar->setValue(value);
+  if (value >= 0 && value <= 100) progressBarCue->setValue(value);
   return;
 }
 
-void MainWindow::timeFinished()
+void MainWindow::timeFinishedCue()
 {
-  progressBar->setValue(0);
+  progressBarCue->reset();
+}
+
+void MainWindow::timeProgressedSend(int value)
+{
+  if (value >= 0 && value <= 100) progressBarSend->setValue(value);
+  return;
+}
+
+void MainWindow::timeFinishedSend()
+{
+  progressBarSend->reset();
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
