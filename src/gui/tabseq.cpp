@@ -45,24 +45,32 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   boutonPrev->setIcon(upIcon);
   boutonPrev->setFixedSize(80, 40);
   boutonPrev->setIconSize(QSize(70, 30));
+  boutonPrev->setToolTip("Move Up Single Event or Cue");
+  boutonPrev->setToolTipDuration(2000);
 
   boutonNext = new QPushButton(this);
   QIcon downIcon = QIcon(":/graphics/DownArrow");
   boutonNext->setIcon(downIcon);
   boutonNext->setFixedSize(80, 40);
   boutonNext->setIconSize(QSize(70, 30));
+  boutonNext->setToolTip("Move Down Single Event or Cue");
+  boutonNext->setToolTipDuration(2000);
 
   boutonRemove = new QPushButton(this);
   QIcon binIcon = QIcon(":/graphics/Bin");
   boutonRemove->setIcon(binIcon);
   boutonRemove->setFixedSize(80, 40);
   boutonRemove->setIconSize(QSize(70, 30));
+  boutonRemove->setToolTip("Remove Single Event or Cue");
+  boutonRemove->setToolTipDuration(2000);
 
   boutonAddCue = new QPushButton(this);
   QIcon plusIcon = QIcon(":/graphics/Plus");
   boutonAddCue->setIcon(plusIcon);
   boutonAddCue->setFixedSize(80, 40);
   boutonAddCue->setIconSize(QSize(70, 30));
+  boutonAddCue->setToolTip("Add or insert new Cue");
+  boutonAddCue->setToolTipDuration(2000);
 
   boutonGo = new QPushButton(this);
   QIcon playIcon = QIcon(":/graphics/Play");
@@ -70,6 +78,8 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   boutonGo->setFixedSize(80, 40);
   boutonGo->setIconSize(QSize(70, 30));
   boutonGo->setShortcut(QKeySequence(Qt::Key_Space));
+  boutonGo->setToolTip("Execute Cue\nSPACE_KEY");
+  boutonGo->setToolTipDuration(2000);
 
   boutonSaveAs = new QPushButton(this);
   QIcon saveIcon = QIcon(":/graphics/Save");
@@ -77,6 +87,8 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   boutonSaveAs->setFixedSize(80, 40);
   boutonSaveAs->setIconSize(QSize(70, 30));
   boutonSaveAs->setShortcut(QKeySequence("Ctrl+S"));
+  boutonSaveAs->setToolTip("Save as\nCtrl+s");
+  boutonSaveAs->setToolTipDuration(2000);
 
   boutonLoad = new QPushButton(this);
   QIcon loadIcon = QIcon(":/graphics/Load");
@@ -84,7 +96,8 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   boutonLoad->setFixedSize(80, 40);
   boutonLoad->setIconSize(QSize(70, 30));
   boutonLoad->setShortcut(QKeySequence("Ctrl+O"));
-
+  boutonLoad->setToolTip("Load File\nCtrl+o");
+  boutonLoad->setToolTipDuration(2000);
 
   boutonLayout->addWidget(boutonPrev);
   boutonLayout->addWidget(boutonNext);

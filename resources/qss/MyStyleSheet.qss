@@ -216,7 +216,6 @@ QProgressBar::chunk {
     width: 20px;
 }
 
-QProgressBar#progressBarSend::chunk {
-    background-color: #000000;
-    width: 20px;
+QToolTip {
+  background: #778390
 }

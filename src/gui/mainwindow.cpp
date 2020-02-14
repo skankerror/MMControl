@@ -158,7 +158,11 @@ void MainWindow::createToolBar()
   waitTimeSpinBox->setValue(0);
 
   sendPushButton = new QPushButton("Send !", this);
+  sendPushButton->setToolTip("Directly send to mapmap");
+  sendPushButton->setToolTipDuration(2000);
   addToCuePushButton = new QPushButton("Add to Cue !", this);
+  addToCuePushButton->setToolTip("Add to cue in sequencer tab");
+  addToCuePushButton->setToolTipDuration(2000);
 
   layout->addWidget(champLabel); layout->addWidget(champComboBox); layout->addWidget(p_nameLineEdit);
   layout->addWidget(p_nameLineEdit2); layout->addWidget(p_uriLine); layout->addWidget(p_uriPushButton);
