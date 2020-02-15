@@ -43,40 +43,49 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   boutonPrev = new QPushButton(this);
   QIcon upIcon = QIcon(":/graphics/UpArrow");
   boutonPrev->setIcon(upIcon);
-  boutonPrev->setFixedSize(80, 40);
-  boutonPrev->setIconSize(QSize(70, 30));
+  boutonPrev->setFixedSize(50, 20);
+  boutonPrev->setIconSize(QSize(40, 18));
   boutonPrev->setToolTip("Move Up Single Event or Cue");
   boutonPrev->setToolTipDuration(2000);
 
   boutonNext = new QPushButton(this);
   QIcon downIcon = QIcon(":/graphics/DownArrow");
   boutonNext->setIcon(downIcon);
-  boutonNext->setFixedSize(80, 40);
-  boutonNext->setIconSize(QSize(70, 30));
+  boutonNext->setFixedSize(50, 20);
+  boutonNext->setIconSize(QSize(40, 18));
   boutonNext->setToolTip("Move Down Single Event or Cue");
   boutonNext->setToolTipDuration(2000);
 
   boutonRemove = new QPushButton(this);
   QIcon binIcon = QIcon(":/graphics/Bin");
   boutonRemove->setIcon(binIcon);
-  boutonRemove->setFixedSize(80, 40);
-  boutonRemove->setIconSize(QSize(70, 30));
+  boutonRemove->setFixedSize(50, 20);
+  boutonRemove->setIconSize(QSize(40, 18));
   boutonRemove->setToolTip("Remove Single Event or Cue");
   boutonRemove->setToolTipDuration(2000);
 
   boutonAddCue = new QPushButton(this);
   QIcon plusIcon = QIcon(":/graphics/Plus");
   boutonAddCue->setIcon(plusIcon);
-  boutonAddCue->setFixedSize(80, 40);
-  boutonAddCue->setIconSize(QSize(70, 30));
+  boutonAddCue->setFixedSize(50, 20);
+  boutonAddCue->setIconSize(QSize(40, 18));
   boutonAddCue->setToolTip("Add or insert new Cue");
   boutonAddCue->setToolTipDuration(2000);
+
+  boutonStop = new QPushButton(this);
+  QIcon stopIcon = QIcon(":/graphics/Stop");
+  boutonStop->setIcon(stopIcon);
+  boutonStop->setFixedSize(50, 40);
+  boutonStop->setIconSize(QSize(40, 30));
+  boutonStop->setShortcut(QKeySequence(Qt::Key_Escape));
+  boutonStop->setToolTip("Stop Cue\nESC_KEY");
+  boutonStop->setToolTipDuration(2000);
 
   boutonGo = new QPushButton(this);
   QIcon playIcon = QIcon(":/graphics/Play");
   boutonGo->setIcon(playIcon);
-  boutonGo->setFixedSize(80, 40);
-  boutonGo->setIconSize(QSize(70, 30));
+  boutonGo->setFixedSize(50, 40);
+  boutonGo->setIconSize(QSize(40, 30));
   boutonGo->setShortcut(QKeySequence(Qt::Key_Space));
   boutonGo->setToolTip("Execute Cue\nSPACE_KEY");
   boutonGo->setToolTipDuration(2000);
@@ -84,8 +93,8 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   boutonSaveAs = new QPushButton(this);
   QIcon saveIcon = QIcon(":/graphics/Save");
   boutonSaveAs->setIcon(saveIcon);
-  boutonSaveAs->setFixedSize(80, 40);
-  boutonSaveAs->setIconSize(QSize(70, 30));
+  boutonSaveAs->setFixedSize(50, 20);
+  boutonSaveAs->setIconSize(QSize(40, 18));
   boutonSaveAs->setShortcut(QKeySequence("Ctrl+S"));
   boutonSaveAs->setToolTip("Save as\nCtrl+s");
   boutonSaveAs->setToolTipDuration(2000);
@@ -93,8 +102,8 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   boutonLoad = new QPushButton(this);
   QIcon loadIcon = QIcon(":/graphics/Load");
   boutonLoad->setIcon(loadIcon);
-  boutonLoad->setFixedSize(80, 40);
-  boutonLoad->setIconSize(QSize(70, 30));
+  boutonLoad->setFixedSize(50, 20);
+  boutonLoad->setIconSize(QSize(40, 18));
   boutonLoad->setShortcut(QKeySequence("Ctrl+O"));
   boutonLoad->setToolTip("Load File\nCtrl+o");
   boutonLoad->setToolTipDuration(2000);
@@ -103,6 +112,7 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   boutonLayout->addWidget(boutonNext);
   boutonLayout->addWidget(boutonRemove);
   boutonLayout->addWidget(boutonAddCue);
+  boutonLayout->addWidget(boutonStop);
   boutonLayout->addWidget(boutonGo);
   boutonLayout->addWidget(boutonSaveAs);
   boutonLayout->addWidget(boutonLoad);
@@ -124,8 +134,11 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   hideShowColumns();
 
   timerWait = new QTimer(this);
+  timerTotal = new QTimer(this);
+  timerTotal->setSingleShot(true);
 
   connect(boutonGo, SIGNAL(clicked(bool)), SLOT(executeGo()));
+  connect(boutonStop, SIGNAL(clicked(bool)), SLOT(stopCue()));
   connect(boutonPrev, SIGNAL(clicked(bool)), SLOT(movePrevious()));
   connect(boutonNext, SIGNAL(clicked(bool)), SLOT(moveNext()));
   connect(boutonRemove, SIGNAL(clicked(bool)), SLOT(remove()));
@@ -136,6 +149,7 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   connect(treeView, SIGNAL(expanded(QModelIndex)), this, SLOT(hideShowColumns()));
   connect(midiIn2, SIGNAL(sigMidiNoteChanged(int)), this, SLOT(receiveMidiNote2(int)));
   connect(timerWait, SIGNAL(timeout()), this, SLOT(timeWaitProgressStepedSend()));
+  connect(timerTotal, SIGNAL(timeout()), this, SLOT(selectRow()));
 }
 
 void TabSeq::executeGo()
@@ -154,6 +168,7 @@ void TabSeq::executeGo()
       else treeView->setCurrentIndex(newIndex); // On sélect la suivante
       return; // on quitte
     }
+    // C'est une cue et elle est pas vide
     totalTime = tempCue->getTimewait();
     if (totalTime)
     {
@@ -161,42 +176,45 @@ void TabSeq::executeGo()
       QTimer::singleShot(totalTime, this, SLOT(timeProgressStepedCue()));
     }
     treeView->setCurrentIndex(m_oscCueList->index(0, 0, index));
+    disconnectButtons(); // on disconnecte les boutons.
     executeGo();
     return;
   }
-  // C'est un send;
-  tempSend = m_oscCueList->getSend(index);
-  connect(tempSend, SIGNAL(sendStringToOutputLabel(QString)), this, SLOT(receiveStringFromSend(QString)), Qt::UniqueConnection);
-  executeSend(tempSend);
-  // On gère le time
-  int champ = tempSend->getChamp();
-  waitTimeSend = tempSend->getTimewait();
-  if (champ == P_FADE || champ == P_XFADE || champ == R_P_FADE || champ == R_P_XFADE)
+  else// C'est un send;
   {
-    fadeTimeSend = tempSend->getTime();
+    tempSend = m_oscCueList->getSend(index);
+    connect(tempSend, SIGNAL(sendStringToOutputLabel(QString)), this, SLOT(receiveStringFromSend(QString)), Qt::UniqueConnection);
+    executeSend(tempSend);
+    // On gère le time
+    int champ = tempSend->getChamp();
+    waitTimeSend = tempSend->getTimewait();
+    if (champ == P_FADE || champ == P_XFADE || champ == R_P_FADE || champ == R_P_XFADE)
+    {
+      fadeTimeSend = tempSend->getTime();
+    }
+    else fadeTimeSend = 0;
+    totalTimeSend = waitTimeSend + fadeTimeSend;
+    if (fadeTimeSend)
+    {
+      // on lance le timer du fade et lui-même lancera le timer du wait si besoin
+      counterSend = 0;
+      QTimer::singleShot(totalTimeSend, this, SLOT(timeProgressStepedSend()));
+    }
+    else if (waitTimeSend) // Sinon on lance le timerwait si besoin
+    {
+      counterSendWait = 0;
+      sendWaitToOutputLabel();
+      timerWait->start(waitTimeSend * 10);
+    }
+    // Puis timer total pour passer au row suivant
+    timerTotal->start((100 * (int)(totalTimeSend*10)) + 1);
+    return;
   }
-  else fadeTimeSend = 0;
-  totalTimeSend = waitTimeSend + fadeTimeSend;
-  if (fadeTimeSend)
-  {
-    // on lance le timer du fade et lui-même lancera le timer du wait si besoin
-    counterSend = 0;
-    QTimer::singleShot(totalTimeSend, this, SLOT(timeProgressStepedSend()));
-  }
-  else if (waitTimeSend) // Sinon on lance le timerwait si besoin
-  {
-    counterSendWait = 0;
-    sendWaitToOutputLabel();
-    timerWait->start(waitTimeSend * 10);
-  }
-  // Puis timer total pour passer au row suivant
-  QTimer::singleShot((100 * (int)(totalTimeSend*10)) + 1, this, SLOT(selectRow()));
-  return;
 }
 
 void TabSeq::executeSend(OscSend *oscsend)
 {
-  oscsend->ExecuteSend();
+  oscsend->execute();
 }
 
 void TabSeq::movePrevious() // Bouger cue si c'est une cue, bouger send si c'est un send
@@ -459,6 +477,7 @@ void TabSeq::selectRow()
     counterCue = 0;
     totalTime = 0;
     resetOutputLabel(); // peut-être mettre un QTimer de 10ms pour être sûr de reseter
+    reconnectButtons();    // On reconnecte les boutons
   }
 }
 
@@ -475,6 +494,43 @@ void TabSeq::sendWaitToOutputLabel()
 void TabSeq::resetOutputLabel()
 {
   emit sendStringToOutputLabel(QString(""));
+}
+
+void TabSeq::disconnectButtons()
+{
+  boutonGo->disconnect();
+  boutonPrev->disconnect();
+  boutonNext->disconnect();
+  boutonRemove->disconnect();
+  boutonAddCue->disconnect();
+  boutonSaveAs->disconnect();
+  boutonLoad->disconnect();
+  emit disconnectButtonsToolBar();
+}
+
+void TabSeq::reconnectButtons()
+{
+  connect(boutonGo, SIGNAL(clicked(bool)), SLOT(executeGo()), Qt::UniqueConnection);
+  connect(boutonPrev, SIGNAL(clicked(bool)), SLOT(movePrevious()), Qt::UniqueConnection);
+  connect(boutonNext, SIGNAL(clicked(bool)), SLOT(moveNext()), Qt::UniqueConnection);
+  connect(boutonRemove, SIGNAL(clicked(bool)), SLOT(remove()), Qt::UniqueConnection);
+  connect(boutonAddCue, SIGNAL(clicked(bool)), SLOT(addCue()), Qt::UniqueConnection);
+  connect(boutonSaveAs, SIGNAL(clicked(bool)), SLOT(saveAs()), Qt::UniqueConnection);
+  connect(boutonLoad, SIGNAL(clicked(bool)), SLOT(loadFile()), Qt::UniqueConnection);
+  emit reconnectButtonsToolBar();
+}
+
+void TabSeq::stopCue()
+{
+  timeProgressFinishedCue();
+  timeProgressFinishedSend();
+  timeWaitProgressFinishedSend();
+  tempSend->fadeFinish();
+  if (timerTotal->isActive()) timerTotal->stop();
+  counterCue = 0;
+  counterSend = 0;
+  counterSendWait = 0;
+  reconnectButtons();
 }
 
 void TabSeq::hideShowColumns()

@@ -112,7 +112,7 @@ OscSend::~OscSend()
   qDeleteAll(v_listSend);
 }
 
-void OscSend::ExecuteSend()
+void OscSend::execute()
 {
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);
@@ -355,7 +355,7 @@ void OscSend::fadeStep()
     return;
   }
   counter++;
-  ExecuteSend();
+  execute();
 }
 
 void OscSend::fadeFinish()

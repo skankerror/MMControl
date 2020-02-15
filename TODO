@@ -5,6 +5,3 @@
 - Allumer les boutons sur la vue dans tabmidi
 
 - les potards midi n'envoient qu'à 99%
-
-- disconnect tous les boutons de la tool bar et du tabseq quand une cue est lancée,
-les reconnecter ensuite. faire un bouton stop cue et un pause ?

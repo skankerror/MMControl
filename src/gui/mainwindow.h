@@ -35,23 +35,23 @@ class MainWindow : public QMainWindow
 public:
   explicit MainWindow();
 
+private:
+  void hideAllWidgets();
   void createCentralWidget();
   void createToolBar();
   void createStatusBar();
 
-private:
-  void hideAllWidgets();
-
 protected:
   void closeEvent(QCloseEvent *event) override;
-
-signals:
 
 public slots:
   void timeProgressedCue(const int value);
   void timeFinishedCue();
   void timeProgressedSend(const int value);
   void timeFinishedSend();
+
+  void disconnectButtonsToolBar();
+  void reconnectButtonsToolBar();
 
 private slots:
   void showWidgets(const int index);

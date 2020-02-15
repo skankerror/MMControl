@@ -71,7 +71,7 @@ signals:
 
 public slots:
 
-  void ExecuteSend();
+  void execute();
   void ExecuteXFade(int ID1, int ID2, double time);
   void ExecuteFade(int ID1, double time, bool isfadein);
   void ExecutePXFade(const QString &p_name1, const QString &p_name2, double time);

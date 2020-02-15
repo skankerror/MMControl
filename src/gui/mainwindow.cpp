@@ -58,6 +58,9 @@ MainWindow::MainWindow() :
   connect(tabseq, SIGNAL(sendStringToOutputLabel(QString)), outputLabel, SLOT(setText(QString)));
   connect(tabmidi, SIGNAL(sendStringToOutputLabel(QString)), outputLabel, SLOT(setText(QString)));
 
+  // disconnect reconnect when go is running
+  connect(tabseq, SIGNAL(disconnectButtonsToolBar()), this, SLOT(disconnectButtonsToolBar()));
+  connect(tabseq, SIGNAL(reconnectButtonsToolBar()), this, SLOT(reconnectButtonsToolBar()));
 }
 
 void MainWindow::createCentralWidget()
@@ -384,8 +387,9 @@ void MainWindow::sendFromToolBar()
   default: break;
   }
   connect(oscsend, SIGNAL(sendStringToOutputLabel(QString)), outputLabel, SLOT(setText(QString)));
-  oscsend->ExecuteSend();
+  oscsend->execute();
 }
+
 void MainWindow::setP_UriLine()
 {
   QString fileName = QFileDialog::getOpenFileName(this, "Choose File",
@@ -393,11 +397,13 @@ void MainWindow::setP_UriLine()
                                                   "Media Files (*.png *.jpg *.gif *.tif *.mov *.avi *.mp4)");
   p_uriLine->setText(fileName);
 }
+
 void MainWindow::setP_ColorLine()
 {
   QColor colorTemp = QColorDialog::getColor(Qt::green, this, "Select Color", QColorDialog::DontUseNativeDialog);
   p_colorLine->setText(colorTemp.name());
 }
+
 void MainWindow::addToCue()
 {
   champMM champ = static_cast<champMM>(champComboBox->currentIndex());
@@ -478,6 +484,18 @@ void MainWindow::timeProgressedSend(const int value)
 void MainWindow::timeFinishedSend()
 {
   progressBarSend->reset();
+}
+
+void MainWindow::disconnectButtonsToolBar()
+{
+  sendPushButton->disconnect();
+  addToCuePushButton->disconnect();
+}
+
+void MainWindow::reconnectButtonsToolBar()
+{
+  connect(sendPushButton, SIGNAL(clicked()), SLOT(sendFromToolBar()), Qt::UniqueConnection);
+  connect(addToCuePushButton, SIGNAL(clicked()), SLOT(addToCue()), Qt::UniqueConnection);
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)

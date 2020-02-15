@@ -542,41 +542,41 @@ void TabMidi::receiveMidiCtrl2(int unID, float uneOpacite) // APC2
 
 // APC1
 void TabMidi::sendOscS1(int uneOpacite){ oscSendS->setChamp(P_OPACITY); oscSendS->setP_ID1(pID1->value());
-                                         oscSendS->setP_opacity(uneOpacite); oscSendS->ExecuteSend();}
+                                         oscSendS->setP_opacity(uneOpacite); oscSendS->execute();}
 void TabMidi::sendOscS2(int uneOpacite){ oscSendS->setChamp(P_OPACITY); oscSendS->setP_ID1(pID2->value());
-                                         oscSendS->setP_opacity(uneOpacite); oscSendS->ExecuteSend();}
+                                         oscSendS->setP_opacity(uneOpacite); oscSendS->execute();}
 void TabMidi::sendOscS3(int uneOpacite){ oscSendS->setChamp(P_OPACITY); oscSendS->setP_ID1(pID3->value());
-                                         oscSendS->setP_opacity(uneOpacite); oscSendS->ExecuteSend();}
+                                         oscSendS->setP_opacity(uneOpacite); oscSendS->execute();}
 void TabMidi::sendOscS4(int uneOpacite){ oscSendS->setChamp(P_OPACITY); oscSendS->setP_ID1(pID4->value());
-                                         oscSendS->setP_opacity(uneOpacite); oscSendS->ExecuteSend();}
+                                         oscSendS->setP_opacity(uneOpacite); oscSendS->execute();}
 void TabMidi::sendOscS5(int uneOpacite){ oscSendS->setChamp(P_OPACITY); oscSendS->setP_ID1(pID5->value());
-                                         oscSendS->setP_opacity(uneOpacite); oscSendS->ExecuteSend();}
+                                         oscSendS->setP_opacity(uneOpacite); oscSendS->execute();}
 void TabMidi::sendOscS6(int uneOpacite){ oscSendS->setChamp(P_OPACITY); oscSendS->setP_ID1(pID6->value());
-                                         oscSendS->setP_opacity(uneOpacite); oscSendS->ExecuteSend();}
+                                         oscSendS->setP_opacity(uneOpacite); oscSendS->execute();}
 void TabMidi::sendOscS7(int uneOpacite){ oscSendS->setChamp(P_OPACITY); oscSendS->setP_ID1(pID7->value());
-                                         oscSendS->setP_opacity(uneOpacite); oscSendS->ExecuteSend();}
+                                         oscSendS->setP_opacity(uneOpacite); oscSendS->execute();}
 void TabMidi::sendOscS8(int uneOpacite){ oscSendS->setChamp(P_OPACITY); oscSendS->setP_ID1(pID8->value());
-                                         oscSendS->setP_opacity(uneOpacite); oscSendS->ExecuteSend();}
+                                         oscSendS->setP_opacity(uneOpacite); oscSendS->execute();}
 void TabMidi::sendOscS9(int uneOpacite){ oscSendS->setChamp(P_OPACITY); oscSendS->setP_ID1(pID9->value());
-                                         oscSendS->setP_opacity(uneOpacite); oscSendS->ExecuteSend();}
+                                         oscSendS->setP_opacity(uneOpacite); oscSendS->execute();}
 
 // APC2
 void TabMidi::sendOscS10(int uneOpacite){ oscSendS->setChamp(P_OPACITY); oscSendS->setP_ID1(pID10->value());
-                                          oscSendS->setP_opacity(uneOpacite); oscSendS->ExecuteSend();}
+                                          oscSendS->setP_opacity(uneOpacite); oscSendS->execute();}
 void TabMidi::sendOscS11(int uneOpacite){ oscSendS->setChamp(P_OPACITY); oscSendS->setP_ID1(pID11->value());
-                                          oscSendS->setP_opacity(uneOpacite); oscSendS->ExecuteSend();}
+                                          oscSendS->setP_opacity(uneOpacite); oscSendS->execute();}
 void TabMidi::sendOscS12(int uneOpacite){ oscSendS->setChamp(P_OPACITY); oscSendS->setP_ID1(pID12->value());
-                                          oscSendS->setP_opacity(uneOpacite); oscSendS->ExecuteSend();}
+                                          oscSendS->setP_opacity(uneOpacite); oscSendS->execute();}
 void TabMidi::sendOscS13(int uneOpacite){ oscSendS->setChamp(P_OPACITY); oscSendS->setP_ID1(pID13->value());
-                                          oscSendS->setP_opacity(uneOpacite); oscSendS->ExecuteSend();}
+                                          oscSendS->setP_opacity(uneOpacite); oscSendS->execute();}
 void TabMidi::sendOscS14(int uneOpacite){ oscSendS->setChamp(P_OPACITY); oscSendS->setP_ID1(pID14->value());
-                                          oscSendS->setP_opacity(uneOpacite); oscSendS->ExecuteSend();}
+                                          oscSendS->setP_opacity(uneOpacite); oscSendS->execute();}
 void TabMidi::sendOscS15(int uneOpacite){ oscSendS->setChamp(P_OPACITY); oscSendS->setP_ID1(pID15->value());
-                                          oscSendS->setP_opacity(uneOpacite); oscSendS->ExecuteSend();}
+                                          oscSendS->setP_opacity(uneOpacite); oscSendS->execute();}
 void TabMidi::sendOscS16(int uneOpacite){ oscSendS->setChamp(P_OPACITY); oscSendS->setP_ID1(pID16->value());
-                                          oscSendS->setP_opacity(uneOpacite); oscSendS->ExecuteSend();}
+                                          oscSendS->setP_opacity(uneOpacite); oscSendS->execute();}
 void TabMidi::sendOscS17(int uneOpacite){ oscSendS->setChamp(P_OPACITY); oscSendS->setP_ID1(pID17->value());
-                                          oscSendS->setP_opacity(uneOpacite); oscSendS->ExecuteSend();}
+                                          oscSendS->setP_opacity(uneOpacite); oscSendS->execute();}
 
 void TabMidi::receiveMidiNote(int unBouton) // APC1
 {
@@ -669,271 +669,271 @@ void TabMidi::receiveMidiNote2(int unBouton) // APC 2
 
 // APC 1
 // mapping visible false
-void TabMidi::sendOscAPCB64(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID1->value()); oscSendB->setM_isvisible(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB64(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID1->value()); oscSendB->setM_isvisible(false); oscSendB->execute();
                              m_midiOut1->sendBoutonOff(0);}
-void TabMidi::sendOscAPCB65(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID2->value()); oscSendB->setM_isvisible(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB65(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID2->value()); oscSendB->setM_isvisible(false); oscSendB->execute();
                              m_midiOut1->sendBoutonOff(1);}
-void TabMidi::sendOscAPCB66(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID3->value()); oscSendB->setM_isvisible(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB66(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID3->value()); oscSendB->setM_isvisible(false); oscSendB->execute();
                              m_midiOut1->sendBoutonOff(2);}
-void TabMidi::sendOscAPCB67(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID4->value()); oscSendB->setM_isvisible(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB67(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID4->value()); oscSendB->setM_isvisible(false); oscSendB->execute();
                              m_midiOut1->sendBoutonOff(3);}
-void TabMidi::sendOscAPCB68(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID5->value()); oscSendB->setM_isvisible(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB68(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID5->value()); oscSendB->setM_isvisible(false); oscSendB->execute();
                              m_midiOut1->sendBoutonOff(4);}
-void TabMidi::sendOscAPCB69(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID6->value()); oscSendB->setM_isvisible(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB69(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID6->value()); oscSendB->setM_isvisible(false); oscSendB->execute();
                              m_midiOut1->sendBoutonOff(5);}
-void TabMidi::sendOscAPCB70(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID7->value()); oscSendB->setM_isvisible(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB70(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID7->value()); oscSendB->setM_isvisible(false); oscSendB->execute();
                              m_midiOut1->sendBoutonOff(6);}
-void TabMidi::sendOscAPCB71(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID8->value()); oscSendB->setM_isvisible(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB71(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID8->value()); oscSendB->setM_isvisible(false); oscSendB->execute();
                              m_midiOut1->sendBoutonOff(7);}
-void TabMidi::sendOscAPCB98(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID9->value()); oscSendB->setM_isvisible(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB98(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID9->value()); oscSendB->setM_isvisible(false); oscSendB->execute();
                              m_midiOut1->sendBoutonOff(89);}
 // mapping visible true
-void TabMidi::sendOscAPCB0(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID1->value()); oscSendB->setM_isvisible(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB0(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID1->value()); oscSendB->setM_isvisible(true); oscSendB->execute();
                             m_midiOut1->sendBoutonOn(0);}
-void TabMidi::sendOscAPCB1(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID2->value()); oscSendB->setM_isvisible(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB1(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID2->value()); oscSendB->setM_isvisible(true); oscSendB->execute();
                             m_midiOut1->sendBoutonOn(1);}
-void TabMidi::sendOscAPCB2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID3->value()); oscSendB->setM_isvisible(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID3->value()); oscSendB->setM_isvisible(true); oscSendB->execute();
                             m_midiOut1->sendBoutonOn(2);}
-void TabMidi::sendOscAPCB3(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID4->value()); oscSendB->setM_isvisible(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB3(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID4->value()); oscSendB->setM_isvisible(true); oscSendB->execute();
                             m_midiOut1->sendBoutonOn(3);}
-void TabMidi::sendOscAPCB4(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID5->value()); oscSendB->setM_isvisible(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB4(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID5->value()); oscSendB->setM_isvisible(true); oscSendB->execute();
                             m_midiOut1->sendBoutonOn(4);}
-void TabMidi::sendOscAPCB5(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID6->value()); oscSendB->setM_isvisible(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB5(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID6->value()); oscSendB->setM_isvisible(true); oscSendB->execute();
                             m_midiOut1->sendBoutonOn(5);}
-void TabMidi::sendOscAPCB6(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID7->value()); oscSendB->setM_isvisible(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB6(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID7->value()); oscSendB->setM_isvisible(true); oscSendB->execute();
                             m_midiOut1->sendBoutonOn(6);}
-void TabMidi::sendOscAPCB7(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID8->value()); oscSendB->setM_isvisible(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB7(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID8->value()); oscSendB->setM_isvisible(true); oscSendB->execute();
                             m_midiOut1->sendBoutonOn(7);}
-void TabMidi::sendOscAPCB89(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID9->value()); oscSendB->setM_isvisible(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB89(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID9->value()); oscSendB->setM_isvisible(true); oscSendB->execute();
                              m_midiOut1->sendBoutonOn(89);}
 // mapping solo false
-void TabMidi::sendOscAPCB8(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID1->value()); oscSendB->setM_issolo(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB8(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID1->value()); oscSendB->setM_issolo(false); oscSendB->execute();
                             m_midiOut1->sendBoutonOff(16); }
-void TabMidi::sendOscAPCB9(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID2->value()); oscSendB->setM_issolo(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB9(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID2->value()); oscSendB->setM_issolo(false); oscSendB->execute();
                             m_midiOut1->sendBoutonOff(17); }
-void TabMidi::sendOscAPCB10(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID3->value()); oscSendB->setM_issolo(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB10(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID3->value()); oscSendB->setM_issolo(false); oscSendB->execute();
                              m_midiOut1->sendBoutonOff(18); }
-void TabMidi::sendOscAPCB11(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID4->value()); oscSendB->setM_issolo(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB11(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID4->value()); oscSendB->setM_issolo(false); oscSendB->execute();
                              m_midiOut1->sendBoutonOff(19); }
-void TabMidi::sendOscAPCB12(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID5->value()); oscSendB->setM_issolo(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB12(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID5->value()); oscSendB->setM_issolo(false); oscSendB->execute();
                              m_midiOut1->sendBoutonOff(20); }
-void TabMidi::sendOscAPCB13(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID6->value()); oscSendB->setM_issolo(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB13(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID6->value()); oscSendB->setM_issolo(false); oscSendB->execute();
                              m_midiOut1->sendBoutonOff(21); }
-void TabMidi::sendOscAPCB14(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID7->value()); oscSendB->setM_issolo(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB14(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID7->value()); oscSendB->setM_issolo(false); oscSendB->execute();
                              m_midiOut1->sendBoutonOff(22); }
-void TabMidi::sendOscAPCB15(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID8->value()); oscSendB->setM_issolo(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB15(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID8->value()); oscSendB->setM_issolo(false); oscSendB->execute();
                              m_midiOut1->sendBoutonOff(23); }
-void TabMidi::sendOscAPCB88(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID9->value()); oscSendB->setM_issolo(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB88(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID9->value()); oscSendB->setM_issolo(false); oscSendB->execute();
                              m_midiOut1->sendBoutonOff(87); }
 // mapping solo true
-void TabMidi::sendOscAPCB16(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID1->value()); oscSendB->setM_issolo(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB16(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID1->value()); oscSendB->setM_issolo(true); oscSendB->execute();
                              m_midiOut1->sendBoutonOn(16); }
-void TabMidi::sendOscAPCB17(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID2->value()); oscSendB->setM_issolo(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB17(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID2->value()); oscSendB->setM_issolo(true); oscSendB->execute();
                              m_midiOut1->sendBoutonOn(17); }
-void TabMidi::sendOscAPCB18(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID3->value()); oscSendB->setM_issolo(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB18(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID3->value()); oscSendB->setM_issolo(true); oscSendB->execute();
                              m_midiOut1->sendBoutonOn(18); }
-void TabMidi::sendOscAPCB19(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID4->value()); oscSendB->setM_issolo(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB19(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID4->value()); oscSendB->setM_issolo(true); oscSendB->execute();
                              m_midiOut1->sendBoutonOn(19); }
-void TabMidi::sendOscAPCB20(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID5->value()); oscSendB->setM_issolo(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB20(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID5->value()); oscSendB->setM_issolo(true); oscSendB->execute();
                              m_midiOut1->sendBoutonOn(20); }
-void TabMidi::sendOscAPCB21(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID6->value()); oscSendB->setM_issolo(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB21(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID6->value()); oscSendB->setM_issolo(true); oscSendB->execute();
                              m_midiOut1->sendBoutonOn(21); }
-void TabMidi::sendOscAPCB22(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID7->value()); oscSendB->setM_issolo(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB22(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID7->value()); oscSendB->setM_issolo(true); oscSendB->execute();
                              m_midiOut1->sendBoutonOn(22); }
-void TabMidi::sendOscAPCB23(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID8->value()); oscSendB->setM_issolo(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB23(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID8->value()); oscSendB->setM_issolo(true); oscSendB->execute();
                              m_midiOut1->sendBoutonOn(23); }
-void TabMidi::sendOscAPCB87(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID9->value()); oscSendB->setM_issolo(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB87(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID9->value()); oscSendB->setM_issolo(true); oscSendB->execute();
                              m_midiOut1->sendBoutonOn(87); }
 // rate -100%
-void TabMidi::sendOscAPCB24(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID1->value()); oscSendB->setP_rate(-100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB25(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID2->value()); oscSendB->setP_rate(-100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB26(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID3->value()); oscSendB->setP_rate(-100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB27(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID4->value()); oscSendB->setP_rate(-100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB28(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID5->value()); oscSendB->setP_rate(-100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB29(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID6->value()); oscSendB->setP_rate(-100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB30(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID7->value()); oscSendB->setP_rate(-100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB31(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID8->value()); oscSendB->setP_rate(-100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB86(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID9->value()); oscSendB->setP_rate(-100); oscSendB->ExecuteSend(); }
+void TabMidi::sendOscAPCB24(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID1->value()); oscSendB->setP_rate(-100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB25(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID2->value()); oscSendB->setP_rate(-100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB26(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID3->value()); oscSendB->setP_rate(-100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB27(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID4->value()); oscSendB->setP_rate(-100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB28(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID5->value()); oscSendB->setP_rate(-100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB29(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID6->value()); oscSendB->setP_rate(-100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB30(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID7->value()); oscSendB->setP_rate(-100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB31(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID8->value()); oscSendB->setP_rate(-100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB86(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID9->value()); oscSendB->setP_rate(-100); oscSendB->execute(); }
 // rate 50%
-void TabMidi::sendOscAPCB32(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID1->value()); oscSendB->setP_rate(50); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB33(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID2->value()); oscSendB->setP_rate(50); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB34(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID3->value()); oscSendB->setP_rate(50); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB35(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID4->value()); oscSendB->setP_rate(50); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB36(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID5->value()); oscSendB->setP_rate(50); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB37(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID6->value()); oscSendB->setP_rate(50); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB38(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID7->value()); oscSendB->setP_rate(50); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB39(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID8->value()); oscSendB->setP_rate(50); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB85(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID9->value()); oscSendB->setP_rate(50); oscSendB->ExecuteSend(); }
+void TabMidi::sendOscAPCB32(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID1->value()); oscSendB->setP_rate(50); oscSendB->execute(); }
+void TabMidi::sendOscAPCB33(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID2->value()); oscSendB->setP_rate(50); oscSendB->execute(); }
+void TabMidi::sendOscAPCB34(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID3->value()); oscSendB->setP_rate(50); oscSendB->execute(); }
+void TabMidi::sendOscAPCB35(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID4->value()); oscSendB->setP_rate(50); oscSendB->execute(); }
+void TabMidi::sendOscAPCB36(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID5->value()); oscSendB->setP_rate(50); oscSendB->execute(); }
+void TabMidi::sendOscAPCB37(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID6->value()); oscSendB->setP_rate(50); oscSendB->execute(); }
+void TabMidi::sendOscAPCB38(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID7->value()); oscSendB->setP_rate(50); oscSendB->execute(); }
+void TabMidi::sendOscAPCB39(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID8->value()); oscSendB->setP_rate(50); oscSendB->execute(); }
+void TabMidi::sendOscAPCB85(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID9->value()); oscSendB->setP_rate(50); oscSendB->execute(); }
 // rate 100%
-void TabMidi::sendOscAPCB40(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID1->value()); oscSendB->setP_rate(100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB41(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID2->value()); oscSendB->setP_rate(100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB42(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID3->value()); oscSendB->setP_rate(100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB43(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID4->value()); oscSendB->setP_rate(100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB44(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID5->value()); oscSendB->setP_rate(100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB45(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID6->value()); oscSendB->setP_rate(100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB46(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID7->value()); oscSendB->setP_rate(100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB47(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID8->value()); oscSendB->setP_rate(100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB84(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID9->value()); oscSendB->setP_rate(100); oscSendB->ExecuteSend(); }
+void TabMidi::sendOscAPCB40(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID1->value()); oscSendB->setP_rate(100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB41(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID2->value()); oscSendB->setP_rate(100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB42(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID3->value()); oscSendB->setP_rate(100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB43(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID4->value()); oscSendB->setP_rate(100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB44(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID5->value()); oscSendB->setP_rate(100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB45(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID6->value()); oscSendB->setP_rate(100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB46(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID7->value()); oscSendB->setP_rate(100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB47(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID8->value()); oscSendB->setP_rate(100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB84(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID9->value()); oscSendB->setP_rate(100); oscSendB->execute(); }
 // rate 200%
-void TabMidi::sendOscAPCB48(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID1->value()); oscSendB->setP_rate(200); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB49(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID2->value()); oscSendB->setP_rate(200); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB50(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID3->value()); oscSendB->setP_rate(200); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB51(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID4->value()); oscSendB->setP_rate(200); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB52(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID5->value()); oscSendB->setP_rate(200); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB53(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID6->value()); oscSendB->setP_rate(200); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB54(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID7->value()); oscSendB->setP_rate(200); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB55(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID8->value()); oscSendB->setP_rate(200); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB83(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID9->value()); oscSendB->setP_rate(200); oscSendB->ExecuteSend(); }
+void TabMidi::sendOscAPCB48(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID1->value()); oscSendB->setP_rate(200); oscSendB->execute(); }
+void TabMidi::sendOscAPCB49(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID2->value()); oscSendB->setP_rate(200); oscSendB->execute(); }
+void TabMidi::sendOscAPCB50(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID3->value()); oscSendB->setP_rate(200); oscSendB->execute(); }
+void TabMidi::sendOscAPCB51(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID4->value()); oscSendB->setP_rate(200); oscSendB->execute(); }
+void TabMidi::sendOscAPCB52(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID5->value()); oscSendB->setP_rate(200); oscSendB->execute(); }
+void TabMidi::sendOscAPCB53(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID6->value()); oscSendB->setP_rate(200); oscSendB->execute(); }
+void TabMidi::sendOscAPCB54(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID7->value()); oscSendB->setP_rate(200); oscSendB->execute(); }
+void TabMidi::sendOscAPCB55(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID8->value()); oscSendB->setP_rate(200); oscSendB->execute(); }
+void TabMidi::sendOscAPCB83(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID9->value()); oscSendB->setP_rate(200); oscSendB->execute(); }
 // rewind
-void TabMidi::sendOscAPCB56(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID1->value()); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB57(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID2->value()); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB58(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID3->value()); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB59(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID4->value()); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB60(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID5->value()); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB61(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID6->value()); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB62(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID7->value()); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB63(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID8->value()); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB82(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID9->value()); oscSendB->ExecuteSend(); }
+void TabMidi::sendOscAPCB56(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID1->value()); oscSendB->execute(); }
+void TabMidi::sendOscAPCB57(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID2->value()); oscSendB->execute(); }
+void TabMidi::sendOscAPCB58(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID3->value()); oscSendB->execute(); }
+void TabMidi::sendOscAPCB59(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID4->value()); oscSendB->execute(); }
+void TabMidi::sendOscAPCB60(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID5->value()); oscSendB->execute(); }
+void TabMidi::sendOscAPCB61(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID6->value()); oscSendB->execute(); }
+void TabMidi::sendOscAPCB62(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID7->value()); oscSendB->execute(); }
+void TabMidi::sendOscAPCB63(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID8->value()); oscSendB->execute(); }
+void TabMidi::sendOscAPCB82(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID9->value()); oscSendB->execute(); }
 
 // APC 2 // Reprendre les dernières lignes pour en faire des masters regexp et play/pause
 // mapping visible false
-void TabMidi::sendOscAPCB64_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID10->value()); oscSendB->setM_isvisible(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB64_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID10->value()); oscSendB->setM_isvisible(false); oscSendB->execute();
                                m_midiOut2->sendBoutonOff(0);}
-void TabMidi::sendOscAPCB65_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID11->value()); oscSendB->setM_isvisible(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB65_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID11->value()); oscSendB->setM_isvisible(false); oscSendB->execute();
                                m_midiOut2->sendBoutonOff(1);}
-void TabMidi::sendOscAPCB66_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID12->value()); oscSendB->setM_isvisible(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB66_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID12->value()); oscSendB->setM_isvisible(false); oscSendB->execute();
                                m_midiOut2->sendBoutonOff(2);}
-void TabMidi::sendOscAPCB67_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID13->value()); oscSendB->setM_isvisible(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB67_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID13->value()); oscSendB->setM_isvisible(false); oscSendB->execute();
                                m_midiOut2->sendBoutonOff(3);}
-void TabMidi::sendOscAPCB68_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID14->value()); oscSendB->setM_isvisible(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB68_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID14->value()); oscSendB->setM_isvisible(false); oscSendB->execute();
                                m_midiOut2->sendBoutonOff(4);}
-void TabMidi::sendOscAPCB69_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID15->value()); oscSendB->setM_isvisible(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB69_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID15->value()); oscSendB->setM_isvisible(false); oscSendB->execute();
                                m_midiOut2->sendBoutonOff(5);}
-void TabMidi::sendOscAPCB70_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID16->value()); oscSendB->setM_isvisible(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB70_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID16->value()); oscSendB->setM_isvisible(false); oscSendB->execute();
                                m_midiOut2->sendBoutonOff(6);}
-void TabMidi::sendOscAPCB71_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID17->value()); oscSendB->setM_isvisible(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB71_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID17->value()); oscSendB->setM_isvisible(false); oscSendB->execute();
                                m_midiOut2->sendBoutonOff(7);}
 
 // mapping visible true
-void TabMidi::sendOscAPCB0_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID10->value()); oscSendB->setM_isvisible(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB0_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID10->value()); oscSendB->setM_isvisible(true); oscSendB->execute();
                               m_midiOut2->sendBoutonOn(0);}
-void TabMidi::sendOscAPCB1_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID11->value()); oscSendB->setM_isvisible(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB1_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID11->value()); oscSendB->setM_isvisible(true); oscSendB->execute();
                               m_midiOut2->sendBoutonOn(1);}
-void TabMidi::sendOscAPCB2_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID12->value()); oscSendB->setM_isvisible(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB2_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID12->value()); oscSendB->setM_isvisible(true); oscSendB->execute();
                               m_midiOut2->sendBoutonOn(2);}
-void TabMidi::sendOscAPCB3_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID13->value()); oscSendB->setM_isvisible(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB3_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID13->value()); oscSendB->setM_isvisible(true); oscSendB->execute();
                               m_midiOut2->sendBoutonOn(3);}
-void TabMidi::sendOscAPCB4_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID14->value()); oscSendB->setM_isvisible(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB4_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID14->value()); oscSendB->setM_isvisible(true); oscSendB->execute();
                               m_midiOut2->sendBoutonOn(4);}
-void TabMidi::sendOscAPCB5_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID15->value()); oscSendB->setM_isvisible(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB5_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID15->value()); oscSendB->setM_isvisible(true); oscSendB->execute();
                               m_midiOut2->sendBoutonOn(5);}
-void TabMidi::sendOscAPCB6_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID16->value()); oscSendB->setM_isvisible(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB6_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID16->value()); oscSendB->setM_isvisible(true); oscSendB->execute();
                               m_midiOut2->sendBoutonOn(6);}
-void TabMidi::sendOscAPCB7_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID17->value()); oscSendB->setM_isvisible(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB7_2(){ oscSendB->setChamp(M_VISIBLE); oscSendB->setM_ID1(mID17->value()); oscSendB->setM_isvisible(true); oscSendB->execute();
                               m_midiOut2->sendBoutonOn(7);}
 // mapping solo false
-void TabMidi::sendOscAPCB8_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID10->value()); oscSendB->setM_issolo(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB8_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID10->value()); oscSendB->setM_issolo(false); oscSendB->execute();
                               m_midiOut2->sendBoutonOff(16); }
-void TabMidi::sendOscAPCB9_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID11->value()); oscSendB->setM_issolo(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB9_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID11->value()); oscSendB->setM_issolo(false); oscSendB->execute();
                               m_midiOut2->sendBoutonOff(17); }
-void TabMidi::sendOscAPCB10_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID12->value()); oscSendB->setM_issolo(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB10_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID12->value()); oscSendB->setM_issolo(false); oscSendB->execute();
                                m_midiOut2->sendBoutonOff(18); }
-void TabMidi::sendOscAPCB11_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID13->value()); oscSendB->setM_issolo(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB11_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID13->value()); oscSendB->setM_issolo(false); oscSendB->execute();
                                m_midiOut2->sendBoutonOff(19); }
-void TabMidi::sendOscAPCB12_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID14->value()); oscSendB->setM_issolo(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB12_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID14->value()); oscSendB->setM_issolo(false); oscSendB->execute();
                                m_midiOut2->sendBoutonOff(20); }
-void TabMidi::sendOscAPCB13_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID15->value()); oscSendB->setM_issolo(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB13_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID15->value()); oscSendB->setM_issolo(false); oscSendB->execute();
                                m_midiOut2->sendBoutonOff(21); }
-void TabMidi::sendOscAPCB14_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID16->value()); oscSendB->setM_issolo(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB14_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID16->value()); oscSendB->setM_issolo(false); oscSendB->execute();
                                m_midiOut2->sendBoutonOff(22); }
-void TabMidi::sendOscAPCB15_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID17->value()); oscSendB->setM_issolo(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB15_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID17->value()); oscSendB->setM_issolo(false); oscSendB->execute();
                                m_midiOut2->sendBoutonOff(23); }
 // mapping solo true
-void TabMidi::sendOscAPCB16_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID10->value()); oscSendB->setM_issolo(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB16_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID10->value()); oscSendB->setM_issolo(true); oscSendB->execute();
                                m_midiOut2->sendBoutonOn(16); }
-void TabMidi::sendOscAPCB17_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID11->value()); oscSendB->setM_issolo(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB17_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID11->value()); oscSendB->setM_issolo(true); oscSendB->execute();
                                m_midiOut2->sendBoutonOn(17); }
-void TabMidi::sendOscAPCB18_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID12->value()); oscSendB->setM_issolo(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB18_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID12->value()); oscSendB->setM_issolo(true); oscSendB->execute();
                                m_midiOut2->sendBoutonOn(18); }
-void TabMidi::sendOscAPCB19_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID13->value()); oscSendB->setM_issolo(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB19_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID13->value()); oscSendB->setM_issolo(true); oscSendB->execute();
                                m_midiOut2->sendBoutonOn(19); }
-void TabMidi::sendOscAPCB20_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID14->value()); oscSendB->setM_issolo(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB20_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID14->value()); oscSendB->setM_issolo(true); oscSendB->execute();
                                m_midiOut2->sendBoutonOn(20); }
-void TabMidi::sendOscAPCB21_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID15->value()); oscSendB->setM_issolo(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB21_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID15->value()); oscSendB->setM_issolo(true); oscSendB->execute();
                                m_midiOut2->sendBoutonOn(21); }
-void TabMidi::sendOscAPCB22_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID16->value()); oscSendB->setM_issolo(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB22_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID16->value()); oscSendB->setM_issolo(true); oscSendB->execute();
                                m_midiOut2->sendBoutonOn(22); }
-void TabMidi::sendOscAPCB23_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID17->value()); oscSendB->setM_issolo(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB23_2(){ oscSendB->setChamp(M_SOLO); oscSendB->setM_ID1(mID17->value()); oscSendB->setM_issolo(true); oscSendB->execute();
                                m_midiOut2->sendBoutonOn(23); }
 // rate -100%
-void TabMidi::sendOscAPCB24_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID10->value()); oscSendB->setP_rate(-100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB25_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID11->value()); oscSendB->setP_rate(-100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB26_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID12->value()); oscSendB->setP_rate(-100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB27_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID13->value()); oscSendB->setP_rate(-100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB28_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID14->value()); oscSendB->setP_rate(-100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB29_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID15->value()); oscSendB->setP_rate(-100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB30_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID16->value()); oscSendB->setP_rate(-100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB31_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID17->value()); oscSendB->setP_rate(-100); oscSendB->ExecuteSend(); }
+void TabMidi::sendOscAPCB24_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID10->value()); oscSendB->setP_rate(-100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB25_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID11->value()); oscSendB->setP_rate(-100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB26_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID12->value()); oscSendB->setP_rate(-100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB27_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID13->value()); oscSendB->setP_rate(-100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB28_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID14->value()); oscSendB->setP_rate(-100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB29_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID15->value()); oscSendB->setP_rate(-100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB30_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID16->value()); oscSendB->setP_rate(-100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB31_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID17->value()); oscSendB->setP_rate(-100); oscSendB->execute(); }
 // rate 50%
-void TabMidi::sendOscAPCB32_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID10->value()); oscSendB->setP_rate(50); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB33_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID11->value()); oscSendB->setP_rate(50); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB34_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID12->value()); oscSendB->setP_rate(50); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB35_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID13->value()); oscSendB->setP_rate(50); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB36_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID14->value()); oscSendB->setP_rate(50); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB37_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID15->value()); oscSendB->setP_rate(50); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB38_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID16->value()); oscSendB->setP_rate(50); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB39_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID17->value()); oscSendB->setP_rate(50); oscSendB->ExecuteSend(); }
+void TabMidi::sendOscAPCB32_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID10->value()); oscSendB->setP_rate(50); oscSendB->execute(); }
+void TabMidi::sendOscAPCB33_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID11->value()); oscSendB->setP_rate(50); oscSendB->execute(); }
+void TabMidi::sendOscAPCB34_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID12->value()); oscSendB->setP_rate(50); oscSendB->execute(); }
+void TabMidi::sendOscAPCB35_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID13->value()); oscSendB->setP_rate(50); oscSendB->execute(); }
+void TabMidi::sendOscAPCB36_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID14->value()); oscSendB->setP_rate(50); oscSendB->execute(); }
+void TabMidi::sendOscAPCB37_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID15->value()); oscSendB->setP_rate(50); oscSendB->execute(); }
+void TabMidi::sendOscAPCB38_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID16->value()); oscSendB->setP_rate(50); oscSendB->execute(); }
+void TabMidi::sendOscAPCB39_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID17->value()); oscSendB->setP_rate(50); oscSendB->execute(); }
 // rate 100%
-void TabMidi::sendOscAPCB40_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID10->value()); oscSendB->setP_rate(100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB41_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID11->value()); oscSendB->setP_rate(100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB42_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID12->value()); oscSendB->setP_rate(100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB43_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID13->value()); oscSendB->setP_rate(100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB44_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID14->value()); oscSendB->setP_rate(100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB45_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID15->value()); oscSendB->setP_rate(100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB46_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID16->value()); oscSendB->setP_rate(100); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB47_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID17->value()); oscSendB->setP_rate(100); oscSendB->ExecuteSend(); }
+void TabMidi::sendOscAPCB40_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID10->value()); oscSendB->setP_rate(100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB41_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID11->value()); oscSendB->setP_rate(100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB42_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID12->value()); oscSendB->setP_rate(100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB43_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID13->value()); oscSendB->setP_rate(100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB44_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID14->value()); oscSendB->setP_rate(100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB45_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID15->value()); oscSendB->setP_rate(100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB46_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID16->value()); oscSendB->setP_rate(100); oscSendB->execute(); }
+void TabMidi::sendOscAPCB47_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID17->value()); oscSendB->setP_rate(100); oscSendB->execute(); }
 // rate 200%
-void TabMidi::sendOscAPCB48_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID10->value()); oscSendB->setP_rate(200); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB49_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID11->value()); oscSendB->setP_rate(200); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB50_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID12->value()); oscSendB->setP_rate(200); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB51_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID13->value()); oscSendB->setP_rate(200); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB52_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID14->value()); oscSendB->setP_rate(200); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB53_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID15->value()); oscSendB->setP_rate(200); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB54_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID16->value()); oscSendB->setP_rate(200); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB55_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID17->value()); oscSendB->setP_rate(200); oscSendB->ExecuteSend(); }
+void TabMidi::sendOscAPCB48_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID10->value()); oscSendB->setP_rate(200); oscSendB->execute(); }
+void TabMidi::sendOscAPCB49_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID11->value()); oscSendB->setP_rate(200); oscSendB->execute(); }
+void TabMidi::sendOscAPCB50_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID12->value()); oscSendB->setP_rate(200); oscSendB->execute(); }
+void TabMidi::sendOscAPCB51_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID13->value()); oscSendB->setP_rate(200); oscSendB->execute(); }
+void TabMidi::sendOscAPCB52_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID14->value()); oscSendB->setP_rate(200); oscSendB->execute(); }
+void TabMidi::sendOscAPCB53_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID15->value()); oscSendB->setP_rate(200); oscSendB->execute(); }
+void TabMidi::sendOscAPCB54_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID16->value()); oscSendB->setP_rate(200); oscSendB->execute(); }
+void TabMidi::sendOscAPCB55_2(){ oscSendB->setChamp(P_RATE); oscSendB->setP_ID1(pID17->value()); oscSendB->setP_rate(200); oscSendB->execute(); }
 // rewind
-void TabMidi::sendOscAPCB56_2(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID10->value()); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB57_2(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID11->value()); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB58_2(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID12->value()); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB59_2(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID13->value()); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB60_2(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID14->value()); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB61_2(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID15->value()); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB62_2(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID16->value()); oscSendB->ExecuteSend(); }
-void TabMidi::sendOscAPCB63_2(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID17->value()); oscSendB->ExecuteSend(); }
+void TabMidi::sendOscAPCB56_2(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID10->value()); oscSendB->execute(); }
+void TabMidi::sendOscAPCB57_2(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID11->value()); oscSendB->execute(); }
+void TabMidi::sendOscAPCB58_2(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID12->value()); oscSendB->execute(); }
+void TabMidi::sendOscAPCB59_2(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID13->value()); oscSendB->execute(); }
+void TabMidi::sendOscAPCB60_2(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID14->value()); oscSendB->execute(); }
+void TabMidi::sendOscAPCB61_2(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID15->value()); oscSendB->execute(); }
+void TabMidi::sendOscAPCB62_2(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID16->value()); oscSendB->execute(); }
+void TabMidi::sendOscAPCB63_2(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID17->value()); oscSendB->execute(); }
 
 // Masters
 void TabMidi::sendOscS18(int uneOpacite)
 {
-  oscSendS->setChamp(R_P_OPACITY); oscSendS->setP_name("*"); oscSendS->setP_opacity(uneOpacite); oscSendS->ExecuteSend();
+  oscSendS->setChamp(R_P_OPACITY); oscSendS->setP_name("*"); oscSendS->setP_opacity(uneOpacite); oscSendS->execute();
 }
-void TabMidi::sendOscAPCB98_2(){ oscSendB->setChamp(R_M_VISIBLE); oscSendB->setM_name("*"); oscSendB->setM_isvisible(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB98_2(){ oscSendB->setChamp(R_M_VISIBLE); oscSendB->setM_name("*"); oscSendB->setM_isvisible(false); oscSendB->execute();
                                m_midiOut1->allBoutonVisibleOff();
                                m_midiOut2->allBoutonVisibleOff();}
-void TabMidi::sendOscAPCB89_2(){ oscSendB->setChamp(R_M_VISIBLE); oscSendB->setM_name("*"); ; oscSendB->setM_isvisible(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB89_2(){ oscSendB->setChamp(R_M_VISIBLE); oscSendB->setM_name("*"); ; oscSendB->setM_isvisible(true); oscSendB->execute();
                                m_midiOut1->allBoutonVisibleOn();
                                m_midiOut2->allBoutonVisibleOn();}
 // Allumer éteindre les solos...
-void TabMidi::sendOscAPCB88_2(){ oscSendB->setChamp(R_M_SOLO); oscSendB->setM_name("*"); oscSendB->setM_issolo(false); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB88_2(){ oscSendB->setChamp(R_M_SOLO); oscSendB->setM_name("*"); oscSendB->setM_issolo(false); oscSendB->execute();
                                  m_midiOut1->allBoutonSoloOff();
                                  m_midiOut2->allBoutonSoloOff();}
-void TabMidi::sendOscAPCB87_2(){ oscSendB->setChamp(R_M_SOLO); oscSendB->setM_name("*"); oscSendB->setM_issolo(true); oscSendB->ExecuteSend();
+void TabMidi::sendOscAPCB87_2(){ oscSendB->setChamp(R_M_SOLO); oscSendB->setM_name("*"); oscSendB->setM_issolo(true); oscSendB->execute();
                                  m_midiOut1->allBoutonSoloOn();
                                  m_midiOut2->allBoutonSoloOn();}
 void TabMidi::sendOscAPCB86_2(){ /*GoBack*/ } // En attente
 void TabMidi::sendOscAPCB85_2(){ /*Go*/ }
-void TabMidi::sendOscAPCB84_2(){ oscSendB->setChamp(PAUSE); oscSendB->ExecuteSend(); m_midiOut2->sendBoutonOn(84); m_midiOut2->sendBoutonOff(83);}
-void TabMidi::sendOscAPCB83_2(){ oscSendB->setChamp(PLAY); oscSendB->ExecuteSend(); m_midiOut2->sendBoutonOn(83); m_midiOut2->sendBoutonOff(84);}
-void TabMidi::sendOscAPCB82_2(){ oscSendB->setChamp(REWIND); oscSendB->ExecuteSend(); }
+void TabMidi::sendOscAPCB84_2(){ oscSendB->setChamp(PAUSE); oscSendB->execute(); m_midiOut2->sendBoutonOn(84); m_midiOut2->sendBoutonOff(83);}
+void TabMidi::sendOscAPCB83_2(){ oscSendB->setChamp(PLAY); oscSendB->execute(); m_midiOut2->sendBoutonOn(83); m_midiOut2->sendBoutonOff(84);}
+void TabMidi::sendOscAPCB82_2(){ oscSendB->setChamp(REWIND); oscSendB->execute(); }
 
 void TabMidi::slotConnectMidi1()
 {

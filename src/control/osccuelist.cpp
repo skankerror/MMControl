@@ -216,7 +216,7 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const
     if (role == Qt::DisplayRole && col == Champ)
     {
       QString value = QString("CUE %1 - ").arg(tempSend->getSendId() + 1);
-              value += tempSend->getNoteSend();
+      value += tempSend->getNoteSend();
       return value;
     }
     if (role == Qt::DisplayRole && col == Wait) return tempSend->getTimewait();

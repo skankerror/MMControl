@@ -43,6 +43,8 @@ signals:
   void updateProgressTimeWaitSend(int value);
   void progressTimeWaitFinishedSend();
   void sendStringToOutputLabel(QString);
+  void disconnectButtonsToolBar();
+  void reconnectButtonsToolBar();
 
 public slots:
   void executeGo();
@@ -64,6 +66,9 @@ public slots:
   void receiveStringFromSend(QString tempString);
   void sendWaitToOutputLabel();
   void resetOutputLabel();
+  void disconnectButtons();
+  void reconnectButtons();
+  void stopCue();
 
   void hideShowColumns();
 
@@ -81,6 +86,7 @@ private:
         QPushButton *boutonPrev;
         QPushButton *boutonNext;
         QPushButton *boutonRemove;
+        QPushButton *boutonStop;
         QPushButton *boutonAddCue;
         QPushButton *boutonGo;
         QPushButton *boutonSaveAs;
@@ -95,7 +101,8 @@ private:
   double totalTimeSend = 0;
   double fadeTimeSend = 0;
   double waitTimeSend = 0;
-  QTimer *timerWait;
+  QTimer *timerWait; // pour le wait
+  QTimer *timerTotal; // pour passer au row suivant
 
 public:
   QTreeView *treeView;
