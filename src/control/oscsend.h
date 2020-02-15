@@ -83,8 +83,6 @@ public slots:
 public:
   //Getters
   champMM getChamp() const { return m_champ; };
-  static QString getChampToString(int champ);
-  static int getChampFromString(const QString &value);
   QString getP_uri() const { return m_p_uri; };
   QString getP_name() const { return m_p_name; };
   QString getP_name2() const{ return m_p_name2; };
@@ -107,38 +105,42 @@ public:
   double getTimewait() const{ return m_timeWait; };
   QString getNoteSend() const{ return m_noteSend; };
 
+  //static
+  static QString getChampToString(const int champ);
+  static int getChampFromString(const QString &value);
+
   //Setters
-  void setChamp(champMM champ){ m_champ = champ; };
-  void setP_uri(QString p_uri){ m_p_uri = p_uri; };
-  void setP_name(QString p_name){ m_p_name = p_name; };
-  void setP_name2(QString p_name2){ m_p_name2 = p_name2; };
-  void setP_color(QString p_color){ m_p_color = p_color; };
-  void setP_ID1(int p_ID1){ m_p_ID1 = p_ID1; };
-  void setP_ID2(int p_ID2){ m_p_ID2 = p_ID2; };
-  void setP_rate(int p_rate){ m_p_rate = p_rate; };
-  void setP_opacity(int p_opacity){ m_p_opacity = p_opacity; };
-  void setP_volume(int p_volume){ m_p_volume = p_volume; };
-  void setM_name(QString m_name){ m_m_name = m_name; };
-  void setM_name2(QString m_name2){ m_m_name2 = m_name2; };
-  void setM_ID1(int m_ID1){ m_m_ID1 = m_ID1; };
-  void setM_opacity(int m_opacity){ m_m_opacity = m_opacity; };
-  void setM_isvisible(bool m_isvisible){ m_m_isvisible = m_isvisible; };
-  void setM_issolo(bool m_issolo){ m_m_issolo = m_issolo; };
-  void setM_islocked(bool m_islocked){ m_m_islocked = m_islocked; };
-  void setM_depth(int m_depth){ m_m_depth = m_depth; };
-  void setTime(double time){ m_time = time; };
-  void setIsfadein(bool isfadein){ m_isfadein = isfadein; };
-  void setTimewait(double timewait){ m_timeWait = timewait; };
-  void setNoteSend(QString noteSend){ m_noteSend = noteSend; };
+  void setChamp(const champMM champ){ m_champ = champ; };
+  void setP_uri(const QString &p_uri){ m_p_uri = p_uri; };
+  void setP_name(const QString &p_name){ m_p_name = p_name; };
+  void setP_name2(const QString &p_name2){ m_p_name2 = p_name2; };
+  void setP_color(const QString &p_color){ m_p_color = p_color; };
+  void setP_ID1(const int p_ID1){ m_p_ID1 = p_ID1; };
+  void setP_ID2(const int p_ID2){ m_p_ID2 = p_ID2; };
+  void setP_rate(const int p_rate){ m_p_rate = p_rate; };
+  void setP_opacity(const int p_opacity){ m_p_opacity = p_opacity; };
+  void setP_volume(const int p_volume){ m_p_volume = p_volume; };
+  void setM_name(const QString &m_name){ m_m_name = m_name; };
+  void setM_name2(const QString &m_name2){ m_m_name2 = m_name2; };
+  void setM_ID1(const int m_ID1){ m_m_ID1 = m_ID1; };
+  void setM_opacity(const int m_opacity){ m_m_opacity = m_opacity; };
+  void setM_isvisible(const bool m_isvisible){ m_m_isvisible = m_isvisible; };
+  void setM_issolo(const bool m_issolo){ m_m_issolo = m_issolo; };
+  void setM_islocked(const bool m_islocked){ m_m_islocked = m_islocked; };
+  void setM_depth(const int m_depth){ m_m_depth = m_depth; };
+  void setTime(const double time){ m_time = time; };
+  void setIsfadein(const bool isfadein){ m_isfadein = isfadein; };
+  void setTimewait(const double timewait){ m_timeWait = timewait; };
+  void setNoteSend(const QString &noteSend){ m_noteSend = noteSend; };
   void setParentSend(OscSend *osccue);
 
-  OscSend *getChild(int position);
+  OscSend *getChild(const int position) const;
   int getSendCount() const;
-  void insertSend(OscSend *oscsend, int position);
-  OscSend *getParentSend();
-  void removeSends(int position, int count = 1);
+  void insertSend(OscSend *oscsend, const int position);
+  OscSend *getParentSend() const;
+  void removeSends(const int position, const int count = 1);
   int getSendId() const; // donne l'id d'un enfant
-  void moveChildPrev(int position);
+  void moveChildPrev(const int position);
 
 private:
   champMM m_champ = CUE;

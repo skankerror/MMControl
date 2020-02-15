@@ -112,7 +112,6 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   treeView->setItemDelegate(m_delegate);
   treeView->setTextElideMode(Qt::ElideLeft);
   treeView->setVerticalScrollMode(QAbstractItemView::ScrollPerItem);
-//  treeView->setAutoFillBackground(true);
 
   treeView->show();
   layout1->addWidget(treeView);
@@ -321,8 +320,8 @@ void TabSeq::loadFile()
 {
   QMessageBox msgBox(QMessageBox::Warning, "Load file warning",
                      "WARNING, this will destroy all cues", nullptr, this);
-  msgBox.addButton(tr("OK"), QMessageBox::AcceptRole);
-  msgBox.addButton(tr("CANCEL"), QMessageBox::RejectRole);
+  msgBox.addButton("OK", QMessageBox::AcceptRole);
+  msgBox.addButton("CANCEL", QMessageBox::RejectRole);
   if (msgBox.exec() == QMessageBox::RejectRole) return;
 
   QString fileName = QFileDialog::getOpenFileName(this, "Choose File", "", "Csv Files (*.csv *.txt)");
@@ -459,7 +458,7 @@ void TabSeq::selectRow()
     emit progressTimeFinishedCue(); // on coupe le timer de la cue
     counterCue = 0;
     totalTime = 0;
-    resetOutputLabel();
+    resetOutputLabel(); // peut-être mettre un QTimer de 10ms pour être sûr de reseter
   }
 }
 
@@ -471,7 +470,6 @@ void TabSeq::receiveStringFromSend(QString tempString)
 void TabSeq::sendWaitToOutputLabel()
 {
   emit sendStringToOutputLabel(QString("Wait -->"));
-  //  qDebug() << "Wait";
 }
 
 void TabSeq::resetOutputLabel()

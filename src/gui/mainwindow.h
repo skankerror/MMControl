@@ -39,21 +39,26 @@ public:
   void createToolBar();
   void createStatusBar();
 
+private:
+  void hideAllWidgets();
+
 protected:
   void closeEvent(QCloseEvent *event) override;
 
 signals:
 
 public slots:
-  void showWidgets(int index);
+  void timeProgressedCue(const int value);
+  void timeFinishedCue();
+  void timeProgressedSend(const int value);
+  void timeFinishedSend();
+
+private slots:
+  void showWidgets(const int index);
   void sendFromToolBar();
   void setP_UriLine();
   void setP_ColorLine();
   void addToCue();
-  void timeProgressedCue(int value);
-  void timeFinishedCue();
-  void timeProgressedSend(int value);
-  void timeFinishedSend();
 
 private:
   OscCueList *oscCueList;

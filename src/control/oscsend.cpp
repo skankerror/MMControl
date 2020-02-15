@@ -119,7 +119,6 @@ void OscSend::ExecuteSend()
   packet << osc::BeginBundleImmediate;
   switch (m_champ)
   {
-//  case CUE: break; // ça doit pas arriver
   case PLAY: packet << osc::BeginMessage("/mapmap/play") << osc::EndMessage;
     emit executeSendFinished();
     emit sendStringToOutputLabel("/mapmap/play");
@@ -277,12 +276,10 @@ void OscSend::ExecuteXFade(int ID1, int ID2, double time) // A voir de près pou
 
 void OscSend::ExecuteFade(int ID1, double time, bool isfadein)
 {
-//  if (counter == 101) return;
   timeRes = (int)(100 * time); // on adapte la résolution suivant le temps
   if (counter == timeRes + 1) return;
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);
-//  double i = (double)(counter) / 100;
   double i = (double)(counter) / timeRes;
   packet << osc::BeginBundleImmediate
          << osc::BeginMessage("/mapmap/paint/opacity") << ID1;
@@ -327,12 +324,10 @@ void OscSend::ExecutePXFade(const QString &p_name, const QString &p_name2, doubl
 
 void OscSend::ExecutePFade(const QString &p_name, double time, bool isfadein)
 {
-//  if (counter == 101) return;
   timeRes = (int)(100 * time); // on adapte la résolution suivant le temps
   if (counter == timeRes + 1) return;
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);
-//  double i = (double)(counter) / 100;
   double i = (double)(counter) / timeRes;
   packet << osc::BeginBundleImmediate
          << osc::BeginMessage("/mapmap/paint/opacity") << p_name.toStdString().c_str();
@@ -376,7 +371,7 @@ void OscSend::fadeFinish()
   counter = 0;
 }
 
-QString OscSend::getChampToString(int champ)
+QString OscSend::getChampToString(const int champ)
 {
   switch(champ)
   {
@@ -464,10 +459,10 @@ int OscSend::getChampFromString(const QString &value)
 
 void OscSend::setParentSend(OscSend *osccue)
 {
-  m_parentSend = osccue; // Gère-t-on le timewait ??
+  m_parentSend = osccue;
 }
 
-OscSend *OscSend::getChild(int position)
+OscSend *OscSend::getChild(const int position) const
 {
   if (position < 0 || position >= v_listSend.size())
     return nullptr;
@@ -479,7 +474,7 @@ int OscSend::getSendCount() const
   return v_listSend.count();
 }
 
-void OscSend::insertSend(OscSend *oscsend, int position)
+void OscSend::insertSend(OscSend *oscsend, const int position)
 {
   if (position < 0 || position > v_listSend.size()) return;
   oscsend->setParentSend(this);
@@ -490,12 +485,12 @@ void OscSend::insertSend(OscSend *oscsend, int position)
   if (champ == P_FADE || champ == P_XFADE || champ == R_P_FADE || champ == R_P_XFADE) m_timeWait += oscsend->getTime();
 }
 
-OscSend *OscSend::getParentSend()
+OscSend *OscSend::getParentSend() const
 {
   return m_parentSend;
 }
 
-void OscSend::removeSends(int position, int count)
+void OscSend::removeSends(const int position, const int count)
 {
   if (position < 0 || position + count > v_listSend.size())
     return;
@@ -517,7 +512,7 @@ int OscSend::getSendId() const
   return 0;
 }
 
-void OscSend::moveChildPrev(int position)
+void OscSend::moveChildPrev(const int position)
 {
   if (position < 1 || position >= getSendCount()) return;
   v_listSend.swapItemsAt(position -1, position);

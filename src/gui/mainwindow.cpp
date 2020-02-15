@@ -33,6 +33,7 @@ MainWindow::MainWindow() :
   midiOut1 = new MyMidiOut(this);
   midiOut2 = new MyMidiOut(this);
   treeView = new QTreeView(this);
+
   createToolBar();
   createCentralWidget();
   createStatusBar();
@@ -40,12 +41,14 @@ MainWindow::MainWindow() :
   progressBarCue->reset();
   progressBarSend->reset();
 
+  // connect for tool bar
   connect(champComboBox, SIGNAL(currentIndexChanged(int)), SLOT(showWidgets(int))); // Pour afficher les widgets
   connect(sendPushButton, SIGNAL(clicked()), SLOT(sendFromToolBar()));
   connect(p_uriPushButton, SIGNAL(clicked()), SLOT(setP_UriLine()));
   connect(p_colorPushButton, SIGNAL(clicked()), SLOT(setP_ColorLine()));
   connect(addToCuePushButton, SIGNAL(clicked()), SLOT(addToCue()));
 
+  // connect for status bar
   connect(tabseq, SIGNAL(updateProgressTimeCue(int)), this, SLOT(timeProgressedCue(int)));
   connect(tabseq, SIGNAL(progressTimeFinishedCue()), this, SLOT(timeFinishedCue()));
   connect(tabseq, SIGNAL(updateProgressTimeSend(int)), this, SLOT(timeProgressedSend(int)));
@@ -180,19 +183,10 @@ void MainWindow::createToolBar()
   layout->addWidget(sendPushButton); layout->addWidget(addToCuePushButton);
 
   myToolBarWidget->setLayout(layout);
-
   myToolBar->addWidget(myToolBarWidget);
 
   // On cache tout et on montre suivant les besoins
-  p_nameLineEdit->hide(); p_nameLineEdit2->hide(); p_uriLine->hide(); p_uriPushButton->hide();
-  p_colorLine->hide(); p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide();
-  p_ID2Label->hide(); p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide();
-  p_opacityLabel->hide(); p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide();
-  m_nameLineEdit->hide(); m_nameLineEdit2->hide(); m_IDLabel->hide(); m_IDSpinBox->hide();
-  m_opacityLabel->hide(); m_opacitySpinBox->hide(); m_visibleCheckBox->hide(); m_soloCheckBox->hide();
-  m_lockCheckBox->hide(); m_depthLabel->hide(); m_depthSpinBox->hide(); fadeCheckBox->hide();
-  timeLabel->hide(); timeSpinBox->hide();
-
+  hideAllWidgets();
 }
 
 void MainWindow::createStatusBar()
@@ -214,301 +208,146 @@ void MainWindow::createStatusBar()
   progressBarCue->setRange(0, 100);
 }
 
-void MainWindow::showWidgets(int index)
+void MainWindow::hideAllWidgets()
 {
+  p_nameLineEdit->hide(); p_nameLineEdit2->hide(); p_uriLine->hide(); p_uriPushButton->hide();
+  p_colorLine->hide(); p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide();
+  p_ID2Label->hide(); p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide();
+  p_opacityLabel->hide(); p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide();
+  m_nameLineEdit->hide(); m_nameLineEdit2->hide(); m_IDLabel->hide(); m_IDSpinBox->hide();
+  m_opacityLabel->hide(); m_opacitySpinBox->hide(); m_visibleCheckBox->hide(); m_soloCheckBox->hide();
+  m_lockCheckBox->hide(); m_depthLabel->hide(); m_depthSpinBox->hide(); fadeCheckBox->hide();
+  timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0);
+}
+
+void MainWindow::showWidgets(const int index)
+{
+  hideAllWidgets();
   switch (index)
   {
-  case PLAY: case PAUSE: case REWIND: case QUIT:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
-    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
   case P_NAME:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->show(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->show(); p_ID1SpinBox->show(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
-    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
+    p_nameLineEdit->show();
+    p_ID1Label->show(); p_ID1SpinBox->show();
+    break;
   case P_REWIND:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->show(); p_ID1SpinBox->show(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
-    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
+    p_ID1Label->show(); p_ID1SpinBox->show();
+    break;
   case P_OPACITY:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->show(); p_ID1SpinBox->show(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->show();
-    p_opacitySpinBox->show(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
-    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
+    p_ID1Label->show(); p_ID1SpinBox->show();
+    p_opacityLabel->show(); p_opacitySpinBox->show();
+    break;
   case P_VOLUME:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->show(); p_ID1SpinBox->show(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->show(); p_volumeSpinBox->show(); m_nameLineEdit->hide();
-    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
+    p_ID1Label->show(); p_ID1SpinBox->show();
+    p_volumeLabel->show(); p_volumeSpinBox->show();
+    break;
   case P_RATE:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->show(); p_ID1SpinBox->show(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->show(); p_rateSpinBox->show(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
-    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
+    p_ID1Label->show(); p_ID1SpinBox->show();
+    p_rateLabel->show(); p_rateSpinBox->show();
+    break;
   case P_URI:
-    p_uriLine->show(); p_uriPushButton->show(); p_nameLineEdit->hide(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->show(); p_ID1SpinBox->show(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
-    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0);
-    p_uriLine->setText("Choose-->"); break;
+    p_uriLine->show(); p_uriPushButton->show(); p_uriLine->setText("Choose-->");
+    p_ID1Label->show(); p_ID1SpinBox->show();
+    break;
   case P_COLOR:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->show();
-    p_colorPushButton->show(); p_ID1Label->show(); p_ID1SpinBox->show(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
-    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0);
-    p_colorLine->setText("Choose-->"); break;
+    p_colorLine->show(); p_colorPushButton->show(); p_colorLine->setText("Choose-->");
+    p_ID1Label->show(); p_ID1SpinBox->show();
+    break;
   case M_NAME:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->show();
-    m_IDLabel->show(); m_IDSpinBox->show(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
+    m_nameLineEdit->show();
+    m_IDLabel->show(); m_IDSpinBox->show();
+    break;
   case M_OPACITY:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
-    m_IDLabel->show(); m_IDSpinBox->show(); m_opacityLabel->show(); m_opacitySpinBox->show();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
+    m_IDLabel->show(); m_IDSpinBox->show();
+    m_opacityLabel->show(); m_opacitySpinBox->show();
+    break;
   case M_VISIBLE:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
-    m_IDLabel->show(); m_IDSpinBox->show(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->show(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
+    m_IDLabel->show(); m_IDSpinBox->show();
+    m_visibleCheckBox->show();
+    break;
   case M_SOLO:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
-    m_IDLabel->show(); m_IDSpinBox->show(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->show(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
+    m_IDLabel->show(); m_IDSpinBox->show();
+    m_soloCheckBox->show();
+    break;
   case M_LOCK:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
-    m_IDLabel->show(); m_IDSpinBox->show(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->show(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
+    m_IDLabel->show(); m_IDSpinBox->show();
+    m_lockCheckBox->show();
+    break;
   case M_DEPTH:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
-    m_IDLabel->show(); m_IDSpinBox->show(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->show();
-    m_depthSpinBox->show(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
+    m_IDLabel->show(); m_IDSpinBox->show();
+    m_depthLabel->show(); m_depthSpinBox->show();
+    break;
   case P_XFADE:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->show(); p_ID1SpinBox->show(); p_ID2Label->show();
-    p_ID2SpinBox->show(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
-    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->show(); timeSpinBox->show(); timeSpinBox->setValue(2); waitTimeSpinBox->setValue(0); break;
+    p_ID1Label->show(); p_ID1SpinBox->show();
+    p_ID2Label->show(); p_ID2SpinBox->show();
+    timeLabel->show(); timeSpinBox->show(); timeSpinBox->setValue(2);
+    break;
   case P_FADE:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->show(); p_ID1SpinBox->show(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
-    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->show(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->show(); timeSpinBox->show(); timeSpinBox->setValue(2); waitTimeSpinBox->setValue(0); break;
+    p_ID1Label->show(); p_ID1SpinBox->show();
+    fadeCheckBox->show();
+    timeLabel->show(); timeSpinBox->show(); timeSpinBox->setValue(2);
+    break;
   case R_P_NAME:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->show(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
-    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->show(); m_nameLineEdit2->hide();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
+    p_nameLineEdit->show();
+    p_nameLineEdit2->show();
+    break;
   case R_P_REWIND:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->show(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
-    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
+    p_nameLineEdit->show();
+    break;
   case R_P_OPACITY:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->show(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->show();
-    p_opacitySpinBox->show(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
-    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
+    p_nameLineEdit->show();
+    p_opacityLabel->show(); p_opacitySpinBox->show();
+    break;
   case R_P_VOLUME:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->show(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->show(); p_volumeSpinBox->show(); m_nameLineEdit->hide();
-    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
+    p_nameLineEdit->show();
+    p_volumeLabel->show(); p_volumeSpinBox->show();
+    break;
   case R_P_RATE:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->show(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->show(); p_rateSpinBox->show(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
-    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
+    p_nameLineEdit->show();
+    p_rateLabel->show(); p_rateSpinBox->show();
+    break;
   case R_P_URI:
-    p_uriLine->show(); p_uriPushButton->show(); p_nameLineEdit->show(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
-    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0);
-    p_uriLine->setText("Choose-->"); break;
+    p_uriLine->show(); p_uriPushButton->show(); p_uriLine->setText("Choose-->");
+    p_nameLineEdit->show();
+    break;
   case R_P_COLOR:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->show(); p_colorLine->show();
-    p_colorPushButton->show(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
-    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0);
-    p_colorLine->setText("Choose-->"); break;
+    p_nameLineEdit->show();
+    p_colorLine->show(); p_colorPushButton->show(); p_colorLine->setText("Choose-->");
+    break;
   case R_M_NAME:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->show();
-    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->show();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
+    m_nameLineEdit->show();
+    m_nameLineEdit2->show();
+    break;
   case R_M_OPACITY:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->show();
-    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->show(); m_opacitySpinBox->show();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
+    m_nameLineEdit->show();
+    m_opacityLabel->show(); m_opacitySpinBox->show();
+    break;
   case R_M_VISIBLE:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->show();
-    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->show(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
+    m_nameLineEdit->show();
+    m_visibleCheckBox->show();
+    break;
   case R_M_SOLO:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->show();
-    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->show(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
+    m_nameLineEdit->show();
+    m_soloCheckBox->show();
+    break;
   case R_M_LOCK:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->show();
-    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->show(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
+    m_nameLineEdit->show();
+    m_lockCheckBox->show();
+    break;
   case R_M_DEPTH:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->hide(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->show();
-    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->show();
-    m_depthSpinBox->show(); fadeCheckBox->hide(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->hide(); timeSpinBox->hide(); waitTimeSpinBox->setValue(0); break;
+    m_nameLineEdit->show();
+    m_depthLabel->show(); m_depthSpinBox->show();
+    break;
   case R_P_FADE:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->show(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
-    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->show(); p_nameLineEdit2->hide(); m_nameLineEdit2->hide();
-    timeLabel->show(); timeSpinBox->show(); timeSpinBox->setValue(2); waitTimeSpinBox->setValue(0); break;
+    p_nameLineEdit->show();
+    fadeCheckBox->show();
+    timeLabel->show(); timeSpinBox->show(); timeSpinBox->setValue(2);
+    break;
   case R_P_XFADE:
-    p_uriLine->hide(); p_uriPushButton->hide(); p_nameLineEdit->show(); p_colorLine->hide();
-    p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide(); p_ID2Label->hide();
-    p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide(); p_opacityLabel->hide();
-    p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide(); m_nameLineEdit->hide();
-    m_IDLabel->hide(); m_IDSpinBox->hide(); m_opacityLabel->hide(); m_opacitySpinBox->hide();
-    m_visibleCheckBox->hide(); m_soloCheckBox->hide(); m_lockCheckBox->hide(); m_depthLabel->hide();
-    m_depthSpinBox->hide(); fadeCheckBox->hide(); p_nameLineEdit2->show(); m_nameLineEdit2->hide();
-    timeLabel->show(); timeSpinBox->show(); timeSpinBox->setValue(2); waitTimeSpinBox->setValue(0); break;
-  default:
-    p_nameLineEdit->hide(); p_nameLineEdit2->hide(); p_uriLine->hide(); p_uriPushButton->hide();
-    p_colorLine->hide(); p_colorPushButton->hide(); p_ID1Label->hide(); p_ID1SpinBox->hide();
-    p_ID2Label->hide(); p_ID2SpinBox->hide(); p_rateLabel->hide(); p_rateSpinBox->hide();
-    p_opacityLabel->hide(); p_opacitySpinBox->hide(); p_volumeLabel->hide(); p_volumeSpinBox->hide();
-    m_nameLineEdit->hide(); m_nameLineEdit2->hide(); m_IDLabel->hide(); m_IDSpinBox->hide();
-    m_opacityLabel->hide(); m_opacitySpinBox->hide(); m_visibleCheckBox->hide(); m_soloCheckBox->hide();
-    m_lockCheckBox->hide(); m_depthLabel->hide(); m_depthSpinBox->hide(); fadeCheckBox->hide(); break;
+    p_nameLineEdit->show();
+    p_nameLineEdit2->show();
+    timeLabel->show(); timeSpinBox->show(); timeSpinBox->setValue(2);
+    break;
+  default: break;
   }
 }
 void MainWindow::sendFromToolBar()
@@ -619,7 +458,7 @@ void MainWindow::addToCue()
   tabseq->hideShowColumns();
 }
 
-void MainWindow::timeProgressedCue(int value)
+void MainWindow::timeProgressedCue(const int value)
 {
   if (value >= 0 && value <= 100) progressBarCue->setValue(value);
   return;
@@ -630,7 +469,7 @@ void MainWindow::timeFinishedCue()
   progressBarCue->reset();
 }
 
-void MainWindow::timeProgressedSend(int value)
+void MainWindow::timeProgressedSend(const int value)
 {
   if (value >= 0 && value <= 100) progressBarSend->setValue(value);
   return;

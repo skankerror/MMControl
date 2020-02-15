@@ -32,10 +32,15 @@ public:
                    MyMidiOut *midiOut2,
                    QWidget *parent = nullptr);
 
+private:
+  void createAPC_Minis();
+  void createMidiConnectWidgets();
+  void createConnections();
+
 signals:
   void sendStringToOutputLabel(QString);
 
-public slots:
+private slots: // A voir... en faire passer en public ?
   // APCMINI 1
   void receiveMidiCtrl(int unID, float uneOpacite);
 
@@ -112,7 +117,6 @@ public slots:
 
   // slots pour outputLabel
   void receiveStringFromSend(QString tempString);
-
 
 private:
   OscSend *oscSendS; // Pour les sliders

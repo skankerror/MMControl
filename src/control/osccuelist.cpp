@@ -236,7 +236,6 @@ QVariant OscCueList::headerData(int section, Qt::Orientation orientation, int ro
 Qt::ItemFlags OscCueList::flags(const QModelIndex &index) const
 {
   if (!index.isValid()) return Qt::NoItemFlags;
-  // Il faut aussi afficher wait sauf sur les cue
   OscSend *tempSend = getSend(index);
   champMM champ = tempSend->getChamp();
   int col = index.column();
@@ -335,7 +334,6 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
   {
     QString val = lineToken.at(j);
     val = val.trimmed();
-    //    qDebug() << val << ", ";
     QVariant value(val);
     switch(j)
     {
@@ -365,12 +363,11 @@ OscSend* OscCueList::retOscsendFromFileLine(QStringList &lineToken)
     }
     m_champ = static_cast<champMM>(m_champInt);
   }
-  //  qDebug()<< "champ dans l'oscsend qui retourne" << m_champ;
 
   auto *oscsend = new OscSend(
         this,
         m_champ,
-        rootSend, // en attendant...
+        rootSend,
         m_p_uri,
         m_p_name,
         m_p_name2,
@@ -483,7 +480,7 @@ bool OscCueList::moveSendNext(int cueId, int sendId)
   return false;
 }
 
-void OscCueList::removeSend(int cueId, int sendId/*, bool destroy*/)
+void OscCueList::removeSend(int cueId, int sendId)
 {
   if (cueId < 0 || cueId >= rootSend->getSendCount()) return;
   OscSend *osccue = rootSend->getChild(cueId);
@@ -504,7 +501,7 @@ void OscCueList::removeAllSend(int cueId)
   endMoveRows();
 }
 
-void OscCueList::insertCue(int cueId) // A vérifier...
+void OscCueList::insertCue(int cueId)
 {
   if (cueId < 0 || cueId >= rootSend->getSendCount())
   {
@@ -667,7 +664,7 @@ void OscCuelistDelegate::setModelData(QWidget *editor, QAbstractItemModel *model
 
 void OscCuelistDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-  Q_UNUSED(index);
+  Q_UNUSED(index)
   editor->setGeometry(option.rect);
 }
 

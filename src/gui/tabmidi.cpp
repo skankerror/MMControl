@@ -23,10 +23,10 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
                  MyMidiOut *midiOut2,
                  QWidget *parent) :
   QWidget(parent),
-    m_midiIn1(midiIn1),
-    m_midiIn2(midiIn2),
-    m_midiOut1(midiOut1),
-    m_midiOut2(midiOut2)
+  m_midiIn1(midiIn1),
+  m_midiIn2(midiIn2),
+  m_midiOut1(midiOut1),
+  m_midiOut2(midiOut2)
 {
   oscSendS = new OscSend(this, P_OPACITY); // Oscsend Slider
   oscSendB = new OscSend(this); // OscSend Buttons
@@ -34,7 +34,15 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   connect(oscSendB, SIGNAL(sendStringToOutputLabel(QString)), this, SLOT(receiveStringFromSend(QString)));
   connect(oscSendS, SIGNAL(sendStringToOutputLabel(QString)), this, SLOT(receiveStringFromSend(QString)));
 
+  createAPC_Minis();
+  createMidiConnectWidgets();
+  createConnections();
 
+  this->setLayout(layoutTotal);
+}
+
+void TabMidi::createAPC_Minis()
+{
   layoutTotal = new QGridLayout();
 
   labelb9 = new QLabel("Source Rewind", this); labelb8 = new QLabel("Source Rate 200%", this); labelb7 = new QLabel("Source Rate 100%", this);
@@ -302,8 +310,10 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   layoutTotal->setAlignment(S14, Qt::AlignHCenter); layoutTotal->setAlignment(S15, Qt::AlignHCenter);
   layoutTotal->setAlignment(S16, Qt::AlignHCenter); layoutTotal->setAlignment(S17, Qt::AlignHCenter);
   layoutTotal->setAlignment(S18, Qt::AlignHCenter);
+}
 
-  // Connect/Disconnect Midi
+void TabMidi::createMidiConnectWidgets()
+{
   connectLayout1 = new QHBoxLayout();
   connectMidi1 = new QPushButton(this);
   QIcon connectIcon = QIcon(":/graphics/Connect");
@@ -329,7 +339,6 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   disconnectMidi2->setFixedSize(80, 40);
   disconnectMidi2->setIconSize(QSize(70, 30));
 
-
   midiPorts2 = new QComboBox(this);
   refreshPorts = new QPushButton(this);
   QIcon icon = QIcon(":/graphics/Refresh");
@@ -348,9 +357,10 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   layoutTotal->addLayout(connectLayout1, 12, 1, 1, 9);
   layoutTotal->addLayout(connectLayout2, 12, 11, 1, 9);
   layoutTotal->addWidget(refreshPorts, 12, 10);
+}
 
-  this->setLayout(layoutTotal);
-
+void TabMidi::createConnections()
+{
   // connect midiIn1
   connect(connectMidi1, SIGNAL(clicked()), this, SLOT(slotConnectMidi1()));
   connect(disconnectMidi1, SIGNAL(clicked()), this, SLOT(slotDisconnectMidi1()));
@@ -379,114 +389,115 @@ TabMidi::TabMidi(MyMidiIn *midiIn1,
   connect(this->S18, SIGNAL(valueChanged(int)), this, SLOT(sendOscS18(int)));
 
   // connections de tous les boutons APC1
-  {connect(this->B64, SIGNAL(clicked()), this, SLOT(sendOscAPCB64())); connect(this->B65, SIGNAL(clicked()), this, SLOT(sendOscAPCB65()));
-    connect(this->B66, SIGNAL(clicked()), this, SLOT(sendOscAPCB66())); connect(this->B67, SIGNAL(clicked()), this, SLOT(sendOscAPCB67()));
-    connect(this->B68, SIGNAL(clicked()), this, SLOT(sendOscAPCB68())); connect(this->B69, SIGNAL(clicked()), this, SLOT(sendOscAPCB69()));
-    connect(this->B70, SIGNAL(clicked()), this, SLOT(sendOscAPCB70())); connect(this->B71, SIGNAL(clicked()), this, SLOT(sendOscAPCB71()));
-    connect(this->B98, SIGNAL(clicked()), this, SLOT(sendOscAPCB98()));
+  connect(this->B64, SIGNAL(clicked()), this, SLOT(sendOscAPCB64())); connect(this->B65, SIGNAL(clicked()), this, SLOT(sendOscAPCB65()));
+  connect(this->B66, SIGNAL(clicked()), this, SLOT(sendOscAPCB66())); connect(this->B67, SIGNAL(clicked()), this, SLOT(sendOscAPCB67()));
+  connect(this->B68, SIGNAL(clicked()), this, SLOT(sendOscAPCB68())); connect(this->B69, SIGNAL(clicked()), this, SLOT(sendOscAPCB69()));
+  connect(this->B70, SIGNAL(clicked()), this, SLOT(sendOscAPCB70())); connect(this->B71, SIGNAL(clicked()), this, SLOT(sendOscAPCB71()));
+  connect(this->B98, SIGNAL(clicked()), this, SLOT(sendOscAPCB98()));
 
-    connect(this->B0, SIGNAL(clicked()), this, SLOT(sendOscAPCB0())); connect(this->B1, SIGNAL(clicked()), this, SLOT(sendOscAPCB1()));
-    connect(this->B2, SIGNAL(clicked()), this, SLOT(sendOscAPCB2())); connect(this->B3, SIGNAL(clicked()), this, SLOT(sendOscAPCB3()));
-    connect(this->B4, SIGNAL(clicked()), this, SLOT(sendOscAPCB4())); connect(this->B5, SIGNAL(clicked()), this, SLOT(sendOscAPCB5()));
-    connect(this->B6, SIGNAL(clicked()), this, SLOT(sendOscAPCB6())); connect(this->B7, SIGNAL(clicked()), this, SLOT(sendOscAPCB7()));
-    connect(this->B89, SIGNAL(clicked()), this, SLOT(sendOscAPCB89()));
+  connect(this->B0, SIGNAL(clicked()), this, SLOT(sendOscAPCB0())); connect(this->B1, SIGNAL(clicked()), this, SLOT(sendOscAPCB1()));
+  connect(this->B2, SIGNAL(clicked()), this, SLOT(sendOscAPCB2())); connect(this->B3, SIGNAL(clicked()), this, SLOT(sendOscAPCB3()));
+  connect(this->B4, SIGNAL(clicked()), this, SLOT(sendOscAPCB4())); connect(this->B5, SIGNAL(clicked()), this, SLOT(sendOscAPCB5()));
+  connect(this->B6, SIGNAL(clicked()), this, SLOT(sendOscAPCB6())); connect(this->B7, SIGNAL(clicked()), this, SLOT(sendOscAPCB7()));
+  connect(this->B89, SIGNAL(clicked()), this, SLOT(sendOscAPCB89()));
 
-    connect(this->B8, SIGNAL(clicked()), this, SLOT(sendOscAPCB8())); connect(this->B9, SIGNAL(clicked()), this, SLOT(sendOscAPCB9()));
-    connect(this->B10, SIGNAL(clicked()), this, SLOT(sendOscAPCB10())); connect(this->B11, SIGNAL(clicked()), this, SLOT(sendOscAPCB11()));
-    connect(this->B12, SIGNAL(clicked()), this, SLOT(sendOscAPCB12())); connect(this->B13, SIGNAL(clicked()), this, SLOT(sendOscAPCB13()));
-    connect(this->B14, SIGNAL(clicked()), this, SLOT(sendOscAPCB14())); connect(this->B15, SIGNAL(clicked()), this, SLOT(sendOscAPCB15()));
-    connect(this->B88, SIGNAL(clicked()), this, SLOT(sendOscAPCB88()));
+  connect(this->B8, SIGNAL(clicked()), this, SLOT(sendOscAPCB8())); connect(this->B9, SIGNAL(clicked()), this, SLOT(sendOscAPCB9()));
+  connect(this->B10, SIGNAL(clicked()), this, SLOT(sendOscAPCB10())); connect(this->B11, SIGNAL(clicked()), this, SLOT(sendOscAPCB11()));
+  connect(this->B12, SIGNAL(clicked()), this, SLOT(sendOscAPCB12())); connect(this->B13, SIGNAL(clicked()), this, SLOT(sendOscAPCB13()));
+  connect(this->B14, SIGNAL(clicked()), this, SLOT(sendOscAPCB14())); connect(this->B15, SIGNAL(clicked()), this, SLOT(sendOscAPCB15()));
+  connect(this->B88, SIGNAL(clicked()), this, SLOT(sendOscAPCB88()));
 
-    connect(this->B16, SIGNAL(clicked()), this, SLOT(sendOscAPCB16())); connect(this->B17, SIGNAL(clicked()), this, SLOT(sendOscAPCB17()));
-    connect(this->B18, SIGNAL(clicked()), this, SLOT(sendOscAPCB18())); connect(this->B19, SIGNAL(clicked()), this, SLOT(sendOscAPCB19()));
-    connect(this->B20, SIGNAL(clicked()), this, SLOT(sendOscAPCB20())); connect(this->B21, SIGNAL(clicked()), this, SLOT(sendOscAPCB21()));
-    connect(this->B22, SIGNAL(clicked()), this, SLOT(sendOscAPCB22())); connect(this->B23, SIGNAL(clicked()), this, SLOT(sendOscAPCB23()));
-    connect(this->B87, SIGNAL(clicked()), this, SLOT(sendOscAPCB87()));
+  connect(this->B16, SIGNAL(clicked()), this, SLOT(sendOscAPCB16())); connect(this->B17, SIGNAL(clicked()), this, SLOT(sendOscAPCB17()));
+  connect(this->B18, SIGNAL(clicked()), this, SLOT(sendOscAPCB18())); connect(this->B19, SIGNAL(clicked()), this, SLOT(sendOscAPCB19()));
+  connect(this->B20, SIGNAL(clicked()), this, SLOT(sendOscAPCB20())); connect(this->B21, SIGNAL(clicked()), this, SLOT(sendOscAPCB21()));
+  connect(this->B22, SIGNAL(clicked()), this, SLOT(sendOscAPCB22())); connect(this->B23, SIGNAL(clicked()), this, SLOT(sendOscAPCB23()));
+  connect(this->B87, SIGNAL(clicked()), this, SLOT(sendOscAPCB87()));
 
-    connect(this->B24, SIGNAL(clicked()), this, SLOT(sendOscAPCB24())); connect(this->B25, SIGNAL(clicked()), this, SLOT(sendOscAPCB25()));
-    connect(this->B26, SIGNAL(clicked()), this, SLOT(sendOscAPCB26())); connect(this->B27, SIGNAL(clicked()), this, SLOT(sendOscAPCB27()));
-    connect(this->B28, SIGNAL(clicked()), this, SLOT(sendOscAPCB28())); connect(this->B29, SIGNAL(clicked()), this, SLOT(sendOscAPCB29()));
-    connect(this->B30, SIGNAL(clicked()), this, SLOT(sendOscAPCB30())); connect(this->B31, SIGNAL(clicked()), this, SLOT(sendOscAPCB31()));
-    connect(this->B86, SIGNAL(clicked()), this, SLOT(sendOscAPCB86()));
+  connect(this->B24, SIGNAL(clicked()), this, SLOT(sendOscAPCB24())); connect(this->B25, SIGNAL(clicked()), this, SLOT(sendOscAPCB25()));
+  connect(this->B26, SIGNAL(clicked()), this, SLOT(sendOscAPCB26())); connect(this->B27, SIGNAL(clicked()), this, SLOT(sendOscAPCB27()));
+  connect(this->B28, SIGNAL(clicked()), this, SLOT(sendOscAPCB28())); connect(this->B29, SIGNAL(clicked()), this, SLOT(sendOscAPCB29()));
+  connect(this->B30, SIGNAL(clicked()), this, SLOT(sendOscAPCB30())); connect(this->B31, SIGNAL(clicked()), this, SLOT(sendOscAPCB31()));
+  connect(this->B86, SIGNAL(clicked()), this, SLOT(sendOscAPCB86()));
 
-    connect(this->B32, SIGNAL(clicked()), this, SLOT(sendOscAPCB32())); connect(this->B33, SIGNAL(clicked()), this, SLOT(sendOscAPCB33()));
-    connect(this->B34, SIGNAL(clicked()), this, SLOT(sendOscAPCB34())); connect(this->B35, SIGNAL(clicked()), this, SLOT(sendOscAPCB35()));
-    connect(this->B36, SIGNAL(clicked()), this, SLOT(sendOscAPCB36())); connect(this->B37, SIGNAL(clicked()), this, SLOT(sendOscAPCB37()));
-    connect(this->B38, SIGNAL(clicked()), this, SLOT(sendOscAPCB38())); connect(this->B39, SIGNAL(clicked()), this, SLOT(sendOscAPCB39()));
-    connect(this->B85, SIGNAL(clicked()), this, SLOT(sendOscAPCB85()));
+  connect(this->B32, SIGNAL(clicked()), this, SLOT(sendOscAPCB32())); connect(this->B33, SIGNAL(clicked()), this, SLOT(sendOscAPCB33()));
+  connect(this->B34, SIGNAL(clicked()), this, SLOT(sendOscAPCB34())); connect(this->B35, SIGNAL(clicked()), this, SLOT(sendOscAPCB35()));
+  connect(this->B36, SIGNAL(clicked()), this, SLOT(sendOscAPCB36())); connect(this->B37, SIGNAL(clicked()), this, SLOT(sendOscAPCB37()));
+  connect(this->B38, SIGNAL(clicked()), this, SLOT(sendOscAPCB38())); connect(this->B39, SIGNAL(clicked()), this, SLOT(sendOscAPCB39()));
+  connect(this->B85, SIGNAL(clicked()), this, SLOT(sendOscAPCB85()));
 
-    connect(this->B40, SIGNAL(clicked()), this, SLOT(sendOscAPCB40())); connect(this->B41, SIGNAL(clicked()), this, SLOT(sendOscAPCB41()));
-    connect(this->B42, SIGNAL(clicked()), this, SLOT(sendOscAPCB42())); connect(this->B43, SIGNAL(clicked()), this, SLOT(sendOscAPCB43()));
-    connect(this->B44, SIGNAL(clicked()), this, SLOT(sendOscAPCB44())); connect(this->B45, SIGNAL(clicked()), this, SLOT(sendOscAPCB45()));
-    connect(this->B46, SIGNAL(clicked()), this, SLOT(sendOscAPCB46())); connect(this->B47, SIGNAL(clicked()), this, SLOT(sendOscAPCB47()));
-    connect(this->B84, SIGNAL(clicked()), this, SLOT(sendOscAPCB84()));
+  connect(this->B40, SIGNAL(clicked()), this, SLOT(sendOscAPCB40())); connect(this->B41, SIGNAL(clicked()), this, SLOT(sendOscAPCB41()));
+  connect(this->B42, SIGNAL(clicked()), this, SLOT(sendOscAPCB42())); connect(this->B43, SIGNAL(clicked()), this, SLOT(sendOscAPCB43()));
+  connect(this->B44, SIGNAL(clicked()), this, SLOT(sendOscAPCB44())); connect(this->B45, SIGNAL(clicked()), this, SLOT(sendOscAPCB45()));
+  connect(this->B46, SIGNAL(clicked()), this, SLOT(sendOscAPCB46())); connect(this->B47, SIGNAL(clicked()), this, SLOT(sendOscAPCB47()));
+  connect(this->B84, SIGNAL(clicked()), this, SLOT(sendOscAPCB84()));
 
-    connect(this->B48, SIGNAL(clicked()), this, SLOT(sendOscAPCB48())); connect(this->B49, SIGNAL(clicked()), this, SLOT(sendOscAPCB49()));
-    connect(this->B50, SIGNAL(clicked()), this, SLOT(sendOscAPCB50())); connect(this->B51, SIGNAL(clicked()), this, SLOT(sendOscAPCB51()));
-    connect(this->B52, SIGNAL(clicked()), this, SLOT(sendOscAPCB52())); connect(this->B53, SIGNAL(clicked()), this, SLOT(sendOscAPCB53()));
-    connect(this->B54, SIGNAL(clicked()), this, SLOT(sendOscAPCB54())); connect(this->B55, SIGNAL(clicked()), this, SLOT(sendOscAPCB55()));
-    connect(this->B83, SIGNAL(clicked()), this, SLOT(sendOscAPCB83()));
+  connect(this->B48, SIGNAL(clicked()), this, SLOT(sendOscAPCB48())); connect(this->B49, SIGNAL(clicked()), this, SLOT(sendOscAPCB49()));
+  connect(this->B50, SIGNAL(clicked()), this, SLOT(sendOscAPCB50())); connect(this->B51, SIGNAL(clicked()), this, SLOT(sendOscAPCB51()));
+  connect(this->B52, SIGNAL(clicked()), this, SLOT(sendOscAPCB52())); connect(this->B53, SIGNAL(clicked()), this, SLOT(sendOscAPCB53()));
+  connect(this->B54, SIGNAL(clicked()), this, SLOT(sendOscAPCB54())); connect(this->B55, SIGNAL(clicked()), this, SLOT(sendOscAPCB55()));
+  connect(this->B83, SIGNAL(clicked()), this, SLOT(sendOscAPCB83()));
 
-    connect(this->B56, SIGNAL(clicked()), this, SLOT(sendOscAPCB56())); connect(this->B57, SIGNAL(clicked()), this, SLOT(sendOscAPCB57()));
-    connect(this->B58, SIGNAL(clicked()), this, SLOT(sendOscAPCB58())); connect(this->B59, SIGNAL(clicked()), this, SLOT(sendOscAPCB59()));
-    connect(this->B60, SIGNAL(clicked()), this, SLOT(sendOscAPCB60())); connect(this->B61, SIGNAL(clicked()), this, SLOT(sendOscAPCB61()));
-    connect(this->B62, SIGNAL(clicked()), this, SLOT(sendOscAPCB62())); connect(this->B63, SIGNAL(clicked()), this, SLOT(sendOscAPCB63()));
-    connect(this->B82, SIGNAL(clicked()), this, SLOT(sendOscAPCB82()));}
+  connect(this->B56, SIGNAL(clicked()), this, SLOT(sendOscAPCB56())); connect(this->B57, SIGNAL(clicked()), this, SLOT(sendOscAPCB57()));
+  connect(this->B58, SIGNAL(clicked()), this, SLOT(sendOscAPCB58())); connect(this->B59, SIGNAL(clicked()), this, SLOT(sendOscAPCB59()));
+  connect(this->B60, SIGNAL(clicked()), this, SLOT(sendOscAPCB60())); connect(this->B61, SIGNAL(clicked()), this, SLOT(sendOscAPCB61()));
+  connect(this->B62, SIGNAL(clicked()), this, SLOT(sendOscAPCB62())); connect(this->B63, SIGNAL(clicked()), this, SLOT(sendOscAPCB63()));
+  connect(this->B82, SIGNAL(clicked()), this, SLOT(sendOscAPCB82()));
 
   // connections de tous les boutons APC2
-  {connect(this->B64_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB64_2())); connect(this->B65_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB65_2()));
-    connect(this->B66_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB66_2())); connect(this->B67_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB67_2()));
-    connect(this->B68_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB68_2())); connect(this->B69_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB69_2()));
-    connect(this->B70_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB70_2())); connect(this->B71_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB71_2()));
-    connect(this->B98_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB98_2()));
+  connect(this->B64_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB64_2())); connect(this->B65_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB65_2()));
+  connect(this->B66_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB66_2())); connect(this->B67_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB67_2()));
+  connect(this->B68_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB68_2())); connect(this->B69_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB69_2()));
+  connect(this->B70_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB70_2())); connect(this->B71_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB71_2()));
+  connect(this->B98_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB98_2()));
 
-    connect(this->B0_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB0_2())); connect(this->B1_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB1_2()));
-    connect(this->B2_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB2_2())); connect(this->B3_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB3_2()));
-    connect(this->B4_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB4_2())); connect(this->B5_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB5_2()));
-    connect(this->B6_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB6_2())); connect(this->B7_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB7_2()));
-    connect(this->B89_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB89_2()));
+  connect(this->B0_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB0_2())); connect(this->B1_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB1_2()));
+  connect(this->B2_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB2_2())); connect(this->B3_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB3_2()));
+  connect(this->B4_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB4_2())); connect(this->B5_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB5_2()));
+  connect(this->B6_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB6_2())); connect(this->B7_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB7_2()));
+  connect(this->B89_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB89_2()));
 
-    connect(this->B8_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB8_2())); connect(this->B9_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB9_2()));
-    connect(this->B10_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB10_2())); connect(this->B11_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB11_2()));
-    connect(this->B12_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB12_2())); connect(this->B13_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB13_2()));
-    connect(this->B14_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB14_2())); connect(this->B15_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB15_2()));
-    connect(this->B88_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB88_2()));
+  connect(this->B8_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB8_2())); connect(this->B9_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB9_2()));
+  connect(this->B10_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB10_2())); connect(this->B11_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB11_2()));
+  connect(this->B12_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB12_2())); connect(this->B13_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB13_2()));
+  connect(this->B14_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB14_2())); connect(this->B15_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB15_2()));
+  connect(this->B88_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB88_2()));
 
-    connect(this->B16_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB16_2())); connect(this->B17_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB17_2()));
-    connect(this->B18_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB18_2())); connect(this->B19_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB19_2()));
-    connect(this->B20_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB20_2())); connect(this->B21_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB21_2()));
-    connect(this->B22_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB22_2())); connect(this->B23_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB23_2()));
-    connect(this->B87_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB87_2()));
+  connect(this->B16_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB16_2())); connect(this->B17_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB17_2()));
+  connect(this->B18_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB18_2())); connect(this->B19_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB19_2()));
+  connect(this->B20_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB20_2())); connect(this->B21_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB21_2()));
+  connect(this->B22_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB22_2())); connect(this->B23_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB23_2()));
+  connect(this->B87_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB87_2()));
 
-    connect(this->B24_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB24_2())); connect(this->B25_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB25_2()));
-    connect(this->B26_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB26_2())); connect(this->B27_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB27_2()));
-    connect(this->B28_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB28_2())); connect(this->B29_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB29_2()));
-    connect(this->B30_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB30_2())); connect(this->B31_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB31_2()));
-    connect(this->B86_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB86_2()));
+  connect(this->B24_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB24_2())); connect(this->B25_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB25_2()));
+  connect(this->B26_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB26_2())); connect(this->B27_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB27_2()));
+  connect(this->B28_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB28_2())); connect(this->B29_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB29_2()));
+  connect(this->B30_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB30_2())); connect(this->B31_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB31_2()));
+  connect(this->B86_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB86_2()));
 
-    connect(this->B32_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB32_2())); connect(this->B33_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB33_2()));
-    connect(this->B34_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB34_2())); connect(this->B35_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB35_2()));
-    connect(this->B36_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB36_2())); connect(this->B37_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB37_2()));
-    connect(this->B38_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB38_2())); connect(this->B39_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB39_2()));
-    connect(this->B85_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB85_2()));
+  connect(this->B32_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB32_2())); connect(this->B33_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB33_2()));
+  connect(this->B34_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB34_2())); connect(this->B35_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB35_2()));
+  connect(this->B36_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB36_2())); connect(this->B37_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB37_2()));
+  connect(this->B38_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB38_2())); connect(this->B39_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB39_2()));
+  connect(this->B85_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB85_2()));
 
-    connect(this->B40_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB40_2())); connect(this->B41_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB41_2()));
-    connect(this->B42_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB42_2())); connect(this->B43_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB43_2()));
-    connect(this->B44_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB44_2())); connect(this->B45_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB45_2()));
-    connect(this->B46_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB46_2())); connect(this->B47_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB47_2()));
-    connect(this->B84_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB84_2()));
+  connect(this->B40_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB40_2())); connect(this->B41_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB41_2()));
+  connect(this->B42_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB42_2())); connect(this->B43_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB43_2()));
+  connect(this->B44_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB44_2())); connect(this->B45_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB45_2()));
+  connect(this->B46_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB46_2())); connect(this->B47_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB47_2()));
+  connect(this->B84_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB84_2()));
 
-    connect(this->B48_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB48_2())); connect(this->B49_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB49_2()));
-    connect(this->B50_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB50_2())); connect(this->B51_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB51_2()));
-    connect(this->B52_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB52_2())); connect(this->B53_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB53_2()));
-    connect(this->B54_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB54_2())); connect(this->B55_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB55_2()));
-    connect(this->B83_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB83_2()));
+  connect(this->B48_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB48_2())); connect(this->B49_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB49_2()));
+  connect(this->B50_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB50_2())); connect(this->B51_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB51_2()));
+  connect(this->B52_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB52_2())); connect(this->B53_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB53_2()));
+  connect(this->B54_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB54_2())); connect(this->B55_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB55_2()));
+  connect(this->B83_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB83_2()));
 
-    connect(this->B56_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB56_2())); connect(this->B57_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB57_2()));
-    connect(this->B58_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB58_2())); connect(this->B59_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB59_2()));
-    connect(this->B60_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB60_2())); connect(this->B61_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB61_2()));
-    connect(this->B62_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB62_2())); connect(this->B63_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB63_2()));
-    connect(this->B82_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB82_2()));}
+  connect(this->B56_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB56_2())); connect(this->B57_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB57_2()));
+  connect(this->B58_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB58_2())); connect(this->B59_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB59_2()));
+  connect(this->B60_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB60_2())); connect(this->B61_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB61_2()));
+  connect(this->B62_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB62_2())); connect(this->B63_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB63_2()));
+  connect(this->B82_2, SIGNAL(clicked()), this, SLOT(sendOscAPCB82_2()));
+
 }
 
 void TabMidi::getPortNames()
@@ -900,7 +911,7 @@ void TabMidi::sendOscAPCB61_2(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID
 void TabMidi::sendOscAPCB62_2(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID16->value()); oscSendB->ExecuteSend(); }
 void TabMidi::sendOscAPCB63_2(){ oscSendB->setChamp(P_REWIND); oscSendB->setP_ID1(pID17->value()); oscSendB->ExecuteSend(); }
 
-// Masters à faire
+// Masters
 void TabMidi::sendOscS18(int uneOpacite)
 {
   oscSendS->setChamp(R_P_OPACITY); oscSendS->setP_name("*"); oscSendS->setP_opacity(uneOpacite); oscSendS->ExecuteSend();
@@ -918,7 +929,7 @@ void TabMidi::sendOscAPCB88_2(){ oscSendB->setChamp(R_M_SOLO); oscSendB->setM_na
 void TabMidi::sendOscAPCB87_2(){ oscSendB->setChamp(R_M_SOLO); oscSendB->setM_name("*"); oscSendB->setM_issolo(true); oscSendB->ExecuteSend();
                                  m_midiOut1->allBoutonSoloOn();
                                  m_midiOut2->allBoutonSoloOn();}
-void TabMidi::sendOscAPCB86_2(){ /*GoBack*/ } // Les assigner dans tabseq
+void TabMidi::sendOscAPCB86_2(){ /*GoBack*/ } // En attente
 void TabMidi::sendOscAPCB85_2(){ /*Go*/ }
 void TabMidi::sendOscAPCB84_2(){ oscSendB->setChamp(PAUSE); oscSendB->ExecuteSend(); m_midiOut2->sendBoutonOn(84); m_midiOut2->sendBoutonOff(83);}
 void TabMidi::sendOscAPCB83_2(){ oscSendB->setChamp(PLAY); oscSendB->ExecuteSend(); m_midiOut2->sendBoutonOn(83); m_midiOut2->sendBoutonOff(84);}

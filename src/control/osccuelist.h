@@ -28,7 +28,6 @@ class OscCueList :
   Q_OBJECT
 
 public:
-
   explicit OscCueList(QObject *parent = nullptr);
   ~OscCueList();
 
@@ -45,7 +44,6 @@ public:
   OscSend* retOscsendFromFileLine(QStringList &lineToken); // revoir en xml ?
   void addCueFromFileLine(QStringList &lineToken);
 
-  OscSend* getRootSend(){ return rootSend; }; // pour tester
   OscSend *getSend(const QModelIndex &index) const;
 
   void addCue();
@@ -64,7 +62,6 @@ public:
   bool hideShowColumn(int col) const;
 
 private:
-
   OscSend *rootSend;
 
 };
@@ -74,6 +71,7 @@ private:
 class OscCuelistDelegate : public QStyledItemDelegate
 {
   Q_OBJECT
+
 public:
   explicit OscCuelistDelegate(QObject *parent = nullptr);
   ~OscCuelistDelegate(){}
