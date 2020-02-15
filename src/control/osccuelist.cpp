@@ -48,8 +48,6 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const
   }
   OscSend *tempSend = getSend(index);
   int col = index.column();
-  QBrush salmonColor(QColor(SALMONCOLOR));
-  QBrush yellowColor(QColor(YELLOWCOLOR));
 
   if (index.flags().testFlag(Qt::ItemIsEditable))
   {
@@ -73,71 +71,157 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const
       case M_name2: return tempSend->getM_name2(); break;
       case M_Id: return tempSend->getM_ID1(); break;
       case M_opac: return tempSend->getM_opacity(); break;
-      case Visible: return tempSend->getM_isvisible(); break;
-      case Solo: return tempSend->getM_issolo(); break;
-      case Lock: return tempSend->getM_islocked(); break;
+      case Visible: return (int)tempSend->getM_isvisible(); break;
+      case Solo: return (int)tempSend->getM_issolo(); break;
+      case Lock: return (int)tempSend->getM_islocked(); break;
       case Depth: return tempSend->getM_depth(); break;
-      case Fade_In: return tempSend->getIsfadein(); break;
+      case Fade_In: return (int)tempSend->getIsfadein(); break;
       case Time: return tempSend->getTime(); break;
       case Wait: return tempSend->getTimewait(); break;
       case Note: return tempSend->getNoteSend(); break;
       default: break;
       } break;
     case Qt::BackgroundRole:
-      if (tempSend->getChamp() == CUE) return yellowColor;
-      if(col == Champ) return salmonColor;
-      switch(tempSend->getChamp())
+      if (tempSend->getChamp() == CUE) return yellowColor2;
+      if (col == Champ) return salmonColor;
+      switch (tempSend->getChamp())
       {
-      case P_NAME: if(col == P_name || col == P_Id) return salmonColor; break;
-      case P_REWIND: if(col == P_Id) return salmonColor; break;
-      case P_COLOR:
-        if(col == P_Id) return salmonColor;
-        if(col == Color) return QColor(tempSend->getP_color());
+      case P_NAME:
+        if (col == P_name) return salmonColor;
+        if (col == P_Id) return blueColor;
         break;
-      case P_OPACITY: if(col == P_Id || col == P_opac) return salmonColor; break;
-      case P_VOLUME: if(col == P_Id || col == Vol) return salmonColor; break;
-      case P_RATE: if(col == P_Id || col == Rate) return salmonColor; break;
-      case P_URI: if(col == Uri || col == P_Id) return salmonColor; break;
-      case M_NAME: if(col == M_name || col == M_Id) return salmonColor; break;
+      case P_REWIND: if(col == P_Id) return blueColor; break;
+      case P_COLOR:
+        if (col == P_Id) return blueColor;
+        if (col == Color) return QColor(tempSend->getP_color());
+        break;
+      case P_OPACITY:
+        if (col == P_Id) return blueColor;
+        if (col == P_opac) return salmonColor;
+        break;
+      case P_VOLUME:
+        if (col == P_Id) return blueColor;
+        if (col == Vol) return salmonColor;
+        break;
+      case P_RATE:
+        if (col == P_Id) return blueColor;
+        if (col == Rate) return salmonColor;
+        break;
+      case P_URI:
+        if (col == P_Id) return blueColor;
+        if (col == Uri) return salmonColor;
+        break;
+      case M_NAME:
+        if (col == M_Id) return blueColor;
+        if (col == M_name) return salmonColor;
+        break;
       case M_OPACITY: if(col == M_opac || col == M_Id) return salmonColor; break;
-      case M_VISIBLE: if(col == Visible || col == M_Id) return salmonColor; break;
-      case M_SOLO: if(col == M_Id || col == Solo) return salmonColor; break;
-      case M_LOCK: if(col == M_Id || col == Lock) return salmonColor; break;
-      case M_DEPTH: if(col == M_Id || col == Depth) return salmonColor; break;
-      case P_XFADE: if(col == P_Id || col == P_Id2 || col == Time) return salmonColor; break;
-      case P_FADE: if(col == P_Id || col == Fade_In || col == Time) return salmonColor; break;
-      case R_P_NAME: if(col == P_name || col == P_name2) return salmonColor; break;
-      case R_P_REWIND: if(col == P_name) return salmonColor; break;
-      case R_P_OPACITY: if(col == P_name || col == P_opac) return salmonColor; break;
-      case R_P_VOLUME: if(col == P_name || col == Vol) return salmonColor; break;
-      case R_P_RATE: if(col == P_name || col == Rate) return salmonColor; break;
-      case R_P_URI: if(col == P_name || col == Uri) return salmonColor; break;
-      case R_P_COLOR: if(col == P_name || col == Color) return salmonColor; break;
-      case R_M_NAME: if(col == M_name || col == M_name2) return salmonColor; break;
-      case R_M_OPACITY: if(col == M_name || col == M_opac) return salmonColor; break;
-      case R_M_VISIBLE: if(col == M_name || col == Visible) return salmonColor; break;
-      case R_M_SOLO: if(col == M_name || col == Solo) return salmonColor; break;
-      case R_M_LOCK: if(col == M_name || col == Lock) return salmonColor; break;
+      case M_VISIBLE:
+        if (col == M_Id) return blueColor;
+        if (col == Visible)
+        {
+          if (tempSend->getM_isvisible()) return greenColor;
+          else return orangeColor;
+        }
+        break;
+      case M_SOLO:
+        if (col == M_Id) return blueColor;
+        if (col == Solo)
+        {
+          if (tempSend->getM_issolo()) return greenColor;
+          else return orangeColor;
+        }
+        break;
+      case M_LOCK:
+        if (col == M_Id) return blueColor;
+        if (col == Lock)
+        {
+          if (tempSend->getM_islocked()) return greenColor;
+          else return orangeColor;
+        }
+        break;
+      case M_DEPTH:
+        if (col == M_Id) return blueColor;
+        if (col == Depth) return salmonColor;
+        break;
+      case P_XFADE:
+        if (col == Time) return yellowColor;
+        if (col == P_Id || col == P_Id2) return blueColor;
+        break;
+      case P_FADE:
+        if (col == P_Id) return blueColor;
+        if (col == Time) return yellowColor;
+        if (col == Fade_In)
+        {
+          if (tempSend->getIsfadein()) return greenColor;
+          else return orangeColor;
+        }
+        break;
+      case R_P_NAME: if (col == P_name || col == P_name2) return salmonColor; break;
+      case R_P_REWIND: if (col == P_name) return salmonColor; break;
+      case R_P_OPACITY: if (col == P_name || col == P_opac) return salmonColor; break;
+      case R_P_VOLUME: if (col == P_name || col == Vol) return salmonColor; break;
+      case R_P_RATE: if (col == P_name || col == Rate) return salmonColor; break;
+      case R_P_URI: if (col == P_name || col == Uri) return salmonColor; break;
+      case R_P_COLOR: if (col == P_name || col == Color) return salmonColor; break;
+      case R_M_NAME: if (col == M_name || col == M_name2) return salmonColor; break;
+      case R_M_OPACITY: if (col == M_name || col == M_opac) return salmonColor; break;
+      case R_M_VISIBLE:
+        if (col == M_name) return salmonColor;
+        if (col == Visible)
+        {
+          if (tempSend->getM_isvisible()) return greenColor;
+          else return orangeColor;
+        }
+        break;
+      case R_M_SOLO:
+        if (col == M_name) return salmonColor;
+        if (col == Solo)
+        {
+          if (tempSend->getM_issolo()) return greenColor;
+          else return orangeColor;
+        }
+        break;
+      case R_M_LOCK:
+        if (col == M_name) return salmonColor;
+        if (col == Lock)
+        {
+          if (tempSend->getM_islocked()) return greenColor;
+          else return orangeColor;
+        }
+        break;
       case R_M_DEPTH: if(col == M_name || col == Depth) return salmonColor; break;
-      case R_P_FADE: if(col == P_name || col == Fade_In || col == Time) return salmonColor; break;
-      case R_P_XFADE: if(col == P_name || col == P_name2 || col == Time) return salmonColor; break;
+      case R_P_FADE:
+        if (col == P_name) return salmonColor;
+        if (col == Time) return yellowColor;
+        if (col == Fade_In)
+        {
+          if (tempSend->getIsfadein()) return orangeColor;
+          else return greenColor;
+        }
+        break;
+      case R_P_XFADE:
+        if (col == Time) return yellowColor;
+        if (col == P_name || col == P_name2) return salmonColor;
+        break;
       default: break;
       } break;
     case Qt::TextAlignmentRole: return Qt::AlignCenter;
     default: break;
     }
   }
-  else if (role == Qt::BackgroundRole && tempSend->getChamp() == CUE) return yellowColor; // pour afficher les lignes de cue en jaune
+  else if (role == Qt::BackgroundRole && tempSend->getChamp() == CUE) return yellowColor2; // pour afficher les lignes de cue en jaune
   if (index.flags().testFlag(Qt::ItemIsSelectable))
   {
     if (role == Qt::DisplayRole && col == Champ)
     {
       QString value = QString("CUE %1 - ").arg(tempSend->getSendId() + 1);
               value += tempSend->getNoteSend();
-      return value; // rajouter l'ID de la cue + la note
+      return value;
     }
     if (role == Qt::DisplayRole && col == Wait) return tempSend->getTimewait();
     if (role == Qt::TextAlignmentRole && col == Wait) return Qt::AlignCenter;
+    if (role == Qt::BackgroundRole && col == Wait && tempSend->getTimewait()) return yellowColor;
   }
   return QVariant();
 }
@@ -159,7 +243,7 @@ bool OscCueList::setData(const QModelIndex &index, const QVariant &value, int ro
   double oldTime = tempSend->getTime();
   double oldTotalTime = tempCue->getTimewait();
 
-  switch(col)
+  switch (col)
   {
   case Champ: tempSend->setChamp(static_cast<champMM>(value.toInt())); break;
   case P_name: tempSend->setP_name(value.toString()); break;
@@ -584,33 +668,41 @@ OscCuelistDelegate::OscCuelistDelegate(QObject *parent):
 
 QWidget *OscCuelistDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-  if (index.column() == Champ)
+  int col = index.column();
+  if (col == Champ)
   {
     auto *champComboBox = new QComboBox(parent);
     for (int i = 0; i < CUE; i++) champComboBox->addItem(OscSend::getChampToString(i));
     return champComboBox;
   }
 
-  if (index.column() == Color)
+  if (col == Color)
   {
     auto *colorDialog = new QColorDialog(parent);
     colorDialog->setOption(QColorDialog::DontUseNativeDialog, true);
     return colorDialog;
   }
 
-  if (index.column() == Uri)
+  if (col == Uri)
   {
     auto *fileDialog = new QFileDialog(parent);
     fileDialog->setFileMode(QFileDialog::ExistingFile);
     fileDialog->setNameFilter("Media Files (*.png *.jpg *.gif *.tif *.mov *.avi *.mp4)");
     return fileDialog;
   }
+
+  if (col == Visible || col == Solo || col == Lock || col == Fade_In)
+  {
+    auto *checkBox = new QCheckBox(parent);
+    return checkBox;
+  }
   return QStyledItemDelegate::createEditor(parent, option, index);
 }
 
 void OscCuelistDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
-  if (index.column() == Champ)
+  int col = index.column();
+  if (col == Champ)
   {
     auto *comboBox = qobject_cast<QComboBox *>(editor);
     if (comboBox)
@@ -621,13 +713,22 @@ void OscCuelistDelegate::setEditorData(QWidget *editor, const QModelIndex &index
       comboBox->setCurrentIndex(value);
     }
   }
-  if (index.column() == Color)
+  if (col == Color)
   {
     auto *colorDialog = qobject_cast<QColorDialog *>(editor);
-    if (editor)
+    if (colorDialog)
     {
       QColor color = QColor(index.model()->data(index).toString());
       colorDialog->setCurrentColor(color);
+    }
+  }
+  if (col == Visible || col == Solo || col == Lock || col == Fade_In)
+  {
+    auto *checkBox = qobject_cast<QCheckBox *>(editor);
+    if (checkBox)
+    {
+      bool isChecked = index.model()->data(index).toBool();
+      checkBox->setChecked(isChecked);
     }
   }
   else

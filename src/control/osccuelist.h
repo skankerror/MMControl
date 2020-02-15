@@ -64,6 +64,14 @@ public:
 private:
   OscSend *rootSend;
 
+  const QBrush salmonColor = (QColor(SALMONCOLOR));
+  const QBrush yellowColor = (QColor(YELLOWCOLOR));
+  const QBrush yellowColor2 = (QColor(YELLOWCOLOR2));
+  const QBrush greenColor = (QColor(GREENCOLOR));
+  const QBrush orangeColor = (QColor(ORANGECOLOR));
+  const QBrush blueColor = (QColor(BLUECOLOR));
+  const QBrush redColor = (QColor(REDCOLOR));
+
 };
 
 //*****************************************************************************
