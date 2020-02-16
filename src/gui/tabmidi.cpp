@@ -289,7 +289,7 @@ void TabMidi::createAPC_Minis()
   labelAllVisibleOn = new QLabel("All Visible On", this);
   labelAllSoloOff = new QLabel("All Solo Off", this);
   labelAllSoloOn = new QLabel("All Solo On", this);
-  labelGoBack = new QLabel("", this);
+  labelGoBack = new QLabel("STOP", this);
   labelGo = new QLabel("GO !", this);
   labelPause = new QLabel("Pause", this);
   labelPlay = new QLabel("Play", this);
@@ -320,12 +320,17 @@ void TabMidi::createMidiConnectWidgets()
   connectMidi1->setIcon(connectIcon);
   connectMidi1->setFixedSize(80, 40);
   connectMidi1->setIconSize(QSize(70, 30));
+  connectMidi1->setToolTip("Connect APC Mini 1");
+  connectMidi1->setToolTipDuration(2000);
 
   disconnectMidi1 = new QPushButton(this);
   QIcon disconnectIcon = QIcon(":/graphics/Disconnect");
   disconnectMidi1->setIcon(disconnectIcon);
   disconnectMidi1->setFixedSize(80, 40);
   disconnectMidi1->setIconSize(QSize(70, 30));
+  disconnectMidi1->hide(); // On cache pour l'allumer si connecté
+  disconnectMidi1->setToolTip("Disconnect APC Mini 1");
+  disconnectMidi1->setToolTipDuration(2000);
 
   midiPorts1 = new QComboBox(this);
   connectLayout2 = new QHBoxLayout();
@@ -333,11 +338,16 @@ void TabMidi::createMidiConnectWidgets()
   connectMidi2->setIcon(connectIcon);
   connectMidi2->setFixedSize(80, 40);
   connectMidi2->setIconSize(QSize(70, 30));
+  connectMidi2->setToolTip("Connect APC Mini 2");
+  connectMidi2->setToolTipDuration(2000);
 
   disconnectMidi2 = new QPushButton(this);
   disconnectMidi2->setIcon(disconnectIcon);
   disconnectMidi2->setFixedSize(80, 40);
   disconnectMidi2->setIconSize(QSize(70, 30));
+  disconnectMidi2->hide(); // On cache pour l'allumer si connecté
+  disconnectMidi2->setToolTip("Disconnect APC Mini 2");
+  disconnectMidi2->setToolTipDuration(2000);
 
   midiPorts2 = new QComboBox(this);
   refreshPorts = new QPushButton(this);
@@ -345,6 +355,9 @@ void TabMidi::createMidiConnectWidgets()
   refreshPorts->setIcon(icon);
   refreshPorts->setFixedSize(60, 40);
   refreshPorts->setIconSize(QSize(50, 30));
+  refreshPorts->setToolTip("Refresh Midi Ports");
+  refreshPorts->setToolTipDuration(2000);
+
 
   getPortNames();
   connectLayout1->addWidget(connectMidi1);
@@ -941,6 +954,11 @@ void TabMidi::slotConnectMidi1()
   m_midiOut1->connectMidiOut(midiPorts1->currentIndex(), 1);
   m_midiOut1->allBoutonVisibleOff();
   m_midiOut1->allBoutonSoloOff();
+  if (m_midiIn1->isPortOpen())
+  {
+    connectMidi1->hide();
+    disconnectMidi1->show();
+  }
 }
 
 void TabMidi::slotConnectMidi2()
@@ -951,6 +969,9 @@ void TabMidi::slotConnectMidi2()
   m_midiOut2->allBoutonSoloOff();
   m_midiOut2->sendBoutonOff(83);
   m_midiOut2->sendBoutonOff(84);
+  if (m_midiIn2->isPortOpen())
+  connectMidi2->hide();
+  disconnectMidi2->show();
 }
 
 void TabMidi::slotDisconnectMidi1()
@@ -959,6 +980,8 @@ void TabMidi::slotDisconnectMidi1()
   m_midiOut1->allBoutonSoloOff();
   m_midiIn1->disconnectMidiIn();
   m_midiOut1->disconnectMidiOut();
+  disconnectMidi1->hide();
+  connectMidi1->show();
 }
 
 void TabMidi::slotDisconnectMidi2()
@@ -970,6 +993,8 @@ void TabMidi::slotDisconnectMidi2()
   m_midiOut2->sendBoutonOff(86);
   m_midiIn2->disconnectMidiIn();
   m_midiOut2->disconnectMidiOut();
+  disconnectMidi2->hide();
+  connectMidi2->show();
 }
 
 void TabMidi::receiveStringFromSend(QString tempString)

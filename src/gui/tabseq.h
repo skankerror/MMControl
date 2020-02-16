@@ -93,7 +93,7 @@ private:
         QPushButton *boutonLoad;
 
   // pour executeGo
-  OscSend *tempSend;
+  OscSend *tempSend = nullptr;
   int counterCue = 0;
   double totalTime = 0;
   int counterSend = 0;

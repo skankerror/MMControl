@@ -179,6 +179,7 @@ void TabSeq::executeGo()
     treeView->setCurrentIndex(m_oscCueList->index(0, 0, index));
     disconnectButtons(); // on disconnecte les boutons.
     executeGo();
+    if (m_midiOut2->isPortOpen()) m_midiOut2->sendBoutonOn(86);
     return;
   }
   else// C'est un send;
@@ -382,9 +383,16 @@ void TabSeq::loadFile()
 
 void TabSeq::receiveMidiNote2(int note)
 {
-  if (!(note == 86)) return;
-  boutonGo->animateClick();
-  m_midiOut2->sendBoutonOn(86);
+  if (note == 86)
+  {
+    boutonGo->animateClick();
+    m_midiOut2->sendBoutonOn(86);
+  }
+  if (note == 85)
+  {
+    boutonStop->animateClick();
+    m_midiOut2->sendBoutonOff(86);
+  }
 }
 
 void TabSeq::timeProgressFinishedCue()
@@ -479,6 +487,7 @@ void TabSeq::selectRow()
     totalTime = 0;
     resetOutputLabel(); // peut-être mettre un QTimer de 10ms pour être sûr de reseter
     reconnectButtons();    // On reconnecte les boutons
+    if (m_midiOut2->isPortOpen()) m_midiOut2->sendBoutonOff(86);
   }
 }
 
@@ -526,7 +535,7 @@ void TabSeq::stopCue()
   timeProgressFinishedCue();
   timeProgressFinishedSend();
   timeWaitProgressFinishedSend();
-  tempSend->fadeFinish();
+  if (tempSend) tempSend->fadeFinish();
   if (timerTotal->isActive()) timerTotal->stop();
   counterCue = 0;
   counterSend = 0;

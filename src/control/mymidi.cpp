@@ -45,24 +45,18 @@ void MyMidiIn::sendMidiToOsc(double deltatime,
 
   if ((int)unMessage->at(0) == MIDI_CONTROL)
   {
-//    qDebug() << "#0 : controller : ";
     int m_ID = (int)unMessage->at(1) - 47; // -47 car les sliders apc mini commencent leur ID à 48
-//    qDebug() << "paintID : " << m_ID;
     int m_temp  = (int)unMessage->at(2);
-    float m_varFloat = (float)m_temp;
-    m_varFloat /=127;
-//    qDebug() << " Opacity % : " << m_varFloat*100 << '\n';
-
+//    float m_varFloat = (float)m_temp;
+//    m_varFloat /=127;
     // Maintenant on y accède pour lancer le signal à *parent
-    unMidiIn->midiControlChanged(m_ID, m_varFloat);
+//    unMidiIn->midiControlChanged(m_ID, m_varFloat);
+    unMidiIn->midiControlChanged(m_ID, (float)(m_temp)/127);
   }
   else if ((int)unMessage->at(0) == MIDI_BUTTON_PRESSED)
   {
-//    qDebug() << "Button " << (int)unMessage->at(1) << " pressed \n";
-//    qDebug() << unMessage->at(0) << " " << unMessage->at(1) << " " << unMessage->at(2);
     unMidiIn->midiNoteChanged((int)unMessage->at(1));
   }
-
 }
 
 void MyMidiIn::connectMidiIn(int portNumber, int ID)
@@ -111,8 +105,7 @@ void MyMidiOut::connectMidiOut(int portNumber, int ID)
 {
   if (ID == 1) RtMidiOut::openPort(portNumber, MYPORTNAME_OUT_1);
   else RtMidiOut::openPort(portNumber, MYPORTNAME_OUT_2);
-  if (RtMidiOut::isPortOpen()) /*qDebug() << "Midi Out " << ID << "opened on port #" << portNumber*/;
-  else qDebug() << "Midi Out " << ID << " not opened";
+  if (!RtMidiOut::isPortOpen()) qDebug() << "Midi Out " << ID << " not opened";
 }
 
 void MyMidiOut::disconnectMidiOut()
@@ -120,7 +113,6 @@ void MyMidiOut::disconnectMidiOut()
   if (RtMidiOut::isPortOpen())
   {
     RtMidiOut::closePort();
-//    qDebug() << "Port out closed";
   }
   else qDebug() << "Port out was not opened...";
 }
