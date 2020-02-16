@@ -52,7 +52,7 @@ enum columns
 #define YELLOWCOLOR "#818658"
 #define YELLOWCOLOR2 "#7D8256"
 #define GREENCOLOR "#2F7539"
-#define ORANGECOLOR "#BA6D2B"
+#define ORANGECOLOR /*"#BA6D2B"*/ "#944C0F"
 #define BLUECOLOR "#3C559A"
 #define REDCOLOR "#730A0C"
 

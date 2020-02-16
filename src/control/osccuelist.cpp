@@ -802,7 +802,7 @@ void OscCuelistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
 
   }
   painter->restore();
-  if (index.column() != Uri || tempSend->getChamp() == CUE) QStyledItemDelegate::paint(painter, option, index);
+  if (index.column() != Uri || (tempSend->getChamp() != P_URI && tempSend->getChamp() != R_P_URI)) QStyledItemDelegate::paint(painter, option, index);
 
 }
 
