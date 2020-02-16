@@ -662,8 +662,9 @@ OscSend *OscCueList::getSend(const QModelIndex &index) const
 
 //*************************************************************************************
 
-OscCuelistDelegate::OscCuelistDelegate(QObject *parent):
-  QStyledItemDelegate(parent)
+OscCuelistDelegate::OscCuelistDelegate(OscCueList *oscCuelist, QObject *parent):
+  QStyledItemDelegate(parent),
+  m_oscCueList(oscCuelist)
 {}
 
 QWidget *OscCuelistDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -767,5 +768,41 @@ void OscCuelistDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptio
 {
   Q_UNUSED(index)
   editor->setGeometry(option.rect);
+}
+
+void OscCuelistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+  //  initStyleOption(option, index);
+  painter->save();
+//  QStyleOptionViewItem *option2 = new QStyleOptionViewItem(option);
+//  initStyleOption(option2, index);
+  if (!index.isValid()) return;
+  OscSend *tempSend = m_oscCueList->getSend(index);
+
+  if (index.flags().testFlag(Qt::ItemIsEditable) && index.column() == Uri)
+  {
+    QString tempString = tempSend->getP_uri();
+
+    for (int i = tempString.size() - 1; i > 0; --i)
+    {
+      if (tempString.at(i) == QChar('/'))
+      {
+        tempString = tempString.right(tempString.size() - i - 1); break;
+      }
+    }
+    if (tempSend->getChamp() == CUE) painter->setBackground(QBrush(QColor(YELLOWCOLOR)));
+    if (tempString.size()) painter->setBackground(QBrush(QColor(SALMONCOLOR)));
+//    painter->setBrush(option.backgroundBrush);
+//    painter->setBrush(option.backgroundBrush);
+//    painter->setBackground(option.backgroundBrush);
+    QTextOption textOption;
+    textOption.setAlignment(Qt::AlignCenter);
+    painter->fillRect(option.rect, option.backgroundBrush);
+    painter->drawText(option.rect, tempString, textOption);
+
+  }
+  painter->restore();
+  if (index.column() != Uri || tempSend->getChamp() == CUE) QStyledItemDelegate::paint(painter, option, index);
+
 }
 

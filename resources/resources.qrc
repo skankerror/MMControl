@@ -12,6 +12,10 @@
         <file alias="Connect">midi_connect.png</file>
         <file alias="Disconnect">midi_disconnect.png</file>
         <file alias="Stop">stop.png</file>
+        <file alias="PlayR">play_red.png</file>
+        <file alias="StopR">stop_red.png</file>
+        <file alias="StopY">stopY.png</file>
+        <file alias="PlayY">playY.png</file>
     </qresource>
     <qresource prefix="/"/>
     <qresource prefix="/qss">
