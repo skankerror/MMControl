@@ -71,6 +71,7 @@ private:
   const QBrush orangeColor = (QColor(ORANGECOLOR));
   const QBrush blueColor = (QColor(BLUECOLOR));
   const QBrush redColor = (QColor(REDCOLOR));
+  const QBrush lighterGray = (QColor(LIGHTERGRAY));
 
 };
 

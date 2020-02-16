@@ -157,17 +157,32 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const
           else return orangeColor;
         }
         break;
-      case R_P_NAME: if (col == P_name || col == P_name2) return salmonColor; break;
-      case R_P_REWIND: if (col == P_name) return salmonColor; break;
-      case R_P_OPACITY: if (col == P_name || col == P_opac) return salmonColor; break;
-      case R_P_VOLUME: if (col == P_name || col == Vol) return salmonColor; break;
-      case R_P_RATE: if (col == P_name || col == Rate) return salmonColor; break;
-      case R_P_URI: if (col == P_name || col == Uri) return salmonColor; break;
-      case R_P_COLOR: if (col == P_name || col == Color) return salmonColor; break;
-      case R_M_NAME: if (col == M_name || col == M_name2) return salmonColor; break;
-      case R_M_OPACITY: if (col == M_name || col == M_opac) return salmonColor; break;
+      case R_P_NAME: if (col == P_name || col == P_name2) return lighterGray; break;
+      case R_P_REWIND: if (col == P_name) return lighterGray; break;
+      case R_P_OPACITY:
+        if (col == P_name) return lighterGray;
+        if (col == P_opac) return salmonColor;
+        break;
+      case R_P_VOLUME:
+        if (col == P_name) return lighterGray;
+        if (col == Vol) return salmonColor;
+        break;
+      case R_P_RATE:
+        if (col == P_name) return lighterGray;
+        if (col == Rate) return salmonColor;
+        break;
+      case R_P_URI: if (col == P_name || col == Uri) return lighterGray; break; // C'est le delegate qui s'occupe de Uri
+      case R_P_COLOR:
+        if (col == Color) return QColor(tempSend->getP_color());
+        if (col == P_name) return lighterGray;
+        break;
+      case R_M_NAME: if (col == M_name || col == M_name2) return lighterGray; break;
+      case R_M_OPACITY:
+        if (col == P_name) return lighterGray;
+        if (col == M_opac) return salmonColor;
+        break;
       case R_M_VISIBLE:
-        if (col == M_name) return salmonColor;
+        if (col == M_name) return lighterGray;
         if (col == Visible)
         {
           if (tempSend->getM_isvisible()) return greenColor;
@@ -175,7 +190,7 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const
         }
         break;
       case R_M_SOLO:
-        if (col == M_name) return salmonColor;
+        if (col == M_name) return lighterGray;
         if (col == Solo)
         {
           if (tempSend->getM_issolo()) return greenColor;
@@ -183,16 +198,19 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const
         }
         break;
       case R_M_LOCK:
-        if (col == M_name) return salmonColor;
+        if (col == M_name) return lighterGray;
         if (col == Lock)
         {
           if (tempSend->getM_islocked()) return greenColor;
           else return orangeColor;
         }
         break;
-      case R_M_DEPTH: if(col == M_name || col == Depth) return salmonColor; break;
+      case R_M_DEPTH:
+        if(col == Depth) return salmonColor;
+        if (col == P_name) return lighterGray;
+        break;
       case R_P_FADE:
-        if (col == P_name) return salmonColor;
+        if (col == P_name) return lighterGray;
         if (col == Time) return yellowColor;
         if (col == Fade_In)
         {
@@ -202,7 +220,7 @@ QVariant OscCueList::data(const QModelIndex &index, int role) const
         break;
       case R_P_XFADE:
         if (col == Time) return yellowColor;
-        if (col == P_name || col == P_name2) return salmonColor;
+        if (col == P_name || col == P_name2) return lighterGray;
         break;
       default: break;
       } break;
@@ -791,13 +809,15 @@ void OscCuelistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
       }
     }
     if (tempSend->getChamp() == CUE) painter->setBackground(QBrush(QColor(YELLOWCOLOR)));
-    if (tempString.size()) painter->setBackground(QBrush(QColor(SALMONCOLOR)));
+    if (tempString.size()) painter->setBackground(QBrush(QColor(BLUECOLOR2)));
 //    painter->setBrush(option.backgroundBrush);
 //    painter->setBrush(option.backgroundBrush);
+    painter->setBackgroundMode(Qt::OpaqueMode);
 //    painter->setBackground(option.backgroundBrush);
     QTextOption textOption;
     textOption.setAlignment(Qt::AlignCenter);
-    painter->fillRect(option.rect, option.backgroundBrush);
+    // le pen, le style, le background mode
+    painter->fillRect(option.rect, QBrush(QColor(BLUECOLOR2)));
     painter->drawText(option.rect, tempString, textOption);
 
   }

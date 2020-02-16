@@ -54,7 +54,9 @@ enum columns
 #define GREENCOLOR "#2F7539"
 #define ORANGECOLOR /*"#BA6D2B"*/ "#944C0F"
 #define BLUECOLOR "#3C559A"
+#define BLUECOLOR2 "#308CC6"
 #define REDCOLOR "#730A0C"
+#define LIGHTERGRAY "#778390"
 
 // MyMidiIn
 #define __LINUX_ALSA // define API for RtMidi needed by MyMidiIn class

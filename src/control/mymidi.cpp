@@ -47,10 +47,7 @@ void MyMidiIn::sendMidiToOsc(double deltatime,
   {
     int m_ID = (int)unMessage->at(1) - 47; // -47 car les sliders apc mini commencent leur ID à 48
     int m_temp  = (int)unMessage->at(2);
-//    float m_varFloat = (float)m_temp;
-//    m_varFloat /=127;
     // Maintenant on y accède pour lancer le signal à *parent
-//    unMidiIn->midiControlChanged(m_ID, m_varFloat);
     unMidiIn->midiControlChanged(m_ID, (float)(m_temp)/127);
   }
   else if ((int)unMessage->at(0) == MIDI_BUTTON_PRESSED)
@@ -66,7 +63,6 @@ void MyMidiIn::connectMidiIn(int portNumber, int ID)
   else RtMidiIn::openPort(portNumber, MYPORTNAME_IN_2);
   if (RtMidiIn::isPortOpen())
   {
-//    qDebug() << "Midi in " << ID << " opened on port #" << portNumber;
     RtMidiIn::setCallback(&sendMidiToOsc, this);
   }
   else qDebug() << "Midi in " << ID << " not opened";
@@ -77,7 +73,7 @@ void MyMidiIn::disconnectMidiIn()
   if (RtMidiIn::isPortOpen())
   {
     RtMidiIn::closePort();
-//    qDebug() << "Port in closed";
+    RtMidiIn::cancelCallback();
   }
   else qDebug() << "Port in was not opened...";
 }
