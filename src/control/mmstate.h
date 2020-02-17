@@ -19,30 +19,38 @@
 #define MMSTATE_H
 
 #include <QObject>
-#include <QVector>
-#include <QString>
-#include <QColor>
+#include <QDebug>
+#include "mmpaint.h"
+#include "mmmapping.h"
 
 class MMState : public QObject
 {
   Q_OBJECT
 public:
   explicit MMState(QObject *parent = nullptr);
+  MMState(const MMState &mmState, QObject *parent = nullptr);
+  ~MMState();
+
+  //getters
+  MMPaint *getPaint(const int vectorAt) const;
+  int getPaintCount() const { return v_listPaint.size(); }
+  MMMapping *getMapping(const int vectorAt) const;
+  int getMappingCount() const { return v_listMapping.size(); };
+
+  //setters
+  void addPaint(MMPaint *paint);
+  void removePaint(const int vectorAt);
+  void addMapping(MMMapping *mapping);
+  void removeMapping(const int vectorAt);
 
 signals:
 
 public slots:
 
 private:
-  QVector<QString *> v_uri;
-  QVector<int > v_rate;
-  QVector<int> v_p_opacity;
-  QVector<int> v_m_opacity;
-  QVector<bool> v_isSolo;
-  QVector<bool> v_isVisible;
-  bool pausePlay;
-  // bool isRewind;
-  QVector<QColor*> v_color;
+  QVector<MMPaint *> v_listPaint;
+  QVector<MMMapping *>v_listMapping;
+//  bool isPlayingState = false;
 };
 
 #endif // MMSTATE_H

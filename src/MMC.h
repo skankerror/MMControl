@@ -72,4 +72,10 @@ enum columns
 #define LIGHT_OFF 00
 #define QUEUE_SIZE_LIMIT 100
 
+// MMPaint
+enum paintType
+{
+  colorPaint, videoPaint, cameraPaint
+};
+
 #endif // MMC_H
