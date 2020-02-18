@@ -30,22 +30,43 @@ public:
 
 signals:
 
-public slots:
+private slots:
+  void typeSelected(const int index);
+  void paintSelected();
+  void mappingSelected();
+  void paintTypeSelected(const int index);
 
 private:
+  void createToolBar();
+
   MMStateList *m_mmstateList;
   QTreeView *treeView;
 
-  QHBoxLayout *layoutMain;
-    QHBoxLayout *layout1;
-      QVBoxLayout *boutonLayout;
-        QPushButton *boutonRemove;
-        QPushButton *boutonAdd;
-        QPushButton *boutonSaveAs;
-        QPushButton *boutonLoad;
-
-  // Créer une toolbar pour créer un initial state
-
+  QVBoxLayout *layoutMain;
+    QHBoxLayout *layoutBar;
+      QComboBox *typeBox;
+      QLabel *idLabel;
+      QSpinBox *idBox;
+      QLineEdit *nameLine;
+      QComboBox *paintTypeBox;
+      QLabel *uriLabel;
+      QPushButton *uriButton;
+      QLabel *colorLabel;
+      QPushButton * colorButton;
+      QLabel *cameraLabel;
+      QPushButton *cameraButton;
+      QLabel *opacityLabel;
+      QSpinBox *opacityBox;
+      QLabel *rateLabel;
+      QSpinBox *rateBox;
+      QLabel *volumeLabel;
+      QSpinBox *volumeBox;
+      QCheckBox *visibleBox;
+      QCheckBox *soloBox;
+      QCheckBox *lockBox;
+      QLabel *depthLabel;
+      QSpinBox *depthBox;
+      QPushButton *addToStateButton;
 };
 
 #endif // TABMMSTATE_H

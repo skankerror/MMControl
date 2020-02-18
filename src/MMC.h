@@ -18,8 +18,6 @@
 #ifndef MMC_H
 #define MMC_H
 
-#include <QBrush>
-
 // MainWindow
 #define WINDOW_TITLE "Mapmap Controller"
 #define X_WINDOW_OFFSET 200
@@ -59,7 +57,7 @@ enum columns
 #define LIGHTERGRAY "#778390"
 
 // MyMidiIn
-#define __LINUX_ALSA // define API for RtMidi needed by MyMidiIn class
+#define __LINUX_ALSA // define API for RtMidi needed by MyMidi class
 #define APCMINI_1 "APC MINI:APC MINI MIDI 1 24:0"
 #define APCMINI_2 "APC MINI:APC MINI MIDI 1 28:0"
 #define MYPORTNAME_IN_1 "MMControl Input Port 1"
@@ -75,7 +73,7 @@ enum columns
 // MMPaint
 enum paintType
 {
-  colorPaint, videoPaint, cameraPaint
+   videoPaint, colorPaint, cameraPaint
 };
 
 // MMStateList

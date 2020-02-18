@@ -71,7 +71,7 @@ QVariant MMStateList::data(const QModelIndex &index, int role) const
     case PM_Id: return paint->getM_id(); break;
     case PaintType:
     {
-      switch (paint->getM_paintType())
+      switch (paint->getM_paintType()) // A éditer dans le delegate
       {
       case colorPaint: return QString("Color"); break;
       case videoPaint: return QString("Media"); break;
@@ -96,6 +96,7 @@ QVariant MMStateList::data(const QModelIndex &index, int role) const
     case Opacity: return mapping->getM_opacity(); break;
     case MappingVisible: return mapping->visible(); break;
     case MappingSolo: return mapping->solo(); break;
+    case MappingLocked: return mapping->locked(); break;
     case MappingDepth: return mapping->getM_depth(); break;
     default: break;
     }
@@ -138,8 +139,26 @@ QVariant MMStateList::headerData(int section, Qt::Orientation orientation, int r
 
 Qt::ItemFlags MMStateList::flags(const QModelIndex &index) const
 {
-// en attendant...
-  return index.isValid() ? Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable : Qt::NoItemFlags;
+  if (!index.isValid()) return Qt::NoItemFlags;
+  int col = index.column();
+  QObject *item = getItem(index);
+  QString className = item->metaObject()->className();
+  if (className == "MMState" && col == Name) return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+  if (className == "MMPaint")
+  {
+    if (col == Name) return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+    if (col == PM_Id || col == PaintType || col == PaintUri || col == Opacity || col == PaintRate || col == PaintVolume)
+      return parent(index).row() ? Qt::ItemIsEnabled | Qt::ItemIsSelectable
+                                 : Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
+  }
+  if (className == "MMMapping")
+  {
+    if (col == Name) return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+    if (col == PM_Id || col == Opacity || col == MappingVisible || col == MappingSolo || col == MappingLocked || col == MappingDepth)
+      return parent(parent(index)).row() ? Qt::ItemIsEnabled | Qt::ItemIsSelectable
+                                 : Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
+  }
+  return Qt::NoItemFlags;
 }
 
 QModelIndex MMStateList::index(int row, int column, const QModelIndex &parent) const
@@ -182,7 +201,8 @@ QModelIndex MMStateList::parent(const QModelIndex &index) const
   if (classParentName == "MMPaint")
   {
     MMPaint *paintParent = qobject_cast<MMPaint *>(parentItem);
-    MMState *stateGrandParent = qobject_cast<MMState *>(paintParent->parent()); // Ils sont passés par MMState::addPaint ils ont le state pour parent
+    // Ils sont passés par MMState::addPaint ils ont le state pour parent
+    MMState *stateGrandParent = qobject_cast<MMState *>(paintParent->parent());
     rowParent = stateGrandParent->getPaintVectorAt(paintParent);
     return createIndex(rowParent, 0, paintParent);
   }

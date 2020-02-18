@@ -52,7 +52,7 @@ public:
 
 private:
   int m_id;
-  QString m_name;
+  QString m_name = "Mesh";
   int m_paintLinkedId;
   int m_opacity = 100;
   bool isVisible = false;
@@ -103,7 +103,7 @@ signals:
 
 private:
   int m_id;
-  QString m_name;
+  QString m_name = "paint";
   paintType m_paintType = videoPaint;
   QString m_uri = "";
   QString m_color = "";
