@@ -13,19 +13,12 @@ MMStateList::MMStateList(QObject *parent):
   MMMapping *mapping1 = new MMMapping(paint1);
   mapping1->setM_id(3);
   mapping1->setM_name("layer3");
-  MMState *state2 = new MMState(*state1, this);
+  mapping1->setM_depth(3);
   addState(state1);
   addPaint(paint1, 0);
   addMapping(mapping1, 0, 0);
+  MMState *state2 = new MMState(*state1, this);
   addState(state2);
-//  v_listMMState.append(state2);
-//  QObject *obj1 = state1;
-//  QObject *obj2 = paint1;
-//  QObject *obj3 = mapping1;
-//  QString obj1Name = obj1->metaObject()->className();
-//  QString obj2Name = obj2->metaObject()->className();
-//  QString obj3Name = obj3->metaObject()->className();
-//  qDebug () << obj1Name << obj2Name << obj3Name;
 }
 
 MMStateList::~MMStateList()
@@ -65,30 +58,49 @@ QVariant MMStateList::data(const QModelIndex &index, int role) const
   int row = index.row();
   int col = index.column();
   QString className = item->metaObject()->className();
-  switch(role)
+  if (className == "MMState" && (role == Qt::DisplayRole || role == Qt::EditRole) && col == Name)
   {
-  case Qt::DisplayRole: case Qt::EditRole:
-    switch(col)
-    {
-    case Name:
-      if (className == "MMState") return QString("State %1 ").arg(row);
-      if (className == "MMPaint")
-      {
-        MMPaint *paint = qobject_cast<MMPaint *>(item);
-        return QString("Paint %1 ").arg(paint->getM_id()).append(paint->getM_name());
-        break;
-      }
-      if (className == "MMMapping")
-      {
-        MMMapping *mapping = qobject_cast<MMMapping *>(item);
-        return QString("Mapping %1 ").arg(mapping->getM_id()).append(mapping->getM_name());
-        break;
-      }
-      break;
-    }
-  default: break;
+    return QString("State %1 ").arg(row + 1);
   }
-
+  if (className == "MMPaint" && (role == Qt::DisplayRole || role == Qt::EditRole))
+  {
+    MMPaint *paint = qobject_cast<MMPaint *>(item);
+    switch (col)
+    {
+    case Name: return paint->getM_name(); break;
+    case PM_Id: return paint->getM_id(); break;
+    case PaintType:
+    {
+      switch (paint->getM_paintType())
+      {
+      case colorPaint: return QString("Color"); break;
+      case videoPaint: return QString("Media"); break;
+      case cameraPaint: return QString("Camera"); break;
+      default: break;
+      }
+    }
+    case PaintUri: return paint->getM_uri(); // A détailler... delegate...
+    case Opacity: return paint->getM_opacity();
+    case PaintRate: return paint->getM_rate();
+    case PaintVolume: return paint->getM_volume();
+    default: break;
+    }
+  }
+  if (className == "MMMapping" && (role == Qt::DisplayRole || role == Qt::EditRole))
+  {
+    MMMapping *mapping = qobject_cast<MMMapping *>(item);
+    switch (col)
+    {
+    case Name: return mapping->getM_name(); break;
+    case PM_Id: return mapping->getM_id(); break;
+    case Opacity: return mapping->getM_opacity(); break;
+    case MappingVisible: return mapping->visible(); break;
+    case MappingSolo: return mapping->solo(); break;
+    case MappingDepth: return mapping->getM_depth(); break;
+    default: break;
+    }
+  }
+  if (role == Qt::TextAlignmentRole) return Qt::AlignCenter;
   return QVariant();
 }
 
@@ -108,7 +120,7 @@ QVariant MMStateList::headerData(int section, Qt::Orientation orientation, int r
       case Name: return QString("Name");
       case PM_Id: return QString("Id");
       case PaintType: return QString("Paint Type");
-      case PaintUri: return QString("Paint Uri/Color/Caméra");
+      case PaintUri: return QString("Uri/Color/Caméra");
       case Opacity: return QString("Opacity");
       case PaintRate: return QString("Rate");
       case PaintVolume: return QString("Volume");
@@ -132,7 +144,7 @@ Qt::ItemFlags MMStateList::flags(const QModelIndex &index) const
 
 QModelIndex MMStateList::index(int row, int column, const QModelIndex &parent) const
 { //revoir !
-  if (parent.isValid() && parent.column() !=0) return QModelIndex(); // Mystique mais ça marche sur osccuelist. Ne permet de ne sélectionner que la ligne ?
+  if (parent.isValid() && parent.column() !=0) return QModelIndex(); // != 0 permet de ne sélectionner que la ligne
   QObject *parentItem = getItem(parent);
   if (!parentItem) return QModelIndex();
   if (parentItem == rootState /*&& row >=0 && row < v_listMMState.size()*/)
@@ -170,7 +182,7 @@ QModelIndex MMStateList::parent(const QModelIndex &index) const
   if (classParentName == "MMPaint")
   {
     MMPaint *paintParent = qobject_cast<MMPaint *>(parentItem);
-    MMState *stateGrandParent = qobject_cast<MMState *>(paintParent->parent()); // Bien s'assurer qu'ils ont le state pour QObject parent
+    MMState *stateGrandParent = qobject_cast<MMState *>(paintParent->parent()); // Ils sont passés par MMState::addPaint ils ont le state pour parent
     rowParent = stateGrandParent->getPaintVectorAt(paintParent);
     return createIndex(rowParent, 0, paintParent);
   }

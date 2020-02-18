@@ -16,8 +16,6 @@ INCLUDEPATH += \
     $$PWD/contrib/oscpack/ip
 
 SOURCES += \
-    src/control/mmmapping.cpp \
-    src/control/mmpaint.cpp \
     src/control/mmstatelist.cpp \
     src/control/mymidi.cpp \
     src/main.cpp \
@@ -36,8 +34,6 @@ SOURCES += \
 
 HEADERS += \
     src/MMC.h \
-    src/control/mmmapping.h \
-    src/control/mmpaint.h \
     src/control/mmstatelist.h \
     src/control/mymidi.h \
     src/gui/mainwindow.h \

@@ -190,6 +190,10 @@ TabSeq {
   background: #414D59;
 }
 
+TabMMState {
+  background: #414D59;
+}
+
 QTreeView QTreeCornerButton::section {
   background-color: #414D59;
 }

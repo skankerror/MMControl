@@ -20,7 +20,100 @@
 
 #include <QObject>
 #include <QDebug>
-#include "mmpaint.h"
+#include "MMC.h"
+
+class MMMapping : public QObject
+{
+  Q_OBJECT
+
+public:
+  explicit MMMapping(QObject *parent = nullptr);
+  MMMapping(const MMMapping &mmmapping, QObject *parent = nullptr);
+
+  // getters
+  int getM_id() const { return m_id; };
+  QString getM_name() const { return m_name; };
+  int getM_paintLinkedId() const { return m_paintLinkedId; };
+  int getM_opacity() const { return m_opacity; };
+  bool visible() const { return isVisible; };
+  bool locked() const { return isLocked; };
+  bool solo() const { return isSolo; };
+  int getM_depth() const {return m_depth; };
+
+  // setters
+  void setM_id(const int id) { m_id = id; };
+  void setM_name(const QString name) { m_name = name; };
+  void setm_paintLinkedId(const int id) { m_paintLinkedId = id; };
+  void setM_opacity(const int opacity) { m_opacity = opacity; };
+  void setVisible(const bool visible) { isVisible = visible; };
+  void setLocked(const bool locked) { isLocked = locked; };
+  void setSolo(const bool solo) { isSolo = solo; };
+  void setM_depth(const int depth) { m_depth = depth; };
+
+private:
+  int m_id;
+  QString m_name;
+  int m_paintLinkedId;
+  int m_opacity = 100;
+  bool isVisible = false;
+  bool isLocked = false;
+  bool isSolo = false;
+  int m_depth;
+};
+
+//**********************************************************************
+
+class MMPaint : public QObject
+{
+  Q_OBJECT
+
+public:
+  explicit MMPaint(QObject *parent = nullptr);
+  MMPaint(const MMPaint &mmpaint, QObject *parent = nullptr);
+  ~MMPaint();
+
+  // getters
+  int getM_id() const { return m_id; };
+  QString getM_name() const { return m_name; };
+  paintType getM_paintType() const { return m_paintType; };
+  QString getM_uri() const { return m_uri; };
+  QString getM_color() const { return m_color; };
+  int getM_opacity() const { return m_opacity; };
+  int getM_rate() const { return m_rate; };
+  int getM_volume() const { return m_volume; };
+
+  MMMapping *getMapping(const int vectorAt) const;
+  int getMappingCount() const { return v_listMapping.size(); };
+
+  // setters
+  void setM_id(const int id) { m_id = id; };
+  void setM_name(const QString name) { m_name = name; };
+  void setM_paintType(const paintType type);
+  void setM_uri(const QString uri) { m_uri = uri; };
+  void setM_color(const QString color) { m_color = color; };
+  void setM_opacity(const int opacity) { m_opacity = opacity; };
+  void setM_rate(const int rate) { m_rate = rate; };
+  void setM_volume(const int volume) { m_volume = volume; };
+
+  void addMapping(MMMapping *mapping);
+  void insertMapping(MMMapping *mapping,const int vectorAt);
+  void removeMapping(const int vectorAt);
+
+signals:
+
+private:
+  int m_id;
+  QString m_name;
+  paintType m_paintType = videoPaint;
+  QString m_uri = "";
+  QString m_color = "";
+  int m_opacity = 0;
+  int m_rate = 100;
+  int m_volume = 100;
+  QVector<MMMapping *> v_listMapping;
+};
+
+//*******************************************************************************
 
 class MMState : public QObject
 {

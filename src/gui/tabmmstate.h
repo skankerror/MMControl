@@ -44,6 +44,8 @@ private:
         QPushButton *boutonSaveAs;
         QPushButton *boutonLoad;
 
+  // Créer une toolbar pour créer un initial state
+
 };
 
 #endif // TABMMSTATE_H
