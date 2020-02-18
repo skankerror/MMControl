@@ -18,24 +18,32 @@
 #ifndef TABMMSTATE_H
 #define TABMMSTATE_H
 
-#include <QWidget>
 #include <QtWidgets>
-//#include <QtreeView>
-#include "mmstate.h"
-#include <QBoxLayout>
+#include "mmstatelist.h"
 
 class TabMMState : public QWidget
 {
   Q_OBJECT
+
 public:
-  explicit TabMMState(MMState *state, QWidget *parent = nullptr);
+  explicit TabMMState(QWidget *parent = nullptr);
 
 signals:
 
 public slots:
 
 private:
-  MMState *m_mmstate;
+  MMStateList *m_mmstateList;
+  QTreeView *treeView;
+
+  QHBoxLayout *layoutMain;
+    QHBoxLayout *layout1;
+      QVBoxLayout *boutonLayout;
+        QPushButton *boutonRemove;
+        QPushButton *boutonAdd;
+        QPushButton *boutonSaveAs;
+        QPushButton *boutonLoad;
+
 };
 
 #endif // TABMMSTATE_H

@@ -66,8 +66,8 @@ MainWindow::MainWindow() :
 void MainWindow::createCentralWidget()
 {
   tabmidi = new TabMidi(midiIn1, midiIn2, midiOut1, midiOut2, this);
-  tabseq = new TabSeq(oscCueList, treeView, midiIn1, midiIn2, midiOut1, midiOut2, /*progressBarCue, */this);
-  tabmmstate = new TabMMState(state, this);
+  tabseq = new TabSeq(oscCueList, treeView, midiIn1, midiIn2, midiOut1, midiOut2, this);
+  tabmmstate = new TabMMState(this);
   tabwidget = new QTabWidget(this);
 
   tabwidget->addTab(tabmidi, "Midi In");
@@ -353,6 +353,7 @@ void MainWindow::showWidgets(const int index)
   default: break;
   }
 }
+
 void MainWindow::sendFromToolBar()
 {
   champMM index = static_cast<champMM>(champComboBox->currentIndex());

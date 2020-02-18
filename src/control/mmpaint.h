@@ -19,6 +19,8 @@
 #define MMPAINT_H
 
 #include <QObject>
+#include <QDebug>
+#include "mmmapping.h"
 #include "MMC.h"
 
 class MMPaint : public QObject
@@ -28,6 +30,7 @@ class MMPaint : public QObject
 public:
   explicit MMPaint(QObject *parent = nullptr);
   MMPaint(const MMPaint &mmpaint, QObject *parent = nullptr);
+  ~MMPaint();
 
   // getters
   int getM_id() const { return m_id; };
@@ -39,8 +42,8 @@ public:
   int getM_rate() const { return m_rate; };
   int getM_volume() const { return m_volume; };
 
-  int getMappingId(const int vectorAt) const; // return -1 si pas d'Id
-  int getMappingCount() {return v_listMappingId.size(); };
+  MMMapping *getMapping(const int vectorAt) const;
+  int getMappingCount() {return v_listMapping.size(); };
 
   // setters
   void setM_id(const int id) { m_id = id; };
@@ -52,9 +55,9 @@ public:
   void setM_rate(const int rate) { m_rate = rate; };
   void setM_volume(const int volume) { m_volume = volume; };
 
-  void addMappingId(const int id);
-  void changeMappingId(const int id, const int vectorAt);
-  void removeMappingId(const int vectorAt);
+  void addMapping(MMMapping *mapping);
+  void insertMapping(MMMapping *mapping,const int vectorAt);
+  void removeMapping(const int vectorAt);
 
 signals:
 
@@ -67,7 +70,7 @@ private:
   int m_opacity;
   int m_rate;
   int m_volume;
-  QVector<int> v_listMappingId;
+  QVector<MMMapping *> v_listMapping;
 };
 
 #endif // MMPAINT_H

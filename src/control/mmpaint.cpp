@@ -18,9 +18,7 @@
 #include "mmpaint.h"
 
 MMPaint::MMPaint(QObject *parent) : QObject(parent)
-{
-
-}
+{}
 
 MMPaint::MMPaint(const MMPaint &mmpaint, QObject *parent) : QObject(parent)
 {
@@ -32,13 +30,31 @@ MMPaint::MMPaint(const MMPaint &mmpaint, QObject *parent) : QObject(parent)
   m_opacity = mmpaint.m_opacity;
   m_rate = mmpaint.m_rate;
   m_volume = mmpaint.m_volume;
-  v_listMappingId = mmpaint.v_listMappingId;
+  // Copier chaque Mapping
+  if (v_listMapping.size())
+  {
+    for (int i = 0; i < v_listMapping.size(); i++)
+    {
+      MMMapping *tempMapping = mmpaint.v_listMapping.at(i);
+      MMMapping *newMapping = new MMMapping(*tempMapping, this);
+      v_listMapping.append(newMapping);
+    }
+  }
 }
 
-int MMPaint::getMappingId(const int vectorAt) const
+MMPaint::~MMPaint()
 {
-  if (vectorAt < 0 || vectorAt >= v_listMappingId.size()) return -1;
-  return v_listMappingId.at(vectorAt);
+  qDeleteAll(v_listMapping);
+}
+
+MMMapping *MMPaint::getMapping(const int vectorAt) const
+{
+  if (vectorAt < 0 || vectorAt >= v_listMapping.size())
+  {
+    qDebug () << "problem return MMMapping";
+    return nullptr;
+  }
+  return v_listMapping.at(vectorAt);
 }
 
 void MMPaint::setM_paintType(const paintType type)
@@ -47,19 +63,23 @@ void MMPaint::setM_paintType(const paintType type)
   m_paintType = type;
 }
 
-void MMPaint::addMappingId(int id)
+void MMPaint::addMapping(MMMapping *mapping)
 {
-  if (id) v_listMappingId.append(id);
+  mapping->setParent(this);
+  mapping->setm_paintLinkedId(m_id);
+  v_listMapping.append(mapping);
 }
 
-void MMPaint::changeMappingId(const int id, const int vectorAt)
+void MMPaint::insertMapping(MMMapping *mapping, const int vectorAt)
 {
-  if (vectorAt < 0 || vectorAt >= v_listMappingId.size()) return;
-  v_listMappingId[vectorAt] = id;
+  if (vectorAt < 0 || vectorAt >= v_listMapping.size()) return;
+  mapping->setParent(this);
+  mapping->setm_paintLinkedId(m_id);
+  v_listMapping.insert(vectorAt, mapping);
 }
 
-void MMPaint::removeMappingId(const int vectorAt)
+void MMPaint::removeMapping(const int vectorAt)
 {
-  if (vectorAt < 0 || vectorAt >= v_listMappingId.size()) return;
-  v_listMappingId.remove(vectorAt);
+  if (vectorAt < 0 || vectorAt >= v_listMapping.size()) return;
+  v_listMapping.remove(vectorAt);
 }

@@ -17,9 +17,66 @@
 
 #include "tabmmstate.h"
 
-TabMMState::TabMMState(MMState * mmstate, QWidget *parent) :
-  QWidget(parent),
-  m_mmstate(mmstate)
+TabMMState::TabMMState(QWidget *parent) :
+  QWidget(parent)
 {
+  m_mmstateList = new MMStateList(this);
+  treeView = new QTreeView(this);
+
+  layoutMain = new QHBoxLayout();
+  layout1 = new QHBoxLayout();
+  boutonLayout = new QVBoxLayout();
+
+  boutonRemove = new QPushButton(this);
+  QIcon binIcon = QIcon(":/graphics/Bin");
+  boutonRemove->setIcon(binIcon);
+  boutonRemove->setFixedSize(70, 30);
+  boutonRemove->setIconSize(QSize(40, 25));
+  boutonRemove->setToolTip("Remove Paint or Mapping");
+  boutonRemove->setToolTipDuration(2000);
+
+  boutonAdd = new QPushButton(this);
+  QIcon plusIcon = QIcon(":/graphics/Plus");
+  boutonAdd->setIcon(plusIcon);
+  boutonAdd->setFixedSize(70, 30);
+  boutonAdd->setIconSize(QSize(40, 25));
+  boutonAdd->setToolTip("Add Paint or Mapping");
+  boutonAdd->setToolTipDuration(2000);
+
+  boutonSaveAs = new QPushButton(this);
+  QIcon saveIcon = QIcon(":/graphics/Save");
+  boutonSaveAs->setIcon(saveIcon);
+  boutonSaveAs->setFixedSize(70, 30);
+  boutonSaveAs->setIconSize(QSize(40, 25));
+//  boutonSaveAs->setShortcut(QKeySequence("Ctrl+S"));
+  boutonSaveAs->setToolTip("Save as\nCtrl+s");
+  boutonSaveAs->setToolTipDuration(2000);
+
+  boutonLoad = new QPushButton(this);
+  QIcon loadIcon = QIcon(":/graphics/Load");
+  boutonLoad->setIcon(loadIcon);
+  boutonLoad->setFixedSize(70, 30);
+  boutonLoad->setIconSize(QSize(40, 25));
+//  boutonLoad->setShortcut(QKeySequence("Ctrl+O"));
+  boutonLoad->setToolTip("Load File\nCtrl+o");
+  boutonLoad->setToolTipDuration(2000);
+
+  boutonLayout->addWidget(boutonRemove);
+  boutonLayout->addWidget(boutonAdd);
+  boutonLayout->addWidget(boutonSaveAs);
+  boutonLayout->addWidget(boutonLoad);
+
+  treeView->setModel(m_mmstateList);
+  treeView->setTextElideMode(Qt::ElideLeft);
+  treeView->setVerticalScrollMode(QAbstractItemView::ScrollPerItem);
+
+  treeView->show();
+
+  layout1->addWidget(treeView);
+  layoutMain->addLayout(boutonLayout);
+  layoutMain->addLayout(layout1);
+  this->setLayout(layoutMain);
+
+  setAutoFillBackground(true);
 
 }

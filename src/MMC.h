@@ -78,4 +78,12 @@ enum paintType
   colorPaint, videoPaint, cameraPaint
 };
 
+// MMStateList
+enum columnState
+{
+  Name, PM_Id, PaintType, PaintUri, Opacity, PaintRate,
+  PaintVolume, MappingVisible, MappingSolo, MappingLocked, MappingDepth,
+  columnStateCount = MappingDepth + 1
+};
+
 #endif // MMC_H

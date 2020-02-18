@@ -42,10 +42,7 @@ int OscCueList::columnCount(const QModelIndex &parent) const
 
 QVariant OscCueList::data(const QModelIndex &index, int role) const
 {
-  if (!index.isValid())
-  {
-    return QVariant();
-  }
+  if (!index.isValid()) return QVariant();
   OscSend *tempSend = getSend(index);
   int col = index.column();
 

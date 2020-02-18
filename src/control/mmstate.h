@@ -21,11 +21,11 @@
 #include <QObject>
 #include <QDebug>
 #include "mmpaint.h"
-#include "mmmapping.h"
 
 class MMState : public QObject
 {
   Q_OBJECT
+
 public:
   explicit MMState(QObject *parent = nullptr);
   MMState(const MMState &mmState, QObject *parent = nullptr);
@@ -34,23 +34,14 @@ public:
   //getters
   MMPaint *getPaint(const int vectorAt) const;
   int getPaintCount() const { return v_listPaint.size(); }
-  MMMapping *getMapping(const int vectorAt) const;
-  int getMappingCount() const { return v_listMapping.size(); };
+  int getPaintVectorAt(MMPaint *paint) const;
 
   //setters
   void addPaint(MMPaint *paint);
   void removePaint(const int vectorAt);
-  void addMapping(MMMapping *mapping);
-  void removeMapping(const int vectorAt);
-
-signals:
-
-public slots:
 
 private:
   QVector<MMPaint *> v_listPaint;
-  QVector<MMMapping *>v_listMapping;
-//  bool isPlayingState = false;
 };
 
 #endif // MMSTATE_H
