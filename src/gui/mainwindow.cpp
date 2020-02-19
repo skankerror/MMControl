@@ -25,7 +25,7 @@ MainWindow::MainWindow() :
   setWindowTitle(WINDOW_TITLE);
   setGeometry(X_WINDOW_OFFSET, Y_WINDOW_OFFSET, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-  state = new MMState(this);
+  stateList = new MMStateList(this);
   oscCueList = new OscCueList(this);
 
   midiIn1 = new MyMidiIn(this);
@@ -67,12 +67,13 @@ void MainWindow::createCentralWidget()
 {
   tabmidi = new TabMidi(midiIn1, midiIn2, midiOut1, midiOut2, this);
   tabseq = new TabSeq(oscCueList, treeView, midiIn1, midiIn2, midiOut1, midiOut2, this);
-  tabmmstate = new TabMMState(this);
+  tabmmstate = new TabMMState(stateList, this);
   tabwidget = new QTabWidget(this);
 
   tabwidget->addTab(tabmidi, "Midi In");
   tabwidget->addTab(tabseq, "Sequencer");
   tabwidget->addTab(tabmmstate, "Mapmap State");
+//  tabwidget->setMovable(true);
 
   setCentralWidget(tabwidget);
 }

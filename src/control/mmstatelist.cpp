@@ -78,6 +78,7 @@ QVariant MMStateList::data(const QModelIndex &index, int role) const
       case cameraPaint: return QString("Camera"); break;
       default: break;
       }
+      break;
     }
     case PaintUri: return paint->getM_uri(); // A détailler... delegate...
     case Opacity: return paint->getM_opacity();
@@ -146,15 +147,17 @@ Qt::ItemFlags MMStateList::flags(const QModelIndex &index) const
   if (className == "MMState" && col == Name) return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
   if (className == "MMPaint")
   {
-    if (col == Name) return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
-    if (col == PM_Id || col == PaintType || col == PaintUri || col == Opacity || col == PaintRate || col == PaintVolume)
+    if (col == Name || col == PM_Id || col == PaintType || col == PaintUri || col == Opacity
+        || col == PaintRate || col == PaintVolume)
+      // Si c'est le 1er state retourner aussi editable
       return parent(index).row() ? Qt::ItemIsEnabled | Qt::ItemIsSelectable
                                  : Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
   }
-  if (className == "MMMapping")
+  if (className == "MMMapping") // rajouter Qt::ItemHasNoChildren ?
   {
-    if (col == Name) return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
-    if (col == PM_Id || col == Opacity || col == MappingVisible || col == MappingSolo || col == MappingLocked || col == MappingDepth)
+    if (col == Name || col == PM_Id || col == Opacity || col == MappingVisible || col == MappingSolo
+        || col == MappingLocked || col == MappingDepth)
+      // Si c'est le 1er state retourner aussi editable
       return parent(parent(index)).row() ? Qt::ItemIsEnabled | Qt::ItemIsSelectable
                                  : Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
   }
@@ -162,7 +165,7 @@ Qt::ItemFlags MMStateList::flags(const QModelIndex &index) const
 }
 
 QModelIndex MMStateList::index(int row, int column, const QModelIndex &parent) const
-{ //revoir !
+{
   if (parent.isValid() && parent.column() !=0) return QModelIndex(); // != 0 permet de ne sélectionner que la ligne
   QObject *parentItem = getItem(parent);
   if (!parentItem) return QModelIndex();
@@ -185,7 +188,7 @@ QModelIndex MMStateList::index(int row, int column, const QModelIndex &parent) c
 }
 
 QModelIndex MMStateList::parent(const QModelIndex &index) const
-{ // revoir !
+{
   if (!index.isValid()) return QModelIndex();
   QObject *item = getItem(index);
   QObject *parentItem = item ? getParentItem(index) : nullptr;

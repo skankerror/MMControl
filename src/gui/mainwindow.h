@@ -19,7 +19,7 @@
 #define MAINWINDOW_H
 
 #include <QtWidgets>
-#include "mmstate.h"
+#include "mmstatelist.h"
 #include "mymidi.h"
 #include "tabmidi.h"
 #include "tabseq.h"
@@ -32,6 +32,7 @@
 class MainWindow : public QMainWindow
 {
   Q_OBJECT
+
 public:
   explicit MainWindow();
 
@@ -62,7 +63,7 @@ private slots:
 
 private:
   OscCueList *oscCueList;
-  MMState *state;
+  MMStateList *stateList;
   MyMidiIn *midiIn1;
   MyMidiIn *midiIn2;
   MyMidiOut *midiOut1;

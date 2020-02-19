@@ -26,6 +26,7 @@
 class MyMidiIn : public QObject, public RtMidiIn
 {
   Q_OBJECT
+
 public:
   MyMidiIn(QObject *parent = nullptr,
            RtMidi::Api api = LINUX_ALSA,
@@ -37,7 +38,6 @@ public:
   static void sendMidiToOsc (double deltatime,
                              std::vector<unsigned char> *unMessage,
                              void *userData);
-
 
 signals:
   void sigMidiCtrlChanged(int unID, float uneOpacite);

@@ -17,10 +17,11 @@
 
 #include "tabmmstate.h"
 
-TabMMState::TabMMState(QWidget *parent) :
-  QWidget(parent)
+TabMMState::TabMMState(MMStateList *stateList, QWidget *parent) :
+  QWidget(parent),
+  m_stateList(stateList)
 {
-  m_mmstateList = new MMStateList(this);
+//  m_mmstateList = new MMStateList(this);
   treeView = new QTreeView(this);
 
   layoutMain = new QVBoxLayout();
@@ -28,7 +29,7 @@ TabMMState::TabMMState(QWidget *parent) :
   createToolBar();
   paintSelected();
 
-  treeView->setModel(m_mmstateList);
+  treeView->setModel(m_stateList);
   treeView->setTextElideMode(Qt::ElideLeft);
   treeView->setVerticalScrollMode(QAbstractItemView::ScrollPerItem);
 
@@ -134,6 +135,69 @@ void TabMMState::paintTypeSelected(const int index)
   }
 }
 
+void TabMMState::addToState()
+{
+  if (typeBox->currentIndex() == 0)
+  {
+    MMPaint *paint = new MMPaint(this);
+    paint->setM_id(idBox->value());
+    paint->setM_name(nameLine->text());
+    int paintType = paintTypeBox->currentIndex();
+    paint->setM_paintType(paintTypeBox->currentIndex());
+    switch (paintType)
+    {
+    case videoPaint:
+      while (uriLabel->text() == "Choose->") setUriLabel();
+      paint->setM_uri(uriLabel->text());
+      break;
+    case colorPaint:
+      while (colorLabel->text() == "Choose->") setColorLabel();
+      paint->setM_uri(colorLabel->text());
+      break;
+    case cameraPaint:
+      while (cameraLabel->text() == "Choose->") setCameraLabel();
+      paint->setM_uri(cameraLabel->text());
+      break;
+    default: break;
+    }
+    paint->setM_opacity(opacityBox->value());
+    paint->setM_rate(rateBox->value());
+    paint->setM_volume(volumeBox->value());
+    m_stateList->addPaint(paint, 0); // voir pour l'insert ?
+  }
+  else
+  {
+    MMMapping *mapping = new MMMapping(this);
+    mapping->setM_id(idBox->value());
+    mapping->setM_name(nameLine->text());
+    mapping->setM_opacity(opacityBox->value());
+    mapping->setVisible(visibleBox->isChecked());
+    mapping->setSolo(soloBox->isChecked());
+    mapping->setLocked(lockBox->isChecked());
+    mapping->setM_depth(depthBox->value());
+    // voir le paint sélectionné
+  }
+}
+
+void TabMMState::setUriLabel()
+{
+  QString fileName = QFileDialog::getOpenFileName(this, "Choose File", "",
+                                                  "Media Files (*.png *.jpg *.gif *.tif *.mov *.avi *.mp4)");
+  uriLabel->setText(fileName);
+}
+
+void TabMMState::setColorLabel()
+{
+  QColor colorTemp = QColorDialog::getColor(Qt::green, this, "Select Color", QColorDialog::DontUseNativeDialog);
+  colorLabel->setText(colorTemp.name());
+}
+
+void TabMMState::setCameraLabel()
+{
+  QString fileName = QFileDialog::getOpenFileName(this, "Choose device", "/dev", "");
+  cameraLabel->setText(fileName);
+}
+
 void TabMMState::createToolBar()
 {
   layoutBar = new QHBoxLayout();
@@ -206,6 +270,10 @@ void TabMMState::createToolBar()
 
     connect(typeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(typeSelected(int)));
     connect(paintTypeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(paintTypeSelected(int)));
+    connect(addToStateButton, SIGNAL(clicked()), this, SLOT(addToState()));
+    connect(uriButton, SIGNAL(clicked()), this, SLOT(setUriLabel()));
+    connect(colorButton, SIGNAL(clicked()), this, SLOT(setColorLabel()));
+    connect(cameraButton, SIGNAL(clicked()), this, SLOT(setCameraLabel()));
 }
 
 

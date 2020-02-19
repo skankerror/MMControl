@@ -251,7 +251,7 @@ void OscSend::execute()
   Send(packet.Data(), packet.Size());
 }
 
-void OscSend::ExecuteXFade(int ID1, int ID2, double time) // A voir de près pour le timeRes
+void OscSend::ExecuteXFade(int ID1, int ID2, double time)
 {
   timeRes = (int)(100 * time); // on adapte la résolution suivant le temps
   if (counter == timeRes + 1) return;

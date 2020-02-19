@@ -43,7 +43,7 @@ MMPaint::MMPaint(const MMPaint &mmpaint, QObject *parent) : QObject(parent)
   m_name = mmpaint.m_name;
   m_paintType = mmpaint.m_paintType;
   m_uri = mmpaint.m_uri;
-  m_color = mmpaint.m_color;
+//  m_color = mmpaint.m_color;
   m_opacity = mmpaint.m_opacity;
   m_rate = mmpaint.m_rate;
   m_volume = mmpaint.m_volume;
@@ -74,7 +74,7 @@ MMMapping *MMPaint::getMapping(const int vectorAt) const
   return v_listMapping.at(vectorAt);
 }
 
-void MMPaint::setM_paintType(const paintType type)
+void MMPaint::setM_paintType(const int type)
 {
   if (type < colorPaint || type > cameraPaint) return;
   m_paintType = type;

@@ -75,9 +75,8 @@ public:
   // getters
   int getM_id() const { return m_id; };
   QString getM_name() const { return m_name; };
-  paintType getM_paintType() const { return m_paintType; };
+  int getM_paintType() const { return m_paintType; };
   QString getM_uri() const { return m_uri; };
-  QString getM_color() const { return m_color; };
   int getM_opacity() const { return m_opacity; };
   int getM_rate() const { return m_rate; };
   int getM_volume() const { return m_volume; };
@@ -88,9 +87,8 @@ public:
   // setters
   void setM_id(const int id) { m_id = id; };
   void setM_name(const QString name) { m_name = name; };
-  void setM_paintType(const paintType type);
+  void setM_paintType(const int type);
   void setM_uri(const QString uri) { m_uri = uri; };
-  void setM_color(const QString color) { m_color = color; };
   void setM_opacity(const int opacity) { m_opacity = opacity; };
   void setM_rate(const int rate) { m_rate = rate; };
   void setM_volume(const int volume) { m_volume = volume; };
@@ -104,9 +102,8 @@ signals:
 private:
   int m_id;
   QString m_name = "paint";
-  paintType m_paintType = videoPaint;
+  int m_paintType = videoPaint;
   QString m_uri = "";
-  QString m_color = "";
   int m_opacity = 0;
   int m_rate = 100;
   int m_volume = 100;

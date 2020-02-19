@@ -26,7 +26,7 @@ class TabMMState : public QWidget
   Q_OBJECT
 
 public:
-  explicit TabMMState(QWidget *parent = nullptr);
+  explicit TabMMState(MMStateList *stateList, QWidget *parent = nullptr);
 
 signals:
 
@@ -35,11 +35,15 @@ private slots:
   void paintSelected();
   void mappingSelected();
   void paintTypeSelected(const int index);
+  void addToState();
+  void setUriLabel();
+  void setColorLabel();
+  void setCameraLabel();
 
 private:
   void createToolBar();
 
-  MMStateList *m_mmstateList;
+  MMStateList *m_stateList;
   QTreeView *treeView;
 
   QVBoxLayout *layoutMain;
