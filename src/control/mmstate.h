@@ -129,6 +129,7 @@ public:
   //setters
   void addPaint(MMPaint *paint);
   void removePaint(const int vectorAt);
+  void removeAllPaint();
 
 private:
   QVector<MMPaint *> v_listPaint;

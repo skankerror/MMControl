@@ -25,6 +25,7 @@ public:
   QObject *getItem(const QModelIndex &index) const; // à caster
   QObject *getParentItem(const QModelIndex &index) const; // à caster
 
+  MMState* getState(const int stateId);
   void addState(MMState *state);
   void insertState(MMState *state, const int stateId);
   void removeState(const int stateId);

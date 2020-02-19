@@ -32,13 +32,13 @@ signals:
 
 private slots:
   void typeSelected(const int index);
-  void paintSelected();
-  void mappingSelected();
   void paintTypeSelected(const int index);
   void addToState();
   void setUriLabel();
   void setColorLabel();
   void setCameraLabel();
+  void saveAs();
+  void loadFile();
 
 private:
   void createToolBar();
@@ -71,6 +71,7 @@ private:
       QLabel *depthLabel;
       QSpinBox *depthBox;
       QPushButton *addToStateButton;
+      QPushButton *saveState1Button;
 };
 
 #endif // TABMMSTATE_H

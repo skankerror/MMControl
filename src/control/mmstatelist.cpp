@@ -7,18 +7,18 @@ MMStateList::MMStateList(QObject *parent):
 
   // test
   MMState *state1 = new MMState(this);
-  MMPaint *paint1 = new MMPaint(state1);
-  paint1->setM_id(1);
-  paint1->setM_name("source1");
-  MMMapping *mapping1 = new MMMapping(paint1);
-  mapping1->setM_id(3);
-  mapping1->setM_name("layer3");
-  mapping1->setM_depth(3);
+//  MMPaint *paint1 = new MMPaint(state1);
+//  paint1->setM_id(1);
+//  paint1->setM_name("source1");
+//  MMMapping *mapping1 = new MMMapping(paint1);
+//  mapping1->setM_id(3);
+//  mapping1->setM_name("layer3");
+//  mapping1->setM_depth(3);
   addState(state1);
-  addPaint(paint1, 0);
-  addMapping(mapping1, 0, 0);
-  MMState *state2 = new MMState(*state1, this);
-  addState(state2);
+//  addPaint(paint1, 0);
+//  addMapping(mapping1, 0, 0);
+//  MMState *state2 = new MMState(*state1, this);
+//  addState(state2);
 }
 
 MMStateList::~MMStateList()
@@ -144,13 +144,14 @@ Qt::ItemFlags MMStateList::flags(const QModelIndex &index) const
   int col = index.column();
   QObject *item = getItem(index);
   QString className = item->metaObject()->className();
-  if (className == "MMState" && col == Name) return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+  if (className == "MMState" && col == Name)
+    return index.row() ? Qt::ItemIsEnabled | Qt::ItemIsSelectable : Qt::ItemIsEnabled;
   if (className == "MMPaint")
   {
     if (col == Name || col == PM_Id || col == PaintType || col == PaintUri || col == Opacity
         || col == PaintRate || col == PaintVolume)
       // Si c'est le 1er state retourner aussi editable
-      return parent(index).row() ? Qt::ItemIsEnabled | Qt::ItemIsSelectable
+      return parent(index).row() ? Qt::ItemIsEnabled
                                  : Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
   }
   if (className == "MMMapping") // rajouter Qt::ItemHasNoChildren ?
@@ -158,7 +159,7 @@ Qt::ItemFlags MMStateList::flags(const QModelIndex &index) const
     if (col == Name || col == PM_Id || col == Opacity || col == MappingVisible || col == MappingSolo
         || col == MappingLocked || col == MappingDepth)
       // Si c'est le 1er state retourner aussi editable
-      return parent(parent(index)).row() ? Qt::ItemIsEnabled | Qt::ItemIsSelectable
+      return parent(parent(index)).row() ? Qt::ItemIsEnabled
                                  : Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
   }
   return Qt::NoItemFlags;
@@ -246,6 +247,16 @@ QObject *MMStateList::getParentItem(const QModelIndex &index) const
     QObject *parentItem = nullptr;
     return parentItem;
   }
+}
+
+MMState *MMStateList::getState(const int stateId)
+{
+  if (stateId < 0 || stateId >= v_listMMState.size())
+  {
+    qDebug() << "Problem getting MMState";
+    return nullptr;
+  }
+  return v_listMMState.at(stateId);
 }
 
 void MMStateList::addState(MMState *state)

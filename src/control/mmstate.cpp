@@ -151,3 +151,9 @@ void MMState::removePaint(const int vectorAt)
   if (vectorAt < 0 || vectorAt >= v_listPaint.size()) return;
   v_listPaint.remove(vectorAt);
 }
+
+void MMState::removeAllPaint()
+{
+  for (int i = 0; i < v_listPaint.size(); i++)
+  v_listPaint.remove(0);
+}

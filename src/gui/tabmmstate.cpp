@@ -21,13 +21,12 @@ TabMMState::TabMMState(MMStateList *stateList, QWidget *parent) :
   QWidget(parent),
   m_stateList(stateList)
 {
-//  m_mmstateList = new MMStateList(this);
   treeView = new QTreeView(this);
 
   layoutMain = new QVBoxLayout();
 
   createToolBar();
-  paintSelected();
+  typeSelected(0);
 
   treeView->setModel(m_stateList);
   treeView->setTextElideMode(Qt::ElideLeft);
@@ -44,60 +43,56 @@ TabMMState::TabMMState(MMStateList *stateList, QWidget *parent) :
 
 void TabMMState::typeSelected(const int index)
 {
-  if (index == 0) paintSelected();
-  if (index == 1) mappingSelected();
+  if (index == 0)
+  {
+      nameLine->setText("Paint");
+    paintTypeBox->show();
+      paintTypeBox->setCurrentIndex(0);
+    uriLabel->show();
+      uriLabel->setText("Choose->");
+    uriButton->show();
+    colorLabel->hide();
+    colorButton->hide();
+    cameraLabel->hide();
+    cameraButton->hide();
+      opacityBox->setValue(0);
+    rateLabel->show();
+    rateBox->show();
+      rateBox->setValue(100);
+    volumeLabel->show();
+    volumeBox->show();
+      volumeBox->setValue(100);
+    visibleBox->hide();
+    soloBox->hide();
+    lockBox->hide();
+    depthLabel->hide();
+    depthBox->hide();
+  }
+  if (index == 1)
+  {
+      nameLine->setText("Mesh");
+    paintTypeBox->hide();
+    uriLabel->hide();
+    uriButton->hide();
+    colorLabel->hide();
+    colorButton->hide();
+    cameraLabel->hide();
+    cameraButton->hide();
+      opacityBox->setValue(100);
+    rateLabel->hide();
+    rateBox->hide();
+    volumeLabel->hide();
+    volumeBox->hide();
+    visibleBox->show();
+      visibleBox->setChecked(false);
+    soloBox->show();
+      soloBox->setChecked(false);
+    lockBox->show();
+      lockBox->setChecked(true);
+    depthLabel->show();
+    depthBox->show();
+  }
   return;
-}
-
-void TabMMState::paintSelected()
-{
-    nameLine->setText("Paint");
-  paintTypeBox->show();
-    paintTypeBox->setCurrentIndex(0);
-  uriLabel->show();
-    uriLabel->setText("Choose->");
-  uriButton->show();
-  colorLabel->hide();
-  colorButton->hide();
-  cameraLabel->hide();
-  cameraButton->hide();
-    opacityBox->setValue(0);
-  rateLabel->show();
-  rateBox->show();
-    rateBox->setValue(100);
-  volumeLabel->show();
-  volumeBox->show();
-    volumeBox->setValue(100);
-  visibleBox->hide();
-  soloBox->hide();
-  lockBox->hide();
-  depthLabel->hide();
-  depthBox->hide();
-}
-
-void TabMMState::mappingSelected()
-{
-    nameLine->setText("Mesh");
-  paintTypeBox->hide();
-  uriLabel->hide();
-  uriButton->hide();
-  colorLabel->hide();
-  colorButton->hide();
-  cameraLabel->hide();
-  cameraButton->hide();
-    opacityBox->setValue(100);
-  rateLabel->hide();
-  rateBox->hide();
-  volumeLabel->hide();
-  volumeBox->hide();
-  visibleBox->show();
-    visibleBox->setChecked(false);
-  soloBox->show();
-    soloBox->setChecked(false);
-  lockBox->show();
-    lockBox->setChecked(true);
-  depthLabel->show();
-  depthBox->show();
 }
 
 void TabMMState::paintTypeSelected(const int index)
@@ -176,6 +171,31 @@ void TabMMState::addToState()
     mapping->setLocked(lockBox->isChecked());
     mapping->setM_depth(depthBox->value());
     // voir le paint sélectionné
+    QModelIndex indexSelected = treeView->currentIndex();
+    int lastPaintRow = m_stateList->getState(0)->getPaintCount() - 1;
+    if (!indexSelected.isValid())
+    {
+//      int lastPaintRow = m_stateList->getState(0)->getPaintCount() - 1;
+      m_stateList->addMapping(mapping, 0, lastPaintRow);
+      return;
+    }
+    QObject *item = m_stateList->getItem(indexSelected);
+    QString className = item->metaObject()->className();
+    if (className == "MMState")
+    {
+      m_stateList->addMapping(mapping, 0, lastPaintRow);
+      return;
+    }
+    if (className == "MMPaint")
+    {
+      m_stateList->addMapping(mapping, 0, indexSelected.row());
+      return;
+    }
+    if (className == "MMMapping")
+    {
+      m_stateList->addMapping(mapping, 0, indexSelected.parent().row());
+      return;
+    }
   }
 }
 
@@ -196,6 +216,63 @@ void TabMMState::setCameraLabel()
 {
   QString fileName = QFileDialog::getOpenFileName(this, "Choose device", "/dev", "");
   cameraLabel->setText(fileName);
+}
+
+void TabMMState::saveAs()
+{
+  QString fileName = QFileDialog::getSaveFileName(this, "Choose File", "", "Csv Files (*.csv *.txt)");
+  if (fileName.isEmpty())
+    return;
+  else
+  {
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly))
+    {
+      QMessageBox::information(this, "Unable to open file", file.errorString());
+      return;
+    }
+    else
+    {
+      QModelIndex indexParent = m_stateList->index(0, 0); // index du state 1
+      QString textData;
+      int rows = m_stateList->rowCount(indexParent);
+      int columns = m_stateList->columnCount();
+
+      for (int i = 0; i < rows; i++)
+      {
+        // boucle pour les paints
+        textData += "PAINT";
+        textData += ", ";
+        for (int j = 0; j < columns; j++)
+        {
+            textData += m_stateList->data(m_stateList->index(i,j, indexParent)).toString();
+            textData += ", ";
+        }
+        textData += "\n";
+        // boucle pour les Mapping
+        int rowsChild = m_stateList->rowCount(m_stateList->index(i, 0, indexParent));
+        for (int k = 0; k < rowsChild; k++)
+        {
+          textData += "MAPPING";
+          textData +=", ";
+          for (int l = 0; l < columns; l++)
+          {
+            textData += m_stateList->data(m_stateList->index(k, l, m_stateList->index(i, 0, indexParent))).toString();
+            textData += ", ";
+          }
+          textData += "\n";
+        }
+      }
+      QTextStream out(&file);
+      out << textData;
+      file.close();
+    }
+  }
+}
+
+void TabMMState::loadFile()
+{
+
 }
 
 void TabMMState::createToolBar()
@@ -242,38 +319,43 @@ void TabMMState::createToolBar()
   addToStateButton = new QPushButton("Add to State", this);
     addToStateButton->setToolTip("Add to Initial Sate");
     addToStateButton->setToolTipDuration(2000);
+  saveState1Button = new QPushButton("Save State1", this);
+    saveState1Button->setToolTip("Save State 1 to File");
+    saveState1Button->setToolTipDuration(2000);
 
-    layoutBar->addWidget(typeBox);
-    layoutBar->addWidget(idLabel);
-    layoutBar->addWidget(idBox);
-    layoutBar->addWidget(nameLine);
-    layoutBar->addWidget(paintTypeBox);
-    layoutBar->addWidget(uriLabel);
-    layoutBar->addWidget(uriButton);
-    layoutBar->addWidget(colorLabel);
-    layoutBar->addWidget(colorButton);
-    layoutBar->addWidget(cameraLabel);
-    layoutBar->addWidget(cameraButton);
-    layoutBar->addWidget(opacityLabel);
-    layoutBar->addWidget(opacityBox);
-    layoutBar->addWidget(rateLabel);
-    layoutBar->addWidget(rateBox);
-    layoutBar->addWidget(volumeLabel);
-    layoutBar->addWidget(volumeBox);
-    layoutBar->addWidget(visibleBox);
-    layoutBar->addWidget(soloBox);
-    layoutBar->addWidget(lockBox);
-    layoutBar->addWidget(depthLabel);
-    layoutBar->addWidget(depthBox);
-    layoutBar->addStretch();
-    layoutBar->addWidget(addToStateButton);
+  layoutBar->addWidget(typeBox);
+  layoutBar->addWidget(idLabel);
+  layoutBar->addWidget(idBox);
+  layoutBar->addWidget(nameLine);
+  layoutBar->addWidget(paintTypeBox);
+  layoutBar->addWidget(uriLabel);
+  layoutBar->addWidget(uriButton);
+  layoutBar->addWidget(colorLabel);
+  layoutBar->addWidget(colorButton);
+  layoutBar->addWidget(cameraLabel);
+  layoutBar->addWidget(cameraButton);
+  layoutBar->addWidget(opacityLabel);
+  layoutBar->addWidget(opacityBox);
+  layoutBar->addWidget(rateLabel);
+  layoutBar->addWidget(rateBox);
+  layoutBar->addWidget(volumeLabel);
+  layoutBar->addWidget(volumeBox);
+  layoutBar->addWidget(visibleBox);
+  layoutBar->addWidget(soloBox);
+  layoutBar->addWidget(lockBox);
+  layoutBar->addWidget(depthLabel);
+  layoutBar->addWidget(depthBox);
+  layoutBar->addStretch();
+  layoutBar->addWidget(addToStateButton);
+  layoutBar->addWidget(saveState1Button);
 
-    connect(typeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(typeSelected(int)));
-    connect(paintTypeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(paintTypeSelected(int)));
-    connect(addToStateButton, SIGNAL(clicked()), this, SLOT(addToState()));
-    connect(uriButton, SIGNAL(clicked()), this, SLOT(setUriLabel()));
-    connect(colorButton, SIGNAL(clicked()), this, SLOT(setColorLabel()));
-    connect(cameraButton, SIGNAL(clicked()), this, SLOT(setCameraLabel()));
+  connect(typeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(typeSelected(int)));
+  connect(paintTypeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(paintTypeSelected(int)));
+  connect(addToStateButton, SIGNAL(clicked()), this, SLOT(addToState()));
+  connect(uriButton, SIGNAL(clicked()), this, SLOT(setUriLabel()));
+  connect(colorButton, SIGNAL(clicked()), this, SLOT(setColorLabel()));
+  connect(cameraButton, SIGNAL(clicked()), this, SLOT(setCameraLabel()));
+  connect(saveState1Button, SIGNAL(clicked()), this, SLOT(saveAs()));
 }
 
 
