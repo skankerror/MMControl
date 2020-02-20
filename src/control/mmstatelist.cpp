@@ -347,11 +347,12 @@ void MMStateList::removeMapping(const int stateId, const int paintId, const int 
 
 //}
 
-void MMStateList::removeAllStates()
+void MMStateList::removeAllStates() // A vérifier
 {
   if (!v_listMMState.size()) return;
   beginRemoveRows(QModelIndex(), 0, v_listMMState.size() - 1);
-  qDeleteAll(v_listMMState);
+  for (int i = 0; i < v_listMMState.size(); i++)
+    removeState(0);
   endRemoveRows();
 }
 

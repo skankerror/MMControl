@@ -72,6 +72,7 @@ private:
       QSpinBox *depthBox;
       QPushButton *addToStateButton;
       QPushButton *saveState1Button;
+      QPushButton *loadState1Button;
 };
 
 #endif // TABMMSTATE_H

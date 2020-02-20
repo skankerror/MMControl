@@ -175,7 +175,6 @@ void TabMMState::addToState()
     int lastPaintRow = m_stateList->getState(0)->getPaintCount() - 1;
     if (!indexSelected.isValid())
     {
-//      int lastPaintRow = m_stateList->getState(0)->getPaintCount() - 1;
       m_stateList->addMapping(mapping, 0, lastPaintRow);
       return;
     }
@@ -272,7 +271,87 @@ void TabMMState::saveAs()
 
 void TabMMState::loadFile()
 {
+  QMessageBox msgBox(QMessageBox::Warning, "Load file warning",
+                     "WARNING, this will destroy actual state", nullptr, this);
+  msgBox.addButton("OK", QMessageBox::AcceptRole);
+  msgBox.addButton("CANCEL", QMessageBox::RejectRole);
+  if (msgBox.exec() == QMessageBox::RejectRole) return;
 
+  QString fileName = QFileDialog::getOpenFileName(this, "Choose File", "", "Csv Files (*.csv *.txt)");
+  QFile file(fileName);
+  if (fileName.isEmpty()) return;
+
+  if (file.open(QIODevice::ReadOnly))
+  {
+    m_stateList->removeAllStates(); // On efface tout
+    MMState *state1 = new MMState(this);
+    m_stateList->addState(state1); // et on ajoute le state 1
+
+    int lineindex = 0;                     // file line counter
+    QTextStream in(&file);                 // read to text stream
+    while (!in.atEnd())
+    {
+      // Attention on ne vérifie rien sur le contenu du fichier
+      // read one line from textstream(separated by "\n")
+      QString fileLine = in.readLine();
+      // parse the read line into separate pieces(tokens) with "," as the delimiter
+      QStringList lineToken = fileLine.split(",", QString::SkipEmptyParts);
+      QString firstVal = lineToken.at(0);
+      firstVal = firstVal.trimmed();
+      if (firstVal == "PAINT") // c'est une CUE
+      {
+        MMPaint *paint = new MMPaint(this);
+        for (int i = 0; i < lineToken.size(); i++)
+        {
+          QString val = lineToken.at(i);
+          val = val.trimmed();
+          QVariant value(val);
+          switch(i - 1) // on a déjà pris la 1ère pour typer la ligne
+          {
+          case Name: paint->setM_name(value.toString()); break;
+          case PM_Id: paint->setM_id(value.toInt()); break;
+          case PaintType:
+            if (val == "Media") paint->setM_paintType(videoPaint);
+            if (val == "Color") paint->setM_paintType(colorPaint);
+            if (val == "Camera") paint->setM_paintType(cameraPaint);
+            break;
+          case PaintUri: paint->setM_uri(value.toString()); break;
+          case Opacity: paint->setM_opacity(value.toInt()); break;
+          case PaintRate: paint->setM_rate(value.toInt()); break;
+          case PaintVolume: paint->setM_volume(value.toInt()); break;
+          default: break;
+          }
+        }
+        m_stateList->addPaint(paint);
+      }
+      else if (firstVal == "MAPPING")
+      {
+        MMMapping *mapping = new MMMapping(this);
+        int lastPaintRow = m_stateList->getState(0)->getPaintCount() - 1;
+        for (int i = 0; i < lineToken.size(); i++)
+        {
+          QString val = lineToken.at(i);
+          val = val.trimmed();
+          QVariant value(val);
+          switch(i - 1) // on a déjà pris la 1ère pour typer la ligne
+          {
+          case Name: mapping->setM_name(val); break;
+          case PM_Id: mapping->setM_id(value.toInt()); break;
+          case Opacity: mapping->setM_opacity(value.toInt()); break;
+          case MappingVisible: mapping->setVisible(value.toBool()); break;
+          case MappingSolo: mapping->setSolo(value.toBool()); break;
+          case MappingLocked: mapping->setLocked(value.toBool()); break;
+          case MappingDepth: mapping->setM_depth(value.toInt()); break;
+          default: break;
+          }
+        }
+        m_stateList->addMapping(mapping, 0, lastPaintRow);
+      }
+    }
+    lineindex++;
+  }
+  file.close();
+//  hideShowColumns();
 }
 
 void TabMMState::createToolBar()
@@ -322,6 +401,9 @@ void TabMMState::createToolBar()
   saveState1Button = new QPushButton("Save State1", this);
     saveState1Button->setToolTip("Save State 1 to File");
     saveState1Button->setToolTipDuration(2000);
+  loadState1Button = new QPushButton("Load State1", this);
+    loadState1Button->setToolTip("Load State 1 From File");
+    loadState1Button->setToolTipDuration(2000);
 
   layoutBar->addWidget(typeBox);
   layoutBar->addWidget(idLabel);
@@ -348,6 +430,7 @@ void TabMMState::createToolBar()
   layoutBar->addStretch();
   layoutBar->addWidget(addToStateButton);
   layoutBar->addWidget(saveState1Button);
+  layoutBar->addWidget(loadState1Button);
 
   connect(typeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(typeSelected(int)));
   connect(paintTypeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(paintTypeSelected(int)));
@@ -356,6 +439,7 @@ void TabMMState::createToolBar()
   connect(colorButton, SIGNAL(clicked()), this, SLOT(setColorLabel()));
   connect(cameraButton, SIGNAL(clicked()), this, SLOT(setCameraLabel()));
   connect(saveState1Button, SIGNAL(clicked()), this, SLOT(saveAs()));
+  connect(loadState1Button, SIGNAL(clicked()), this, SLOT(loadFile()));
 }
 
 

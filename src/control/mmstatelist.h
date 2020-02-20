@@ -29,12 +29,12 @@ public:
   void addState(MMState *state);
   void insertState(MMState *state, const int stateId);
   void removeState(const int stateId);
-  void addPaint(MMPaint *paint, const int stateId);
+  void addPaint(MMPaint *paint, const int stateId = 0);
 //  void insertPaint(MMPaint *paint, const int stateId, const int paintId);
   void removePaint(const int stateId, const int paintId);
-  void addMapping(MMMapping *mapping, const int stateId, const int paintId);
+  void addMapping(MMMapping *mapping, const int stateId, const int paintId); // Inverser pour mettre stateId = 0
 //  void insertMapping(MMMapping *mapping, const int stateId, const int paintId, const int mappingId);
-  void removeMapping(const int stateId, const int paintId, const int mappingId);
+  void removeMapping(const int stateId, const int paintId, const int mappingId); // Inverser
   void removeAllStates();
 
 private:

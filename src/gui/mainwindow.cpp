@@ -503,7 +503,7 @@ void MainWindow::reconnectButtonsToolBar()
 void MainWindow::closeEvent(QCloseEvent *event)
 {
   QMessageBox msgBox(QMessageBox::Warning, "",
-                     "WARNING, are you sure you want to quit ?", nullptr, this);
+                     "Are you sure you want to quit ?", nullptr, this);
   msgBox.setWindowIcon(icon);
   msgBox.addButton("OK", QMessageBox::AcceptRole);
   msgBox.addButton("CANCEL", QMessageBox::RejectRole);
