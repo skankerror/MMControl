@@ -45,6 +45,7 @@ signals:
   void sendStringToOutputLabel(QString);
   void disconnectButtonsToolBar();
   void reconnectButtonsToolBar();
+  void askGoToCue(int); // Y connecter un bouton pour asker à mainwindow
 
 public slots:
   void executeGo();
@@ -69,6 +70,7 @@ public slots:
   void disconnectButtons();
   void reconnectButtons();
   void stopCue();
+  void GoToCue();
 
   void hideShowColumns();
 
@@ -91,6 +93,7 @@ private:
         QPushButton *boutonGo;
         QPushButton *boutonSaveAs;
         QPushButton *boutonLoad;
+        QPushButton *boutonGoToCue;
 
   // pour executeGo
   OscSend *tempSend = nullptr;

@@ -61,6 +61,10 @@ MainWindow::MainWindow() :
   // disconnect reconnect when go is running
   connect(tabseq, SIGNAL(disconnectButtonsToolBar()), this, SLOT(disconnectButtonsToolBar()));
   connect(tabseq, SIGNAL(reconnectButtonsToolBar()), this, SLOT(reconnectButtonsToolBar()));
+
+  // connect for state
+  connect(tabmmstate, SIGNAL(askGenerateStates()), this, SLOT(onAskGenerateStates()));
+  connect(tabseq, SIGNAL(askGoToCue(int)), this, SLOT(onAskGotoCue(int)));
 }
 
 void MainWindow::createCentralWidget()
@@ -464,6 +468,73 @@ void MainWindow::addToCue()
   // c'est un send
   oscCueList->insertSend(oscsend, index.parent().row(), row); // Il ajoute avant le send...
   tabseq->hideShowColumns();
+}
+
+void MainWindow::onAskGenerateStates()
+{
+
+}
+
+void MainWindow::onAskGotoCue(const int index)
+{
+  if (index < 0 || index >= stateList->rowCount()) return;
+  MMState *state = stateList->getState(index);
+  OscSend *send = new OscSend(this);
+  for (int i = 0; i < state->getPaintCount(); i++)
+  {
+    MMPaint *paint = state->getPaint(i);
+    // Faire le biz sur le paint
+    send->setP_ID1(paint->getM_id());
+    switch (paint->getM_paintType())
+    {
+    case videoPaint:
+      send->setChamp(P_URI);
+      send->setP_uri(paint->getM_uri());
+      send->execute();
+      send->setChamp(P_RATE);
+      send->setP_rate(paint->getM_rate());
+      send->execute();
+      send->setChamp(P_VOLUME);
+      send->setP_volume(paint->getM_volume());
+      send->execute();
+      break;
+    case cameraPaint:
+      send->setChamp(P_URI);
+      send->setP_uri(paint->getM_uri());
+      send->execute();
+      break;
+    case colorPaint:
+    default: break;
+    }
+    send->setChamp(P_OPACITY);
+    send->setP_opacity(paint->getM_opacity());
+    send->execute();
+    // Il nous reste Name ?
+    for (int j = 0; j < paint->getMappingCount(); j++)
+    {
+      MMMapping *mapping = paint->getMapping(j);
+      send->setM_ID1(mapping->getM_id());
+      send->setChamp(M_OPACITY);
+      send->setM_opacity(mapping->getM_opacity());
+      send->execute();
+      send->setChamp(M_VISIBLE);
+      send->setM_isvisible(mapping->visible());
+      send->execute();
+      send->setChamp(M_SOLO);
+      send->setM_issolo(mapping->solo());
+      send->execute();
+      send->setChamp(M_LOCK);
+      send->setM_islocked(mapping->locked());
+      send->execute();
+      send->setChamp(M_DEPTH);
+      send->setM_depth(mapping->getM_depth());
+      send->execute();
+    }
+  }
+  send->setChamp(REWIND);
+  send->execute();
+  send->setChamp(PAUSE);
+  send->execute();
 }
 
 void MainWindow::timeProgressedCue(const int value)

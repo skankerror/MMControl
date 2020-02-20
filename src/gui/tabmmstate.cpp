@@ -473,15 +473,14 @@ void TabMMState::deleteRow()
   if (!indexSelected.isValid() || parentIndex == QModelIndex()) return;
   QObject *item = m_stateList->getItem(indexSelected);
   QString className = item->metaObject()->className();
-  if (className == "MMPaint")
-    m_stateList->removePaint(0, indexSelected.row());
+  if (className == "MMPaint") m_stateList->removePaint(0, indexSelected.row());
   if (className == "MMMapping") m_stateList->removeMapping(0, parentIndex.row(), indexSelected.row());
   return;
 }
 
 void TabMMState::generateStates()
 {
-
+  emit askGenerateStates();
 }
 
 void TabMMState::resizeColumns()

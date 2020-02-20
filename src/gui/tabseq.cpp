@@ -90,6 +90,8 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   boutonLoad->setToolTip("Load File\nCtrl+o");
   boutonLoad->setToolTipDuration(2000);
 
+  boutonGoToCue = new QPushButton("Go to Cue", this);
+
   boutonStop = new QPushButton(this);
   QIcon stopIcon = QIcon(":/graphics/StopY");
   boutonStop->setIcon(stopIcon);
@@ -115,6 +117,7 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   boutonLayout->addWidget(boutonSaveAs);
   boutonLayout->addWidget(boutonLoad);
   boutonLayout->addStretch();
+  boutonLayout->addWidget(boutonGoToCue);
   boutonLayout->addWidget(boutonStop);
   boutonLayout->addWidget(boutonGo);
 
@@ -138,6 +141,7 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   timerTotal = new QTimer(this);
   timerTotal->setSingleShot(true);
 
+  connect(boutonGoToCue, SIGNAL(clicked()), this, SLOT(GoToCue()));
   connect(boutonGo, SIGNAL(clicked(bool)), SLOT(executeGo()));
   connect(boutonStop, SIGNAL(clicked(bool)), SLOT(stopCue()));
   connect(boutonPrev, SIGNAL(clicked(bool)), SLOT(movePrevious()));
@@ -515,11 +519,13 @@ void TabSeq::disconnectButtons()
   boutonAddCue->disconnect();
   boutonSaveAs->disconnect();
   boutonLoad->disconnect();
+  boutonGoToCue->disconnect();
   emit disconnectButtonsToolBar();
 }
 
 void TabSeq::reconnectButtons()
 {
+  connect(boutonGoToCue, SIGNAL(clicked()), this, SLOT(GoToCue()), Qt::UniqueConnection);
   connect(boutonGo, SIGNAL(clicked(bool)), SLOT(executeGo()), Qt::UniqueConnection);
   connect(boutonPrev, SIGNAL(clicked(bool)), SLOT(movePrevious()), Qt::UniqueConnection);
   connect(boutonNext, SIGNAL(clicked(bool)), SLOT(moveNext()), Qt::UniqueConnection);
@@ -541,6 +547,15 @@ void TabSeq::stopCue()
   counterSend = 0;
   counterSendWait = 0;
   reconnectButtons();
+}
+
+void TabSeq::GoToCue()
+{
+  QModelIndex index = treeView->currentIndex();
+  if (!index.isValid()) return;
+//  int row = index.row();
+  if (!m_oscCueList->isCue(index)) return;
+  emit askGoToCue(index.row());
 }
 
 void TabSeq::hideShowColumns()

@@ -29,6 +29,7 @@ public:
   explicit TabMMState(MMStateList *stateList, QWidget *parent = nullptr);
 
 signals:
+  void askGenerateStates();
 
 private slots:
   void typeSelected(const int index);

@@ -2,6 +2,7 @@
 #define MMSTATELIST_H
 
 #include <QAbstractItemModel>
+#include <QBrush>
 #include "mmstate.h"
 
 class MMStateList : public QAbstractItemModel
@@ -40,6 +41,11 @@ public:
 private:
   QVector<MMState *>v_listMMState;
   MMState *rootState;
+
+  const QBrush yellowColor = (QColor(YELLOWCOLOR));
+  const QBrush blueColor = (QColor(BLUECOLOR));
+  const QBrush lighterGray = (QColor(LIGHTERGRAY));
+
 };
 
 #endif // MMSTATELIST_H

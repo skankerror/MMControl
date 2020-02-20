@@ -95,14 +95,20 @@ QVariant MMStateList::data(const QModelIndex &index, int role) const
     case Name: return mapping->getM_name(); break;
     case PM_Id: return mapping->getM_id(); break;
     case Opacity: return mapping->getM_opacity(); break;
-    case MappingVisible: return mapping->visible(); break;
-    case MappingSolo: return mapping->solo(); break;
-    case MappingLocked: return mapping->locked(); break;
+    case MappingVisible: return (int)mapping->visible(); break;
+    case MappingSolo: return (int)mapping->solo(); break;
+    case MappingLocked: return (int)mapping->locked(); break;
     case MappingDepth: return mapping->getM_depth(); break;
     default: break;
     }
   }
   if (role == Qt::TextAlignmentRole) return Qt::AlignCenter;
+  if (role == Qt::BackgroundRole)
+  {
+    if (className == "MMState") return yellowColor;
+    if (className == "MMPaint") return blueColor;
+    if (className == "MMMapping") return lighterGray;
+  }
   return QVariant();
 }
 

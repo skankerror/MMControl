@@ -60,6 +60,8 @@ private slots:
   void setP_UriLine();
   void setP_ColorLine();
   void addToCue();
+  void onAskGenerateStates();
+  void onAskGotoCue(const int index);
 
 private:
   OscCueList *oscCueList;
