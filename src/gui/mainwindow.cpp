@@ -472,7 +472,86 @@ void MainWindow::addToCue()
 
 void MainWindow::onAskGenerateStates()
 {
+  // Implémentation ne prenant pas en compte les regexp et partant du principe
+  // que les paints id suivent l'ordre numérique et n'ont qu'un mapping associé
+  if (!stateList->rowCount())
+  {
+    qDebug() << "No state1 found";
+    return;
+  }
+  // il faut d'abord effacer tous les cue sauf l'inital
+  int stateCount = stateList->rowCount();
+  if (stateCount > 1)
+  {
+    for (int i = 1; i < stateList->rowCount(); i++)
+    {
+      stateList->removeState(1); // fait planter ? A voir...
+    }
+  }
 
+  MMState *state1 = stateList->getState(stateList->rowCount() - 1); // On copie le dernier Cue
+  if (!state1->getPaintCount())
+  {
+    qDebug() << "State1 is empty";
+    return;
+  }
+  int cueCount = oscCueList->rowCount();
+  for (int i = 0; i < cueCount; i++)
+  {
+    MMState *newState = new MMState(*state1, stateList); // on copie le state
+    QModelIndex index = oscCueList->index(i, 0); // On chope l'index de la cue
+    OscSend *oscCue = oscCueList->getSend(index); // On chope la cue
+    for (int j = 0; j < oscCue->getSendCount(); j++)
+    {
+      OscSend *send = oscCue->getChild(j); // On choppe le send
+      MMPaint *paint = newState->getPaint(send->getP_ID1() - 1); // périlleux... mettre vérif avant ou faire avec if plutôt que switch
+      MMPaint *paint2 = newState->getPaint(send->getP_ID2() - 1);
+      MMMapping *mapping = newState->getPaint(send->getM_ID1())->getMapping(0);
+      switch (send->getChamp())
+      {
+      case P_OPACITY:
+        paint->setM_opacity(send->getP_opacity());
+        break;
+      case P_VOLUME:
+        paint->setM_volume(send->getP_volume());
+        break;
+      case P_RATE:
+        paint->setM_rate(send->getP_volume());
+        break;
+      case P_URI:
+        paint->setM_uri(send->getP_uri());
+        break;
+      case P_COLOR:
+        paint->setM_uri(send->getP_color());
+        break;
+      case M_OPACITY:
+        mapping->setM_opacity(send->getM_opacity());
+        break;
+      case M_VISIBLE:
+        mapping->setVisible(send->getM_isvisible());
+        break;
+      case M_SOLO:
+        mapping->setSolo(send->getM_issolo());
+        break;
+      case M_LOCK:
+        mapping->setLocked(send->getM_issolo());
+        break;
+      case M_DEPTH:
+        mapping->setM_depth(send->getM_depth());
+        break;
+      case P_FADE:
+        if (send->getIsfadein()) paint->setM_opacity(100);
+        else paint->setM_opacity(0);
+        break;
+      case P_XFADE:
+        paint->setM_opacity(0);
+        paint2->setM_opacity(100);
+        break;
+      default: break;
+      }
+    }
+    stateList->addState(newState); // On ajoute le state (row i + 1)
+  }
 }
 
 void MainWindow::onAskGotoCue(const int index)

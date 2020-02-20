@@ -176,7 +176,7 @@ QModelIndex MMStateList::index(int row, int column, const QModelIndex &parent) c
   if (parent.isValid() && parent.column() !=0) return QModelIndex(); // != 0 permet de ne sélectionner que la ligne
   QObject *parentItem = getItem(parent);
   if (!parentItem) return QModelIndex();
-  if (parentItem == rootState /*&& row >=0 && row < v_listMMState.size()*/)
+  if (parentItem == rootState && row >=0 && row < v_listMMState.size())
     return createIndex(row, column, v_listMMState.at(row));
   // Faire les cast
   QString classParentName = parentItem->metaObject()->className();
