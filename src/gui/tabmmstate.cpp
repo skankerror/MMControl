@@ -24,9 +24,11 @@ TabMMState::TabMMState(MMStateList *stateList, QWidget *parent) :
   treeView = new QTreeView(this);
 
   layoutMain = new QVBoxLayout();
+  layoutButtonsTree = new QHBoxLayout();
 
   createToolBar();
   typeSelected(0);
+  createLateralButtons();
 
   treeView->setModel(m_stateList);
   treeView->setTextElideMode(Qt::ElideLeft);
@@ -35,10 +37,120 @@ TabMMState::TabMMState(MMStateList *stateList, QWidget *parent) :
   treeView->show();
 
   layoutMain->addLayout(layoutBar);
-  layoutMain->addWidget(treeView);
+  layoutButtonsTree->addLayout(layoutButton);
+  layoutButtonsTree->addWidget(treeView);
+  layoutMain->addLayout(layoutButtonsTree);
   this->setLayout(layoutMain);
 
   setAutoFillBackground(true);
+  resizeColumns();
+
+  connect(treeView, SIGNAL(expanded(QModelIndex)), this, SLOT(resizeColumns()));
+}
+
+void TabMMState::createToolBar()
+{
+  layoutBar = new QHBoxLayout();
+
+  typeBox = new QComboBox(this);
+    typeBox->addItem("Paint");
+    typeBox->addItem("Mapping");
+    typeBox->setCurrentIndex(0);
+  idLabel = new QLabel("Id", this);
+  idBox = new QSpinBox(this);
+    idBox->setMinimum(1);
+  nameLine = new QLineEdit("paint", this);
+  paintTypeBox = new QComboBox(this);
+    paintTypeBox->addItem("Media");
+    paintTypeBox->addItem("Color");
+    paintTypeBox->addItem("Camera");
+    paintTypeBox->setCurrentIndex(0);
+  uriLabel = new QLabel("Choose->", this);
+  uriButton = new QPushButton("File", this);
+  colorLabel = new QLabel("Choose->", this);
+  colorButton = new QPushButton("Color", this);
+  cameraLabel = new QLabel("Choose->", this);
+  cameraButton = new QPushButton("Camera", this);
+  opacityLabel = new QLabel("opacity", this);
+  opacityBox = new QSpinBox(this);
+    opacityBox->setMinimum(0);
+    opacityBox->setMaximum(100);
+  rateLabel = new QLabel("rate", this);
+  rateBox = new QSpinBox(this);
+    rateBox->setMaximum(1000);
+    rateBox->setMinimum(-1000);
+  volumeLabel = new QLabel("volume", this);
+  volumeBox = new QSpinBox(this);
+    volumeBox->setMaximum(100);
+    volumeBox->setMinimum(0);
+  visibleBox = new QCheckBox("Visible", this);
+  soloBox = new QCheckBox("Solo", this);
+  lockBox = new QCheckBox("Locked", this);
+  depthLabel = new QLabel("depth", this);
+  depthBox = new QSpinBox(this);
+    depthBox->setMinimum(1);
+  addToStateButton = new QPushButton("Add to State", this);
+    addToStateButton->setToolTip("Add to Initial Sate");
+    addToStateButton->setToolTipDuration(2000);
+
+  layoutBar->addWidget(typeBox);
+  layoutBar->addWidget(idLabel);
+  layoutBar->addWidget(idBox);
+  layoutBar->addWidget(nameLine);
+  layoutBar->addWidget(paintTypeBox);
+  layoutBar->addWidget(uriLabel);
+  layoutBar->addWidget(uriButton);
+  layoutBar->addWidget(colorLabel);
+  layoutBar->addWidget(colorButton);
+  layoutBar->addWidget(cameraLabel);
+  layoutBar->addWidget(cameraButton);
+  layoutBar->addWidget(opacityLabel);
+  layoutBar->addWidget(opacityBox);
+  layoutBar->addWidget(rateLabel);
+  layoutBar->addWidget(rateBox);
+  layoutBar->addWidget(volumeLabel);
+  layoutBar->addWidget(volumeBox);
+  layoutBar->addWidget(visibleBox);
+  layoutBar->addWidget(soloBox);
+  layoutBar->addWidget(lockBox);
+  layoutBar->addWidget(depthLabel);
+  layoutBar->addWidget(depthBox);
+  layoutBar->addStretch();
+  layoutBar->addWidget(addToStateButton);
+
+  connect(typeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(typeSelected(int)));
+  connect(paintTypeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(paintTypeSelected(int)));
+  connect(addToStateButton, SIGNAL(clicked()), this, SLOT(addToState()));
+  connect(uriButton, SIGNAL(clicked()), this, SLOT(setUriLabel()));
+  connect(colorButton, SIGNAL(clicked()), this, SLOT(setColorLabel()));
+  connect(cameraButton, SIGNAL(clicked()), this, SLOT(setCameraLabel()));
+}
+
+void TabMMState::createLateralButtons()
+{
+  layoutButton = new QVBoxLayout();
+
+  deleteButton = new QPushButton("Delete", this);
+    deleteButton->setToolTip("Delete Paint or Mapping Selected");
+    deleteButton->setToolTipDuration(2000);
+  saveState1Button = new QPushButton("Save State1", this);
+    saveState1Button->setToolTip("Save State 1 to File");
+    saveState1Button->setToolTipDuration(2000);
+  loadState1Button = new QPushButton("Load State1", this);
+    loadState1Button->setToolTip("Load State 1 From File");
+    loadState1Button->setToolTipDuration(2000);
+  generateStatesButton = new QPushButton("Generate states", this);
+    generateStatesButton->setToolTip(("generate States from Cues"));
+
+  layoutButton->addWidget(deleteButton);
+  layoutButton->addWidget(saveState1Button);
+  layoutButton->addWidget(loadState1Button);
+  layoutButton->addWidget(generateStatesButton);
+
+  connect(deleteButton, SIGNAL(clicked()), this, SLOT(deleteRow()));
+  connect(saveState1Button, SIGNAL(clicked()), this, SLOT(saveAs()));
+  connect(loadState1Button, SIGNAL(clicked()), this, SLOT(loadFile()));
+  connect(generateStatesButton, SIGNAL(clicked()), this, SLOT(generateStates()));
 }
 
 void TabMMState::typeSelected(const int index)
@@ -351,95 +463,31 @@ void TabMMState::loadFile()
     lineindex++;
   }
   file.close();
-//  hideShowColumns();
+  resizeColumns();
 }
 
-void TabMMState::createToolBar()
+void TabMMState::deleteRow()
 {
-  layoutBar = new QHBoxLayout();
-
-  typeBox = new QComboBox(this);
-    typeBox->addItem("Paint");
-    typeBox->addItem("Mapping");
-    typeBox->setCurrentIndex(0);
-  idLabel = new QLabel("Id", this);
-  idBox = new QSpinBox(this);
-    idBox->setMinimum(1);
-  nameLine = new QLineEdit("paint", this);
-  paintTypeBox = new QComboBox(this);
-    paintTypeBox->addItem("Media");
-    paintTypeBox->addItem("Color");
-    paintTypeBox->addItem("Camera");
-    paintTypeBox->setCurrentIndex(0);
-  uriLabel = new QLabel("Choose->", this);
-  uriButton = new QPushButton("File", this);
-  colorLabel = new QLabel("Choose->", this);
-  colorButton = new QPushButton("Color", this);
-  cameraLabel = new QLabel("Choose->", this);
-  cameraButton = new QPushButton("Camera", this);
-  opacityLabel = new QLabel("opacity", this);
-  opacityBox = new QSpinBox(this);
-    opacityBox->setMinimum(0);
-    opacityBox->setMaximum(100);
-  rateLabel = new QLabel("rate", this);
-  rateBox = new QSpinBox(this);
-    rateBox->setMaximum(1000);
-    rateBox->setMinimum(-1000);
-  volumeLabel = new QLabel("volume", this);
-  volumeBox = new QSpinBox(this);
-    volumeBox->setMaximum(100);
-    volumeBox->setMinimum(0);
-  visibleBox = new QCheckBox("Visible", this);
-  soloBox = new QCheckBox("Solo", this);
-  lockBox = new QCheckBox("Locked", this);
-  depthLabel = new QLabel("depth", this);
-  depthBox = new QSpinBox(this);
-    depthBox->setMinimum(1);
-  addToStateButton = new QPushButton("Add to State", this);
-    addToStateButton->setToolTip("Add to Initial Sate");
-    addToStateButton->setToolTipDuration(2000);
-  saveState1Button = new QPushButton("Save State1", this);
-    saveState1Button->setToolTip("Save State 1 to File");
-    saveState1Button->setToolTipDuration(2000);
-  loadState1Button = new QPushButton("Load State1", this);
-    loadState1Button->setToolTip("Load State 1 From File");
-    loadState1Button->setToolTipDuration(2000);
-
-  layoutBar->addWidget(typeBox);
-  layoutBar->addWidget(idLabel);
-  layoutBar->addWidget(idBox);
-  layoutBar->addWidget(nameLine);
-  layoutBar->addWidget(paintTypeBox);
-  layoutBar->addWidget(uriLabel);
-  layoutBar->addWidget(uriButton);
-  layoutBar->addWidget(colorLabel);
-  layoutBar->addWidget(colorButton);
-  layoutBar->addWidget(cameraLabel);
-  layoutBar->addWidget(cameraButton);
-  layoutBar->addWidget(opacityLabel);
-  layoutBar->addWidget(opacityBox);
-  layoutBar->addWidget(rateLabel);
-  layoutBar->addWidget(rateBox);
-  layoutBar->addWidget(volumeLabel);
-  layoutBar->addWidget(volumeBox);
-  layoutBar->addWidget(visibleBox);
-  layoutBar->addWidget(soloBox);
-  layoutBar->addWidget(lockBox);
-  layoutBar->addWidget(depthLabel);
-  layoutBar->addWidget(depthBox);
-  layoutBar->addStretch();
-  layoutBar->addWidget(addToStateButton);
-  layoutBar->addWidget(saveState1Button);
-  layoutBar->addWidget(loadState1Button);
-
-  connect(typeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(typeSelected(int)));
-  connect(paintTypeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(paintTypeSelected(int)));
-  connect(addToStateButton, SIGNAL(clicked()), this, SLOT(addToState()));
-  connect(uriButton, SIGNAL(clicked()), this, SLOT(setUriLabel()));
-  connect(colorButton, SIGNAL(clicked()), this, SLOT(setColorLabel()));
-  connect(cameraButton, SIGNAL(clicked()), this, SLOT(setCameraLabel()));
-  connect(saveState1Button, SIGNAL(clicked()), this, SLOT(saveAs()));
-  connect(loadState1Button, SIGNAL(clicked()), this, SLOT(loadFile()));
+  QModelIndex indexSelected = treeView->currentIndex();
+  QModelIndex parentIndex = m_stateList->parent(indexSelected);
+  if (!indexSelected.isValid() || parentIndex == QModelIndex()) return;
+  QObject *item = m_stateList->getItem(indexSelected);
+  QString className = item->metaObject()->className();
+  if (className == "MMPaint")
+    m_stateList->removePaint(0, indexSelected.row());
+  if (className == "MMMapping") m_stateList->removeMapping(0, parentIndex.row(), indexSelected.row());
+  return;
 }
+
+void TabMMState::generateStates()
+{
+
+}
+
+void TabMMState::resizeColumns()
+{
+  for (int i = Name; i < columnStateCount; i++) treeView->resizeColumnToContents(i);
+}
+
 
 

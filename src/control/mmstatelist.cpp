@@ -177,12 +177,13 @@ QModelIndex MMStateList::index(int row, int column, const QModelIndex &parent) c
   if (classParentName == "MMState")
   {
     MMState *stateParent = qobject_cast<MMState *>(parentItem);
-//    if (row < 0 || row >= stateParent->getPaintCount()) return QModelIndex();
+    if (row < 0 || row >= stateParent->getPaintCount()) return QModelIndex();
     return createIndex(row, column, stateParent->getPaint(row));
   }
   if (classParentName == "MMPaint")
   {
     MMPaint *paintParent = qobject_cast<MMPaint *>(parentItem);
+    if (row < 0 || row >= paintParent->getMappingCount()) return QModelIndex();
     return createIndex(row, column, paintParent->getMapping(row));
   }
   return QModelIndex();

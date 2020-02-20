@@ -39,12 +39,15 @@ private slots:
   void setCameraLabel();
   void saveAs();
   void loadFile();
+  void deleteRow();
+  void generateStates();
+  void resizeColumns();
 
 private:
   void createToolBar();
+  void createLateralButtons();
 
   MMStateList *m_stateList;
-  QTreeView *treeView;
 
   QVBoxLayout *layoutMain;
     QHBoxLayout *layoutBar;
@@ -71,8 +74,14 @@ private:
       QLabel *depthLabel;
       QSpinBox *depthBox;
       QPushButton *addToStateButton;
-      QPushButton *saveState1Button;
-      QPushButton *loadState1Button;
+    QHBoxLayout *layoutButtonsTree;
+      QTreeView *treeView;
+      QVBoxLayout *layoutButton;
+        QPushButton *deleteButton;
+        QPushButton *saveState1Button;
+        QPushButton *loadState1Button;
+        QPushButton *generateStatesButton;
+
 };
 
 #endif // TABMMSTATE_H
