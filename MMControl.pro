@@ -21,9 +21,6 @@ SOURCES += \
     src/main.cpp \
     contrib/oscpack/osc/OscTypes.cpp \
     contrib/oscpack/osc/OscOutboundPacketStream.cpp \
-    contrib/oscpack/ip/UdpSocket.cpp \
-    contrib/oscpack/ip/NetworkingUtils.cpp \
-    contrib/oscpack/ip/IpEndpointName.cpp \
     src/gui/mainwindow.cpp \
     src/gui/tabmidi.cpp \
     src/gui/tabseq.cpp \
@@ -31,6 +28,14 @@ SOURCES += \
     src/control/osccuelist.cpp \
     src/control/mmstate.cpp \
     src/gui/tabmmstate.cpp
+
+unix {
+    SOURCES *= \
+    contrib/oscpack/ip/posix/UdpSocket.cpp \
+    contrib/oscpack/ip/posix/NetworkingUtils.cpp \
+    contrib/oscpack/ip/IpEndpointName.cpp
+    }
+
 
 HEADERS += \
     src/MMC.h \

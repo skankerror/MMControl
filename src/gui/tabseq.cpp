@@ -343,7 +343,7 @@ void TabSeq::saveAs()
 void TabSeq::loadFile()
 {
   QMessageBox msgBox(QMessageBox::Warning, "Load file warning",
-                     "WARNING, this will destroy all cues", nullptr, this);
+                     "WARNING, this will destroy all cues");
   msgBox.addButton("OK", QMessageBox::AcceptRole);
   msgBox.addButton("CANCEL", QMessageBox::RejectRole);
   if (msgBox.exec() == QMessageBox::RejectRole) return;
@@ -363,7 +363,7 @@ void TabSeq::loadFile()
       // read one line from textstream(separated by "\n")
       QString fileLine = in.readLine();
       // parse the read line into separate pieces(tokens) with "," as the delimiter
-      QStringList lineToken = fileLine.split(",", QString::SkipEmptyParts);
+      QStringList lineToken = fileLine.split(",", Qt::SkipEmptyParts);
       QString firstVal = lineToken.at(0);
       firstVal = firstVal.trimmed();
       firstVal.resize(3);
@@ -484,8 +484,10 @@ void TabSeq::selectRow()
   {
     newIndex = index.parent().siblingAtRow(index.parent().row() + 1); // On la sélectionne
     //Si elle existe pas on prend la 1ère
-    if (!newIndex.isValid()) treeView->setCurrentIndex(index.parent().siblingAtRow(0));
-    else treeView->setCurrentIndex(newIndex); // Sinon on la sélectionne
+    if (!newIndex.isValid())
+      treeView->setCurrentIndex(index.parent().siblingAtRow(0));
+    else
+      treeView->setCurrentIndex(newIndex); // Sinon on la sélectionne
     emit progressTimeFinishedCue(); // on coupe le timer de la cue
     counterCue = 0;
     totalTime = 0;

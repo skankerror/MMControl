@@ -1,8 +1,8 @@
 /*
 	oscpack -- Open Sound Control (OSC) packet manipulation library
-	http://www.rossbencina.com/code/oscpack
+    http://www.rossbencina.com/code/oscpack
 
-	Copyright (c) 2004-2013 Ross Bencina <rossb@audiomulch.com>
+    Copyright (c) 2004-2013 Ross Bencina <rossb@audiomulch.com>
 
 	Permission is hereby granted, free of charge, to any person obtaining
 	a copy of this software and associated documentation files
@@ -34,31 +34,29 @@
 	requested that these non-binding requests be included whenever the
 	above license is reproduced.
 */
-#include "NetworkingUtils.h"
+#ifndef INCLUDED_OSCPACK_OSCEXCEPTION_H
+#define INCLUDED_OSCPACK_OSCEXCEPTION_H
 
-#include <netdb.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
+#include <exception>
 
-#include <cstring>
+namespace osc{
 
+class Exception : public std::exception {
+    const char *what_;
+    
+public:
+    Exception() throw() {}
+    Exception( const Exception& src ) throw()
+        : std::exception( src )
+        , what_( src.what_ ) {}
+    Exception( const char *w ) throw()
+        : what_( w ) {}
+    Exception& operator=( const Exception& src ) throw()
+        { what_ = src.what_; return *this; }
+    virtual ~Exception() throw() {}
+    virtual const char* what() const throw() { return what_; }
+};
 
+} // namespace osc
 
-NetworkInitializer::NetworkInitializer() {}
-
-NetworkInitializer::~NetworkInitializer() {}
-
-
-unsigned long GetHostByName( const char *name )
-{
-    unsigned long result = 0;
-
-    struct hostent *h = gethostbyname( name );
-    if( h ){
-        struct in_addr a;
-        std::memcpy( &a, h->h_addr_list[0], h->h_length );
-        result = ntohl(a.s_addr);
-    }
-
-    return result;
-}
+#endif /* INCLUDED_OSCPACK_OSCEXCEPTION_H */

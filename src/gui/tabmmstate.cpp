@@ -384,7 +384,7 @@ void TabMMState::saveAs()
 void TabMMState::loadFile()
 {
   QMessageBox msgBox(QMessageBox::Warning, "Load file warning",
-                     "WARNING, this will destroy actual state", nullptr, this);
+                     "WARNING, this will destroy actual state");
   msgBox.addButton("OK", QMessageBox::AcceptRole);
   msgBox.addButton("CANCEL", QMessageBox::RejectRole);
   if (msgBox.exec() == QMessageBox::RejectRole) return;
@@ -407,7 +407,7 @@ void TabMMState::loadFile()
       // read one line from textstream(separated by "\n")
       QString fileLine = in.readLine();
       // parse the read line into separate pieces(tokens) with "," as the delimiter
-      QStringList lineToken = fileLine.split(",", QString::SkipEmptyParts);
+      QStringList lineToken = fileLine.split(",", Qt::SkipEmptyParts);
       QString firstVal = lineToken.at(0);
       firstVal = firstVal.trimmed();
       if (firstVal == "PAINT") // c'est une CUE

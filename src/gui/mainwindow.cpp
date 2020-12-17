@@ -474,20 +474,24 @@ void MainWindow::onAskGenerateStates()
 {
   // Implémentation ne prenant pas en compte les regexp et partant du principe
   // que les paints id suivent l'ordre numérique et n'ont qu'un mapping associé
+  // Peut-être créer un QPair dans mmstatelist pour lister row et id
   if (!stateList->rowCount())
   {
     qDebug() << "No state1 found";
     return;
   }
   // il faut d'abord effacer tous les cue sauf l'inital
-  int stateCount = stateList->rowCount();
-  if (stateCount > 1)
-  {
-    for (int i = 1; i < stateList->rowCount(); i++)
-    {
-      stateList->removeState(1); // fait planter ? A voir...
-    }
-  }
+//  int stateCount = stateList->rowCount();
+//  if (stateCount > 1)
+//  {
+//    for (int i = 1; i < stateList->rowCount(); i++)
+//    {
+//      stateList->removeState(1); // fait planter ? A voir...
+//    }
+//  }
+  MMState *tempState1 = new MMState(*stateList->getState(0), this); // On copie le state1
+  stateList->removeAllStates(); // on enlève tout
+  stateList->addState(tempState1); // on rajoute le state 1 copié
 
   MMState *state1 = stateList->getState(stateList->rowCount() - 1); // On copie le dernier Cue
   if (!state1->getPaintCount())
@@ -653,7 +657,7 @@ void MainWindow::reconnectButtonsToolBar()
 void MainWindow::closeEvent(QCloseEvent *event)
 {
   QMessageBox msgBox(QMessageBox::Warning, "",
-                     "Are you sure you want to quit ?", nullptr, this);
+                     "Are you sure you want to quit ?");
   msgBox.setWindowIcon(icon);
   msgBox.addButton("OK", QMessageBox::AcceptRole);
   msgBox.addButton("CANCEL", QMessageBox::RejectRole);

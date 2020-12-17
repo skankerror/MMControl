@@ -1,8 +1,8 @@
 /*
 	oscpack -- Open Sound Control (OSC) packet manipulation library
-	http://www.rossbencina.com/code/oscpack
+    http://www.rossbencina.com/code/oscpack
 
-	Copyright (c) 2004-2013 Ross Bencina <rossb@audiomulch.com>
+    Copyright (c) 2004-2013 Ross Bencina <rossb@audiomulch.com>
 
 	Permission is hereby granted, free of charge, to any person obtaining
 	a copy of this software and associated documentation files
@@ -34,23 +34,54 @@
 	requested that these non-binding requests be included whenever the
 	above license is reproduced.
 */
-#include "NetworkingUtils.h"
+#include "ip/NetworkingUtils.h"
 
-#include <netdb.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
+#include <winsock2.h>   // this must come first to prevent errors with MSVC7
+#include <windows.h>
 
 #include <cstring>
 
 
+static LONG initCount_ = 0;
+static bool winsockInitialized_ = false;
 
-NetworkInitializer::NetworkInitializer() {}
+NetworkInitializer::NetworkInitializer()
+{
+    if( InterlockedIncrement( &initCount_ ) == 1 ){
+        // there is a race condition here if one thread tries to access
+        // the library while another is still initializing it. 
+        // i can't think of an easy way to fix it so i'm telling you here
+        // incase you need to init the library from two threads at once.
+        // this is why the header file advises to instantiate one of these 
+        // in main() so that the initialization happens globally
 
-NetworkInitializer::~NetworkInitializer() {}
+        // initialize winsock
+	    WSAData wsaData;
+	    int nCode = WSAStartup(MAKEWORD(1, 1), &wsaData);
+	    if( nCode != 0 ){
+	        //std::cout << "WSAStartup() failed with error code " << nCode << "\n";
+        }else{
+            winsockInitialized_ = true;
+        }
+    }
+}
+
+
+NetworkInitializer::~NetworkInitializer()
+{
+    if( InterlockedDecrement( &initCount_ ) == 0 ){
+        if( winsockInitialized_ ){
+            WSACleanup();
+            winsockInitialized_ = false;
+        }
+    }
+}
 
 
 unsigned long GetHostByName( const char *name )
 {
+    NetworkInitializer networkInitializer;
+
     unsigned long result = 0;
 
     struct hostent *h = gethostbyname( name );

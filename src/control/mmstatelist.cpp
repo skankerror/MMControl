@@ -1,3 +1,20 @@
+/*
+ * (c) 2020 Michaël Creusy -- creusy(.)michael(@)gmail(.)com
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "mmstatelist.h"
 
 MMStateList::MMStateList(QObject *parent):
@@ -114,6 +131,9 @@ QVariant MMStateList::data(const QModelIndex &index, int role) const
 
 bool MMStateList::setData(const QModelIndex &index, const QVariant &value, int role)
 {
+  Q_UNUSED(index)
+  Q_UNUSED(value)
+  Q_UNUSED(role)
   return false;
 }
 
@@ -285,6 +305,11 @@ void MMStateList::insertState(MMState *state, const int stateId)
 void MMStateList::removeState(const int stateId)
 {
   if (stateId < 0 || stateId >= v_listMMState.size()) return;
+  MMState *state = v_listMMState.at(stateId);
+  for (int i = 0; i < state->getPaintCount(); i++)
+  {
+    state->removePaint(i);
+  }
   beginRemoveRows(QModelIndex(), stateId, stateId);
   v_listMMState.remove(stateId);
   endRemoveRows();
@@ -316,6 +341,11 @@ void MMStateList::removePaint(const int stateId, const int paintId)
   if (stateId < 0 || stateId >= v_listMMState.size()) return;
   MMState *state = v_listMMState.at(stateId);
   if (paintId < 0 || paintId >= state->getPaintCount()) return;
+  MMPaint *paint = state->getPaint(paintId); // on remove ses mappings
+  for (int i = 0; i < paint->getMappingCount(); i++)
+  {
+    paint->removeMapping(i);
+  }
   QModelIndex stateIndex = index(stateId, 0, QModelIndex());
   beginRemoveRows(stateIndex, paintId, paintId);
   state->removePaint(paintId);
