@@ -12,6 +12,7 @@ INCLUDEPATH += \
     $$PWD/src \
     $$PWD/src/control \
     $$PWD/src/gui \
+    §§PWD/contrib/oscpack \
     $$PWD/contrib/oscpack/osc \
     $$PWD/contrib/oscpack/ip
 

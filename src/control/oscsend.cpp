@@ -116,7 +116,7 @@ void OscSend::execute()
 {
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);
-  packet << osc::BeginBundleImmediate;
+//  packet << osc::BeginBundleImmediate;
   switch (m_champ)
   {
   case PLAY: packet << osc::BeginMessage("/mapmap/play") << osc::EndMessage;
@@ -247,7 +247,7 @@ void OscSend::execute()
     qDebug() << "/sa/pa/normal error execute send";
     break;
   }
-  packet << osc::EndBundle;
+//  packet << osc::EndBundle;
   Send(packet.Data(), packet.Size());
 }
 
@@ -258,15 +258,15 @@ void OscSend::ExecuteXFade(int ID1, int ID2, double time)
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);
   double i = (double)(counter) / timeRes;
-  packet << osc::BeginBundleImmediate
+  packet /*<< osc::BeginBundleImmediate*/
          << osc::BeginMessage("/mapmap/paint/opacity")
-         << ID1 << 1 - i << osc::EndMessage << osc::EndBundle;
+         << ID1 << 1 - i << osc::EndMessage/* << osc::EndBundle*/;
   Send(packet.Data(), packet.Size());
   packet.Clear();
 
-  packet << osc::BeginBundleImmediate
+  packet /*<< osc::BeginBundleImmediate*/
          << osc::BeginMessage("/mapmap/paint/opacity")
-         << ID2 << i << osc::EndMessage << osc::EndBundle;
+         << ID2 << i << osc::EndMessage/* << osc::EndBundle*/;
   Send(packet.Data(), packet.Size());
   packet.Clear();
   emit sendStringToOutputLabel(QString("paint ID%1 -> %2\%   ***   paint ID%3 -> %4\%").
@@ -281,7 +281,7 @@ void OscSend::ExecuteFade(int ID1, double time, bool isfadein)
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);
   double i = (double)(counter) / timeRes;
-  packet << osc::BeginBundleImmediate
+  packet /*<< osc::BeginBundleImmediate*/
          << osc::BeginMessage("/mapmap/paint/opacity") << ID1;
   if (isfadein)
   {
@@ -293,7 +293,7 @@ void OscSend::ExecuteFade(int ID1, double time, bool isfadein)
     packet << 1 - i;
     emit sendStringToOutputLabel(QString("paint ID%1 -> %2\%").arg(ID1).arg((int)((1 - i) * 100)));
   }
-  packet << osc::EndMessage << osc::EndBundle;
+  packet << osc::EndMessage/* << osc::EndBundle*/;
     Send(packet.Data(), packet.Size());
     packet.Clear();
     timer->start(10);
@@ -306,15 +306,15 @@ void OscSend::ExecutePXFade(const QString &p_name, const QString &p_name2, doubl
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);
   double i = (double)(counter) / timeRes;
-  packet << osc::BeginBundleImmediate
+  packet /*<< osc::BeginBundleImmediate*/
          << osc::BeginMessage("/mapmap/paint/opacity")
-         << p_name.toStdString().c_str() << 1 - i << osc::EndMessage << osc::EndBundle;
+         << p_name.toStdString().c_str() << 1 - i << osc::EndMessage/* << osc::EndBundle*/;
   Send(packet.Data(), packet.Size());
   packet.Clear();
 
-  packet << osc::BeginBundleImmediate
+  packet /*<< osc::BeginBundleImmediate*/
          << osc::BeginMessage("/mapmap/paint/opacity")
-         << p_name2.toStdString().c_str() << i << osc::EndMessage << osc::EndBundle;
+         << p_name2.toStdString().c_str() << i << osc::EndMessage/* << osc::EndBundle*/;
   Send(packet.Data(), packet.Size());
   packet.Clear();
   emit sendStringToOutputLabel(QString(p_name).append(" -> %1\%   ******   ").arg((int)((1 - i) * 100))
@@ -329,7 +329,7 @@ void OscSend::ExecutePFade(const QString &p_name, double time, bool isfadein)
   char buffer[OUTPUT_BUFFER_SIZE];
   osc::OutboundPacketStream packet(buffer, OUTPUT_BUFFER_SIZE);
   double i = (double)(counter) / timeRes;
-  packet << osc::BeginBundleImmediate
+  packet /*<< osc::BeginBundleImmediate*/
          << osc::BeginMessage("/mapmap/paint/opacity") << p_name.toStdString().c_str();
   if (isfadein)
   {
@@ -341,7 +341,7 @@ void OscSend::ExecutePFade(const QString &p_name, double time, bool isfadein)
     packet << 1 - i;
     emit sendStringToOutputLabel(QString(p_name).append(" -> %1\%").arg((int)((1 - i) * 100)));
   }
-  packet << osc::EndMessage << osc::EndBundle;
+  packet << osc::EndMessage/* << osc::EndBundle*/;
   Send(packet.Data(), packet.Size());
   packet.Clear();
   timer->start(10);
