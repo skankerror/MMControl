@@ -90,7 +90,13 @@ TabSeq::TabSeq(OscCueList *oscCueList,
   boutonLoad->setToolTip("Load File\nCtrl+o");
   boutonLoad->setToolTipDuration(2000);
 
-  boutonGoToCue = new QPushButton("Go to Cue", this);
+  boutonGoToCue = new QPushButton(this);
+  QIcon gotoIcon = QIcon(":/graphics/Goto");
+  boutonGoToCue->setIcon(gotoIcon);
+  boutonGoToCue->setFixedSize(70, 70);
+  boutonGoToCue->setIconSize(QSize(60, 60));
+  boutonGoToCue->setToolTip("Go to Cue");
+  boutonGoToCue->setToolTipDuration(2000);
 
   boutonStop = new QPushButton(this);
   QIcon stopIcon = QIcon(":/graphics/StopY");

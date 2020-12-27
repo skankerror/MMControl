@@ -16,6 +16,8 @@
         <file alias="StopR">stop_red.png</file>
         <file alias="StopY">stopY.png</file>
         <file alias="PlayY">playY.png</file>
+        <file alias="Goto">goto.png</file>
+        <file alias="Generate">generate.png</file>
     </qresource>
     <qresource prefix="/"/>
     <qresource prefix="/qss">

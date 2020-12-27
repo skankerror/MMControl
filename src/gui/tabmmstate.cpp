@@ -130,17 +130,34 @@ void TabMMState::createLateralButtons()
 {
   layoutButton = new QVBoxLayout();
 
-  deleteButton = new QPushButton("Delete", this);
+  deleteButton = new QPushButton(/*"Delete", */this);
+    QIcon deleteButtonIcon = QIcon(":/graphics/Bin");
+    deleteButton->setIcon(deleteButtonIcon);
+    deleteButton->setFixedSize(70, 70);
+    deleteButton->setIconSize(QSize(60, 60));
     deleteButton->setToolTip("Delete Paint or Mapping Selected");
     deleteButton->setToolTipDuration(2000);
-  saveState1Button = new QPushButton("Save State1", this);
+  saveState1Button = new QPushButton(/*"Save State1", */this);
+    QIcon saveState1ButtonIcon = QIcon(":/graphics/Save");
+    saveState1Button->setIcon(saveState1ButtonIcon);
+    saveState1Button->setFixedSize(70, 70);
+    saveState1Button->setIconSize(QSize(60, 60));
     saveState1Button->setToolTip("Save State 1 to File");
     saveState1Button->setToolTipDuration(2000);
-  loadState1Button = new QPushButton("Load State1", this);
+  loadState1Button = new QPushButton(/*"Load State1", */this);
+    QIcon loadState1ButtonIcon = QIcon(":/graphics/Load");
+    loadState1Button->setIcon(loadState1ButtonIcon);
+    loadState1Button->setFixedSize(70, 70);
+    loadState1Button->setIconSize(QSize(60, 60));
     loadState1Button->setToolTip("Load State 1 From File");
     loadState1Button->setToolTipDuration(2000);
-  generateStatesButton = new QPushButton("Generate states", this);
+  generateStatesButton = new QPushButton(/*"Generate states", */this);
+    QIcon generateStatesButtonIcon = QIcon(":/graphics/Generate");
+    generateStatesButton->setIcon(generateStatesButtonIcon);
+    generateStatesButton->setFixedSize(70, 70);
+    generateStatesButton->setIconSize(QSize(60, 60));
     generateStatesButton->setToolTip(("generate States from Cues"));
+    generateStatesButton->setToolTipDuration(2000);
 
   layoutButton->addWidget(deleteButton);
   layoutButton->addWidget(saveState1Button);
