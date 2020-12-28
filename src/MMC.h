@@ -29,6 +29,8 @@
 #define ADDRESS "127.0.0.1" // IP cible
 #define PORT 12345 // Port cible
 #define OUTPUT_BUFFER_SIZE 512
+#define TIME_RES 100
+#define TIMER_SLEEP 10
 
 enum champMM
 {

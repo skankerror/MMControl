@@ -143,6 +143,8 @@ public:
   void moveChildPrev(const int position);
 
 private:
+  char m_buffer[OUTPUT_BUFFER_SIZE];
+  osc::OutboundPacketStream m_packet;
   champMM m_champ = CUE;
   // paint var
   QString m_p_uri = "";
@@ -171,7 +173,7 @@ private:
 
   QTimer *timer;
   int counter = 0; // pour fonctionner avec le time
-  int timeRes = 100;
+  int timeRes = TIME_RES;
 
   QVector<OscSend *> v_listSend; // Si c'est une cue
   OscSend *m_parentSend; // rootItem si c'est une cue
