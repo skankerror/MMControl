@@ -37,6 +37,7 @@ MainWindow::MainWindow() :
   createToolBar();
   createCentralWidget();
   createStatusBar();
+  createMenuBar();
 
   progressBarCue->reset();
   progressBarSend->reset();
@@ -77,15 +78,14 @@ void MainWindow::createCentralWidget()
   tabwidget->addTab(tabmidi, "Midi In");
   tabwidget->addTab(tabseq, "Sequencer");
   tabwidget->addTab(tabmmstate, "Mapmap State");
-//  tabwidget->setMovable(true);
 
   setCentralWidget(tabwidget);
 }
 void MainWindow::createToolBar()
 {
   myToolBar = addToolBar("MessageToolBar");
-  auto *myToolBarWidget = new QWidget(this);
-  auto *layout = new QHBoxLayout();
+  auto myToolBarWidget = new QWidget(this);
+  auto layout = new QHBoxLayout();
   // tout le temps
   champLabel = new QLabel("champ", this);
   champComboBox = new QComboBox(this);
@@ -214,6 +214,18 @@ void MainWindow::createStatusBar()
   statusBar->insertPermanentWidget(2, progressBarSend, 1);
   setStatusBar(statusBar);
   progressBarCue->setRange(0, 100);
+}
+
+void MainWindow::createMenuBar()
+{
+  myMenuFile = new QMenu("File", this);
+  myMenuEdit = new QMenu("Edit", this);
+  myMenuHelp = new QMenu("Help", this);
+  myMenuBar = new QMenuBar(this);
+  myMenuBar->addMenu(myMenuFile);
+  myMenuBar->addMenu(myMenuEdit);
+  myMenuBar->addMenu(myMenuHelp);
+  setMenuBar(myMenuBar);
 }
 
 void MainWindow::hideAllWidgets()
@@ -362,7 +374,7 @@ void MainWindow::showWidgets(const int index)
 void MainWindow::sendFromToolBar()
 {
   champMM index = static_cast<champMM>(champComboBox->currentIndex());
-  auto *oscsend = new OscSend(
+  auto oscsend = new OscSend(
         this,
         index,
         nullptr,
@@ -387,7 +399,8 @@ void MainWindow::sendFromToolBar()
         fadeCheckBox->isChecked(),
         waitTimeSpinBox->value()
         );
-  switch(index){
+  switch(index)
+  {
   case P_URI: case R_P_URI: while (p_uriLine->text() == "Choose->") setP_UriLine(); oscsend->setP_uri(p_uriLine->text()); break;
   case P_COLOR: case R_P_COLOR: while (p_colorLine->text() == "Choose->") setP_ColorLine(); oscsend->setP_color(p_colorLine->text()); break;
   default: break;
@@ -413,7 +426,7 @@ void MainWindow::setP_ColorLine()
 void MainWindow::addToCue()
 {
   champMM champ = static_cast<champMM>(champComboBox->currentIndex());
-  auto *oscsend = new OscSend(
+  auto oscsend = new OscSend(
         this,
         champ,
         nullptr,
@@ -438,7 +451,8 @@ void MainWindow::addToCue()
         fadeCheckBox->isChecked(),
         waitTimeSpinBox->value()
         );
-  switch(champ){
+  switch(champ)
+  {
   case P_URI: case R_P_URI: while (p_uriLine->text() == "Choose->") setP_UriLine(); oscsend->setP_uri(p_uriLine->text()); break;
   case P_COLOR: case R_P_COLOR: while (p_colorLine->text() == "Choose->") setP_ColorLine(); oscsend->setP_color(p_colorLine->text()); break;
   default: break;
@@ -489,11 +503,11 @@ void MainWindow::onAskGenerateStates()
 //      stateList->removeState(1); // fait planter ? A voir...
 //    }
 //  }
-  MMState *tempState1 = new MMState(*stateList->getState(0), this); // On copie le state1
+  auto tempState1 = new MMState(*stateList->getState(0), this); // On copie le state1
   stateList->removeAllStates(); // on enlève tout
   stateList->addState(tempState1); // on rajoute le state 1 copié
 
-  MMState *state1 = stateList->getState(stateList->rowCount() - 1); // On copie le dernier Cue
+  auto state1 = stateList->getState(stateList->rowCount() - 1); // On copie le dernier Cue
   if (!state1->getPaintCount())
   {
     qDebug() << "State1 is empty";
@@ -502,15 +516,15 @@ void MainWindow::onAskGenerateStates()
   int cueCount = oscCueList->rowCount();
   for (int i = 0; i < cueCount; i++)
   {
-    MMState *newState = new MMState(*state1, stateList); // on copie le state
+    auto newState = new MMState(*state1, stateList); // on copie le state
     QModelIndex index = oscCueList->index(i, 0); // On chope l'index de la cue
-    OscSend *oscCue = oscCueList->getSend(index); // On chope la cue
+    auto oscCue = oscCueList->getSend(index); // On chope la cue
     for (int j = 0; j < oscCue->getSendCount(); j++)
     {
-      OscSend *send = oscCue->getChild(j); // On choppe le send
-      MMPaint *paint = newState->getPaint(send->getP_ID1() - 1); // périlleux... mettre vérif avant ou faire avec if plutôt que switch
-      MMPaint *paint2 = newState->getPaint(send->getP_ID2() - 1);
-      MMMapping *mapping = newState->getPaint(send->getM_ID1())->getMapping(0);
+      auto send = oscCue->getChild(j); // On choppe le send
+      auto paint = newState->getPaint(send->getP_ID1() - 1); // périlleux... mettre vérif avant ou faire avec if plutôt que switch
+      auto paint2 = newState->getPaint(send->getP_ID2() - 1);
+      auto mapping = newState->getPaint(send->getM_ID1())->getMapping(0);
       switch (send->getChamp())
       {
       case P_OPACITY:
@@ -561,11 +575,11 @@ void MainWindow::onAskGenerateStates()
 void MainWindow::onAskGotoCue(const int index)
 {
   if (index < 0 || index >= stateList->rowCount()) return;
-  MMState *state = stateList->getState(index);
-  OscSend *send = new OscSend(this);
+  auto state = stateList->getState(index);
+  auto send = new OscSend(this);
   for (int i = 0; i < state->getPaintCount(); i++)
   {
-    MMPaint *paint = state->getPaint(i);
+    auto paint = state->getPaint(i);
     // Faire le biz sur le paint
     send->setP_ID1(paint->getM_id());
     switch (paint->getM_paintType())
@@ -595,7 +609,7 @@ void MainWindow::onAskGotoCue(const int index)
     // Il nous reste Name ?
     for (int j = 0; j < paint->getMappingCount(); j++)
     {
-      MMMapping *mapping = paint->getMapping(j);
+      auto mapping = paint->getMapping(j);
       send->setM_ID1(mapping->getM_id());
       send->setChamp(M_OPACITY);
       send->setM_opacity(mapping->getM_opacity());

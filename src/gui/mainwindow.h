@@ -41,6 +41,7 @@ private:
   void createCentralWidget();
   void createToolBar();
   void createStatusBar();
+  void createMenuBar();
 
 protected:
   void closeEvent(QCloseEvent *event) override;
@@ -73,6 +74,14 @@ private:
   QTreeView *treeView;
 
   QIcon icon;
+
+  QMenuBar *myMenuBar;
+    QMenu *myMenuFile;
+    QMenu *myMenuEdit;
+    QMenu *myMenuHelp;
+      QAction *aboutAct;
+      QAction *aboutQtAct;
+
 
   QTabWidget *tabwidget;
     TabMidi *tabmidi;

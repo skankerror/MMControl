@@ -12,8 +12,13 @@ QTextBrowser
 
 /* ##### Toolbars, ... ##### */
 QToolBar {
-    background: #404B57;
-    color: white;
+  background: #404B57;
+  color: white;
+}
+
+QMenuBar {
+  background: #414D59;
+  color: white;
 }
 
 QLabel {
